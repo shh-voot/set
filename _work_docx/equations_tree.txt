@@ -1,0 +1,2290 @@
+================================================================================
+EQ#1  in paragraph: '本问题在不考虑实体无人机和共享电池调度的情况下，研究单服务区直接往返条件下的运输能力与货箱组批问题。每个架次采用 O01'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='O01'
+
+================================================================================
+EQ#2  in paragraph: '本问题在不考虑实体无人机和共享电池调度的情况下，研究单服务区直接往返条件下的运输能力与货箱组批问题。每个架次采用 O01'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math', 'hint': 'eastAsia'}>
+    <t> TEXT='i'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='=1,2,…,15'
+
+================================================================================
+EQ#3  in paragraph: '水平巡航距离、爬升高度和下降高度由节点位置、DEM及计划巡航海拔确定。机型  携带载荷 时的等效航程为：'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='g'
+
+================================================================================
+EQ#4  in paragraph: '水平巡航距离、爬升高度和下降高度由节点位置、DEM及计划巡航海拔确定。机型  携带载荷 时的等效航程为：'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='q'
+
+================================================================================
+EQ#5  in paragraph: ''
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <t> TEXT='g'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='('
+  <r>
+    <t> TEXT='q'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT=')='
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <t> TEXT='g'
+    <sup>
+      <r>
+        <t> TEXT='0'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='-'
+  <d>
+    <dPr>
+      <ctrlPr>
+    <e>
+      <sSubSup>
+        <sSubSupPr>
+          <ctrlPr>
+        <e>
+          <r>
+            <t> TEXT='L'
+        <sub>
+          <r>
+            <t> TEXT='g'
+        <sup>
+          <r>
+            <t> TEXT='0'
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='-'
+      <sSubSup>
+        <sSubSupPr>
+          <ctrlPr>
+        <e>
+          <r>
+            <t> TEXT='L'
+        <sub>
+          <r>
+            <t> TEXT='g'
+        <sup>
+          <r>
+            <t> TEXT='F'
+  <sSup>
+    <sSupPr>
+      <ctrlPr>
+    <e>
+      <d>
+        <dPr>
+          <ctrlPr>
+        <e>
+          <f>
+            <fPr>
+              <ctrlPr>
+            <num>
+              <r>
+                <t> TEXT='q'
+            <den>
+              <sSub>
+                <sSubPr>
+                  <ctrlPr>
+                <e>
+                  <r>
+                    <t> TEXT='Q'
+                <sub>
+                  <r>
+                    <t> TEXT='g'
+    <sup>
+      <r>
+        <t> TEXT='3'
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='/'
+      <r>
+        <t> TEXT='2'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT=','
+  <r>
+    <t> TEXT='0'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='≤'
+  <r>
+    <t> TEXT='q'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='≤'
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='Q'
+    <sub>
+      <r>
+        <t> TEXT='g'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='.'
+
+================================================================================
+EQ#6  in paragraph: '其中， 表示运输无人机机型， 表示当前有效载荷（kg）；和分别表示机型  的空载标准航程和满载标准航程（m）； 表示机型'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='g'
+
+================================================================================
+EQ#7  in paragraph: '其中， 表示运输无人机机型， 表示当前有效载荷（kg）；和分别表示机型  的空载标准航程和满载标准航程（m）； 表示机型'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='q'
+
+================================================================================
+EQ#8  in paragraph: '其中， 表示运输无人机机型， 表示当前有效载荷（kg）；和分别表示机型  的空载标准航程和满载标准航程（m）； 表示机型'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='g'
+    <sup>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='0'
+
+================================================================================
+EQ#9  in paragraph: '其中， 表示运输无人机机型， 表示当前有效载荷（kg）；和分别表示机型  的空载标准航程和满载标准航程（m）； 表示机型'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='g'
+    <sup>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='F'
+
+================================================================================
+EQ#10  in paragraph: '其中， 表示运输无人机机型， 表示当前有效载荷（kg）；和分别表示机型  的空载标准航程和满载标准航程（m）； 表示机型'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='g'
+
+================================================================================
+EQ#11  in paragraph: '其中， 表示运输无人机机型， 表示当前有效载荷（kg）；和分别表示机型  的空载标准航程和满载标准航程（m）； 表示机型'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='Q'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='g'
+
+================================================================================
+EQ#12  in paragraph: '其中， 表示运输无人机机型， 表示当前有效载荷（kg）；和分别表示机型  的空载标准航程和满载标准航程（m）； 表示机型'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='g'
+
+================================================================================
+EQ#13  in paragraph: ''
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='t'
+    <sub>
+      <r>
+        <t> TEXT='gij'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='='
+  <f>
+    <fPr>
+      <ctrlPr>
+    <num>
+      <sSubSup>
+        <sSubSupPr>
+          <ctrlPr>
+        <e>
+          <r>
+            <t> TEXT='h'
+        <sub>
+          <r>
+            <t> TEXT='ij'
+        <sup>
+          <r>
+            <rPr>
+              <sty {'val': 'p'}>
+            <t> TEXT='+'
+    <den>
+      <sSubSup>
+        <sSubSupPr>
+          <ctrlPr>
+        <e>
+          <r>
+            <t> TEXT='v'
+        <sub>
+          <r>
+            <t> TEXT='g'
+        <sup>
+          <r>
+            <rPr>
+              <sty {'val': 'p'}>
+            <t> TEXT='↑'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='+'
+  <f>
+    <fPr>
+      <ctrlPr>
+    <num>
+      <sSub>
+        <sSubPr>
+          <ctrlPr>
+        <e>
+          <r>
+            <t> TEXT='d'
+        <sub>
+          <r>
+            <t> TEXT='ij'
+    <den>
+      <sSubSup>
+        <sSubSupPr>
+          <ctrlPr>
+        <e>
+          <r>
+            <t> TEXT='v'
+        <sub>
+          <r>
+            <t> TEXT='g'
+        <sup>
+          <r>
+            <rPr>
+              <sty {'val': 'p'}>
+            <t> TEXT='c'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='+'
+  <f>
+    <fPr>
+      <ctrlPr>
+    <num>
+      <sSubSup>
+        <sSubSupPr>
+          <ctrlPr>
+        <e>
+          <r>
+            <t> TEXT='h'
+        <sub>
+          <r>
+            <t> TEXT='ij'
+        <sup>
+          <r>
+            <rPr>
+              <sty {'val': 'p'}>
+            <t> TEXT='-'
+    <den>
+      <sSubSup>
+        <sSubSupPr>
+          <ctrlPr>
+        <e>
+          <r>
+            <t> TEXT='v'
+        <sub>
+          <r>
+            <t> TEXT='g'
+        <sup>
+          <r>
+            <rPr>
+              <sty {'val': 'p'}>
+            <t> TEXT='↓'
+
+================================================================================
+EQ#14  in paragraph: '其中， 表示机型  从节点  到节点  的航段飞行时间（s）； 为水平巡航距离（m）；、 分别为爬升高度和下降高度（m）'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='t'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='gij'
+
+================================================================================
+EQ#15  in paragraph: '其中， 表示机型  从节点  到节点  的航段飞行时间（s）； 为水平巡航距离（m）；、 分别为爬升高度和下降高度（m）'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='g'
+
+================================================================================
+EQ#16  in paragraph: '其中， 表示机型  从节点  到节点  的航段飞行时间（s）； 为水平巡航距离（m）；、 分别为爬升高度和下降高度（m）'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='i'
+
+================================================================================
+EQ#17  in paragraph: '其中， 表示机型  从节点  到节点  的航段飞行时间（s）； 为水平巡航距离（m）；、 分别为爬升高度和下降高度（m）'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='j'
+
+================================================================================
+EQ#18  in paragraph: '其中， 表示机型  从节点  到节点  的航段飞行时间（s）； 为水平巡航距离（m）；、 分别为爬升高度和下降高度（m）'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='d'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='ij'
+
+================================================================================
+EQ#19  in paragraph: '其中， 表示机型  从节点  到节点  的航段飞行时间（s）； 为水平巡航距离（m）；、 分别为爬升高度和下降高度（m）'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='h'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='ij'
+    <sup>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='+'
+
+================================================================================
+EQ#20  in paragraph: '其中， 表示机型  从节点  到节点  的航段飞行时间（s）； 为水平巡航距离（m）；、 分别为爬升高度和下降高度（m）'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='h'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='ij'
+    <sup>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='-'
+
+================================================================================
+EQ#21  in paragraph: '其中， 表示机型  从节点  到节点  的航段飞行时间（s）； 为水平巡航距离（m）；、 分别为爬升高度和下降高度（m）'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='v'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='g'
+    <sup>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='↑'
+
+================================================================================
+EQ#22  in paragraph: '其中， 表示机型  从节点  到节点  的航段飞行时间（s）； 为水平巡航距离（m）；、 分别为爬升高度和下降高度（m）'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='v'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='g'
+    <sup>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='c'
+
+================================================================================
+EQ#23  in paragraph: '其中， 表示机型  从节点  到节点  的航段飞行时间（s）； 为水平巡航距离（m）；、 分别为爬升高度和下降高度（m）'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='v'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='g'
+    <sup>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='↓'
+
+================================================================================
+EQ#24  in paragraph: ''
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='E'
+    <sub>
+      <r>
+        <t> TEXT='gij'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='('
+  <r>
+    <t> TEXT='q'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT=')='
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='E'
+    <sub>
+      <r>
+        <t> TEXT='gij'
+    <sup>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='hor'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='('
+  <r>
+    <t> TEXT='q'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT=')+'
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='E'
+    <sub>
+      <r>
+        <t> TEXT='gij'
+    <sup>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='up'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='('
+  <r>
+    <t> TEXT='q'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT=').'
+
+================================================================================
+EQ#25  in paragraph: '其中， 为航段总运输能耗， 和  分别为水平巡航能耗和爬升附加能耗（kWh）。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='E'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='gij'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='('
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='q'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT=')'
+
+================================================================================
+EQ#26  in paragraph: '其中， 为航段总运输能耗， 和  分别为水平巡航能耗和爬升附加能耗（kWh）。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='E'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='gij'
+    <sup>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='hor'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='('
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='q'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT=')'
+
+================================================================================
+EQ#27  in paragraph: '其中， 为航段总运输能耗， 和  分别为水平巡航能耗和爬升附加能耗（kWh）。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='E'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='gij'
+    <sup>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='up'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='('
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='q'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT=')'
+
+================================================================================
+EQ#28  in paragraph: ''
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='E'
+    <sub>
+      <r>
+        <t> TEXT='p'
+    <sup>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='T'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='='
+  <nary>
+    <naryPr>
+      <chr {'val': '∑'}>
+      <limLoc {'val': 'undOvr'}>
+      <supHide {'val': '1'}>
+      <ctrlPr>
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='('
+      <r>
+        <t> TEXT='i'
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT=','
+      <r>
+        <t> TEXT='j'
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT=')∈'
+      <r>
+        <t> TEXT='p'
+    <sup>
+      <r>
+        <t> TEXT='\u200b'
+    <e>
+      <sSub>
+        <sSubPr>
+          <ctrlPr>
+        <e>
+          <r>
+            <t> TEXT='E'
+        <sub>
+          <r>
+            <t> TEXT='gij'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='('
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='q'
+    <sub>
+      <r>
+        <t> TEXT='pij'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT=')≤('
+  <r>
+    <t> TEXT='1'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='-'
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='ρ'
+    <sub>
+      <r>
+        <t> TEXT='g'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT=')'
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='E'
+    <sub>
+      <r>
+        <t> TEXT='g'
+    <sup>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='use'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='.'
+
+================================================================================
+EQ#29  in paragraph: '其中， 为架次  的总运输能耗（kWh）， 为架次  在航段 → 上的剩余载荷（kg）， 为机型  的返航安全余量比例，'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='E'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='p'
+    <sup>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='T'
+
+================================================================================
+EQ#30  in paragraph: '其中， 为架次  的总运输能耗（kWh）， 为架次  在航段 → 上的剩余载荷（kg）， 为机型  的返航安全余量比例，'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='p'
+
+================================================================================
+EQ#31  in paragraph: '其中， 为架次  的总运输能耗（kWh）， 为架次  在航段 → 上的剩余载荷（kg）， 为机型  的返航安全余量比例，'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='q'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='pij'
+
+================================================================================
+EQ#32  in paragraph: '其中， 为架次  的总运输能耗（kWh）， 为架次  在航段 → 上的剩余载荷（kg）， 为机型  的返航安全余量比例，'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='p'
+
+================================================================================
+EQ#33  in paragraph: '其中， 为架次  的总运输能耗（kWh）， 为架次  在航段 → 上的剩余载荷（kg）， 为机型  的返航安全余量比例，'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='i'
+
+================================================================================
+EQ#34  in paragraph: '其中， 为架次  的总运输能耗（kWh）， 为架次  在航段 → 上的剩余载荷（kg）， 为机型  的返航安全余量比例，'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='j'
+
+================================================================================
+EQ#35  in paragraph: '其中， 为架次  的总运输能耗（kWh）， 为架次  在航段 → 上的剩余载荷（kg）， 为机型  的返航安全余量比例，'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='ρ'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='g'
+
+================================================================================
+EQ#36  in paragraph: '其中， 为架次  的总运输能耗（kWh）， 为架次  在航段 → 上的剩余载荷（kg）， 为机型  的返航安全余量比例，'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='g'
+
+================================================================================
+EQ#37  in paragraph: '其中， 为架次  的总运输能耗（kWh）， 为架次  在航段 → 上的剩余载荷（kg）， 为机型  的返航安全余量比例，'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='E'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='g'
+    <sup>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='use'
+
+================================================================================
+EQ#38  in paragraph: '其中， 为架次  的总运输能耗（kWh）， 为架次  在航段 → 上的剩余载荷（kg）， 为机型  的返航安全余量比例，'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='g'
+
+================================================================================
+EQ#39  in paragraph: ''
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+    <e>
+      <r>
+        <rPr>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+        <t> TEXT='t'
+    <sub>
+      <r>
+        <rPr>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+        <t> TEXT='chg'
+  <r>
+    <rPr>
+      <color {'val': '000000', 'themeColor': 'text1'}>
+    <t> TEXT='(s) ='
+  <d>
+    <dPr>
+      <begChr {'val': '{'}>
+      <endChr {'val': ''}>
+      <ctrlPr>
+        <rPr>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+    <e>
+      <m>
+        <mPr>
+          <rSpRule {'val': '3'}>
+          <rSp {'val': '120'}>
+          <mcs>
+            <mc>
+              <mcPr>
+                <count {'val': '1'}>
+                <mcJc {'val': 'left'}>
+          <ctrlPr>
+            <rPr>
+              <color {'val': '000000', 'themeColor': 'text1'}>
+        <mr>
+          <e>
+            <sSub>
+              <sSubPr>
+                <ctrlPr>
+                  <rPr>
+                    <color {'val': '000000', 'themeColor': 'text1'}>
+              <e>
+                <r>
+                  <rPr>
+                    <color {'val': '000000', 'themeColor': 'text1'}>
+                  <t> TEXT='T'
+              <sub>
+                <r>
+                  <rPr>
+                    <color {'val': '000000', 'themeColor': 'text1'}>
+                  <t> TEXT='full'
+            <r>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='[0.65(0.90 - s)/0.90 + 0.35],    0 ≤ s < 0.90'
+        <mr>
+          <e>
+            <sSub>
+              <sSubPr>
+                <ctrlPr>
+                  <rPr>
+                    <color {'val': '000000', 'themeColor': 'text1'}>
+              <e>
+                <r>
+                  <rPr>
+                    <color {'val': '000000', 'themeColor': 'text1'}>
+                  <t> TEXT='T'
+              <sub>
+                <r>
+                  <rPr>
+                    <color {'val': '000000', 'themeColor': 'text1'}>
+                  <t> TEXT='full'
+            <r>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='·0.35(1 - s)/0.10,    0.90 ≤ s ≤ 1'
+
+================================================================================
+EQ#40  in paragraph: '其中，为电池或能源组件任务结束时的SOC，表示该资源从任务结束时 SOC 为  的状态充电至100%所需的时间，为相应资'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+      <color {'val': '000000', 'themeColor': 'text1'}>
+    <t> TEXT='s'
+
+================================================================================
+EQ#41  in paragraph: '其中，为电池或能源组件任务结束时的SOC，表示该资源从任务结束时 SOC 为  的状态充电至100%所需的时间，为相应资'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+        <t> TEXT='t'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+        <t> TEXT='chg'
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+      <color {'val': '000000', 'themeColor': 'text1'}>
+    <t> TEXT='(s)'
+
+================================================================================
+EQ#42  in paragraph: '其中，为电池或能源组件任务结束时的SOC，表示该资源从任务结束时 SOC 为  的状态充电至100%所需的时间，为相应资'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+      <color {'val': '000000', 'themeColor': 'text1'}>
+    <t> TEXT='s'
+
+================================================================================
+EQ#43  in paragraph: '其中，为电池或能源组件任务结束时的SOC，表示该资源从任务结束时 SOC 为  的状态充电至100%所需的时间，为相应资'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+        <t> TEXT='T'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+        <t> TEXT='full'
+
+================================================================================
+EQ#44  in paragraph: ''
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+    <e>
+      <r>
+        <rPr>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+        <t> TEXT='b'
+    <sub>
+      <r>
+        <rPr>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+        <t> TEXT='ij'
+  <d>
+    <dPr>
+      <ctrlPr>
+        <rPr>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+    <e>
+      <r>
+        <rPr>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+        <t> TEXT='t'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <rPr>
+      <color {'val': '000000', 'themeColor': 'text1'}>
+    <t> TEXT='='
+  <d>
+    <dPr>
+      <begChr {'val': '{'}>
+      <endChr {'val': ''}>
+      <ctrlPr>
+        <rPr>
+          <color {'val': '000000', 'themeColor': 'text1'}>
+    <e>
+      <m>
+        <mPr>
+          <plcHide {'val': '1'}>
+          <mcs>
+            <mc>
+              <mcPr>
+                <count {'val': '2'}>
+                <mcJc {'val': 'left'}>
+          <ctrlPr>
+            <rPr>
+              <color {'val': '000000', 'themeColor': 'text1'}>
+        <mr>
+          <e>
+            <r>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='0'
+            <r>
+              <rPr>
+                <sty {'val': 'p'}>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT=','
+          <e>
+            <r>
+              <rPr>
+                <nor>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='端点'
+            <r>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='i'
+            <r>
+              <rPr>
+                <nor>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='与'
+            <r>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='j'
+            <r>
+              <rPr>
+                <nor>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='之间不存在地形遮挡'
+            <r>
+              <rPr>
+                <sty {'val': 'p'}>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT=','
+        <mr>
+          <e>
+            <r>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='1'
+            <r>
+              <rPr>
+                <sty {'val': 'p'}>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT=','
+          <e>
+            <r>
+              <rPr>
+                <nor>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='端点'
+            <r>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='i'
+            <r>
+              <rPr>
+                <nor>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='与'
+            <r>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='j'
+            <r>
+              <rPr>
+                <nor>
+              <rPr>
+                <color {'val': '000000', 'themeColor': 'text1'}>
+              <t> TEXT='之间存在地形遮挡'
+
+================================================================================
+EQ#45  in paragraph: ''
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='P'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='th'
+    <sup>
+      <r>
+        <t> TEXT='b'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='='
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='P'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='sens'
+    <sup>
+      <r>
+        <t> TEXT='b'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='+'
+  <sSup>
+    <sSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='M'
+    <sup>
+      <r>
+        <t> TEXT='b'
+
+================================================================================
+EQ#46  in paragraph: '其中， 和  分别为接收端  的接收灵敏度和衰落裕量，具体取值见“通信链路参数.xlsx”。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='P'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='sens'
+    <sup>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='b'
+
+================================================================================
+EQ#47  in paragraph: '其中， 和  分别为接收端  的接收灵敏度和衰落裕量，具体取值见“通信链路参数.xlsx”。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSup>
+    <sSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='M'
+    <sup>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='b'
+
+================================================================================
+EQ#48  in paragraph: '其中， 和  分别为接收端  的接收灵敏度和衰落裕量，具体取值见“通信链路参数.xlsx”。'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='b'
+
+================================================================================
+EQ#49  in paragraph: '对于通信方向 ，最大允许总传播损耗为'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='a'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='→'
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='b'
+
+================================================================================
+EQ#50  in paragraph: ''
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='max'
+    <sup>
+      <r>
+        <t> TEXT='a'
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='→'
+      <r>
+        <t> TEXT='b'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='='
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='P'
+    <sub>
+      <r>
+        <t> TEXT='t'
+    <sup>
+      <r>
+        <t> TEXT='a'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='+'
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='G'
+    <sub>
+      <r>
+        <t> TEXT='t'
+    <sup>
+      <r>
+        <t> TEXT='a'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='+'
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='G'
+    <sub>
+      <r>
+        <t> TEXT='r'
+    <sup>
+      <r>
+        <t> TEXT='b'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='-'
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='sys'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='-'
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='P'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='th'
+    <sup>
+      <r>
+        <t> TEXT='b'
+
+================================================================================
+EQ#51  in paragraph: '其中， 和  分别为发射端  的发射功率和发射天线增益， 为接收端  的接收天线增益， 为系统损耗。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='P'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='t'
+    <sup>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='a'
+
+================================================================================
+EQ#52  in paragraph: '其中， 和  分别为发射端  的发射功率和发射天线增益， 为接收端  的接收天线增益， 为系统损耗。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='G'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='t'
+    <sup>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='a'
+
+================================================================================
+EQ#53  in paragraph: '其中， 和  分别为发射端  的发射功率和发射天线增益， 为接收端  的接收天线增益， 为系统损耗。'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='a'
+
+================================================================================
+EQ#54  in paragraph: '其中， 和  分别为发射端  的发射功率和发射天线增益， 为接收端  的接收天线增益， 为系统损耗。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='G'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='r'
+    <sup>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='b'
+
+================================================================================
+EQ#55  in paragraph: '其中， 和  分别为发射端  的发射功率和发射天线增益， 为接收端  的接收天线增益， 为系统损耗。'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='b'
+
+================================================================================
+EQ#56  in paragraph: '其中， 和  分别为发射端  的发射功率和发射天线增益， 为接收端  的接收天线增益， 为系统损耗。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='sys'
+
+================================================================================
+EQ#57  in paragraph: '由于运输控制与状态回传均需要通信保障，主体  与  之间按照双向链路进行判定，其链路门限取两个通信方向最大允许传播损耗中'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='a'
+
+================================================================================
+EQ#58  in paragraph: '由于运输控制与状态回传均需要通信保障，主体  与  之间按照双向链路进行判定，其链路门限取两个通信方向最大允许传播损耗中'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='b'
+
+================================================================================
+EQ#59  in paragraph: ''
+--------------------------------------------------------------------------------
+<oMath>
+  <sSubSup>
+    <sSubSupPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='max'
+    <sup>
+      <r>
+        <t> TEXT='a'
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='↔'
+      <r>
+        <t> TEXT='b'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='=min'
+  <d>
+    <dPr>
+      <begChr {'val': '{'}>
+      <endChr {'val': '}'}>
+      <ctrlPr>
+    <e>
+      <sSubSup>
+        <sSubSupPr>
+          <ctrlPr>
+        <e>
+          <r>
+            <t> TEXT='L'
+        <sub>
+          <r>
+            <rPr>
+              <sty {'val': 'p'}>
+            <t> TEXT='max'
+        <sup>
+          <r>
+            <t> TEXT='a'
+          <r>
+            <rPr>
+              <sty {'val': 'p'}>
+            <t> TEXT='→'
+          <r>
+            <t> TEXT='b'
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT=','
+      <sSubSup>
+        <sSubSupPr>
+          <ctrlPr>
+        <e>
+          <r>
+            <t> TEXT='L'
+        <sub>
+          <r>
+            <rPr>
+              <sty {'val': 'p'}>
+            <t> TEXT='max'
+        <sup>
+          <r>
+            <t> TEXT='b'
+          <r>
+            <rPr>
+              <sty {'val': 'p'}>
+            <t> TEXT='→'
+          <r>
+            <t> TEXT='a'
+
+================================================================================
+EQ#60  in paragraph: '端点  与  在时刻  的自由空间传播损耗为'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='i'
+
+================================================================================
+EQ#61  in paragraph: '端点  与  在时刻  的自由空间传播损耗为'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='j'
+
+================================================================================
+EQ#62  in paragraph: '端点  与  在时刻  的自由空间传播损耗为'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='t'
+
+================================================================================
+EQ#63  in paragraph: ''
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='FSPL,'
+      <r>
+        <t> TEXT='ij'
+  <d>
+    <dPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='t'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='='
+  <r>
+    <t> TEXT='32.45'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='+'
+  <r>
+    <t> TEXT='20'
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='log'
+    <sub>
+      <r>
+        <t> TEXT='10'
+  <r>
+    <t> TEXT='f'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='+'
+  <r>
+    <t> TEXT='20'
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='log'
+    <sub>
+      <r>
+        <t> TEXT='10'
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='D'
+    <sub>
+      <r>
+        <t> TEXT='ij'
+  <d>
+    <dPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='t'
+
+================================================================================
+EQ#64  in paragraph: '其中，载波频率  以 MHz 计， 为两个通信端点之间的三维直线距离，以 km 计。'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='f'
+
+================================================================================
+EQ#65  in paragraph: '其中，载波频率  以 MHz 计， 为两个通信端点之间的三维直线距离，以 km 计。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='D'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='ij'
+  <d>
+    <dPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='t'
+
+================================================================================
+EQ#66  in paragraph: ''
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='path,'
+      <r>
+        <t> TEXT='ij'
+  <d>
+    <dPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='t'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='='
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='FSPL,'
+      <r>
+        <t> TEXT='ij'
+  <d>
+    <dPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='t'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='+'
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <t> TEXT='obs'
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='b'
+    <sub>
+      <r>
+        <t> TEXT='ij'
+  <d>
+    <dPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='t'
+
+================================================================================
+EQ#67  in paragraph: '其中， 为地形遮挡附加损耗，具体取值见“通信链路参数.xlsx”。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='L'
+    <sub>
+      <r>
+        <rPr>
+          <sty {'val': 'p'}>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='obs'
+
+================================================================================
+EQ#68  in paragraph: '端点  与  之间的双向链路可用性定义为'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='i'
+
+================================================================================
+EQ#69  in paragraph: '端点  与  之间的双向链路可用性定义为'
+--------------------------------------------------------------------------------
+<oMath>
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='j'
+
+================================================================================
+EQ#70  in paragraph: ''
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='A'
+    <sub>
+      <r>
+        <t> TEXT='ij'
+  <d>
+    <dPr>
+      <ctrlPr>
+    <e>
+      <r>
+        <t> TEXT='t'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <t> TEXT='='
+  <d>
+    <dPr>
+      <begChr {'val': '{'}>
+      <endChr {'val': ''}>
+      <ctrlPr>
+    <e>
+      <m>
+        <mPr>
+          <plcHide {'val': '1'}>
+          <mcs>
+            <mc>
+              <mcPr>
+                <count {'val': '2'}>
+                <mcJc {'val': 'left'}>
+          <ctrlPr>
+        <mr>
+          <e>
+            <r>
+              <t> TEXT='1'
+            <r>
+              <rPr>
+                <sty {'val': 'p'}>
+              <t> TEXT=','
+          <e>
+            <sSub>
+              <sSubPr>
+                <ctrlPr>
+              <e>
+                <r>
+                  <t> TEXT='L'
+              <sub>
+                <r>
+                  <rPr>
+                    <sty {'val': 'p'}>
+                  <t> TEXT='path,'
+                <r>
+                  <t> TEXT='ij'
+            <d>
+              <dPr>
+                <ctrlPr>
+              <e>
+                <r>
+                  <t> TEXT='t'
+            <r>
+              <rPr>
+                <sty {'val': 'p'}>
+              <t> TEXT='≤'
+            <sSubSup>
+              <sSubSupPr>
+                <ctrlPr>
+              <e>
+                <r>
+                  <t> TEXT='L'
+              <sub>
+                <r>
+                  <rPr>
+                    <sty {'val': 'p'}>
+                  <t> TEXT='max'
+              <sup>
+                <r>
+                  <t> TEXT='i'
+                <r>
+                  <rPr>
+                    <sty {'val': 'p'}>
+                  <t> TEXT='↔'
+                <r>
+                  <t> TEXT='j'
+            <r>
+              <rPr>
+                <sty {'val': 'p'}>
+              <t> TEXT=','
+        <mr>
+          <e>
+            <r>
+              <t> TEXT='0'
+            <r>
+              <rPr>
+                <sty {'val': 'p'}>
+              <t> TEXT=','
+          <e>
+            <sSub>
+              <sSubPr>
+                <ctrlPr>
+              <e>
+                <r>
+                  <t> TEXT='L'
+              <sub>
+                <r>
+                  <rPr>
+                    <sty {'val': 'p'}>
+                  <t> TEXT='path,'
+                <r>
+                  <t> TEXT='ij'
+            <d>
+              <dPr>
+                <ctrlPr>
+              <e>
+                <r>
+                  <t> TEXT='t'
+            <r>
+              <rPr>
+                <sty {'val': 'p'}>
+              <t> TEXT='>'
+            <sSubSup>
+              <sSubSupPr>
+                <ctrlPr>
+              <e>
+                <r>
+                  <t> TEXT='L'
+              <sub>
+                <r>
+                  <rPr>
+                    <sty {'val': 'p'}>
+                  <t> TEXT='max'
+              <sup>
+                <r>
+                  <t> TEXT='i'
+                <r>
+                  <rPr>
+                    <sty {'val': 'p'}>
+                  <t> TEXT='↔'
+                <r>
+                  <t> TEXT='j'
+
+================================================================================
+EQ#71  in paragraph: '其中， 表示相应链路可用， 表示相应链路不可用。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='A'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='ij'
+  <d>
+    <dPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='t'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='='
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='1'
+
+================================================================================
+EQ#72  in paragraph: '其中， 表示相应链路可用， 表示相应链路不可用。'
+--------------------------------------------------------------------------------
+<oMath>
+  <sSub>
+    <sSubPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='A'
+    <sub>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='ij'
+  <d>
+    <dPr>
+      <ctrlPr>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <e>
+      <r>
+        <rPr>
+          <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+        <t> TEXT='t'
+  <r>
+    <rPr>
+      <sty {'val': 'p'}>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='='
+  <r>
+    <rPr>
+      <rFonts {'ascii': 'Cambria Math', 'hAnsi': 'Cambria Math'}>
+    <t> TEXT='0'

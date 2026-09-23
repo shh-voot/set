@@ -1,0 +1,16 @@
+﻿import re
+t = open(r"D:\claude\华为杯\D题\_work_docx\media\image2.svg", encoding="utf-8", errors="replace").read()
+t2 = re.sub(r'xlink:href="data:image/png;base64,[A-Za-z0-9+/=]+"', 'xlink:href="[BASE64]"', t)
+i = t2.find('<image')
+j = t2.find('id="matplotlib.axis_1"')
+print("--- between image and axis ---")
+print(t2[i:j][:4000])
+print()
+print("--- after last text (look for overlay drawn last) ---")
+k = t2.rfind('</g></g>')
+print(t2[-6000:][:6000] if False else "")
+# list all top-level g ids in order
+print("=== ordered g ids ===")
+print(re.findall(r'<g id="([^"]+)"', t2))
+print("=== count of paths with stroke widths ===")
+print(sorted(set(re.findall(r'stroke-width="([\d.]+)"', t2))))
