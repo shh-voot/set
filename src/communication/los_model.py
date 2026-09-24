@@ -82,7 +82,17 @@ class LOSCommunicationModel:
             (is_los, reason): 是否可通信，以及不可通信的原因
         """
         # 1. 距离检查
-        distance = pos1.distance_to(pos2)
+        if self.dem_bounds is not None:
+            # Haversine distance for lon/lat coordinates.
+            r = 6371000.0
+            dlat = np.radians(pos2.y - pos1.y)
+            dlon = np.radians(pos2.x - pos1.x)
+            q = (np.sin(dlat / 2) ** 2 + np.cos(np.radians(pos1.y)) *
+                 np.cos(np.radians(pos2.y)) * np.sin(dlon / 2) ** 2)
+            horizontal = r * 2 * np.arctan2(np.sqrt(q), np.sqrt(1 - q))
+            distance = float(np.sqrt(horizontal ** 2 + (pos2.z - pos1.z) ** 2))
+        else:
+            distance = pos1.distance_to(pos2)
         if distance > self.comm_params.max_range_m:
             return False, f"距离超限 ({distance:.0f}m > {self.comm_params.max_range_m}m)"
 
@@ -111,9 +121,13 @@ class LOSCommunicationModel:
         if self.dem_data is None:
             return False, None
 
-        # 计算采样点数（每10米一个采样点）
-        horizontal_dist = pos1.horizontal_distance_to(pos2)
-        num_samples = max(10, int(horizontal_dist / 10))
+        # Coordinates in this project are longitude/latitude. Sample at the
+        # native DEM resolution instead of treating degrees as metres.
+        if self.dem_bounds and self.dem_bounds.get('resolution'):
+            span = max(abs(pos2.x - pos1.x), abs(pos2.y - pos1.y))
+            num_samples = max(2, int(np.ceil(span / self.dem_bounds['resolution'])))
+        else:
+            num_samples = 10
 
         # 在两点之间均匀采样
         for i in range(1, num_samples):

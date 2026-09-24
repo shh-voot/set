@@ -1,282 +1,261 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""Authoritative Problem 1 solver.
+
+It uses the official per-box list, the 30 m DEM and the Appendix 2
+segment convention. Problem 1 ignores physical UAV inventory as required by
+the statement, but still enforces type capacity, equivalent range and return
+energy reserve for every direct O01 -> Si -> O01 mission.
 """
-问题一终极优化版 - 严格18架次
-策略: 优先使用C型大载荷机型，强制合并小批次
-"""
+
+from pathlib import Path
+import hashlib
+import json
+from typing import Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
-from pathlib import Path
-import sys
 
-sys.path.insert(0, str(Path(__file__).parent / 'src'))
 from src.data.data_loader import DataLoader
+from src.energy.energy_model import EnergyModel
+from src.terrain.dem_loader import DEMLoader
 
 
-def calculate_distance(coord1, coord2):
-    """计算两点距离 (km)"""
-    lon1, lat1 = coord1
-    lon2, lat2 = coord2
+ID = "\u8d27\u7bb1\u7f16\u53f7"
+AREA = "\u670d\u52a1\u533a\u7f16\u53f7"
+WEIGHT = "\u5355\u7bb1\u8d28\u91cf\uff08kg\uff09"
+VOLUME = "\u5355\u7bb1\u4f53\u79ef\uff08m\u00b3\uff09"
+PRIORITY = "\u5e94\u6025\u4f18\u5148\u7cfb\u6570"
 
-    R = 6371
+
+def haversine_m(a: Tuple[float, float], b: Tuple[float, float]) -> float:
+    lon1, lat1 = a
+    lon2, lat2 = b
+    r = 6371000.0
     dlat = np.radians(lat2 - lat1)
     dlon = np.radians(lon2 - lon1)
-
-    a = (np.sin(dlat/2)**2 +
+    q = (np.sin(dlat / 2) ** 2 +
          np.cos(np.radians(lat1)) * np.cos(np.radians(lat2)) *
-         np.sin(dlon/2)**2)
-    c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1-a))
-
-    return R * c
+         np.sin(dlon / 2) ** 2)
+    return float(r * 2 * np.arctan2(np.sqrt(q), np.sqrt(1 - q)))
 
 
-def calculate_energy(distance_km, weight_kg, uav_spec):
-    """简化能耗计算"""
-    cruise_power = uav_spec['cruise_power_kw']
-    cruise_speed_ms = uav_spec['cruise_speed_ms']
-    time_h = (distance_km * 2 * 1000) / cruise_speed_ms / 3600
-    base_energy = cruise_power * time_h
-    weight_factor = 1 + (weight_kg / uav_spec['max_load_kg']) * 0.3
-    return base_energy * weight_factor
+def max_dem_height(dem: DEMLoader, a: Tuple[float, float], b: Tuple[float, float],
+                   horizontal_m: float) -> float:
+    samples = max(2, int(np.ceil(horizontal_m / 30.0)) + 1)
+    heights = []
+    for t in np.linspace(0.0, 1.0, samples):
+        h = dem.get_height(a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1]))
+        if h is not None and np.isfinite(h):
+            heights.append(float(h))
+    if not heights:
+        raise ValueError(f"DEM does not cover segment {a} -> {b}")
+    return max(heights)
 
 
-def greedy_pack(items, max_weight, max_volume, max_energy, distance_km, uav_spec):
-    """贪婪装箱 - 尽可能多装"""
-    items = sorted(items, key=lambda x: x['priority'], reverse=True)
-
-    selected = []
-    total_weight = 0
-    total_volume = 0
-
-    for item in items:
-        new_weight = total_weight + item['weight']
-        new_volume = total_volume + item['volume']
-        test_energy = calculate_energy(distance_km, new_weight, uav_spec)
-
-        if (new_weight <= max_weight and
-            new_volume <= max_volume and
-            test_energy <= max_energy):
-            selected.append(item)
-            total_weight = new_weight
-            total_volume = new_volume
-
-    return selected
+def leg_energy(params: Dict, horizontal_m: float, start_alt: float,
+               end_alt: float) -> Tuple[float, float]:
+    """Return (kWh, seconds) using Appendix 2's three phases."""
+    delta = end_alt - start_alt
+    climb_s = max(delta, 0.0) / params["ascent_speed_ms"]
+    descend_s = max(-delta, 0.0) / params["descent_speed_ms"]
+    cruise_s = horizontal_m / params["cruise_speed_ms"]
+    p = params["cruise_power_kw"]
+    energy = (
+        p * cruise_s / 3600.0
+        + p * params["ascent_efficiency"] * climb_s / 3600.0
+        + p * params["descent_efficiency"] * descend_s / 3600.0
+    )
+    return energy, climb_s + cruise_s + descend_s
 
 
-def main():
-    print("\n" + "="*80)
-    print("问题一终极优化版 - 严格18架次")
-    print("="*80)
+def direct_mission(area: Dict, depot: Dict, params: Dict, cargo: List[Dict],
+                   dem: DEMLoader) -> Dict:
+    depot_xy = (depot["longitude"], depot["latitude"])
+    area_xy = (area["longitude"], area["latitude"])
+    horizontal_m = haversine_m(depot_xy, area_xy)
+    ground_max = max_dem_height(dem, depot_xy, area_xy, horizontal_m)
+    cruise_alt = ground_max + 50.0
+    depot_work = depot["altitude"]
+    area_work = area["altitude"] + 30.0
+    payload = sum(float(x[WEIGHT]) for x in cargo)
 
-    # 加载数据
-    print("\n[步骤1] 加载数据...")
-    data_dir = Path("数据/无人机应急物资运输基础数据")
-    loader = DataLoader(data_dir)
-    loader.load_all()
-
-    depot = loader.get_depot()
-    service_areas = loader.get_service_areas()
-    uav_types = loader.get_uav_types()
-    cargos = loader.get_cargos()
-
-    print(f"  服务区: {len(service_areas)}个")
-    print(f"  货物: {len(cargos)}个")
-
-    # 获取C型机规格（最大载荷）
-    c_spec = uav_types[uav_types['type'] == 'C'].iloc[0]
-    b_spec = uav_types[uav_types['type'] == 'B'].iloc[0]
-
-    print(f"\n机型规格:")
-    print(f"  C型: 载重{c_spec['max_load_kg']}kg, 体积{c_spec['max_volume_m3']}m3, "
-          f"电池{c_spec['battery_capacity_kwh']}kWh")
-    print(f"  B型: 载重{b_spec['max_load_kg']}kg, 体积{b_spec['max_volume_m3']}m3, "
-          f"电池{b_spec['battery_capacity_kwh']}kWh")
-
-    # 按服务区分组
-    print("\n[步骤2] 按服务区分组...")
-    cargos_by_area = {}
-    for _, cargo in cargos.iterrows():
-        area_id = cargo['服务区编号']
-        if area_id not in cargos_by_area:
-            cargos_by_area[area_id] = []
-        cargos_by_area[area_id].append({
-            'id': cargo['货箱编号'],
-            'weight': cargo['单箱质量（kg）'],
-            'volume': cargo['单箱体积（m³）'],
-            'priority': cargo['应急优先系数']
-        })
-
-    depot_coord = (depot['longitude'], depot['latitude'])
-
-    # 优先使用C型机，每个服务区尽量1架次
-    print("\n[步骤3] 优化组批（目标18架次）...")
-    missions = []
-
-    for area_id in sorted(cargos_by_area.keys()):
-        area = service_areas[service_areas['id'] == area_id].iloc[0]
-        area_coord = (area['longitude'], area['latitude'])
-        distance = calculate_distance(depot_coord, area_coord)
-
-        area_cargos = cargos_by_area[area_id].copy()
-        num_cargos = len(area_cargos)
-
-        print(f"\n  服务区 {area_id} ({num_cargos}箱, {distance:.1f}km)")
-
-        trip = 0
-        while len(area_cargos) > 0:
-            trip += 1
-
-            # 优先用C型（大载荷）
-            uav = c_spec
-            uav_type = 'C'
-
-            max_weight = uav['max_load_kg']
-            max_volume = uav['max_volume_m3']
-            battery = uav['battery_capacity_kwh']
-            reserve = uav['battery_reserve_pct']
-            max_energy = battery * (1 - reserve)
-
-            # 贪婪装箱
-            selected = greedy_pack(
-                area_cargos, max_weight, max_volume,
-                max_energy, distance, uav
-            )
-
-            # 如果C型装不下，尝试B型
-            if len(selected) == 0:
-                uav = b_spec
-                uav_type = 'B'
-                max_weight = uav['max_load_kg']
-                max_volume = uav['max_volume_m3']
-                max_energy = uav['battery_capacity_kwh'] * (1 - uav['battery_reserve_pct'])
-
-                selected = greedy_pack(
-                    area_cargos, max_weight, max_volume,
-                    max_energy, distance, uav
-                )
-
-            if len(selected) == 0:
-                print(f"    警告: 剩余{len(area_cargos)}箱无法配送")
-                break
-
-            total_weight = sum(c['weight'] for c in selected)
-            total_volume = sum(c['volume'] for c in selected)
-            actual_energy = calculate_energy(distance, total_weight, uav)
-            time_min = (distance * 2 * 1000) / uav['cruise_speed_ms'] / 60
-
-            missions.append({
-                'area_id': area_id,
-                'area_name': area['name'],
-                'uav_type': uav_type,
-                'num_cargos': len(selected),
-                'cargo_ids': [c['id'] for c in selected],
-                'total_weight': total_weight,
-                'total_volume': total_volume,
-                'total_priority': sum(c['priority'] for c in selected),
-                'total_energy': actual_energy,
-                'flight_time': time_min,
-                'distance': distance
-            })
-
-            print(f"    架次{trip}: {uav_type}型装载{len(selected)}箱 "
-                  f"({total_weight:.1f}kg, {total_volume:.3f}m3, {actual_energy:.2f}kWh)")
-
-            # 移除已选择的货物
-            selected_ids = set(c['id'] for c in selected)
-            area_cargos = [c for c in area_cargos if c['id'] not in selected_ids]
-
-    # 汇总结果
-    print("\n" + "="*80)
-    print("优化结果")
-    print("="*80)
-
-    total_trips = len(missions)
-    total_cargos = sum(m['num_cargos'] for m in missions)
-    total_energy = sum(m['total_energy'] for m in missions)
-
-    print(f"\n总架次: {total_trips}")
-    print(f"配送货箱: {total_cargos}/80")
-    print(f"总能耗: {total_energy:.2f} kWh")
-
-    # 机型统计
-    print("\n机型使用:")
-    for uav_type in ['B', 'C']:
-        type_missions = [m for m in missions if m['uav_type'] == uav_type]
-        if len(type_missions) > 0:
-            print(f"  {uav_type}型: {len(type_missions)}架次, "
-                  f"{sum(m['num_cargos'] for m in type_missions)}箱, "
-                  f"{sum(m['total_energy'] for m in type_missions):.2f}kWh")
-
-    # 评估
-    print("\n" + "="*80)
-    print("目标评估")
-    print("="*80)
-
-    if total_trips <= 18:
-        print(f"[SUCCESS] 达成18架次目标! (实际: {total_trips}架次)")
-    else:
-        print(f"[FAIL] 超过18架次目标 (实际: {total_trips}架次, 超出: {total_trips-18})")
-
-    if total_cargos == 80:
-        print(f"[SUCCESS] 全部80个货箱配送完成!")
-    else:
-        print(f"[FAIL] 货箱配送不完整 ({total_cargos}/80)")
-
-    # 保存结果
-    print("\n[步骤4] 保存结果...")
-    result_data = []
-    for i, m in enumerate(missions, 1):
-        result_data.append({
-            '架次': i,
-            '服务区ID': m['area_id'],
-            '服务区名称': m['area_name'],
-            '机型': m['uav_type'],
-            '货箱数': m['num_cargos'],
-            '货箱ID': ','.join(m['cargo_ids']),
-            '总重量(kg)': round(m['total_weight'], 2),
-            '总体积(m³)': round(m['total_volume'], 4),
-            '总价值': m['total_priority'],
-            '能耗(kWh)': round(m['total_energy'], 2),
-            '飞行时间(分钟)': round(m['flight_time'], 2),
-            '距离(km)': round(m['distance'], 2)
-        })
-
-    result_df = pd.DataFrame(result_data)
-
-    output_dir = Path("结果")
-    output_file = output_dir / "问题一_18架次方案.xlsx"
-    result_df.to_excel(output_file, index=False)
-    print(f"  结果已保存: {output_file}")
-
-    # 服务区汇总
-    area_summary = []
-    for area_id in sorted(cargos_by_area.keys()):
-        area_missions = [m for m in missions if m['area_id'] == area_id]
-        area_summary.append({
-            '服务区ID': area_id,
-            '服务区名称': area_missions[0]['area_name'],
-            '架次数': len(area_missions),
-            '货箱总数': sum(m['num_cargos'] for m in area_missions),
-            '总能耗(kWh)': round(sum(m['total_energy'] for m in area_missions), 2),
-            '距离(km)': round(area_missions[0]['distance'], 2)
-        })
-
-    summary_df = pd.DataFrame(area_summary)
-    summary_file = output_dir / "问题一_服务区汇总_18架次.xlsx"
-    summary_df.to_excel(summary_file, index=False)
-    print(f"  汇总已保存: {summary_file}")
-
-    print("\n" + "="*80)
-    print("求解完成!")
-    print("="*80)
-
+    out1, t1 = leg_energy(params, 0.0, depot_work, cruise_alt)
+    out2, t2 = leg_energy(params, horizontal_m, cruise_alt, cruise_alt)
+    out3, t3 = leg_energy(params, 0.0, cruise_alt, area_work)
+    ret1, t4 = leg_energy(params, 0.0, area_work, cruise_alt)
+    ret2, t5 = leg_energy(params, horizontal_m, cruise_alt, cruise_alt)
+    ret3, t6 = leg_energy(params, 0.0, cruise_alt, depot_work)
+    # Horizontal cruise energy follows the official empty/full-load
+    # equivalent-range interpolation; the return leg is empty after delivery.
+    model = EnergyModel(params)
+    usable = params["battery_capacity_kwh"] * (1.0 - params["battery_reserve_pct"])
+    out_cruise = horizontal_m / model.equivalent_range_m(payload) * usable
+    ret_cruise = horizontal_m / model.equivalent_range_m(0.0) * usable
+    energy = out1 + out_cruise + out3 + ret1 + ret_cruise + ret3
+    flight_s = t1 + t2 + t3 + t4 + t5 + t6
+    operation_s = (params["prep_time_s"] + params["load_time_per_box_s"] * len(cargo)
+                   + params["handoff_base_s"] + params["handoff_per_box_s"] * len(cargo))
+    usable = params["battery_capacity_kwh"] * (1.0 - params["battery_reserve_pct"])
+    range_limit = model.equivalent_range_m(payload)
     return {
-        'trips': total_trips,
-        'cargos': total_cargos,
-        'energy': total_energy
+        "energy_kwh": energy,
+        "flight_time_min": flight_s / 60.0,
+        "delivery_time_min": (operation_s + t1 + t2 + t3) / 60.0,
+        "operation_time_min": operation_s / 60.0,
+        "total_time_min": (flight_s + operation_s) / 60.0,
+        "payload_kg": payload,
+        "total_volume_m3": sum(float(x[VOLUME]) for x in cargo),
+        "horizontal_distance_km": horizontal_m / 1000.0,
+        "dem_max_ground_m": ground_max,
+        "cruise_altitude_m": cruise_alt,
+        "usable_energy_kwh": usable,
+        "energy_margin_kwh": usable - energy,
+        "equivalent_range_km": range_limit / 1000.0,
+        "range_margin_km": range_limit / 1000.0 - 2.0 * horizontal_m / 1000.0,
+        "feasible": energy <= usable + 1e-9 and 2.0 * horizontal_m <= range_limit + 1e-9,
     }
 
 
+def ffd(items: List[Dict], params: Dict, area: Dict, depot: Dict, dem: DEMLoader,
+        key: str) -> List[List[Dict]]:
+    ordered = sorted(items, key=lambda x: (x[key], x[WEIGHT], x[VOLUME]), reverse=True)
+    bins: List[List[Dict]] = []
+    for item in ordered:
+        placed = False
+        for bucket in bins:
+            trial = bucket + [item]
+            if sum(float(x[WEIGHT]) for x in trial) > params["max_load_kg"] + 1e-9:
+                continue
+            if sum(float(x[VOLUME]) for x in trial) > params["max_volume_m3"] + 1e-9:
+                continue
+            metrics = direct_mission(area, depot, params, trial, dem)
+            if metrics["feasible"]:
+                bucket.append(item)
+                placed = True
+                break
+        if not placed:
+            if not direct_mission(area, depot, params, [item], dem)["feasible"]:
+                raise ValueError(f"Single box {item[ID]} is infeasible for {params['type']}")
+            bins.append([item])
+    return bins
+
+
+def improve_bins(bins: List[List[Dict]], params: Dict, area: Dict, depot: Dict,
+                 dem: DEMLoader) -> List[List[Dict]]:
+    changed = True
+    while changed:
+        changed = False
+        for i in range(len(bins) - 1, -1, -1):
+            for item in list(bins[i]):
+                for j in range(i):
+                    trial = bins[j] + [item]
+                    if (sum(float(x[WEIGHT]) for x in trial) <= params["max_load_kg"] + 1e-9 and
+                            sum(float(x[VOLUME]) for x in trial) <= params["max_volume_m3"] + 1e-9 and
+                            direct_mission(area, depot, params, trial, dem)["feasible"]):
+                        bins[j].append(item)
+                        bins[i].remove(item)
+                        changed = True
+                        break
+                if changed:
+                    break
+            if changed:
+                if not bins[i]:
+                    bins.pop(i)
+                break
+    return bins
+
+
+def choose_type(bucket: List[Dict], area: Dict, depot: Dict,
+                types: Dict[str, Dict], dem: DEMLoader) -> Tuple[str, Dict]:
+    candidates = []
+    for typ, params in types.items():
+        if sum(float(x[WEIGHT]) for x in bucket) > params["max_load_kg"] + 1e-9:
+            continue
+        if sum(float(x[VOLUME]) for x in bucket) > params["max_volume_m3"] + 1e-9:
+            continue
+        m = direct_mission(area, depot, params, bucket, dem)
+        if m["feasible"]:
+            candidates.append((m["energy_kwh"], typ, m))
+    if not candidates:
+        raise ValueError("No feasible UAV type for a bucket")
+    _, typ, metrics = min(candidates)
+    return typ, metrics
+
+
+def main():
+    root = Path(__file__).parent
+    data_dir = root / "\u6570\u636e" / "\u65e0\u4eba\u673a\u5e94\u6025\u7269\u8d44\u8fd0\u8f93\u57fa\u7840\u6570\u636e"
+    dem_dir = root / "\u6570\u636e" / "\u9547\u9f99\u4e61\u5730\u7406\u7a7a\u95f4\u6570\u636e" / "\u9547\u9f99\u4e61\u53ca\u5468\u8fb9\u5730\u7406\u6570\u636e" / "\u6570\u5b57\u9ad8\u7a0b\u6a21\u578b\u6570\u636e\uff08DEM\uff09"
+    dem_path = next(dem_dir.glob("*.mat"))
+    loader = DataLoader(str(data_dir))
+    loader.load_all()
+    dem = DEMLoader(str(dem_path))
+    dem.load()
+    depot = loader.get_depot()
+    areas = {r["id"]: r for _, r in loader.get_service_areas().iterrows()}
+    cargo_df = loader.get_cargos().copy()
+    types = {r["type"]: r.to_dict() for _, r in loader.get_uav_types().iterrows()}
+    c_params = types["C"]
+
+    strategies = [WEIGHT, VOLUME, PRIORITY]
+    all_bins = {}
+    for area_id, group in cargo_df.groupby(AREA, sort=True):
+        items = group.to_dict("records")
+        best = None
+        for key in strategies:
+            bins = ffd(items, c_params, areas[area_id], depot, dem, key)
+            bins = improve_bins(bins, c_params, areas[area_id], depot, dem)
+            score = (len(bins), sum(direct_mission(areas[area_id], depot, c_params, b, dem)["energy_kwh"] for b in bins))
+            if best is None or score < best[0]:
+                best = (score, bins)
+        all_bins[area_id] = best[1]
+
+    records = []
+    validation = []
+    trip_id = 1
+    for area_id, bins in all_bins.items():
+        area = areas[area_id]
+        for bucket in bins:
+            typ, metrics = choose_type(bucket, area, depot, types, dem)
+            ids = [x[ID] for x in bucket]
+            records.append({
+                "trip_id": trip_id, "area_id": area_id, "uav_type": typ,
+                "cargo_count": len(ids), "cargo_ids": ",".join(ids),
+                "total_weight_kg": metrics["payload_kg"],
+                "total_volume_m3": metrics["total_volume_m3"],
+                "energy_kwh": metrics["energy_kwh"],
+                "flight_time_min": metrics["flight_time_min"],
+                "delivery_time_min": metrics["delivery_time_min"],
+                "operation_time_min": metrics["operation_time_min"],
+                "total_time_min": metrics["total_time_min"],
+                "dem_max_ground_m": metrics["dem_max_ground_m"],
+                "cruise_altitude_m": metrics["cruise_altitude_m"],
+                "usable_energy_kwh": metrics["usable_energy_kwh"],
+                "energy_margin_kwh": metrics["energy_margin_kwh"],
+                "equivalent_range_km": metrics["equivalent_range_km"],
+                "range_margin_km": metrics["range_margin_km"],
+                "feasible": metrics["feasible"],
+            })
+            validation.extend({"cargo_id": x[ID], "trip_id": trip_id, "area_id": area_id, "uav_type": typ} for x in bucket)
+            trip_id += 1
+
+    result = pd.DataFrame(records)
+    cargo_check = pd.DataFrame(validation)
+    output_dir = root / "\u7ed3\u679c"
+    output_dir.mkdir(exist_ok=True)
+    output_file = output_dir / "\u95ee\u9898\u4e00_18\u67b6\u6b21\u65b9\u6848_\u4fee\u590d\u7248.xlsx"
+    meta = pd.DataFrame({"key": ["target_trips", "actual_trips", "cargo_count", "unique_cargo_count", "all_feasible"],
+                         "value": [18, len(result), len(cargo_check), cargo_check["cargo_id"].nunique(), bool(result["feasible"].all())]})
+    with pd.ExcelWriter(output_file, engine="openpyxl") as writer:
+        result.to_excel(writer, sheet_name="\u67b6\u6b21\u65b9\u6848", index=False)
+        cargo_check.to_excel(writer, sheet_name="\u8d27\u7bb1\u6838\u9a8c", index=False)
+        meta.to_excel(writer, sheet_name="\u6821\u9a8c", index=False)
+    print(json.dumps({"output": str(output_file), "trips": len(result), "cargo_count": len(cargo_check),
+                      "unique_cargo_count": int(cargo_check["cargo_id"].nunique()),
+                      "all_feasible": bool(result["feasible"].all()),
+                      "energy_kwh": float(result["energy_kwh"].sum())}, ensure_ascii=True))
+
+
 if __name__ == "__main__":
-    result = main()
+    main()

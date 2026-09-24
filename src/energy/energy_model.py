@@ -50,6 +50,7 @@ class EnergyModel:
         Returns:
             包含能耗详情的字典
         """
+        payload_kg = max(0.0, float(payload_kg))
         # 1. 爬升/下降距离
         altitude_diff = altitude_end_m - altitude_start_m
 
@@ -79,7 +80,12 @@ class EnergyModel:
 
         # 4. 水平巡航阶段
         cruise_time_h = horizontal_distance_m / (self.uav_params['cruise_speed_ms'] * 3600)
-        cruise_energy_kwh = self.uav_params['cruise_power_kw'] * cruise_time_h
+        # Appendix 2 supplies empty/full-load equivalent ranges. Use linear
+        # interpolation by current payload so payload is not silently ignored.
+        usable_capacity = self.uav_params['battery_capacity_kwh'] * (1.0 - self.uav_params['battery_reserve_pct'])
+        equivalent_range_m = self.equivalent_range_m(payload_kg)
+        cruise_energy_kwh = (horizontal_distance_m / equivalent_range_m * usable_capacity
+                             if equivalent_range_m > 0 else float('inf'))
 
         # 5. 起飞和降落能耗 (按巡航功率的一定比例估算)
         takeoff_energy_kwh = (
@@ -120,8 +126,19 @@ class EnergyModel:
             'landing_energy_kwh': landing_energy_kwh,
             'ascent_time_h': ascent_time_h,
             'descent_time_h': descent_time_h,
-            'cruise_time_h': cruise_time_h
+            'cruise_time_h': cruise_time_h,
+            'payload_kg': payload_kg,
         }
+
+    def equivalent_range_m(self, payload_kg: float) -> float:
+        """Interpolate the supplied empty/full-load range data."""
+        empty = self.uav_params.get('empty_range_km', self.uav_params.get('max_range_km', 0.0)) * 1000.0
+        full = self.uav_params.get('full_range_km', empty / 1000.0) * 1000.0
+        max_payload = float(self.uav_params.get('max_load_kg', 0.0))
+        if max_payload <= 0:
+            return empty
+        ratio = min(1.0, max(0.0, float(payload_kg) / max_payload))
+        return empty + (full - empty) * ratio
 
     def calculate_round_trip_energy(
         self,
@@ -162,6 +179,8 @@ class EnergyModel:
         total_energy = outbound['total_energy_kwh'] + inbound['total_energy_kwh']
         total_time = outbound['total_time_h'] + inbound['total_time_h']
 
+        outbound_range_ok = 2.0 * horizontal_distance_m <= self.equivalent_range_m(payload_kg)
+        inbound_range_ok = 2.0 * horizontal_distance_m <= self.equivalent_range_m(0.0)
         return {
             'total_energy_kwh': total_energy,
             'total_time_h': total_time,
@@ -169,7 +188,11 @@ class EnergyModel:
             'outbound': outbound,
             'inbound': inbound,
             'battery_soc_used': total_energy / self.uav_params['battery_capacity_kwh'],
-            'is_feasible': self.check_energy_feasibility(total_energy)
+            'is_feasible': self.check_energy_feasibility(total_energy) and outbound_range_ok and inbound_range_ok,
+            'outbound_range_m': self.equivalent_range_m(payload_kg),
+            'inbound_range_m': self.equivalent_range_m(0.0),
+            'outbound_range_feasible': outbound_range_ok,
+            'inbound_range_feasible': inbound_range_ok,
         }
 
     def check_energy_feasibility(self, energy_required_kwh: float) -> bool:
@@ -183,7 +206,9 @@ class EnergyModel:
             是否可行
         """
         battery_capacity = self.uav_params['battery_capacity_kwh']
-        reserve_pct = self.uav_params['battery_reserve_pct'] / 100.0
+        reserve_pct = float(self.uav_params['battery_reserve_pct'])
+        if reserve_pct > 1.0:
+            reserve_pct /= 100.0
         usable_capacity = battery_capacity * (1 - reserve_pct)
 
         return energy_required_kwh <= usable_capacity
@@ -200,7 +225,9 @@ class EnergyModel:
             最大航程 (m)
         """
         battery_capacity = self.uav_params['battery_capacity_kwh']
-        reserve_pct = self.uav_params['battery_reserve_pct'] / 100.0
+        reserve_pct = float(self.uav_params['battery_reserve_pct'])
+        if reserve_pct > 1.0:
+            reserve_pct /= 100.0
         usable_capacity = battery_capacity * (1 - reserve_pct)
 
         # 简化模型: 假设能耗主要来自水平巡航
