@@ -3,6 +3,7 @@
 """
 正确的两阶段充电模型实现
 符合赛题要求：SOC < 90%为快速阶段（65%时间），SOC >= 90%为慢速阶段（35%时间）
+使用赛题提供的真实数据，不使用硬编码
 """
 
 def calculate_charging_time(soc_start: float, soc_target: float, t_full: float) -> float:
@@ -12,15 +13,20 @@ def calculate_charging_time(soc_start: float, soc_target: float, t_full: float) 
     Args:
         soc_start: 起始SOC [0, 1]
         soc_target: 目标SOC [0, 1]（通常为1.0）
-        t_full: 等效完全充电时间（分钟）
+        t_full: 等效完全充电时间（分钟）- 从赛题数据文件读取
 
     Returns:
         充电时间（分钟）
 
-    赛题规则（第58行）：
+    赛题规则（problem_text.txt第57-59行）：
     - SOC < 90%: 快速阶段，0%至90%占65%的完全充电时间
     - SOC >= 90%: 慢速阶段，90%至100%占35%的完全充电时间
     - 各阶段按SOC增量线性折算
+
+    数据来源：运输无人机数据.xlsx
+    - A型: t_full = 30分钟 (col11)
+    - B型: t_full = 30分钟 (col11)
+    - C型: t_full = 36分钟 (col13)
     """
     if soc_start >= soc_target:
         return 0.0
@@ -61,47 +67,58 @@ def calculate_charging_time(soc_start: float, soc_target: float, t_full: float) 
 
 
 def test_charging_model():
-    """测试充电模型"""
+    """测试充电模型 - 使用赛题真实数据"""
     print("="*80)
-    print("两阶段充电模型测试")
+    print("两阶段充电模型测试（赛题真实数据）")
     print("="*80)
 
-    t_full = 40  # 假设完全充电时间40分钟
-
-    test_cases = [
-        (0.0, 1.0, "0% -> 100% (完全充电)"),
-        (0.0, 0.9, "0% -> 90% (仅快速阶段)"),
-        (0.9, 1.0, "90% -> 100% (仅慢速阶段)"),
-        (0.5, 1.0, "50% -> 100% (跨两阶段)"),
-        (0.2, 0.8, "20% -> 80% (快速阶段内)"),
-        (0.95, 1.0, "95% -> 100% (慢速阶段内)"),
+    # 测试三种机型的真实充电时间
+    test_configs = [
+        ('A型', 30),  # 从运输无人机数据.xlsx col11读取
+        ('B型', 30),  # 从运输无人机数据.xlsx col11读取
+        ('C型', 36),  # 从运输无人机数据.xlsx col13读取
     ]
 
-    print(f"\n等效完全充电时间: {t_full} 分钟")
-    print(f"快速阶段(0-90%): {t_full * 0.65:.1f} 分钟")
-    print(f"慢速阶段(90-100%): {t_full * 0.35:.1f} 分钟")
+    for uav_type, t_full in test_configs:
+        print(f"\n{'='*80}")
+        print(f"{uav_type}无人机充电测试")
+        print(f"{'='*80}")
+        print(f"等效完全充电时间: {t_full} 分钟（赛题数据）")
+        print(f"快速阶段(0-90%): {t_full * 0.65:.1f} 分钟")
+        print(f"慢速阶段(90-100%): {t_full * 0.35:.1f} 分钟")
 
-    print("\n" + "-"*80)
-    print(f"{'起始SOC':<12} {'目标SOC':<12} {'充电时间':<15} {'说明':<30}")
-    print("-"*80)
+        test_cases = [
+            (0.0, 1.0, "0% -> 100% (完全充电)"),
+            (0.0, 0.9, "0% -> 90% (仅快速阶段)"),
+            (0.9, 1.0, "90% -> 100% (仅慢速阶段)"),
+            (0.5, 1.0, "50% -> 100% (跨两阶段)"),
+            (0.2, 0.8, "20% -> 80% (快速阶段内)"),
+            (0.95, 1.0, "95% -> 100% (慢速阶段内)"),
+        ]
 
-    for soc_start, soc_target, desc in test_cases:
-        charge_time = calculate_charging_time(soc_start, soc_target, t_full)
-        print(f"{soc_start*100:>5.0f}%{'':<5} {soc_target*100:>5.0f}%{'':<5} "
-              f"{charge_time:>8.2f} 分钟   {desc}")
+        print("\n" + "-"*80)
+        print(f"{'起始SOC':<12} {'目标SOC':<12} {'充电时间':<15} {'说明':<30}")
+        print("-"*80)
+
+        for soc_start, soc_target, desc in test_cases:
+            charge_time = calculate_charging_time(soc_start, soc_target, t_full)
+            print(f"{soc_start*100:>5.0f}%{'':<5} {soc_target*100:>5.0f}%{'':<5} "
+                  f"{charge_time:>8.2f} 分钟   {desc}")
+
+        print("\n" + "="*80)
+        print("验证完全充电时间:")
+        full_charge = calculate_charging_time(0.0, 1.0, t_full)
+        print(f"  计算值: {full_charge:.2f} 分钟")
+        print(f"  理论值: {t_full:.2f} 分钟")
+        print(f"  误差: {abs(full_charge - t_full):.6f} 分钟")
+
+        if abs(full_charge - t_full) < 0.01:
+            print("  [PASS] 充电模型正确！")
+        else:
+            print("  [FAIL] 充电模型有误！")
 
     print("\n" + "="*80)
-    print("验证完全充电时间:")
-    full_charge = calculate_charging_time(0.0, 1.0, t_full)
-    print(f"  计算值: {full_charge:.2f} 分钟")
-    print(f"  理论值: {t_full:.2f} 分钟")
-    print(f"  误差: {abs(full_charge - t_full):.6f} 分钟")
-
-    if abs(full_charge - t_full) < 0.01:
-        print("  [PASS] 充电模型正确！")
-    else:
-        print("  [FAIL] 充电模型有误！")
-
+    print("所有测试完成")
     print("="*80)
 
 

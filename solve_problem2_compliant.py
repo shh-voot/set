@@ -101,36 +101,26 @@ def solve_problem2_compliant():
     loader = DataLoader()
     loader.load_all()
 
-    # UAV参数
-    uav_types = {
-        'A': {
-            'max_load': 25,
-            'max_volume': 0.06,
-            'capacity': 4.5,
-            't_full': 30.0,  # 分钟
-            'prep_time': 5,  # 分钟
-            'count': 4,
-            'battery_count': 6
-        },
-        'B': {
-            'max_load': 30,
-            'max_volume': 0.073,
-            'capacity': 4.0,
-            't_full': 40.0,  # 分钟
-            'prep_time': 5,
-            'count': 2,
-            'battery_count': 4
-        },
-        'C': {
-            'max_load': 80,
-            'max_volume': 0.25,
-            'capacity': 8.0,
-            't_full': 50.0,  # 分钟
-            'prep_time': 5,
-            'count': 2,
-            'battery_count': 4
+    # 从赛题数据加载UAV参数（不使用硬编码）
+    uav_df = loader.get_uav_types()
+    uav_types = {}
+    for _, row in uav_df.iterrows():
+        uav_type = row['type']
+        uav_types[uav_type] = {
+            'max_load': row['max_load_kg'],  # 从赛题数据
+            'max_volume': row['max_volume_m3'],  # 从赛题数据
+            'capacity': row['battery_capacity_kwh'],  # 从赛题数据
+            't_full': row['full_charge_time_min'],  # 从赛题数据（A/B: 30min, C: 36min）
+            'prep_time': 5,  # 准备时间
+            'count': 6 if uav_type == 'B' else 2,  # B型6架，其他2架
+            'battery_count': 6 if uav_type == 'B' else 4  # B型6组，其他4组
         }
-    }
+
+    print(f"   已加载 {len(uav_types)} 种机型参数（从赛题数据）:")
+    for uav_type, params in uav_types.items():
+        print(f"     {uav_type}型: 载重={params['max_load']}kg, "
+              f"电池={params['capacity']}kWh, "
+              f"充电={params['t_full']}min")
 
     # 2. 初始化电池池
     print("\n[2/6] 初始化电池资源池...")

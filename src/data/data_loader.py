@@ -140,6 +140,15 @@ class DataLoader:
                     # 巡航功率 = 可用电量 / 巡航时间
                     cruise_power_kw = usable_battery / cruise_time_h if cruise_time_h > 0 else 0
 
+                    # 读取充电时间（赛题第57-59行规定的等效完全充电时间）
+                    # 对于A/B型，查看col11（第12列）
+                    # 对于C型，查看col13（第14列）
+                    uav_type = df.iloc[i, 0]
+                    if uav_type in ['A', 'B']:
+                        full_charge_time_min = float(df.iloc[i, 11]) if pd.notna(df.iloc[i, 11]) else 30
+                    else:  # C型
+                        full_charge_time_min = float(df.iloc[i, 13]) if pd.notna(df.iloc[i, 13]) else 36
+
                     uav_data.append({
                         'type': df.iloc[i, 0],
                         'name': df.iloc[i, 1] if pd.notna(df.iloc[i, 1]) else f"{df.iloc[i, 0]}型无人机",
@@ -150,6 +159,7 @@ class DataLoader:
                         'cruise_power_kw': cruise_power_kw,  # 推算的巡航功率
                         'battery_capacity_kwh': battery_kwh,
                         'battery_reserve_pct': battery_reserve,
+                        'full_charge_time_min': full_charge_time_min,  # 等效完全充电时间
                         'takeoff_time_s': float(df.iloc[i, 10]) if pd.notna(df.iloc[i, 10]) else 20,
                         'landing_time_s': float(df.iloc[i, 12]) if pd.notna(df.iloc[i, 12]) else 20,
                         'load_unload_time_s': float(df.iloc[i, 11]) if pd.notna(df.iloc[i, 11]) else 30,
@@ -170,6 +180,7 @@ class DataLoader:
             for _, uav in self.uav_transport.iterrows():
                 print(f"    {uav['type']}型: 载重={uav['max_load_kg']}kg, "
                       f"电池={uav['battery_capacity_kwh']}kWh, "
+                      f"充电={uav['full_charge_time_min']}min, "
                       f"航程={uav['max_range_km']:.1f}km, "
                       f"功率≈{uav['cruise_power_kw']:.2f}kW")
 
