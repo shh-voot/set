@@ -22,9 +22,9 @@
           "charger_count": 2
         }
       },
-      "relay_ids": "R02",
-      "relay_count": 1,
-      "relay_energy_components": 2
+      "relay_ids": "",
+      "relay_count": 0,
+      "relay_energy_components": 0
     },
     {
       "group": "G2",
@@ -33,16 +33,16 @@
         "S003",
         "S004",
         "S005",
-        "S006",
         "S007",
         "S008",
         "S009",
         "S010",
-        "S011",
         "S012",
         "S013",
         "S014",
-        "S015"
+        "S015",
+        "S006",
+        "S011"
       ],
       "resources": {
         "A": {
@@ -61,9 +61,9 @@
           "charger_count": 3
         }
       },
-      "relay_ids": "R01",
-      "relay_count": 1,
-      "relay_energy_components": 2
+      "relay_ids": "R01,R02",
+      "relay_count": 2,
+      "relay_energy_components": 4
     }
   ],
   "totals": {

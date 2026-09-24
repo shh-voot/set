@@ -22,58 +22,31 @@
           "charger_count": 2
         }
       },
-      "relay_ids": "R02",
-      "relay_count": 1,
-      "relay_energy_components": 2
+      "relay_ids": "",
+      "relay_count": 0,
+      "relay_energy_components": 0
     },
     {
       "group": "G2",
       "areas": [
         "S002",
-        "S005",
-        "S006",
-        "S009",
-        "S011",
-        "S014"
-      ],
-      "resources": {
-        "A": {
-          "uav_count": 4,
-          "battery_count": 5,
-          "charger_count": 4
-        },
-        "B": {
-          "uav_count": 2,
-          "battery_count": 2,
-          "charger_count": 2
-        },
-        "C": {
-          "uav_count": 2,
-          "battery_count": 2,
-          "charger_count": 2
-        }
-      },
-      "relay_ids": "R01",
-      "relay_count": 1,
-      "relay_energy_components": 2
-    },
-    {
-      "group": "G3",
-      "areas": [
         "S003",
         "S004",
+        "S005",
         "S007",
         "S008",
+        "S009",
         "S010",
         "S012",
         "S013",
+        "S014",
         "S015"
       ],
       "resources": {
         "A": {
-          "uav_count": 3,
-          "battery_count": 4,
-          "charger_count": 3
+          "uav_count": 4,
+          "battery_count": 6,
+          "charger_count": 4
         },
         "B": {
           "uav_count": 2,
@@ -83,7 +56,34 @@
         "C": {
           "uav_count": 2,
           "battery_count": 3,
+          "charger_count": 3
+        }
+      },
+      "relay_ids": "R01,R02",
+      "relay_count": 2,
+      "relay_energy_components": 4
+    },
+    {
+      "group": "G3",
+      "areas": [
+        "S006",
+        "S011"
+      ],
+      "resources": {
+        "A": {
+          "uav_count": 1,
+          "battery_count": 1,
+          "charger_count": 1
+        },
+        "B": {
+          "uav_count": 2,
+          "battery_count": 2,
           "charger_count": 2
+        },
+        "C": {
+          "uav_count": 1,
+          "battery_count": 1,
+          "charger_count": 1
         }
       },
       "relay_ids": "",
@@ -92,14 +92,14 @@
     }
   ],
   "totals": {
-    "A_uav": 7.0,
-    "A_battery": 9.0,
-    "A_charger": 7.0,
+    "A_uav": 5.0,
+    "A_battery": 7.0,
+    "A_charger": 5.0,
     "B_uav": 4.0,
     "B_battery": 6.0,
     "B_charger": 5.0,
-    "C_uav": 6.0,
-    "C_battery": 7.0,
+    "C_uav": 5.0,
+    "C_battery": 6.0,
     "C_charger": 6.0,
     "relay_uav": 2.0,
     "relay_energy_components": 4.0
@@ -115,12 +115,12 @@
     "relay_energy_components": 6
   },
   "gap": {
-    "A_uav": 3.0,
+    "A_uav": 1.0,
     "B_uav": 2.0,
-    "C_uav": 4.0,
-    "A_battery": 3.0,
+    "C_uav": 3.0,
+    "A_battery": 1.0,
     "B_battery": 2.0,
-    "C_battery": 3.0,
+    "C_battery": 2.0,
     "relay_uav": 0,
     "relay_energy_components": 0
   }
