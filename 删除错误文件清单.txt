@@ -1,0 +1,22 @@
+# 错误的问题二文件（使用5分钟换电假设）
+结果/问题二_完整优化方案.xlsx - ❌ 69.79分钟，违反赛题规则
+结果/问题二_调度方案.xlsx - ❌ 早期版本
+solve_problem2.py - ❌ 早期版本
+solve_problem2_complete.py - ❌ 使用5分钟换电
+solve_problem2_optimized.py - ❌ 使用5分钟换电  
+solve_problem2_quick_test.py - ❌ 简化测试版
+solve_problem2_simple.py - ❌ 简化版本
+
+# 错误的问题四文件（硬编码数据）
+solve_problem4.py - ❌ 硬编码B型40分钟、C型50分钟、容量5.0kWh
+结果/问题四_2批次划分.xlsx - ❌ 旧版本
+结果/问题四_2批次资源需求.xlsx - ❌ 旧版本
+结果/问题四_3批次划分.xlsx - ❌ 旧版本
+结果/问题四_3批次资源需求.xlsx - ❌ 旧版本
+
+# 保留的正确文件
+solve_problem2_compliant.py - ✅ 符合赛题规则版
+结果/问题二_符合赛题规则方案.xlsx - ✅ 126.39分钟，真实充电模型
+solve_problem4_fixed.py - ✅ 使用真实数据
+结果/问题四_2批次_修复版.xlsx - ✅ 真实数据
+结果/问题四_3批次_修复版.xlsx - ✅ 真实数据
