@@ -44,21 +44,21 @@ def load_problem3_solution():
     print("\n[步骤1] 读取问题三调度方案...")
 
     # 读取运输调度
-    transport_file = Path("结果/问题三_运输调度.xlsx")
+    transport_file = Path("结果/问题三_运输调度_新.xlsx")
     transport_df = pd.read_excel(transport_file)
 
     # 使用列索引而非列名（避免编码问题）
-    # 列索引：0=UAV_ID, 1=Type, 2=Area, 4=Cargos, 7=Energy, 10=Duration
+    # 新列结构（10列）：0=架次编号, 1=UAV_ID, 2=UAV_Type, 3=电池编号, 4=服务区, 5=货箱数量, 6=起飞时间, 7=降落时间, 8=飞行时长, 9=能耗
 
     transport_data = []
     for _, row in transport_df.iterrows():
         transport_data.append({
-            'uav_id': row.iloc[0],
-            'uav_type': row.iloc[1],
-            'area_id': row.iloc[2],
-            'num_cargos': row.iloc[4],
-            'energy': row.iloc[7],
-            'duration': row.iloc[10]
+            'uav_id': row.iloc[1],      # UAV编号
+            'uav_type': row.iloc[2],    # UAV类型
+            'area_id': row.iloc[4],     # 服务区
+            'num_cargos': row.iloc[5],  # 货箱数量
+            'energy': row.iloc[9],      # 能耗
+            'duration': row.iloc[8]     # 飞行时长
         })
 
     # 读取中继部署

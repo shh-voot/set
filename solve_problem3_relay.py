@@ -423,8 +423,8 @@ def main():
         print(f"  未覆盖服务区: {sorted(uncovered)}")
         print(f"\n  [需要多中继] 单中继覆盖率不足，自动增加中继数量...")
 
-        # 尝试多中继（最多5个）
-        for num_relays in range(2, 6):
+        # 尝试多中继（最多8个）
+        for num_relays in range(2, 9):
             print(f"\n[尝试] {num_relays}个中继方案:")
             relays, coverage, covered, details = optimize_relay_placement_grid_search(
                 depot_pos, service_area_positions,
@@ -481,7 +481,12 @@ def main():
     # 5. 保存结果
     print("\n[步骤5] 保存结果...")
 
-    # 中继部署方案（支持多中继）
+    # 5.1 保存运输调度方案（直接复用问题二的33架次数据）
+    output_transport = Path('结果/问题三_运输调度_新.xlsx')
+    df_problem2.to_excel(output_transport, index=False)
+    print(f"  运输调度已保存: {output_transport} ({len(df_problem2)}架次)")
+
+    # 5.2 中继部署方案（支持多中继）
     relay_data = []
     for idx, relay_pos in enumerate(relays):
         relay_energy_single, flight_energy_single, hover_energy_single, comm_energy_single = calculate_relay_energy(
@@ -510,7 +515,7 @@ def main():
     # 链路详情
     link_df = pd.DataFrame(details)
 
-    # 保存到Excel
+    # 5.3 保存中继部署方案到Excel
     output_file = Path('结果/问题三_中继部署方案_新.xlsx')
     with pd.ExcelWriter(output_file) as writer:
         relay_df.to_excel(writer, sheet_name='中继部署', index=False)
