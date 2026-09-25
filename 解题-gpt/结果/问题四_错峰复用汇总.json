@@ -1,0 +1,60 @@
+{
+  "staggered_2": {
+    "groups": 2,
+    "completion_min": 337.68695206775715,
+    "required": {
+      "A_uav": 4,
+      "B_uav": 2,
+      "C_uav": 2,
+      "A_battery": 6,
+      "B_battery": 4,
+      "C_battery": 3
+    },
+    "inventory": {
+      "A_uav": 4,
+      "B_uav": 2,
+      "C_uav": 2,
+      "A_battery": 6,
+      "B_battery": 4,
+      "C_battery": 4
+    },
+    "gap": {
+      "A_uav": 0,
+      "B_uav": 0,
+      "C_uav": 0,
+      "A_battery": 0,
+      "B_battery": 0,
+      "C_battery": 0
+    },
+    "feasible_official_inventory": true
+  },
+  "staggered_3": {
+    "groups": 3,
+    "completion_min": 513.2840661251915,
+    "required": {
+      "A_uav": 4,
+      "B_uav": 2,
+      "C_uav": 2,
+      "A_battery": 6,
+      "B_battery": 4,
+      "C_battery": 3
+    },
+    "inventory": {
+      "A_uav": 4,
+      "B_uav": 2,
+      "C_uav": 2,
+      "A_battery": 6,
+      "B_battery": 4,
+      "C_battery": 4
+    },
+    "gap": {
+      "A_uav": 0,
+      "B_uav": 0,
+      "C_uav": 0,
+      "A_battery": 0,
+      "B_battery": 0,
+      "C_battery": 0
+    },
+    "feasible_official_inventory": true
+  }
+}
