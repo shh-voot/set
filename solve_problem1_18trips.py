@@ -166,6 +166,55 @@ def improve_bins(bins: List[List[Dict]], params: Dict, area: Dict, depot: Dict,
     return bins
 
 
+def improve_time_order(bins: List[List[Dict]], params: Dict, area: Dict,
+                       depot: Dict, dem: DEMLoader) -> List[List[Dict]]:
+    """Repack feasible bins to reduce the longest direct-mission time.
+
+    This is a local post-processing pass: it never accepts a move that
+    changes the number of trips or violates the official physical checks.
+    """
+    if len(bins) < 2:
+        return bins
+    changed = True
+    while changed:
+        changed = False
+        current_max = max(direct_mission(area, depot, params, b, dem)["total_time_min"]
+                          for b in bins)
+        for i in range(len(bins)):
+            for j in range(i + 1, len(bins)):
+                for src, dst in ((i, j), (j, i)):
+                    for item in list(bins[src]):
+                        trial_src = [x for x in bins[src] if x is not item]
+                        trial_dst = bins[dst] + [item]
+                        if not trial_src:
+                            continue
+                        if sum(float(x[WEIGHT]) for x in trial_dst) > params["max_load_kg"] + 1e-9:
+                            continue
+                        if sum(float(x[VOLUME]) for x in trial_dst) > params["max_volume_m3"] + 1e-9:
+                            continue
+                        m_src = direct_mission(area, depot, params, trial_src, dem)
+                        m_dst = direct_mission(area, depot, params, trial_dst, dem)
+                        if not (m_src["feasible"] and m_dst["feasible"]):
+                            continue
+                        candidate_max = max(
+                            [candidate["total_time_min"] for k, candidate in enumerate(
+                                [direct_mission(area, depot, params, b, dem) for b in bins])
+                             if k not in (src, dst)] +
+                            [m_src["total_time_min"], m_dst["total_time_min"]]
+                        )
+                        if candidate_max + 1e-9 < current_max:
+                            bins[src], bins[dst] = trial_src, trial_dst
+                            changed = True
+                            break
+                    if changed:
+                        break
+                if changed:
+                    break
+            if changed:
+                break
+    return bins
+
+
 def choose_type(bucket: List[Dict], area: Dict, depot: Dict,
                 types: Dict[str, Dict], dem: DEMLoader) -> Tuple[str, Dict]:
     candidates = []
@@ -198,14 +247,22 @@ def main():
     types = {r["type"]: r.to_dict() for _, r in loader.get_uav_types().iterrows()}
     c_params = types["C"]
 
-    strategies = [WEIGHT, VOLUME, PRIORITY]
+    # Deadline and priority-based ordering can reduce the longest delivery
+    # time without changing official data or the number of feasible trips.
+    strategies = [WEIGHT, VOLUME, PRIORITY, "_deadline", "_priority_deadline"]
     all_bins = {}
     for area_id, group in cargo_df.groupby(AREA, sort=True):
         items = group.to_dict("records")
+        for item in items:
+            first = str(item.get("是否首批保障", "")).strip() == "是"
+            deadline = item.get("首批截止时间（s）") if first else item.get("期望送达时间（s）")
+            item["_deadline"] = -float(deadline) if pd.notna(deadline) else 0.0
+            item["_priority_deadline"] = (float(item.get(PRIORITY, 0.0)), item["_deadline"])
         best = None
         for key in strategies:
             bins = ffd(items, c_params, areas[area_id], depot, dem, key)
             bins = improve_bins(bins, c_params, areas[area_id], depot, dem)
+            bins = improve_time_order(bins, c_params, areas[area_id], depot, dem)
             score = (len(bins), sum(direct_mission(areas[area_id], depot, c_params, b, dem)["energy_kwh"] for b in bins))
             if best is None or score < best[0]:
                 best = (score, bins)
