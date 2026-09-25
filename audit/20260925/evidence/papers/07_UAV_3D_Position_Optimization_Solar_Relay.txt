@@ -1,0 +1,2106 @@
+--- PDF PAGE 1 ---
+1
+3-D Position Optimization of Solar-Powered
+Hovering UAV Relay in Optical Wireless Backhaul
+Heyou Liu, Muhammad Salman Bashir, Senior Member, IEEE, Mohamed-Slim Alouini, Fellow, IEEE
+Abstract—A major hurdle in widespread deployment of UAVs
+(unmanned aerial vehicle) in existing communications infrastruc-
+ture is the limited UAV onboard energy. Therefore, this study con-
+siders solar energy harvesting UAVs for wireless communications.
+In this context, we consider three dimensional position optimiza-
+tion of a solar-powered UAV relay that connects a distant sensor
+field to an optical ground station (OGS) for data processing.
+The integrated sensor-UAV-OGS network utilizes radio frequency
+band for sensor-to-UAV links and the optical band for the UAV-
+to-OGS feeder link. Since atmospheric conditions affect both the
+harvested solar energy as well as the optical wireless signal, this
+study tackles UAV position optimization problems under various
+channel conditions such as clouds, atmospheric turbulence and
+dirt. From this study, we discover that the optimum position of
+the UAV—that maximizes the end-to-end channel capacity—is
+heavily dependent on the atmospheric channel conditions.
+Index Terms—Channel capacity, cloud, optical wireless signal,
+position optimization, solar energy harvesting relay, unmanned
+aerial vehicle.
+I. Introduction
+Unmanned Aerial Vehicles (UAVs) are revolutionizing tra-
+ditional paradigms in contemporary wireless communication.
+Their unique ability to navigate difficult terrains and regions
+grants UAVs a substantial advantage in terms of deployment
+flexibility, cost efficiency, and adaptability over static relaying
+methods [1], [2]. This is particularly advantageous in areas
+without ground infrastructure or where ground terminals are
+separated by obstacles such as mountains or buildings as UAVs
+can essentially provide line-of-sight (LoS) connectivity and
+enhanced capacity [3], [4]. The mobility of UAVs is ideal for
+on-demand operations and can significantly improve communi-
+cation channels, primarily through the establishment of short-
+distance LoS links [5], [6]. Utilized as aerial base stations,
+UAVs are particularly beneficial in scenarios that demand im-
+mediate and adaptable wireless service, such as in temporary
+hotspots and emergency situations. The enhanced availability
+of LoS connections due to UAVs’ elevated positions, combined
+with their high maneuverability, allows for a fast and highly
+flexible deployment of communication infrastructure in time-
+sensitive or economically restrictive environments [7], [8].
+A. Problem Motivation
+Despite their extensive applications, the deployment of
+UAVs in communication systems encounters significant chal-
+H. Liu and M.-S. Alouini are with the CEMSE Division, King Ab-
+dullah University of Science and Technology (KAUST), Thuwal 23955-
+6900, Kingdom of Saudi Arabia. M. S. Bashir is with the School of
+Computing and Engineering, University of Huddersfield, Huddersfield HD1
+3DH United Kingdom. e-mail: (heyou.liu@kaust.edu.sa; m.bashir@hud.ac.uk;
+slim.alouini@kaust.edu.sa)
+lenges, predominantly related to onboard energy storage lim-
+itations. The UAVs’ endurance and performance are directly
+restricted by the finite energy reserves due to size and weight
+constraints of aerial platforms [9]–[11]. This necessitates a
+strategic focus on energy-efficient communications and ex-
+ploitation of energy harvesting techniques to maximize the
+operational time of the UAV. Two popular energy harvesting
+techniques for optical wireless based UAVs are i) simultaneous
+lightwave information and power transfer (SLIPT) in which
+the data carrying laser beam from the ground is also used
+to power the UAV [12]–[14] and ii) solar-powered UAVs that
+harvest sunlight energy to either partially or fully meet their
+power requirements [8], [15], [16].
+There are only a few studies that discuss the trajec-
+tory/position optimization of solar-powered UAVs to maximize
+some quality-of-service metric (such as channel capacity)
+in wireless communications. Specifically, articles [8], [17]
+thoroughly discuss the resource allocation and trajectory op-
+timization of a solar-powered UAV to maximize the sum
+rate in the multi-user and multi-sensor links, respectively.
+Both these studies consider RF channels to communicate with
+users/sensors. However, for serial RF/FSO links in which the
+UAV connects the multi-user (or multi-sensor) side to a optical
+ground station (OGS) through i) RF (user-to-UAV) links and
+ii) a feeder FSO (UAV-to-OGS) link, position optimization
+of a UAV relay incurs extra considerations which have not
+been addressed before to the best of our understanding. Firstly,
+for the two-dimensional UAV position optimization (for UAVs
+obtaining sufficient sunlight even at lower heights), the end-to-
+end rate is limited not only by the user-to-UAV RF link but also
+the UAV-to-OGS optical link. Secondly, for UAVs limited by
+solar energy, atmospheric effects—such as clouds and dirt—
+will play a major role not only in affecting the harvested
+solar energy but also the FSO laser signal connecting the
+UAV and the OGS. Thirdly, for the solar energy limited UAV,
+UAV position optimization incurs certain tradeoffs between
+maximizing harvested solar energy and the end-to-end rate
+of the serial RF/FSO link. All these considerations form
+the motivation of the current study which deals with the
+optimization of a solar-powered UAV relay position in an
+RF/FSO communication system.
+B. Background Literature Review
+Recent literature on energy efficient UAV-based wireless
+communication systems considers research efforts primarily
+focused on two interrelated objectives: energy resources op-
+timization and UAV placement (or UAV trajectory) strategies
+arXiv:2401.16601v1  [eess.SP]  29 Jan 2024
+
+--- PDF PAGE 2 ---
+2
+to enhance system performance. A core aspect involves the
+UAVs’ role as either aerial base stations, or relays, to enhance
+support for ground users [18]. Trajectory optimization emerges
+as a key question in the study [19] which optimizes UAV relay
+paths to maximize ground terminal throughput and improve
+static relaying methods. In [6], trajectory optimization also ac-
+counts for energy efficiency by considering propulsion energy
+consumption alongside communication throughput. Articles
+[2], [20] collectively examine joint optimization of transmis-
+sion power, bandwidth, and UAV positioning to improve the
+overall performance of UAV-assisted networks. The works
+[21], [22] discuss power consumption concerns which focus
+on minimizing uplink power for ground users and exploring
+energy-constrained operational strategies, respectively.
+Limited onboard energy has forced the UAV design in recent
+years to focus on an energy-efficient paradigm. To address
+the finite battery life, which is a critical limitation for UAVs,
+some studies such as [1], [2], [7], [23] have proposed com-
+prehensive energy consumption models that take into account
+various aspects and functions of UAVs. However, reliance
+on onboard batteries for UAV-based communication systems
+leads to limited operation times. The frequent need for these
+UAVs to return to base for recharging hinders the stability and
+sustainability of communication services, thus creating system
+performance bottlenecks. Although direct battery replacement
+or recharging is a straightforward approach to extend opera-
+tional life, it becomes impractical and labor-intensive when
+scaling up to a large number of UAVs or sensors [22]. Thus,
+seeking innovative methods to bolster the energy framework
+of UAVs to support extended and reliable operations continues
+to be a critical challenge in the design and deployment of UAV
+communication systems.
+To overcome the limitations of conventional battery systems
+due to finite on-board energy, the potential of solar-powered
+UAVs has been explored in recent literature. The authors in
+[15], [16] described the development of solar-powered UAV
+prototypes that leverage solar panels to efficiently convert
+solar energy into electrical power to enable extended flight
+duration. The authors in [24] introduce the idea and imple-
+mentation of solar-powered UAVs as base stations for 5G
+and beyond systems. The concept of solar-powered UAVs
+is further exemplified by prototypes that have successfully
+demonstrated long-endurance flights exceeding a full day [8],
+[11]. This technology has garnered interest for its implications
+in both military and civilian spheres, particularly for tasks
+requiring prolonged aerial presence such as reconnaissance
+and surveillance [25]. The advancement in solar cell materials
+technology, specifically the use of flexible and lightweight
+cells, is pivotal for the integration of solar energy into UAV
+systems. The authors in [26] explored solar cells materials
+characterized by their nanocrystalline structure, robust light
+absorption across a wide spectrum and suitability for deploy-
+ment on flexible substrates. These materials are pivotal for
+crafting ultra-lightweight and adaptable solar cells that can
+be seamlessly integrated into UAV designs to enhance their
+operational efficiency and expanding their utility in both aerial
+and terrestrial domains. Furthermore, the exploration of solar
+power extends beyond UAVs to other realms of transportation
+such as the six-seat transporter flight referenced in [27]. These
+innovations in solar cell materials and construction techniques
+have enhanced the practicality of solar-powered UAVs and
+broaden their application spectrum.
+This work is motivated by the idea that the efficacy of solar
+energy harvesting in UAV applications is closely intertwined
+with the UAV’s operational altitude, as discussed in [8], [25],
+[28]. Atmospheric transmittance, a critical determinant of the
+solar energy captured by UAV-mounted photovoltaic cells,
+diminishes at lower altitudes due to increased air density
+and potential obstructions such as clouds. This attenuation of
+solar irradiance at reduced altitudes consequently affects the
+solar energy flux available for conversion to electrical power.
+Conversely, as UAVs ascend to higher altitudes, they benefit
+from increased atmospheric transmittance, thereby enhancing
+the solar energy harvest. Yet, this advantage is not without its
+trade-offs. Elevated altitudes, while favorable for solar energy
+collection, concurrently escalate the path loss in air-to-ground
+communication links, presenting a trade-off that necessitates a
+balanced approach to optimize both solar energy harvesting
+and communications performance [8], [17]. Therefore, the
+design of UAV systems requires a careful consideration of
+these conflicting aspects to ensure an optimal balance between
+energy harvesting and communication quality. In addition,
+the authors in [7] and [18] investigated the strategic 3-D
+deployment of UAVs, targeting optimal user coverage and
+service area expansion, with the former focusing on maxi-
+mizing network revenue, and the latter on the deployment
+of UAVs as aerial base stations with directional antennas.
+Besides, the optimization of solar energy capture through
+intelligent path design is detailed in [29] which employs
+quaternion-based methods, whereas the work in [25] improves
+solar-powered UAV endurance by optimizing flight paths to
+exploit gravitational potential and attitude adjustments. The
+joint optimization of 3-D positioning trajectory and resource
+allocation is analyzed in studies [7], [30], to enhance system
+throughput and extend UAV flight endurance. Expanding on
+these endeavors, the authors in [31] and [32] presented energy-
+efficient trajectory schemes that merge solar energy harvest-
+ing with charging stations, thereby constructing a sustainable
+communication service framework for UAV-assisted networks.
+The comprehensive approach in [8] incorporates trajectory
+planning with resource allocation for multi-carrier systems
+to maximize operational efficiency over extended periods.
+Moreover, the authors in [33] developed a greedy algorithm
+augmented with a buffering mechanism to compute optimal
+flight trajectories that enables perpetual flight in solar-powered
+aircraft. In a similar vein, the work [34] presented a mission-
+oriented design approach for three-dimensional (3D) path plan-
+ning of solar-powered unmanned aerial vehicles. This approach
+strategically utilizes limited solar energy resources to optimize
+the effectiveness of the mission. The article [22] explored a
+solar-powered UAV that is tasked with data collection from
+Internet of Things Devices (IoTDs) and providing energy to
+them through laser. The main focus of this article is on
+maximizing the UAV’s residual energy by jointly optimiz-
+ing the IoTDs’ scheduling and the UAV’s three-dimensional
+trajectory. An innovative iterative algorithm—that integrates
+
+--- PDF PAGE 3 ---
+3
+block coordinate descent and successive convex optimiza-
+tion techniques—is recommended to efficiently address the
+simultaneous optimization of user scheduling and UAV path
+planning.
+Overall, these references underscore the critical goal of
+achieving optimal UAV performance through a focus on solar
+power utilization and 3-D positioning. Thus, it is essential to
+formulate an integrated optimization strategy that encapsulates
+both altitude-dependent solar energy harvesting and the end-
+to-end performance of communication system under different
+environment conditions. This strategy should account for the
+UAV’s flight trajectory or position, thereby ensuring optimal
+energy efficiency, maximum data transmission rates, and reli-
+able communication.
+C. Contributions of Current Study
+The main contributions of this paper can be summarized as
+follows:
+1) The first contribution is the derivation of (approximate)
+closed-form solutions for optimal UAV position in two
+dimensions for the aggregate sensor-to-UAV channel
+(Section III). These approximate solutions are highly
+accurate in asymptotic regimes. Furthermore, for the ag-
+gregate channel, we present a novel closed-form solution
+to determine the UAV’s optimal coordinates within a
+max-min fairness framework.
+2) For the end-to-end link, the role of a solar-powered
+UAV as an amplify-and-forward (AF) and decode-and-
+forward (DF) relay is explored (Section V). A number
+of asymptotic scenarios were covered for such relays
+which gave us deeper insights and helped us explain the
+optimization results pertaining to the optimum altitude
+of a solar-powered UAV relay.
+3) For the end-to-end link that comprises sensor-to-UAV
+and UAV-to-OGS links, we assessed the impacts of
+atmospheric turbulence and cloud layers on laser signal
+attenuation as well as the harvested solar energy, and ex-
+plored their influence on the UAV’s optimal positioning
+(Section VI). The criterion for optimal UAV positioning
+is the end-to-end channel capacity that is maximized
+for the UAV’s role as both an amplify-and-forward (AF)
+and decode-and-forward (DF) relay. Various insights for
+optimal 2-D and 3-D positioning of UAV relay—based
+on atmospheric conditions—are developed.
+D. Model Assumptions
+To simplify the analysis, we now consider the following two
+major assumptions (along with justifications) in our study.
+1) We assume that the uplink RF channel between each
+sensor and the UAV is dominated by the LoS component.
+This assumption holds well since the beamwidth (in
+meters) from the transmitting sensor is small close to
+the ground and most sensors are “looking upwards” to
+the UAV while transmitting. This arrangement implies
+that the reflections from the ground objects are at a min-
+imum, and therefore, the assumption of the dominance
+Fig. 1. This figure depicts the system model of a UAV-assisted serial RF/FSO
+link. This figure shows two scenarios where, in the first scenario, the UAV
+lies inside the cloud, and in the other scenario, the UAV hovers on top of the
+clouds.
+of LoS holds. Additionally, for the sake of simplicity, we
+assume that the RF signal experiences nominal fading
+in the LoS channel.
+2) The optical wireless feeder link from the UAV-to-OGS
+is modeled by the (signal independent) Gaussian noise at
+the OGS receiver. This assumption holds under moderate
+signal strength conditions at the OGS receiver. Here,
+we have used the assumption that the received signal is
+neither too large so that the signal-dependent shot noise
+model applies, nor the signal strength is so weak that
+the Poisson model is justified.
+E. Paper Organization
+This paper is organized as follows. Section II presents the
+composite optical channel model in the UAV-to-OGS backhaul
+link. This is followed by Section III that considers two-
+dimensional position optimization (in the (x, y) plane) of a
+UAV relay for the RF based aggregate sensor-to-UAV link.
+The results obtained in this section give important insights for
+maximization of end-to-end rate of the serial RF/FSO link.
+Section IV focuses on solar energy harvesting and energy
+consumption models of a hovering UAV. The results obtained
+in both Section III and Section IV are utilized in maximiza-
+tion of end-to-end rate in Section V. The three-dimensional
+position optimization of a solar-powered UAV relay, along
+with a commentary on experimental results, is analyzed in
+Section VI. The main results of this study are summarized
+and concluded in Section VII.
+II. Backhaul Optical Signal Fading Models
+The (composite) channel gain of the UAV-OGS optical
+wireless link is given by
+h = hphshcha,
+(1)
+where hp represents the loss in energy due to pointing error
+and hs corresponds to signal fading due to scintillation of
+the optical signal caused by atmospheric turbulence. The
+deterministic coefficients, hc and ha, denote the attenuation
+of the backhaul channel due to (scattering and absorption)
+through cloud and air, respectively.
+
+--- PDF PAGE 4 ---
+4
+A. Pointing Error Model
+For a circularly symmetric Gaussian pointing error distri-
+bution in two dimensions, the magnitude of the error, R, is
+distributed as a Rayleigh random variable. In this case, the
+random channel coefficient is [35]
+hp ≈
+a2
+d
+2θ2(x2 + y2 + z2) exp
+
+−
+R2
+2θ2(x2 + y2 + z2)
+
+, (2)
+and the distribution of hp is [14]
+fhp(h) = Φh(θ2−σ2)/σ2 · 1[0,B)(h),
+(3)
+where θ and σ are the angular beamwidth and angular pointing
+error standard deviation, respectively. Assuming that the OGS
+lies at the origin (0, 0, 0), the point (x, y, z) represents the
+location coordinate of the UAV relay, 1A is the indicator
+function over a measurable set A, and
+Φ := θ2
+σ2
+ 1
+B
+θ2/σ2
+,
+(4)
+B :=
+a2
+d
+2θ2(x2 + y2 + z2).
+(5)
+The factor ad in (5) is the radius of OGS receiver telescope.
+B. Atmospheric Attenuation for Cloud and Air Model
+We assume that the cloud layer is parallel to the ground
+and that both the upper and lower boundaries of the cloud
+layer remain parallel to each other (as shown in Fig. 1). Then,
+by the principles of similar triangles, we can deduce the link
+distance, dc, through the cloud as
+Zc
+z =
+dc
+p
+x2 + y2 + z2 , z > Zc + Zd
+z −Zd
+z
+=
+dc
+p
+x2 + y2 + z2 , Zd < z < Zc + Zd
+=⇒dc =
+
+
+
+
+
+Zc
+z
+p
+x2 + y2 + z2,
+z > Zc + Zd
+z−Zd
+z
+p
+x2 + y2 + z2,
+Zd < z < Zc + Zd
+0,
+z < Zd,
+(6)
+where Zc is the thickness of cloud and Zd is the distance
+from the ground to the lower cloud boundary. Thus, the link
+distance during the air is da =
+p
+x2 + y2 + z2 −dc. Then,
+the values of channel coefficients, hc and ha, are given by
+hc := e−ψcdc,
+(7)
+ha := e−ψada,
+(8)
+where ψc and ψa are the extinction coefficients that determine
+the attenuation of the signal (due to scattering or absorption)
+in the cloud and air, respectively.
+C. Scintillation Due to Atmospheric Turbulence
+The exponentiated Weibull distribution has been shown to
+provide an excellent fit to experimental results for both weak
+and moderate turbulence conditions compared to lognormal
+and Gamma-Gamma distributions [36]. An attractive feature
+of exponentiated Weibull distribution is the mathematically
+tractable nature of its probability density function, which is
+given by the expression
+fhs(h) = ab
+η
+
+h
+η
+b−1
+exp
+ 
+−
+
+h
+η
+b! 
+1 −exp
+ 
+−
+
+h
+η
+b!!a−1
+, h > 0.
+(9)
+In (9), b is the shape parameter which is representative of the
+scintillation index. The factor a is also a shape parameter that
+depends on receiver aperture size, and η is the scale parameter.
+D. Overall Channel Model
+The overall channel gain—based on channel impairments
+in (3), (7), (8) and (9)—is the product of individual channel
+impairments: h = hphshahc. Then, the overall channel
+probability density function is
+fh(h) =
+Z hahcB
+0
+1
+hahcxfhp
+
+x
+hahc
+
+fhs
+h
+x
+
+dx,
+h > 0.
+(10)
+III. Two-Dimensional Position Optimization of UAV for
+Sensor-to-UAV Link
+We first introduce the UAV location optimization as a
+two-dimensional problem in which we optimize the (x, y)
+coordinates of UAV location to maximize the sum rate from
+the ground sensors. We assume that the height z of the UAV
+from the ground is fixed. This implies that (x, y, z) is the three
+dimensional position of the UAV. Two dimensional location
+optimization holds for scenarios when the UAV does not
+need solar energy to sustain itself in the air, and the UAV
+is suspended at the smallest possible height from the ground
+to establish a clear line-of-sight (LoS) with the OGS. The
+results obtained in this section will be utilized in later sections
+where we optimize the position of an energy constrained, solar-
+powered UAV relay.
+Let us assume that the uplink radio channel between each
+sensor and the UAV is dominated by the LoS component. Un-
+der the Gaussian channel assumption, the maximum achievable
+rate (in nats/s/Hz) in the mth uplink channel—between the
+mth sensor and the UAV—is Cm = ln
+
+1 + PmGm
+σ2
+0
+
+, where
+Pm is the power transmitted by the mth sensor, and Gm is the
+power gain of the channel for the case when the line-of-sight
+dominates other paths between the sensor and the UAV [12].
+The parameter σ2
+0 represents the thermal noise power at the
+UAV antenna. The quantity Gm is defined as
+Gm :=
+β0
+z2 + (xm −x)2 + (ym −y)2 ,
+(11)
+where z is the height of the UAV from ground in meters,
+(xm, ym) is the location of the mth sensor on ground and
+p
+(xm −x)2 + (ym −y)2 is the distance of the mth sensor
+from the UAV. The quantity β0 represents the channel power
+gain at the reference distance of 1 meters from the sensor. The
+sum rate in the aggregate sensor channel, denoted by Cs, is
+Cs := PM−1
+m=0 Cm, where M is the total number of sensors
+
+--- PDF PAGE 5 ---
+5
+deployed in the region. Let us assume that the mth sensor is
+located at position xm for 0 ≤m ≤M −1. We then have that
+Cs =
+M−1
+X
+m=0
+ln
+
+1 +
+Pmβ0
+σ2
+0 [z2 + (x −xm)2 + (y −ym)2]
+
+.
+(12)
+A. Optimization Problem 1
+maximize
+x,y
+Cs
+subject to
+x > 0, y > 0.
+(13)
+1) SNR reasonably large: Let us assume that Pm is large
+enough so that the SNR in the mth sensor channel, denoted
+by λm, is
+λm :=
+Pmβ0
+σ2
+0 [z2 + (x −xm)2 + (y −ym)2] > 1
+(14)
+for all m. The approximation
+ln(1 + λm) ≈γ
+
+(1 + λm)
+1
+γ −1
+
+,
+(15)
+holds for a large enough number γ [14]. Equation (15) can be
+rewritten as ln(1 + λm) ≈γ
+
+λ
+1
+γm
+
+1 +
+1
+λm
+ 1
+γ −1
+
+. Since
+1
+λm < 1 and
+1
+γ
+1
+λm ≪1, we can use binomial theorem to
+approximate
+
+1 +
+1
+λm
+ 1
+γ ≈1 +
+1
+γλm . Thus,
+ln(1 + λm) ≈γ
+
+λ
+1
+γm
+
+1 +
+1
+γλm
+
+−1
+
+= γλ
+1
+γm + λ
+1
+γ −1
+m
+−γ.
+(16)
+Substituting approximation (16) into (12), we have that the
+final expression for Cs (for reasonably large SNR) is
+Cs ≈
+M−1
+X
+m=0
+
+γλ
+1
+γm + λ
+1
+γ −1
+m
+−γ
+
+.
+(17)
+Now, taking the partial derivatives of Cs (Equation (17)) with
+respect to x and y and setting the derivatives equal to 0, we
+have that
+∂
+∂xCs =
+M−1
+X
+m=0
+σ2
+0
+Pmβ0
+(x −xm)
+−
+M−1
+X
+m=0
+1
+(z2 + (x −xm)2 + (y −ym)2)(x −xm) = 0,
+(18)
+∂
+∂y Cs =
+M−1
+X
+m=0
+σ2
+0
+Pmβ0
+(y −ym)
+−
+M−1
+X
+m=0
+1
+(z2 + (x −xm)2 + (y −ym)2)(y −ym) = 0.
+(19)
+When z is large enough so that z2 ≫(x−xm)2+(y−ym)2
+for all m, then a solution to (18) and (19) is obtained as
+x∗=
+PM−1
+m=0 xm
+
+σ2
+0
+Pmβ0 −1
+z2
+
+PM−1
+m=0
+
+σ2
+0
+Pmβ0 −1
+z2
+
+,
+(20)
+y∗=
+PM−1
+m=0 ym
+
+σ2
+0
+Pmβ0 −1
+z2
+
+PM−1
+m=0
+
+σ2
+0
+Pmβ0 −1
+z2
+
+.
+(21)
+2) Low SNR scenario: When λm ≪1, we have that
+ln (1 + λm) ≈λm and Cs ≈PM−1
+m=0 λm. In this case, it can
+be shown that for z2 ≫(x−xm)2 for all m, the optimal value
+of x is
+x∗≈
+PM−1
+m=0 Pmxm
+PM−1
+m=0 Pm
+,
+(22)
+y∗≈
+PM−1
+m=0 Pmym
+PM−1
+m=0 Pm
+.
+(23)
+3) Approximation Error Plots: Here, we consider the error
+in approximate solutions (20) (21), (22) and (23) to the
+optimization problem (13). Let the exact (numerical) solution
+to (13) be denoted by (˜x, ˜y). We then use the normalized
+mean-square error to quantify the approximation error:
+NMSE = (x∗−ex)2 + (y∗−ey)2
+ex2 + ey2
+,
+(24)
+where (x∗, y∗) are the analytical (approximate) solutions
+furnished by (20) and (21) for large SNR; and (22) and
+(23) for low SNR. Fig. 2 illustrates the NMSE for low SNR
+(left figure) and high SNR (right figure) approximations for
+varying channel power gains at the reference distance β0 and
+at different UAV altitudes represented by z. It is noteworthy
+that the approximate expressions maintain a high level of
+accuracy both at low (λm ≪1) and high SNR regimes
+(λm ≫1), particularly within the regions demarcated by
+dashed regions. However, for the low SNR scenario, the
+approximation tends to diminish in accuracy as the SNR
+elevates, especially for σ2
+0 < 10−5. Similarly, for the high
+SNR scenario, the approximation error begins to grow for
+σ2
+0 > 10−9. We also note that the variation in β0 seems to have
+a nominal effect on the NMSE for both SNR extremities. Yet,
+a declining UAV altitude begins to erode the approximations’
+precision since the approximate solutions were computed
+based on the assumption z2 ≫(x −xm)2 + (y −ym)2.
+For
+the
+said
+figure,
+the
+location
+of
+sensors
+are
+xm
+=
+0, 100, 150, 200, 250, 350, 450, 550, 750, 1000
+,
+ym
+=
+0, 150, 250, 300, 450, 550, 650, 700, 800, 1000
+,
+the
+power
+transmitted
+by
+the
+sensor
+is
+Pm
+=
+0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0
+.
+Fig. 3 presents the aggregate sensor channel capacity Cs
+contingent upon the UAV’s spatial positioning. This empha-
+sizes the significance of strategic UAV placement to enhance
+channel performance. For this figure, the default system pa-
+rameters are the same as Fig. 2.
+B. Optimization Problem 2
+maximize
+x,y
+min
+m Cm
+subject to
+x ≥x0, y ≥y0.
+(25)
+A closed-form solution results for the above mentioned
+problem results when the sensors are arranged in a nonde-
+creasing power sequence from left to right. This arrangement
+
+--- PDF PAGE 6 ---
+6
+Fig. 2. This figure shows the normalized mean-square error as a function of σ2
+0 for low (left) and large (right) SNR scenarios with different values of factor
+β0 and the height of UAVs z. The total link distance D = 1000 m, the number of the sensors is M = 10 and the height of UAV z = 5000 m.
+Fig. 3. The figure shows 3-D plot of the aggregate sensor-to-UAV channel
+capacity as a function of UAV’s location in two dimensions. The UAV height
+z = 500 m and β0 = 0.4. The noise power σ2
+0 = 1 × 10−6 W.
+implies that P0 ≤P1 ≤· · · ≤PM−1. This is a natural
+arrangement in that we place the lower power sensors closer
+to the OGS and the larger power sensors further away. For a
+better understanding of problem (25), we will first consider
+the solution to one-dimensional problem in terms of x (by
+fixing the value of y) and then extend the solution to the two-
+dimensional problem for (x, y). The one-dimensional analog
+of (25) is
+maximize
+x
+min
+m Cm
+subject to
+x ≥x0.
+(26)
+1) Solution of One-Dimensional Problem: For the one-
+dimensional optimization problem, we fix the value of y and
+maximize capacity as a function of only x coordinates. For the
+sake of brevity, we represent the uplink capacity of the mth
+sensor, Cm(x, y), as Cm(x) to highlight the one-dimensional
+nature of the problem.
+For the one-dimensional problem, the solution is given by
+the following two-step algorithm:
+1) For a fixed value of y, find the set X of non-negative
+UAV positions: X := {x(1), x(2), . . . , x(M−1)}, such
+that
+C0(x(i)) = Ci(x(i)),
+(27)
+for i = 1, 2, . . . , M −1.
+2) The solution of optimization problem (26) is x∗=
+max X. The maximized value of minimum capacity is
+C∗= C0(x∗).
+a) Proof: For the nondecreasing power arrangement, let
+us define the sequence of M points x(i) > 0, for i =
+0, 1, 2, . . . , M −1. The point x(i) is defined as the position of
+the UAV relay where the capacity Ci is equal to C0 (or the
+point where the two capacity curves, Ci and C0, intersect):
+Ci
+ x(i)
+= C0
+ x(i)
+=⇒
+Pi
+z2 + (x(i) −xi)2 =
+P0
+z2 + (x(i) −x0)2
+=⇒ x(i)2 (Pi −P0) + x(i) (2P0xi −2Pix0)
++ Pix2
+0 −P0x2
+i + (Pi −P0) z2 = 0.
+(28)
+The equation (28) is a quadratic in x(i) and can be solved by
+using the well-known quadratic formula: x(i) = −b+
+√
+b2−4ac
+2a
+,
+where a := Pi −P0, b := 2 (P0xi −Pix0) and c := Pix2
+0 −
+P0x2
+i + (Pi −P0) z2.
+Before we move further, we need to address an important
+point. Since the curve C0 corresponds to the smallest power,
+it will determine the minimum rate beyond a certain point ˆx,
+where ˆx > xM−1. For some x > ˆx, min
+m Cm(x) = C0(x)
+since P0 < Pm and |x0 −x| > |xm −x| for any m > 0. In
+this case, C0(x) is a monotonically decreasing function in x
+for x > ˆx.
+However, if x approaches −∞from the point ˆx, C0(x)—
+and therefore min(Cm)—will increase and intersect some
+Cj(x), j̸ = 0 at point x = xj1. The curve Cj(x) is monoton-
+ically decreasing for x < xj because if it were increasing for
+x < xj, the intersection would not have happened in the first
+place. Thus, for x < xj, min
+m Cm(x) = Cj(x) < C0(xj).
+Thus, min
+m Cm achieves its maximum at the point xj and
+x∗= xj = max
+i
+x(i),
+1 ≤i, j ≤M −1. It follows that
+the (maximized) minimum capacity at the optimal point x∗is
+C0(x∗) or Cj(x∗).
+b) Special Case: If C0 = min
+i
+Ci at x = x0, then no
+intersection of C0 will take place with any curve Cj, j =
+1, . . . , M −1 for any x > x0. In this case, the optimal UAV
+location is x∗= x0.
+1It is possible that C0(x) may intersect more than one curve at the point
+xj. However, this does not affect the final result of our argument.
+
+--- PDF PAGE 7 ---
+7
+2) Solution
+of
+Two-Dimensional
+Problem:
+The
+one-
+dimensional optimization problem can be extended in a
+straightforward manner to the two-dimensional setting. In this
+regard, we define the distance Di as the Euclidean distance
+between the the 0th and the ith sensors. Furthermore, let
+us define the vector di as the (variable) vector that points
+from sensor 0 to sensor i. Let us define di := ∥di∥2 where
+0 < di ≤Di. Now, let the point of intersection between C0
+and Ci be given by
+C0(di) = Ci(Di −di) =⇒
+P0
+z2 + d2
+i
+=
+Pi
+z2 + (Di −di)2
+(29)
+=⇒(P0 −Pi)d2
+i −2P0Didi + P0z2 −Piz2 + P0D2
+i = 0,
+(30)
+=⇒d∗
+i = −b −
+√
+b2 −4ac
+2a
+,
+(31)
+where a := P0 −Pi, b := −2P0Di and c := P0z2 −
+Piz2 + P0D2
+i . The solution
+−b+
+√
+b2−4ac
+2a
+is discarded since
+it is negative. Then, the two-dimensional point, where C0 and
+Ci intersect, is
+
+x(i)
+y(i)
+
+=
+
+x0
+y0
+
++
+
+δx∗
+i
+δy∗
+i
+
+,
+(32)
+where δx∗
+i := d∗
+i cos(θi) and δy∗
+i := d∗
+i sin(θi) where θi is the
+angle that di makes with x-axis. Here, the optimal solution
+(optimal location of the UAV) for the three dimensional max-
+min problem is (x(j), y(j)) where j = arg max
+i
+∥x(i)∥2, and
+x(i) is defined as x(i) :=
+
+x(i)
+y(i)T .
+3) Optimization plots of (26): Fig. 4 illustrates the max-
+imum achievable rate (in nats/s/Hz) in the uplink channel
+between the mth sensor and the UAV, denoted as Cm, for five
+different sensors. This problem is formulated as a Max-min
+optimization problem. From the graph, C0 curve—represented
+by orange color—intersects with other four curves at points
+x(i), where i = 1, 2, 3, 4. Among these intersections, the
+point x(4) notably produces the largest minimum value for
+Cm across all sensors. For Fig. 4, the parameter values are
+as follows: The total link distance D = 1000 m, the number
+of the sensors is M = 5, the location of sensors are xm =
+0, 200, 400, 700, 1000
+, the power transmitted by the sensors
+is Pm =
+2.5, 3, 3.5, 4, 5
+(left) and Pm =
+0.3, 3, 3.5, 4, 5
+(right), the factor β0 = 0.2, the noise power σ2
+0 = 1 × 10−6
+and the height of UAV z = 300 m.
+As for the right graph in Fig. 4 represents to the special
+case previously discussed in III-B1b. Here, C0 corresponds
+to min
+m Cm for all x > x0. Here, C0 does not intersect with
+any of the four remaining curves. As a result, we find that the
+optimal point that maximizes min Cm coincides with x0.
+IV. Solar Energy Harvesting and Energy Consumption
+Models of Hovering UAVs
+A. Energy Harvesting Model
+In this paper, we assume that the UAV is fitted with a large
+enough solar panel so that the energy required by the UAV
+rotors as well as laser transmission to the OGS is provided
+solely by sunlight. In this case, the atmospheric transmittance
+at an altitude z in the region above the clouds is determined
+as [8]
+α0(z) = A0 −B0 exp
+
+−z
+δ
+
+,
+(33)
+where A0 is the maximum value of atmospheric transmittance,
+B0 is the extinction coefficient of the atmosphere in m−1,
+and δ is the scale height of the earth in m. Besides this, the
+presence of clouds and the dirt in air will further reduce the
+sunlight energy reaching the UAV. In this regard, let us define
+the energy attenuation through clouds and dirt as αc(Zc) :=
+exp (−βcZc) and αd(Zd) := exp (−βaZd). The quantities βc
+and βa denote the extinction coefficient of the cloud and the
+air mediums, respectively. Then, the harvested solar power at
+the UAV, denoted by PH, is given by [8]
+PH(z) =
+
+
+
+
+
+ηpAGrα0(z),
+z > Zc + Zd,
+ηpAGrα0(z)αc(Zc + Zd −z),
+Zd < z < Zc + Zd,
+ηpAGrα0(z)αc(Zc)αd(Zd −z),
+z < Zd,
+(34)
+where ηp is the photoconversion efficiency of photovoltaic
+cells, A is the active surface area of the photovoltaic array
+in m2 and Gr denotes the average solar radiation on earth in
+W/m2.
+B. Energy Consumption Model
+It has been shown in [1] that the power consumed by a UAV
+while hovering is
+P0 =
+s
+(mg)3
+2πr2ρ ,
+(35)
+where m is the mass of the UAV and the solar panels in kg, g
+is the gravitational acceleration: g := 9.8 m/s, r is the radius
+of the propeller in meters, and ρ is the density of air at a
+given height and temperature in kg/m3. For instance, for a
+UAV with a total mass of 5 kg, propeller radius of 0.5 m and
+the air density ρ = 1.225 kg/m3, the power required to sustain
+the UAV in the hovering position is approximately 247 Watts.
+Thus, the height of the UAV (z) and the area of the solar panel,
+A, has to be such that the harvested power PH(z) has to be
+more than 247 Watts for this particular scenario.
+With the advancements in photovoltaic technology, the
+power-to-weight and the power-to-area ratio of the solar arrays
+has improved considerably over the last decade. For instance,
+the flexible textile solar panels devised by SolarCloth System
+(France) can deliver power densities up to 170 W/m2 with
+an average weight density of 500 g/m2 [37]. This leads to
+an energy density of 340 W/kg with the textile solar panels.
+The United States based Ascent Solar Technologies developed
+super lightweight high-quality crystalline silicon solar arrays
+in 2016 that can deliver energy density up to 1700 W/kg.
+The highly flexible perovskite solar arrays have been shown to
+achieve a power density of 23 W/g [38]. These high power-to-
+weight and power-to-area ratio arrays are highly suitable for
+deployment on unmanned aerial vehicles, weather balloons and
+aeroplanes [38].
+
+--- PDF PAGE 8 ---
+8
+Fig. 4. This figure shows the Capacity Curves for Max-min fairness problem.
+V. End-to-End Rate of the Sensor-UAV-OGS Link for
+Solar UAV
+As discussed before, the UAV assumes the role of a relay
+to connect the sensor field with the OGS: The sensor-to-UAV
+link is RF whereas the UAV-to-OGS link is optical wireless. In
+this section, we consider the end-to-end channel capacity for
+this hybrid RF/FSO link that utilizes a solar energy harvesting
+amplify-and-forward (AF) or decode-and-forward (DF) UAV
+relay. We denote the capacity in the laser backhaul (UAV-to-
+OGS link) by the symbol Cb.
+A. AF Relay
+Let X denote the sum signal reaching the AF relay from
+the sensor network. We have that
+X =
+M−1
+X
+m=0
+s
+Pmβ0
+z2 + (x −xm)2 + (y −ym)2
+|
+{z
+}
+SX
++
+M−1
+X
+m=0
+Nm
+|
+{z
+}
+NX
+, (36)
+where Nm are the i.i.d. Gaussian random variables: Nm ∼
+N
+ 0, σ2
+0
+
+where σ2
+0 is the thermal noise variance in a single
+sensor channel. Let σ2
+s denote the total noise variance in the
+aggregate sensor channel. Then, σ2
+s = Mσ2
+0 where M is the
+total number of sensors. By definition, NX ∼N(0, σ2
+s).
+The laser signal retransmitted by the AF relay to the OGS is
+Y = GX, where G is the voltage amplification factor. Let us
+assume that the average harvested power is PH Watts and the
+average power to sustain the UAV in the air is P0 Watts. Then,
+the net power available for the purpose of signal transmission
+is PH −P0. Since the relay cannot transmit more than the net
+power, we have that
+PH −P0 ≥E[G2X2] = G2E[X2]
+= G2E[S2
+X + N 2
+X + 2SXNX] = G2S2
+X + G2σ2
+s
+(37)
+=⇒G2 ≤PH −P0
+S2
+X + σ2s
+=⇒G ≤
+r
+PH −P0
+S2
+X + σ2s .
+(38)
+Here, for the purpose of analysis, we set G equal to the
+maximum possible value it can attain: i.e., G =
+q
+PH−P0
+S2
+X+σ2
+s .
+The received signal at the OGS is denoted by Z. We have
+that
+Z = ηhY + N = ηhGX + N = ηhG(SX + NX) + N
+= ηhGSX + ηhGNX + N.
+(39)
+where h is the (random) optical channel gain in the backhaul,
+η is the photoconversion efficiency at the OGS receiver and N
+is a Gaussian random variable which represents thermal noise
+at the OGS optical receiver: N ∼N(0, σ2
+N). The conditional
+end-to-end rate (in bits/seconds/Hz) for the AF relay is
+C(h) = ln
+
+1 +
+(ηhGSX)2
+(ηhG)2σ2s + σ2
+N
+
+= ln
+
+1 +
+η2h2 
+PH−P0
+S2
+X+σ2s
+
+S2
+X
+η2h2
+
+PH−P0
+S2
+X+σ2s
+
+σ2s + σ2
+N
+
+
+(40)
+Finally, the unconditional rate (averaged over h) is C =
+R ∞
+0
+C(h)fh(h) dh.
+1) Asymptotic Case 1: When the SNR in the aggregate
+sensor-to-UAV channel is high, i.e., S2
+X
+≫σ2
+s and the
+SNR in the UAV-to-OGS optical channel is low, i.e., σ2
+N ≫
+η2h2 
+PH−P0
+S2
+X+σ2s
+
+σ2
+s, then,
+C(h) = ln
+
+1 +
+η2h2 
+PH−P0
+S2
+X+σ2s
+
+S2
+X
+η2h2
+
+PH−P0
+S2
+X+σ2s
+
+σ2s + σ2
+N
+
+
+≈ln
+
+1 + η2h2 (PH −P0)
+σ2
+N
+
+.
+(41)
+In this scenario, we note that the backhaul channel dominates
+the end-to-end capacity. To understand the effect of link dis-
+tance on the capacity, we note that for the fading scenario, the
+signal strength’s dependence on link distance is only through
+pointing error2 and not scintillation. Therefore, without loss
+of generality, we assume that the optical channel suffers
+fading mainly due to pointing error. Under this assumption,
+the composite channel gain is h = hphahc with PDF:
+fh(h) =
+Φ
+hahc
+
+h
+hahc
+ θ2−σ2
+σ2
+· 1[0,Bhahc)(h).
+In this case, the unconditional rate is
+C ≈
+Z Bhahc
+0
+ln
+
+1 + η2h2(PH −P0)
+σ2
+N
+
+·
+Φ
+hahc
+
+h
+hahc
+ θ2−σ2
+σ2
+dh
+(42)
+Recall that from (4), Φ = θ2
+σ2
+  1
+B
+ θ2
+σ2 . To get a closed-form
+expression, we assume the common result that θ2 ≈2σ2,
+which is justified in [14]. Under this assumption, (42) can
+2It is shown later in the same section that the loss in end-to-end capacity
+due to pointing error increases directly with link distance.
+
+--- PDF PAGE 9 ---
+9
+be further simplified as
+C ≈
+Z Bhahc
+0
+2
+B2h2ah2c · ln
+
+1 + η2(PH −P0)h2
+σ2
+N
+
+· h dh
+=
+
+1 +
+σ2
+N
+η2h2ah2c(PH −P0)B2
+
+· ln
+
+1 + η2h2
+ah2
+cB2(PH −P0)
+σ2
+N
+
+−1
+(43)
+In the presence of fading due to pointing error, the relationship
+between link distance and attenuation due to pointing error is
+not clear. In this scenario, to show that the channel capacity
+of the laser link is maximized when the UAV lies as close
+as possible to the OGS, we first show that C is monoton-
+ically increasing in t where t :=
+η2h2
+ah2
+cB2(PH−P0)
+σ2
+N
+> 0.
+Then, C(t) =
+ 1 + 1
+t
+
+ln (1 + t) −1, and by taking the
+first derivative, we have that C′(t) =
+t−ln(1+t)
+t2
+> 0, since
+t > ln(1 + t) for all t > 0. Thus, C is monotonically
+increasing in t. This implies that—for a fixed height z—we
+want to maximize only B, ha and hc to maximize C since
+the term η2h2
+ah2
+c(PH−P0)
+σ2
+N
+does not depend on UAV location in
+(x, y) plane. The quantities B, ha and hc are maximized only
+at (0, 0, z), which is exactly on top of the OGS location on
+ground. In other words, for a fixed UAV height z, the optimal
+UAV position in the (x, y) plane is the same as the position
+of the OGS.
+2) Asymptotic Case 2: When the SNR in the optical UAV-
+to-OGS channel is high compared to the aggregate sensor-to-
+UAV channel such that σ2
+N ≪η2h2 
+PH−P0
+S2
+X+σ2s
+
+σ2
+s, then the
+channel capacity is approximated as
+C(h) = ln
+
+1 +
+η2h2 
+PH−P0
+S2
+X+σ2s
+
+S2
+X
+η2h2
+
+PH−P0
+S2
+X+σ2s
+
+σ2s + σ2
+N
+
+
+≈ln
+
+1 +
+η2h2 
+PH−P0
+S2
+X+σ2s
+
+S2
+X
+η2h2
+
+PH−P0
+S2
+X+σ2s
+
+σ2s
+
+= ln
+
+1 + S2
+X
+σ2s
+
+,
+(44)
+which is simply the capacity of the aggregate sensor-to-UAV
+channel and its maximum value depends only on the positions
+and transmitted powers of the sensors (the optimum UAV
+position for this case was derived in Section III).
+3) Asymptotic Case 3: For large noise power σ2
+N at the OGS
+receiver such that, σ2
+N ≫η2h2 
+PH−P0
+S2
+X+σ2
+s
+
+σ2
+s, the approximate
+end-to-end capacity is
+C(h) ≈ln
+
+1 +
+η2h2 
+PH−P0
+S2
+X+σ2s
+
+S2
+X
+σ2
+N
+
+.
+(45)
+In this asymptotic case, the value of σ2
+N does not play any role
+in determining the optimal UAV position since the optimal
+position depends only on the numerator.
+B. DF Relay
+The conditional end-to-end rate for a DF relay scheme is
+given by
+C(h, x, y, z) = min(Cb(h, x, y, z), Cs(x, y, z)).
+(46)
+The dependence of aggregate sensor channel capacity Cs on
+UAV location (x, y, z) is evident through (12). The capacity
+in the backhaul, Cb, depends on the UAV location through
+the distribution of channel coefficient hp which is a function
+of (x, y, z) because of the factor B (as depicted in (5)).
+Additionally, Cb also depends on channel coefficients ha and
+hc—which are defined by (8) and (7), respectively—which
+also depend on the UAV position. The average end-to-end rate
+of the DF link is
+C(x, y, z) =
+Z Bhahc
+0
+C(h, x, y, z)fh(h) dh
+=
+Z Bhahc
+0
+min
+ 
+ln
+
+1 + ((PH −P0)hη)2
+σ2
+N
+
+,
+M−1
+X
+m=0
+ln
+
+1 +
+Pmβ0
+σ2
+0 [z2 + (x −xm)2 + (y −ym)2]
+ !
+fh(h) dh.
+(47)
+We can obtain a closed-form expression for the approxi-
+mate channel capacity when the pointing error is the major
+contributing factor to signal fading [14]. In that case, the
+approximate closed-form expression of capacity, denoted by
+˜C, is [14]
+eC(x, y, z)
+= Φ(PH −P0)2η2
+σ2
+N
+σ2
+θ2 + 2σ2
+ min(ˆh, h∗, Bhahc) θ2+2σ2
+σ2
++ Φσ2
+  min  ˆh, h∗, Bhahc
+
+−min (h∗, Bhahc)
+α
+θ2
+−
+ min  ˆh, h∗, Bhahc
+ 2σ2+αθ2
+ασ2
+× α   (PH−P0)η
+σN
+ 2
+α
+αθ2 + 2σ2
++
+(min(h∗, Bhahc))
+2σ2+αθ2
+ασ2
+× α   (PH−P0)η
+σN
+ 2
+α
+αθ2 + 2σ2
+−
+min(ˆh, h∗, Bhahc)
+2σ2+αθ2−2ασ2
+2σ2
+×   (PH−P0)η
+σN
+ 2−2α
+α
+αθ2 + 2σ2 −2ασ2
++
+min(h∗, Bhahc)
+2σ2+αθ2−2ασ2
+2σ2
+×   (PH−P0)η
+σN
+ 2−2α
+α
+αθ2 + 2σ2 −2ασ2
+!
++
+M−1
+X
+m=0
+ln
+
+1 +
+Pmβ0
+σ2
+0 [z2 + (x −xm)2 + (y −ym)2]
+
+× Φσ2
+θ2
+ 
+(Bhahc)
+θ2
+σ2 −
+
+min(h∗, Bhahc)
+ θ2
+σ2
+!
+,
+(48)
+where h∗:=
+σN
+rQM−1
+m=0
+
+1+
+Pmβ0
+σ2
+0[z2+(x−xm)2+(y−ym)2]
+
+−1
+(PH−P0)η
+, ˆh :=
+σN
+(PH−P0)η and α ≫1.
+1) Asymptotic Case 1: When the SNR in the aggregate
+sensor-to-UAV channel is high compared to the SNR in the
+optical backhaul UAV-to-OGS channel—that is σ2
+N is large—
+the capacity in the backhaul Cb dominates the end-to-end rate.
+In this case, the average end-to-end rate is approximately
+C(x, y, z) =
+Z Bhahc
+0
+ln
+
+1 + ((PH −P0)hη)2
+σ2
+N
+
+fh(h) dh,
+(49)
+
+--- PDF PAGE 10 ---
+10
+which is similar to the asymptotic case 1 for AF scheme in
+V-A1. Therefore, for this asymptotic case, the optimal UAV
+based DF relay position in the (x, y) plane is the same as the
+position of the OGS.
+2) Asymptotic Case 2: When the SNR in the aggregate
+sensor-to-UAV channel is low compared to the SNR in the
+optical UAV-to-OGS channel—that is σ2
+N is low—then the
+capacity in the aggregate sensor channel, Cs, is dominant. In
+this case, the average end-to-end rate in (47) can be simplified
+to
+C(x, y, z) =
+M−1
+X
+m=0
+ln
+
+1 +
+Pmβ0
+σ2
+0 [z2 + (x −xm)2 + (y −ym)2]
+
+.
+(50)
+In other words, the optimal location of UAV depends only
+on the positions and transmitted powers of the sensors which
+is studied in detail in Section III.
+VI. Three-Dimensional Position Optimization of Solar
+UAV for Sensor-UAV-OGS Link
+In our optimization analysis, our primary objective is to
+enhance the end-to-end capacity of the sensor-UAV-OGS link
+by optimizing the solar-powered UAV position in x, y and z
+dimensions. The motivation for optimization in (x, y) plane
+stems from the fact that the end-to-end rate of sensor-UAV-
+OGS link depends on both the sensor-to-UAV link and the
+UAV-to-OGS link: If the UAV is too close to the OGS, the
+sensor-to-UAV link will suffer performance degradation, and
+if the UAV is too close to the sensor field, the UAV-to-OGS
+link will underperform. Therefore, an optimal choice of (x, y)
+coordinates of the UAV is important to maintain an optimum
+end-to-end rate.
+The height z of the UAV is important in that it decides
+the amount of energy harvested from the sun as well as
+the performance of sensor-to-UAV and UAV-to-OGS links.
+If the UAV is placed too high from the ground, the UAV
+will harvest more solar energy but it will lie further away
+from the sensors and the OGS which will minimize the end-
+to-end rate. On the other hand, if the UAV is too close to
+the ground, the minimized harvested energy will affect the
+UAV-to-OGS link. Thus, an optimal height z is necessary
+to guarantee a maximum end-to-end capacity performance.
+Additionally, recognizing the impact of weather conditions on
+UAV placement, this study also caters to the affect of clouds
+on the optimal altitude choice for the UAV.
+In
+this
+section,
+we
+consider
+the
+three-dimensional
+position
+optimization
+of
+a
+solar-powered
+UAV
+relay.
+For the optimization problem, we have standardized the
+position of all sensors (in meters) as follows: xm
+=
+700, 800, 900, 1000, 1200, 1400, 1500, 1600, 1800, 2000
+and
+ym =
+800, 900, 1000, 1200, 1300, 1500, 1600, 1700, 1900, 2000
+.
+The default parameter values of our optimization problems
+are enumerated in Table I. The UAV position optimization
+Symbol
+Parameter
+Simulation Value
+ad
+Radius of OGS receiver telescope (m)
+0.5
+θ
+Angular beamwidth (radians)
+1 × 10−2
+σ
+Angular pointing error standard deviation (radians)
+1 × 10−2
+D
+Distance between OGS and farthest sensor (m)
+1000, 2000
+Zc
+Distance sunlight travels through the cloud (m)
+500
+Zd
+Distance sunlight travels through dirt medium (m)
+500
+Pm
+Power transmitted by the mth sensor (Watts)
+0.2–5
+β0
+Channel power gain at the reference distance from the sensor
+0.2, 0.4, 0.6
+M
+Total number of sensors
+10
+A0
+Maximum value of atmospheric transmittance
+0.8978
+B0
+Extinction coefficient of the atmosphere (m−1)
+0.2804
+δ
+Scale height of the earth (m)
+8000
+Gr
+Average solar radiation on earth (W/m2)
+1361
+A
+Active surface area of the photovoltaic array (m2)
+2
+ηp
+Photoconversion efficiency of photovoltaic cells
+0.4
+η
+Photoconversion efficiency at the OGS receiver
+0.4
+ψa
+Attenuation/extinction factor of laser signal through air
+0.001
+ψc
+Attenuation/extinction factor of laser signal through cloud
+0.001-0.01
+βc
+Attenuation/extinction factor of sunlight through cloud
+0.001-0.02
+βa
+Attenuation/extinction factor of sunlight through air
+0.5
+P0
+Power consumed by hovering UAV (Watts)
+100
+σ2
+0
+Noise power of sensor-to-UAV link (Watts)
+1 × 10−6
+σ2
+N
+Thermal noise power at the OGS optical receiver (Watts)
+1 × 10−10
+TABLE I
+Table Of simulation parameters
+problem is formulated as
+maximize
+x,y,z
+C
+subject to
+i) 0 < x < D,
+ii) 0 < y < D,
+iii) z > z0.
+(51)
+We employ numerical optimization techniques to solve
+this
+optimization
+problem.
+Here,
+the
+set
+of
+sensor’s
+transmission
+power
+(in
+Watts)
+is
+given
+by
+Pm
+=
+[0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2]. The constraint z > z0
+corresponds to the condition PH(z) −P0 > 0, where PH(z)
+is a function of the UAV’s altitude.
+We now discuss the effect of UAV position on the end-to-
+end capacity through graphical illustrations. For the purpose
+of clarity, we only consider 2-D plots (functions of only one
+variable) to convey our results more effectively.
+Fig. 5 illustrates the maximization of capacity as a function
+of x when the values of y and z are fixed at their optimal
+values: y = y∗and z = z∗. This figure presents the distribu-
+tion profiles of the Exponentiated Weibull (EW) fading of the
+UAV-to-OGS optical channel for various default parameters
+and its impact on UAV positioning. On the left, we can see
+from the illustration that a smaller tail probability corresponds
+to more severe fading. The center graph illustrates the channel
+capacity of a UAV based AF relay. Evidently, under different
+levels of EW fading conditions, it is observed that the fading
+severity plays a pivotal role in determining the optimal UAV
+position. The right figure illustrates the relationship between
+channel capacity and the UAV’s position for a DF relay. For
+both AF and DF relays, we observe that as the fading levels
+becomes more severe, the optimal UAV location shifts closer
+to OGS in order to minimize the effect of fading in the optical
+channel.
+Fig. 6 illustrates the impact of cloud attenuation factor ψc
+and optical noise power σ2
+N on the UAV optimal location x∗
+for AF (left figure) and DF (right figure) relays. For one,
+this figure suggests an inverse relationship between x∗and
+these channel parameters due to the obvious reason that as the
+optical channel gets more impaired, the UAV has to shift closer
+to the OGS to improve the laser link (thereby minimizing x∗).
+
+--- PDF PAGE 11 ---
+11
+Fig. 5. The left figure shows Exponentiated Weibull fading with different parameters. The center and right figures shows capacity plots (as a function of x
+coordinate of UAV) for AF and DF relays, respectively.
+Fig. 6. This figure shows optimal location of UAV along x axis as a function of optical noise power σ2
+N for AF scheme (left) and DF scheme (right) under
+Exponentiated Weibull fading. The attenuation factor ψc = 0.003.
+This figure also highlights the asymptotic regimes of the two
+relays discussed in Section V-A and Section V-B. When the
+conditions for asymptotic case 1 are true for the AF relay
+(high SNR in sensor-to-UAV link and low SNR in UAV-to-
+OGS link), we note that the relay settles above the OGS,
+i.e., the relay optimal position x∗→0 as σ2
+N →∞. On the
+other hand, for asymptotic case 3 (low SNR in both sensor-to-
+UAV and UAV-to-OGS links), the optimal position x∗becomes
+independent of noise power σ2
+N as σ2
+N →∞. Moreover,
+σ2
+N →∞=⇒x∗→ϵ0 where ϵ0 > 0. This is in contrast with
+the DF relay case—shown in the right subfigure of Fig. 6—
+where the optimal position x∗→0 as σ2
+N →0 irrespective of
+the SNR in the sensor-to-UAV link (asymptotic case 1 for DF
+relay). For high SNR in UAV-to-OGS link, the optimal UAV
+position is given by the solution to (III-A) for both AF and
+DF relays. In this case, the optimal solution depends only on
+the sensor locations and their transmitted powers.
+Next, we investigate the impact of the UAV’s altitude on the
+end-to-end capacity and explore how variations in the atmo-
+spheric environment affect the optimal altitude of the UAV. A
+critical consideration is that the energy PH(z)—harvested by
+solar panels on the UAV—depends on the altitude of the UAV
+and the solar energy attenuation coefficient due to atmospheric
+cloud layer, βc. Consequently, when the UAV is positioned
+within the cloud layer, that is, where Zd < z < Zc + Zd, we
+not only need to account for the attenuation of laser signal
+energy transmitted by the UAV through the cloud layer, but
+also the attenuation of solar energy as it passes through the
+cloud layer before being absorbed by the UAV solar panels.
+The interplay between the attenuation coefficients ψc and
+βc—where ψc represents attenuation of laser signal through
+clouds and βc denotes solar energy decay through clouds—is
+central to this optimization problem. It is crucial to emphasize
+that these parameters are inherently linked and are subject
+to simultaneous variations triggered by changing atmospheric
+conditions. However, these attenuation coefficients are strongly
+related to the wavelengths involved, and the wavelength-
+dependent attenuation is influenced by the cloud layer model
+which encompasses numerous variables. These include the size
+distribution of droplets within the cloud, the complex refractive
+indices related to the corresponding wavelengths as well as the
+shape of the particles [39]. The relationship between ψc and
+βc, while crucial, is not the main focus of our study. Therefore,
+we have simplified the relationship between the two parameters
+into a linear model for our study in this paper.
+Fig. 7 shows the end-to-end channel capacity as a func-
+tion of the UAV altitude under the assumption βc = ψc,
+modulated by various laser signal energy attenuation fac-
+tors ψc. For this figure as well as the remaining fig-
+ures in this paper, the sensor powers are distributed as
+Pm =
+0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5
+Watts. Fig. 7 dis-
+tinctly showcases the bimodal nature of the capacity curves as
+a function of altitude z. The critical point—where the slope
+changes instantly from negative to positive—occurs when the
+UAV is at the uppermost boundary of the cloud layer at
+
+--- PDF PAGE 12 ---
+12
+Fig. 7. The figure show the channel capacity as a function of UAV’s altitude for different cloud attenuation factor ψc.
+Fig. 8. The figures show the optimal height of UAVs as functions of σ2
+N (left) and ψc (right) for different level fading channel (left) and different models of
+cloud attenuation factors (right).
+z = Zc + Zd = 1000 m. A major insight from this figure
+is the increase in optimal UAV altitude as ψc escalates. This
+implies that in the adverse atmospheric conditions, the UAV
+tends to ascend closer to the sun to harvest more solar power
+to maintain the end-to-end link. A second major observation
+comes from the right subfigure in Fig. 7, where we note that
+as ψc exceeds a particular value, the optimal altitude shifts
+abruptly from the first peak (optimal height inside the cloud) to
+the second peak (optimal height outside the cloud). To provide
+a comprehensive understanding of the relationship between
+changes in the UAV optimal altitude and the atmospheric cloud
+conditions, a deeper investigation is essential.
+In Fig. 8, the left curve depicts the relationship between
+the optimal altitude of the UAV and optical thermal noise
+power σ2
+N. Here, we note that an increase in noise power—
+or conversely a decrease in the signal-to-noise ratio—prompts
+the UAV to fly higher to get closer to the sun in order to
+harvest more solar energy and reduce the impact of thermal
+noise on the performance. For large noise power, the optimal
+altitude becomes independent of the noise power due to (45).
+Moreover, σ2
+N →0 =⇒z∗→0 due to (44) and (36).
+The right graph of Fig. 8 elucidates the impact of cloud
+channel coefficients ψc and βc on the optimal height of
+UAV assuming a linear model between the two atmospheric
+parameters. We note that at minimal values of βc and ψc,
+the optimal altitude for UAV converges at the bottom of the
+cloud z = Zd, a fact that is attributed to minimal solar
+energy attenuation by the clouds. However, below this altitude,
+the extinction coefficient of air—denoted as βa = 0.05—
+significantly diminishes solar energy, making the cloud base an
+equilibrium point for UAV positioning. As βc and ψc increase
+due to formation of clouds, the UAV’s optimal altitude starts
+to rise gradually. A particularly notable observation is that for
+each assumed linear model, there is an abrupt transition in
+the UAV’s optimal height from within the cloud layer to the
+region above the top boundary of the cloud as ψc increases.
+This transition correlates with the dual peaks observed in
+Fig. 7, where the optimal height shifts from the location of
+the first peak to the second in an abrupt fashion. Finally,
+as ψc exceeds a certain threshold and continues to increase,
+the UAV’s optimal altitude follows an approximately linear
+trajectory, with the three curves converging. This convergence
+is due to the fact that above the clouds, solar energy reaches
+the UAVs’ solar panels without attenuation by the cloud,
+prompting the UAV to adopt similar altitude strategy across
+different atmospheric models.
+VII. Conclusions
+In this paper, we present a comprehensive model for a
+solar-powered UAV-assisted RF/FSO link that is aimed at
+facilitating data relay between distant sensors and an optical
+ground station (OGS). We demonstrate that there exists an
+optimal UAV position in three dimensions at which the end-
+to-end capacity is maximized. Our analysis also highlights
+
+--- PDF PAGE 13 ---
+13
+the impact of atmospheric conditions, such as cloud coverage,
+signal fading due to atmospheric turbulence and pointing error
+on the optical UAV-to-OGS link. A major finding of our study
+indicates that as the cloud channel becomes worse, the solar-
+powered UAV must be placed higher up in the sky to maximize
+the end-to-end rate. We believe that these findings will offer
+valuable insights for the design and implementation of future
+solar UAV-assisted RF/FSO communication links.
+References
+[1] H. V. Abeywickrama, B. A. Jayawickrama, Y. He, and E. Dutkiewicz,
+“Comprehensive Energy Consumption Model for Unmanned Aerial
+Vehicles, Based on Empirical Studies of Battery Performance,” IEEE
+Access, vol. 6, pp. 58 383–58 394, 2018.
+[2] Y. Zeng, R. Zhang, and T. J. Lim, “Throughput Maximization for UAV-
+Enabled Mobile Relaying Systems,” IEEE Transactions on Communica-
+tions, vol. 64, no. 12, pp. 4983–4996, 2016.
+[3] J. Lyu, Y. Zeng, R. Zhang, and T. J. Lim, “Placement optimization
+of UAV-mounted mobile base stations,” IEEE Communications Letters,
+vol. 21, no. 3, pp. 604–607, 2016.
+[4] Y. Qin, M. A. Kishk, and M.-S. Alouini, “On the Uplink SINR
+Meta Distribution of UAV-Assisted Wireless Networks,” IEEE Wireless
+Communications Letters, vol. 12, no. 4, pp. 684–688, 2023.
+[5] ——, “On the Downlink SINR Meta Distribution of UAV-assisted
+Wireless Networks,” 2023.
+[6] Y. Zeng and R. Zhang, “Energy-efficient UAV communication with tra-
+jectory optimization,” IEEE Transactions on wireless communications,
+vol. 16, no. 6, pp. 3747–3760, 2017.
+[7] M. Mozaffari, W. Saad, M. Bennis, and M. Debbah, “Efficient De-
+ployment of Multiple Unmanned Aerial Vehicles for Optimal Wireless
+Coverage,” IEEE Communications Letters, vol. 20, no. 8, pp. 1647–1650,
+2016.
+[8] Y. Sun, D. Xu, D. W. K. Ng, L. Dai, and R. Schober, “Optimal 3D-
+trajectory design and resource allocation for solar-powered UAV com-
+munication systems,” IEEE Transactions on Communications, vol. 67,
+no. 6, pp. 4281–4298, 2019.
+[9] S. Kandeepan, K. Gomez, L. Reynaud, and T. Rasheed, “Aerial-
+terrestrial communications: terrestrial cooperation and energy-efficient
+transmissions to aerial base stations,” IEEE Transactions on Aerospace
+and Electronic Systems, vol. 50, no. 4, pp. 2715–2735, 2014.
+[10] K. Li, W. Ni, X. Wang, R. P. Liu, S. S. Kanhere, and S. Jha, “Energy-
+Efficient Cooperative Relaying for Unmanned Aerial Vehicles,” IEEE
+Transactions on Mobile Computing, vol. 15, no. 6, pp. 1377–1386, 2016.
+[11] Y. Chu, C. Ho, Y. Lee, and B. Li, “Development of a Solar-Powered
+Unmanned Aerial Vehicle for Extended Flight Endurance,” Drones,
+vol. 5, no. 2, 2021. [Online]. Available: https://www.mdpi.com/
+2504-446X/5/2/44
+[12] P. D. Diamantoulakis, K. N. Pappi, Z. Ma, X. Lei, P. C. Sofotasios, and
+G. K. Karagiannidis, “Airborne Radio Access Networks with Simultane-
+ous Lightwave Information and Power Transfer (SLIPT),” in 2018 IEEE
+Global Communications Conference (GLOBECOM), 2018, pp. 1–6.
+[13] P. D. Diamantoulakis, G. K. Karagiannidis, and Z. Ding, “Simultaneous
+Lightwave Information and Power Transfer (SLIPT),” IEEE Transactions
+on Green Communications and Networking, vol. 2, no. 3, pp. 764–773,
+2018.
+[14] M. S. Bashir and M.-S. Alouini, “Energy Optimization of a Laser-
+Powered Hovering-UAV Relay in Optical Wireless Backhaul,” IEEE
+Transactions on Wireless Communications, vol. 22, no. 5, pp. 3216–
+3230, 2023.
+[15] P.
+Oettershagen,
+A.
+Melzer,
+T.
+Mantel,
+K.
+Rudin,
+T.
+Stastny,
+B. Wawrzacz, T. Hinzmann, K. Alexis, and R. Siegwart, “Perpetual flight
+with a small solar-powered UAV: Flight results, performance analysis and
+model validation,” in 2016 IEEE Aerospace Conference, 2016, pp. 1–8.
+[16] S. Morton, R. D’Sa, and N. Papanikolopoulos, “Solar powered UAV:
+Design and experiments,” in 2015 IEEE/RSJ International Conference
+on Intelligent Robots and Systems (IROS), 2015, pp. 2460–2466.
+[17] Y. Fu, H. Mei, K. Wang, and K. Yang, “Joint Optimization of 3D
+Trajectory and Scheduling for Solar-Powered UAV Systems,” IEEE
+Transactions on Vehicular Technology, vol. 70, no. 4, pp. 3972–3977,
+2021.
+[18] R. I. Bor-Yaliniz, A. El-Keyi, and H. Yanikomeroglu, “Efficient 3-
+D placement of an aerial base station in next generation cellular
+networks,” in 2016 IEEE international conference on communications
+(ICC).
+IEEE, 2016, pp. 1–5.
+[19] J.-H. Lee, K.-H. Park, Y.-C. Ko, and M.-S. Alouini, “Throughput
+Maximization of Mixed FSO/RF UAV-Aided Mobile Relaying With a
+Buffer,” IEEE Transactions on Wireless Communications, vol. 20, no. 1,
+pp. 683–694, 2021.
+[20] R. Fan, J. Cui, S. Jin, K. Yang, and J. An, “Optimal node placement and
+resource allocation for UAV relaying network,” IEEE Communications
+Letters, vol. 22, no. 4, pp. 808–811, 2018.
+[21] Z. Yang, C. Pan, M. Shikh-Bahaei, W. Xu, M. Chen, M. Elkashlan,
+and A. Nallanathan, “Joint altitude, beamwidth, location, and bandwidth
+optimization for UAV-enabled communications,” IEEE Communications
+Letters, vol. 22, no. 8, pp. 1716–1719, 2018.
+[22] H.-T. Ye, X. Kang, J. Joung, and Y.-C. Liang, “Optimization for
+Wireless-Powered IoT Networks Enabled by an Energy-Limited UAV
+Under Practical Energy Consumption Model,” IEEE Wireless Commu-
+nications Letters, vol. 10, no. 3, pp. 567–571, 2021.
+[23] Q. Wu, Y. Zeng, and R. Zhang, “Joint trajectory and communication
+design for multi-UAV enabled wireless networks,” IEEE Transactions
+on Wireless Communications, vol. 17, no. 3, pp. 2109–2121, 2018.
+[24] G. Vallero and M. Meo, “Modelling Solar Powered UAV-BS for 5G and
+Beyond,” in 2021 19th Mediterranean Communication and Computer
+Networking Conference (MedComNet), 2021, pp. 1–8.
+[25] J.-S. Lee and K.-H. Yu, “Optimal Path Planning of Solar-Powered UAV
+Using Gravitational Potential Energy,” IEEE Transactions on Aerospace
+and Electronic Systems, vol. 53, no. 3, pp. 1442–1451, 2017.
+[26] X. Zhang, V. A.
+¨Oberg, J. Du, J. Liu, and E. M. J. Johansson,
+“Extremely lightweight and ultra-flexible infrared light-converting
+quantum dot solar cells with high power-per-weight output using a
+solution-processed bending durable silver nanowire-based electrode,”
+Energy Environ. Sci., vol. 11, pp. 354–364, 2018. [Online]. Available:
+http://dx.doi.org/10.1039/C7EE02772A
+[27] Solar-electric 6-seat transporter, url = https://www.solar-flight.com/solar-
+6-seat-transporter/.
+[28] J. A. Duffie and W. A. Beckman, Solar engineering of thermal processes.
+John Wiley & Sons, 2013.
+[29] R. Dai, U. Lee, S. Hosseini, and M. Mesbahi, “Optimal path planning
+for solar-powered UAVs based on unit quaternions,” in 2012 IEEE 51st
+IEEE Conference on Decision and Control (CDC).
+IEEE, 2012, pp.
+3104–3109.
+[30] R. I. Bor-Yaliniz, A. El-Keyi, and H. Yanikomeroglu, “Efficient 3-
+D Placement of an Aerial Base Station in Next Generation Cellular
+Networks,” in 2016 IEEE International Conference on Communications
+(ICC), 2016, pp. 1–5.
+[31] L. Zhang, A. Celik, S. Dang, and B. Shihada, “Energy-Efficient Trajec-
+tory Optimization for UAV-Assisted IoT Networks,” IEEE Transactions
+on Mobile Computing, pp. 1–1, 2021.
+[32] X. Song, Z. Chang, X. Guo, P. Wu, and T. H¨am¨al¨ainen, “Energy Efficient
+Optimization for Solar-Powered UAV Communications System,” in 2021
+IEEE International Conference on Communications Workshops (ICC
+Workshops), 2021, pp. 1–6.
+[33] J. Marriott, B. Tezel, Z. Liu, and N. E. Stier-Moses, “Trajectory Opti-
+mization of Solar-Powered High-Altitude Long Endurance Aircraft,” in
+2020 6th International Conference on Control, Automation and Robotics
+(ICCAR), 2020, pp. 473–481.
+[34] X. Wang, Y. Yang, D. Wu, Z. Zhang, and X. Ma, “Mission-Oriented 3D
+Path Planning for High-Altitude Long-Endurance Solar-Powered UAVs
+With Optimal Energy Management,” IEEE Access, vol. 8, pp. 227 629–
+227 641, 2020.
+[35] M. S. Bashir and M.-S. Alouini, “Optimal positioning of hovering UAV
+relays for mitigation of pointing error in free-space optical communi-
+cations,” IEEE Transactions on Communications, vol. 70, no. 11, pp.
+7477–7490, 2022.
+[36] R. Barrios and F. Dios, “Exponentiated Weibull distribution family
+under aperture averaging for Gaussian beam waves,” Opt. Express,
+vol. 20, no. 12, pp. 13 055–13 064, Jun 2012. [Online]. Available:
+http://www.opticsexpress.org/abstract.cfm?URI=oe-20-12-13055
+[37] “Special Edition / Textile Solar Panels for an Optimal Power-
+to-Weight
+Ratio,”
+https://www.boatsnews.com/story/32249/
+textile-solar-panels-for-an-optimal-power-to-weight-ratio,
+accessed:
+09-15-2022.
+[38] M. Kaltenbrunner et al., “Flexible high power-per-weight perovskite
+solar cells with chromium oxide–metal contacts for improved stability
+in air,” Nature Mater, vol. 14, p. 1032–1039, 2015.
+[39] F. Moll and M. Knapek, “Wavelength selection criteria and link avail-
+ability due to cloud coverage statistics and attenuation affecting satellite,
+aerial, and downlink scenarios,” in Free-Space Laser Communications
+VII, vol. 6709.
+SPIE, 2007, pp. 347–358.

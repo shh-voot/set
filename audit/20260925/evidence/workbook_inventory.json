@@ -1,0 +1,292 @@
+[
+  {
+    "file": "数据\\无人机应急物资运输基础数据\\中继无人机数据.xlsx",
+    "sheets": [
+      {
+        "name": "数据",
+        "rows": 12,
+        "cols": 19
+      }
+    ]
+  },
+  {
+    "file": "数据\\无人机应急物资运输基础数据\\物资需求与配送时限.xlsx",
+    "sheets": [
+      {
+        "name": "数据",
+        "rows": 54,
+        "cols": 9
+      },
+      {
+        "name": "逐箱货箱清单",
+        "rows": 81,
+        "cols": 9
+      }
+    ]
+  },
+  {
+    "file": "数据\\无人机应急物资运输基础数据\\调度中心与服务区.xlsx",
+    "sheets": [
+      {
+        "name": "数据",
+        "rows": 21,
+        "cols": 6
+      }
+    ]
+  },
+  {
+    "file": "数据\\无人机应急物资运输基础数据\\运输无人机数据.xlsx",
+    "sheets": [
+      {
+        "name": "数据",
+        "rows": 22,
+        "cols": 18
+      }
+    ]
+  },
+  {
+    "file": "数据\\无人机应急物资运输基础数据\\通信链路参数.xlsx",
+    "sheets": [
+      {
+        "name": "数据",
+        "rows": 17,
+        "cols": 5
+      }
+    ]
+  },
+  {
+    "file": "结果提交模板.xlsx",
+    "sheets": [
+      {
+        "name": "Q1_单点组批",
+        "rows": 3,
+        "cols": 9
+      },
+      {
+        "name": "Q2_运输架次",
+        "rows": 3,
+        "cols": 8
+      },
+      {
+        "name": "Q2_逐箱交付",
+        "rows": 3,
+        "cols": 4
+      },
+      {
+        "name": "Q3_中继架次",
+        "rows": 29,
+        "cols": 14
+      },
+      {
+        "name": "Q3_通信保障",
+        "rows": 79,
+        "cols": 23
+      },
+      {
+        "name": "Q4_分区配置",
+        "rows": 58,
+        "cols": 16
+      }
+    ]
+  },
+  {
+    "file": "解题-gpt\\结果\\问题一_18架次方案_修复版.xlsx",
+    "sheets": [
+      {
+        "name": "架次方案",
+        "rows": 19,
+        "cols": 19
+      },
+      {
+        "name": "货箱核验",
+        "rows": 81,
+        "cols": 4
+      },
+      {
+        "name": "校验",
+        "rows": 6,
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "file": "解题-gpt\\结果\\问题一_严格约束方案.xlsx",
+    "sheets": [
+      {
+        "name": "Sheet1",
+        "rows": 38,
+        "cols": 11
+      }
+    ]
+  },
+  {
+    "file": "解题-gpt\\结果\\问题三_中继部署方案_修复版.xlsx",
+    "sheets": [
+      {
+        "name": "Sheet1",
+        "rows": 3,
+        "cols": 17
+      }
+    ]
+  },
+  {
+    "file": "解题-gpt\\结果\\问题三_覆盖核验_修复版.xlsx",
+    "sheets": [
+      {
+        "name": "Sheet1",
+        "rows": 16,
+        "cols": 4
+      }
+    ]
+  },
+  {
+    "file": "解题-gpt\\结果\\问题三_运输调度_修复版.xlsx",
+    "sheets": [
+      {
+        "name": "Sheet1",
+        "rows": 46,
+        "cols": 20
+      }
+    ]
+  },
+  {
+    "file": "解题-gpt\\结果\\问题二_优化修复版.xlsx",
+    "sheets": [
+      {
+        "name": "架次调度",
+        "rows": 50,
+        "cols": 14
+      },
+      {
+        "name": "逐箱时限",
+        "rows": 81,
+        "cols": 8
+      },
+      {
+        "name": "资源核验",
+        "rows": 4,
+        "cols": 8
+      },
+      {
+        "name": "校验",
+        "rows": 9,
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "file": "解题-gpt\\结果\\问题二_增强优化版.xlsx",
+    "sheets": [
+      {
+        "name": "架次调度",
+        "rows": 46,
+        "cols": 14
+      },
+      {
+        "name": "逐箱时限",
+        "rows": 81,
+        "cols": 8
+      },
+      {
+        "name": "资源核验",
+        "rows": 4,
+        "cols": 8
+      },
+      {
+        "name": "校验",
+        "rows": 9,
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "file": "解题-gpt\\结果\\问题四_2批次_修复版.xlsx",
+    "sheets": [
+      {
+        "name": "分组资源",
+        "rows": 3,
+        "cols": 19
+      },
+      {
+        "name": "官方库存",
+        "rows": 2,
+        "cols": 8
+      },
+      {
+        "name": "资源缺口",
+        "rows": 2,
+        "cols": 8
+      }
+    ]
+  },
+  {
+    "file": "解题-gpt\\结果\\问题四_2批次_错峰复用优化.xlsx",
+    "sheets": [
+      {
+        "name": "错峰调度",
+        "rows": 46,
+        "cols": 16
+      },
+      {
+        "name": "需求",
+        "rows": 2,
+        "cols": 6
+      },
+      {
+        "name": "官方库存",
+        "rows": 2,
+        "cols": 6
+      },
+      {
+        "name": "缺口",
+        "rows": 2,
+        "cols": 6
+      }
+    ]
+  },
+  {
+    "file": "解题-gpt\\结果\\问题四_3批次_修复版.xlsx",
+    "sheets": [
+      {
+        "name": "分组资源",
+        "rows": 4,
+        "cols": 19
+      },
+      {
+        "name": "官方库存",
+        "rows": 2,
+        "cols": 8
+      },
+      {
+        "name": "资源缺口",
+        "rows": 2,
+        "cols": 8
+      }
+    ]
+  },
+  {
+    "file": "解题-gpt\\结果\\问题四_3批次_错峰复用优化.xlsx",
+    "sheets": [
+      {
+        "name": "错峰调度",
+        "rows": 46,
+        "cols": 16
+      },
+      {
+        "name": "需求",
+        "rows": 2,
+        "cols": 6
+      },
+      {
+        "name": "官方库存",
+        "rows": 2,
+        "cols": 6
+      },
+      {
+        "name": "缺口",
+        "rows": 2,
+        "cols": 6
+      }
+    ]
+  }
+]

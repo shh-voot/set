@@ -1,0 +1,2309 @@
+--- PDF PAGE 1 ---
+Submitted to INFORMS Journal on Computing
+manuscript JOC-2023-03-SI-0055.R1
+PyVRP: a high-performance VRP solver package
+Niels A. Wouda
+Department of Operations, University of Groningen, Groningen, The Netherlands, n.a.wouda@rug.nl
+Leon Lan
+Department of Mathematics, Vrije Universiteit Amsterdam, Amsterdam, The Netherlands, l.lan@vu.nl
+Wouter Kool
+ORTEC, Zoetermeer, The Netherlands, wouter.kool@ortec.com
+We introduce PyVRP, a Python package that implements hybrid genetic search in a state-of-the-art vehicle
+routing problem (VRP) solver. The package is designed for the VRP with time windows (VRPTW), but
+can be easily extended to support other VRP variants. PyVRP combines the flexibility of Python with the
+performance of C++, by implementing (only) performance critical parts of the algorithm in C++, while
+being fully customisable at the Python level. PyVRP is a polished implementation of the algorithm that
+ranked 1st in the 2021 DIMACS VRPTW challenge and, after improvements, ranked 1st on the static variant
+of the EURO meets NeurIPS 2022 vehicle routing competition. The code follows good software engineering
+practices, and is well-documented and unit tested. PyVRP is freely available under the liberal MIT license.
+Through numerical experiments we show that PyVRP achieves state-of-the-art results on the VRPTW and
+capacitated VRP. We hope that PyVRP enables researchers and practitioners to easily and quickly build on
+a state-of-the-art VRP solver.
+Key words : Vehicle Routing Problem; Time Windows; Hybrid Genetic Search; Open-Source; C++; Python
+History :
+1.
+Introduction
+This paper describes PyVRP, a Python package that provides a high-performance imple-
+mentation of the hybrid genetic search (HGS) algorithm for vehicle routing problems
+(VRPs) (Vidal et al. 2013). PyVRP currently supports two well-known VRP variants:
+the capacitated VRP (CVRP) and the VRP with time windows (VRPTW) (Toth and
+Vigo 2014). The implementation builds on the open-source HGS-CVRP implementation of
+Vidal (2022), but has added support for time windows and has been completely redesigned
+to be easy to use as a highly customisable Python package, while maintaining speed and
+state-of-the-art performance.
+While HGS-CVRP is implemented completely in C++, PyVRP adopts a different philos-
+ophy: only performance-critical parts of the algorithm are implemented in C++, whereas
+1
+arXiv:2403.13795v2  [cs.NE]  21 Mar 2024
+
+--- PDF PAGE 2 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+2
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+all other parts are implemented in Python. Besides easily using the algorithm, this gives
+the user additional flexibility to customise the algorithm using Python. The provided HGS
+implementation is one example of a large family of VRP algorithms that can be built using
+the building blocks that PyVRP provides. As the performance-critical parts remain in
+C++, the added flexibility and ease-of-use that Python offers barely impact the algorithm
+performance.
+PyVRP comes with pre-compiled binaries for Windows, Mac OS and Linux, and can
+be easily installed from the Python package index using pip install pyvrp. This allows
+users to directly solve VRP instances, or implement variants of the HGS algorithm using
+Python, inspired by the examples in PyVRP’s documentation. Users can customise various
+aspects of the algorithm using Python, including population management, crossover strate-
+gies, granular neighbourhoods and operator selection in the local search. Additionally, for
+advanced use cases such as supporting additional VRP variants, users can build and install
+PyVRP directly from the source code. We actively welcome community contributions to
+develop support for additional VRP variants within PyVRP, and provide some guidelines
+for this in our online documentation.
+The goal of PyVRP, which is made available under the liberal MIT license, is to provide
+an easy-to-use, extensible, and well-documented VRP solver that generates state-of-the-art
+results on a variety of VRP variants. This can be used by practitioners to solve practical
+problems, and by researchers as a starting point or strong baseline when aiming to improve
+the state of the art. The name ‘PyVRP’ has deliberately been chosen to not mention
+a specific algorithm or VRP variant, providing flexibility with respect to the underlying
+heuristic algorithms and supported VRP variants.
+Through the Python ecosystem, we enable a wide audience to easily use the software.
+We especially hope that PyVRP will help machine learning (ML) researchers interested in
+vehicle routing to easily build on the state-of-the-art, and move beyond LKH-3 (Helsgaun
+2017) as the most commonly used baseline (Accorsi et al. 2022). Using ML for vehicle
+routing problems is a promising and active research area, but so far it has not been able to
+advance the state-of-the-art; this may change when ML researchers can build on a flexible
+and high-quality implementation of a state-of-the-art VRP solver.
+PyVRP is a complete Python library for solving multiple VRP variants, accompanied
+by unit tests, online documentation and examples on its use cases. The library has been
+
+--- PDF PAGE 3 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+3
+tested in practice: earlier versions of the software ranked 1st in the VRPTW track of
+the 12th DIMACS implementation challenge (Kool et al. 2022) and, after improvements,
+ranked 1st on the static VRPTW variant of the EURO meets NeurIPS 2022 vehicle routing
+competition (Van Doorn et al. 2022). Compared to the versions used to win these chal-
+lenges, the PyVRP implementation has been simplified further, and significantly rewritten
+to improve its overall design and testability. In particular, complex components with lim-
+ited contribution to the overall performance have been removed to strike a balance between
+simplicity and performance. The result is simpler and more robust than the individual chal-
+lenge solvers, which were quite complex and optimised for the specific challenge problem
+sets. In Section 6, we show that PyVRP still yields excellent performance, using numer-
+ical experiments on public benchmarks following the conventions used in the DIMACS
+implementation challenge.
+The rest of this paper is structured as follows. In Section 2 we briefly introduce the
+CVRP and VRPTW, and the benchmarking conventions PyVRP supports. In Section 3,
+we discuss several other open-source VRP solvers, and highlight the novelty of PyVRP.
+Then, in Sections 4 and 5, we discuss the technical implementation and PyVRP package,
+respectively. In Section 5 we present two examples to demonstrate how the package can
+be used. Section 6 presents PyVRP’s performance on established benchmark instances.
+Finally, Section 7 concludes the paper.
+2.
+Problem description
+PyVRP currently supports two VRP variants: CVRP and VRPTW. The CVRP aims to
+construct multiple routes, each starting and ending at the same depot, to serve a set of
+customers while minimising total distance. The total demand of customers in a single
+vehicle is limited by the vehicle capacity. The VRPTW generalises the CVRP by adding
+the constraint that each customer must be visited within a certain time window. For both
+CVRP and VRPTW, PyVRP supports minimising distances, not the number of vehicles
+used. A simple procedure to support fleet minimisation can be developed on top of PyVRP,
+by first finding a feasible solution with some number of vehicles, and then removing one
+vehicle at a time until no feasible solution is found. PyVRP has been designed to handle
+instances of these problems with up to several thousand customers.
+
+--- PDF PAGE 4 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+4
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+2.1.
+CVRP
+Formally, the capacitated VRP consists of customers i = 1,...,n with demands qi ≥0, which
+must be served from a common depot denoted as 0. The goal is to visit all customers using
+a fixed fleet of vehicles, each of which starts at, and returns to, the depot, while minimising
+the total distance travelled, where the distance from customer (or depot) i to j is denoted
+as dij ≥0. The total demand in each vehicle should not exceed the vehicle capacity Q > 0.
+2.2.
+VRPTW
+For the VRPTW, each customer additionally has a service time si ≥0, an earliest arrival
+time ei ≥0 and latest arrival time li ≥0 (ei ≤li) in between which service should start. A
+vehicle can wait at customer i when arriving too early, but cannot arrive after li. The time
+to travel from customer (or depot) i to j is given by tij ≥0. While in academic benchmarks
+the duration tij is typically set equal to the distance dij, PyVRP supports separate distance
+and duration matrices, as is commonly encountered in practice.
+2.3.
+Conventions
+There are different conventions on the definitions of the constraints and objectives for
+CVRP and VRPTW, especially relating to rounding of (Euclidean) distances and other
+data in existing benchmark instances (see e.g. Uchoa et al. (2017)). PyVRP supports integer
+distances and durations, which should be provided explicitly by the user. Additionally,
+PyVRP can be compiled to use double precision data as well, but that is not enabled by
+default for performance reasons: we found during initial experimentation that working with
+double precision data is somewhat slower than using integers. For working with benchmark
+instances, we rely on the VRPLIB package (Lan 2023) to compute distances and durations,
+and we provide helper functions to scale and then round or truncate them before converting
+to integers. This way, we support various conventions, including the one-decimal precision
+used in the DIMACS VRPTW challenge, and the CVRPLIB benchmark repository at
+http://vrp.galgos.inf.puc-rio.br/.
+3.
+Related projects
+As many algorithms developed in the literature have not been open-sourced, the primary
+goal of PyVRP is to open-source a state-of-the-art VRP solver that is easy to use and
+customise. We are aware of the following, related projects:
+
+--- PDF PAGE 5 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+5
+• HGS-CVRP (Vidal 2022) is a simple, specialised solver for the CVRP implemented in
+C++ with state-of-the-art performance. While a Python interface, PyHygese (Kwon 2022),
+is available on the Python package index, it does not come with pre-compiled binaries,
+and thus requires that users have a compiler toolchain already installed. Beyond setting
+the parameters, all types of customisation require changes of the C++ source code. HGS-
+CVRP is open to contributions from the community and has a permissive MIT license.
+• LKH-3 (Helsgaun 2017) is a heuristic that supports a wide variety of VRP variants. It
+solves these by transforming them into a symmetric travelling salesman problem problem
+and applying the Lin-Kernighan-Helsgaun local search heuristic. While it provides good
+solutions for many problem variants, the solver is hard to customise as it requires modifying
+its C source code. Furthermore, it is only available under an academic and non-commercial
+license, and it is unclear whether community contributions are welcomed.
+• VROOM (Coupey et al. 2023), the Vehicle Routing Open-source Optimisation
+Machine, is an open-source solver that aims to provide good solutions to real-life VRPs.
+In particular, it integrates well with open-source routing software to solve real-life VRPs
+within limited computation time. It implements many constructive heuristics and a local
+search algorithm in C++ and can handle different types of VRPs. However, it is unable to
+compete with state-of-the-art algorithms and lacks documentation to customise its under-
+lying solver.
+• OR-Tools (Perron and Furnon 2022) is a general modelling and optimisation toolkit for
+solving operations research problems, developed and maintained by Google. It is written in
+C++ but can be used from Python, Java or C#. OR-tools is extensively documented and
+can be installed directly from the Python packaging index. Internally, it uses a constraint
+programming approach specialised to solve a large variety of routing problems. While this
+approach allows it to model and solve many problem variants, its performance is far from
+the state of the art.
+• VRPSolver (Pessoa et al. 2020) is an exact, state-of-the-art VRP solver which supports
+different problem variants through a generic model. The solver has a C++, Julia and
+Python interface, the latter of which can be installed directly from the Python package
+index. VRPSolver can find optimal solutions and prove optimality for VRP solutions of
+modest size, but it is does not scale to instances with more than a few hundred customers.
+Moreover, the solver’s license limits the use of its most powerful components to academic
+users.
+
+--- PDF PAGE 6 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+6
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+• “A VRP Solver” is a rich VRP heuristic solver due to Builuk (2023), written in Rust
+and made available under an Apache 2.0 license. The project supports many VRP variants,
+using a custom data format based on JavaScript Object Notation. The project is well-
+tested and a user manual is available, including examples, but appears to be lacking a
+detailed documentation of the available functional endpoints. Furthermore, it is unclear
+how well the solver performs in general, as results on standard benchmark instances are
+lacking.
+While each of these projects has their own merit, PyVRP has a unique combination of
+scope, performance, flexibility and ease-of-use, making it a useful addition to this set of
+projects.
+4.
+Technical implementation
+PyVRP implements a variant of the HGS algorithm of Vidal et al. (2013). At its core,
+our implementation consists of a genetic algorithm, a population, and a local search
+improvement method. We explain these below, but refer to our documentation at https:
+//pyvrp.org/ for a full overview of the class and function descriptions, and other helper
+classes and methods we do not describe here.
+4.1.
+Overview of HGS
+HGS is a hybrid algorithm that combines a genetic algorithm with a local search algorithm.
+It maintains a population with feasible and infeasible solutions. Initially, solutions are
+created by randomly assigning customers to routes (feasibility is not required), which
+ensures diversity in the search. Then, in every iteration, two parents are selected from the
+population, and combined using a crossover operator to create a new offspring solution. We
+provide an efficient C++ implementation of the selective route exchange (SREX) crossover
+operator (Nagata and Kobayashi 2010) by default, but this can easily be replaced by
+another crossover operator.
+In each iteration, the new offspring solution is improved using local search, which con-
+siders time windows and capacities as soft constraints by penalising violations. This way,
+the local search considers a smoothed version of the problem, which helps the genetic algo-
+rithm to converge towards promising regions of the solution space. The penalty weights are
+automatically adjusted such that a target percentage of the local search runs results in a
+feasible solution. After the local search, the offspring is inserted into the population. Once
+
+--- PDF PAGE 7 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+7
+the population exceeds a certain size, a survivor selection mechanism removes solutions
+which contribute the least to the overall quality and diversity of the population.
+4.2.
+Genetic algorithm
+The genetic algorithm is implemented in Python and defines the main search loop. In every
+iteration of the search loop, the genetic algorithm selects two (feasible or infeasible) parent
+solutions from the population. A crossover operators takes the two parent solutions and
+uses those to generate an offspring solution that inherits features from both parents.
+After crossover completes, the offspring solution is improved using local search, and then
+added to the population. If this improved offspring solution is feasible and better than our
+current best solution, it becomes the new best observed solution. Finally, after the main
+search loop completes, the genetic algorithm returns a result object that contains the best
+observed solution and detailed runtime statistics.
+4.3.
+Local search
+We provide an efficient local search implementation to improve a new offspring solution.
+This improvement procedure is typically the most expensive part of the HGS algorithm.
+Software profiling suggests that in PyVRP it accounts for 80-90% of the runtime, which
+is why the local search is implemented in C++. The implementation explores a granular
+neighbourhood (Toth and Vigo 2003) in a very efficient manner using user-provided oper-
+ators. These operators evaluate moves in different neighbourhoods, and the local search
+algorithm applies the move as soon as it yields a direct improvement in the objective
+value of the solution. The search is repeated until no more improvements can be made.
+We distinguish node operators and route operators. Node operators are applied to pairs of
+customers, and evaluate local moves around these customers. Node operators may also be
+applied to a customer and an unassigned vehicle: this evaluates moves placing a customer
+into an empty route. To limit the number of vehicles used, these moves are evaluated
+only once all moves involving pairs of customer have been exhausted. Route operators are
+applied to pairs of non-empty routes and evaluate more expensive moves that intensify the
+search.
+Users are free to supply their own node and route operators, but for convenience we
+already provide a large set of efficient operators, which we describe next.
+
+--- PDF PAGE 8 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+8
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+4.3.1.
+Node operators Node operators each evaluate (and possibly apply) a move
+between two customers u and v, with the restriction that v is in the granular neighbour-
+hood N(u) of u. We provide a default granular neighbourhood of size k for each customer,
+that takes into account both spatial and temporal aspects of the problem instance. This
+default implementation reduces the neighborhood size from O(n2) to O(kn), but a user
+can fully customise the neighbourhood structure, or replace it altogether with their own.
+PyVRP currently implements the following node operators:
+(N,M)-exchange This operator considers exchanging a consecutive route segment of N >
+0 nodes starting at u (inclusive) with a segment of 0 ≤M ≤N nodes starting at v (inclu-
+sive). These segments must not overlap in the same route, and not contain the depot. When
+M = 0, this operator evaluates relocate moves inserting u (and possible subsequent nodes)
+after v. When M > 0, the operator evaluates swap moves exchanging the route segments
+of one or more nodes starting at nodes u and v. This exchange generalises the implementa-
+tions of Vidal (2022). We implement (N,M)-exchange using C++’s template mechanism,
+which after compilation results in efficient, specialised operator implementations for any
+N and M.
+MoveTwoClientsReversed This operator considers a (2,0)-exchange where u and its imme-
+diate successor are reversed before inserting them after v.
+2-OPT The 2-OPT operator represents the routes of u and v as (directed) line-graphs,
+where an arc u →x indicates x is visited directly after u. 2-OPT replaces the arcs u →x
+and v →y by u →y and v →x, effectively recombining the starts and ends of the two
+routes if we split them at u and v. When u and v are within the same route, and u precedes
+v, this operator replaces u →x and v →y by u →v and x →y, thus reversing the route
+segment from x to v.
+4.3.2.
+Route operators Route operators consider moves between route pairs, avoiding
+the granularity restrictions imposed on the node operators. This enables the evaluation of
+much larger neighbourhoods, while additional caching opportunities ensure these evalua-
+tions remain fast. PyVRP provides two route operators by default:
+RELOCATE* The RELOCATE* operator finds and applies the best (1,0)-exchange move
+between two routes. RELOCATE* uses the (N,M)-exchange node operator (with N = 1
+and M = 0) to evaluate each move between the two routes.
+
+--- PDF PAGE 9 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+9
+SWAP* The SWAP* operator due to Vidal (2022) considers the best swap move between
+two routes, but does not require that the swapped customers are inserted in each others
+place. Instead, each is inserted into the best location in the other route. We enhance the
+implementation of Vidal (2022) with time window support, further caching, and earlier
+stopping when evaluating ‘known-bad’ moves.
+4.4.
+Population management
+The population is implemented in Python, using feasible and infeasible sub-populations
+that are implemented in C++ for performance. New solutions can be added to the pop-
+ulation, and parent solutions can be requested from it for crossover. These parents are
+selected by a k-way tournament on the relative fitness of each parent (Kwon et al. 2022).
+By default, k = 2, which results in a binary tournament.
+The population is initialised with a minimal set of random solutions. New solutions
+obtained by the genetic algorithm are added to it as they are generated. Once a sub-
+population reaches its maximal size, survivor selection is performed that reduces the sub-
+population to its minimal size. This survivor selection is done by first removing duplicate
+solutions, and then by removing those solutions that have worst fitness based on the biased
+fitness criterion of Vidal (2022). This fitness criterion balances solution quality based on
+the solution’s objective value and diversity w.r.t. to other solutions in the sub-population,
+evaluated using a diversity measure supplied to the population. We implement a directed
+variant of the broken pairs distance, but a user can also supply their own diversity measure.
+5.
+The PyVRP package
+The PyVRP package is developed in a GitHub repository located at https://github.
+com/PyVRP/PyVRP. The repository contains the C++ and Python source code, including
+unit and integration tests, as well as documentation and examples introducing new users
+to PyVRP. Additionally, the repository uses automated workflows that build PyVRP for
+different platforms (currently Linux, Windows, and Mac OS), such that a user can install
+PyVRP directly from the Python package index using pip install pyvrp without having
+to compile the C++ extensions themselves.
+5.1.
+Package structure
+The top-level pyvrp namespace contains some of the components of Section 4,
+and important additional classes. These include the Model modelling interface, the
+
+--- PDF PAGE 10 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+10
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+GeneticAlgorithm and Population, along with a read function that can be used to
+read benchmark instances in various formats (through the VRPLIB Python package).
+Crossover operators that can be used together with the GeneticAlgorithm are provided
+in pyvrp.crossover. Further, the pyvrp.diversity namespace constains diversity mea-
+sures that can be used with the Population. The pyvrp.search namespace contains the
+LocalSearch class, the operators, and the compute neighbours function that computes
+a granular neighbourhood. Stopping criteria for the genetic algorithm are provided by
+pyvrp.stop. These include stopping criteria based on a maximum number of iterations
+or runtime, but also variants that stop after a number of iterations without improvement.
+Finally, pyvrp.plotting provides utilities for plotting and analysing solutions.
+5.2.
+Example use
+We present two examples, for different audiences. The first example in Listing 1 shows
+the modelling interface of PyVRP, and how that can be used to define and solve a CVRP
+instance. This interface is particularly convenient for practitioners interested in solving
+VRPs using PyVRP. The second example in Listing 2 shows the different components in
+PyVRP, and how they can be used to solve a VRPTW instance. This example is helpful
+for understanding how PyVRP’s implementation of HGS works, and can be used as a basis
+to customise the solution algorithm.
+We will first present the modelling interface in Listing 1.
+Listing 1: Using PyVRP’s modelling interface to solve a CVRP instance.
+import
+numpy as np
+from
+pyvrp
+import
+Model
+from
+pyvrp.stop
+import
+MaxRuntime
+gen = np.random.default_rng(seed=42)
+# random
+coordinate
+and demand
+data
+coords = gen.integers (0, 100, size=(10, 2))
+demands = gen.integers (0, 10, size=(10 ,))
+m = Model ()
+m. add_vehicle_type (capacity=15, num_available =4)
+# 4 vehicles of 15 capacity
+each
+depot = m.add_depot(x=coords[0][0], y=coords[0][1])
+clients = [
+m.add_client(x=coords[idx][0], y=coords[idx][1], demand=demands[idx])
+for idx in range(1, len(coords))
+]
+for frm in m.locations:
+for to in m.locations:
+distance = abs(frm.x - to.x) + abs(frm.y - to.y)
+# Manhattan
+
+--- PDF PAGE 11 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+11
+m.add_edge(frm , to , distance=distance)
+res = m.solve(stop=MaxRuntime (1), seed=4)
+# one second
+print(res)
+The modelling interface is available as Model, and can be used to define all relevant
+instance attributes: the depot, clients, vehicle types, and the edges connecting all locations.
+After defining an instance, it can be solved by calling the solve method on the model.
+Once solving finishes, a result object res is returned. This object contains the best-found
+solution (res.best) and statistics about the solver run. The result object can be printed to
+display the solution and some relevant statistics. Additionally, the results can be plotted,
+which we will show how to do in Listing 2.
+In Listing 2 we solve the 1000 customer RC2 10 5 instance of the Homberger and Gehring
+VRPTW set of benchmarks. Rather than using the modelling interface’s high-level solve
+method, here we set everything up explicitly. The code assumes that the RC2 10 5 instance
+is available locally.
+Listing 2: PyVRP example usage.
+from
+pyvrp
+import *
+from
+pyvrp.crossover
+import
+selective_route_exchange
+as srex
+from
+pyvrp.diversity
+import
+broken_pairs_distance
+as bpd
+from
+pyvrp.search
+import *
+from
+pyvrp.plotting
+import
+plot_result
+from
+pyvrp.stop
+import
+MaxRuntime
+data = read("RC2_10_5.txt", instance_format ="solomon", round_func="dimacs")
+rng = RandomNumberGenerator (seed=42)
+# We use local
+search
+with all
+default
+node and route
+operators to improve
+# offspring
+after
+crossover.
+ls = LocalSearch(data , rng , compute_neighbours (data))
+for op in NODE_OPERATORS :
+ls. add_node_operator (op(data))
+for op in ROUTE_OPERATORS :
+ls. add_route_operator (op(data))
+pen_manager = PenaltyManager ()
+pop = Population(bpd)
+init_pop = [Solution.make_random(data , rng) for _ in range (25)]
+algo = GeneticAlgorithm (data , pen_manager , rng , pop , ls , srex , init_pop)
+res = algo.run(stop=MaxRuntime (60))
+# run for sixty
+seconds
+plot_result(res , data)
+Listing 2 first reads a benchmark instance in standard format and constructs a random
+number generator with fixed seed. It then defines the local search method. We use the
+
+--- PDF PAGE 12 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+12
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+0
+250
+500
+750
+1000
+1250
+1500
+1750
+2000
+Iteration (#)
+0.0
+0.2
+0.4
+0.6
+0.8
+Avg. diversity
+Diversity
+Feas. diversity
+Infeas. diversity
+0
+250
+500
+750
+1000
+1250
+1500
+1750
+2000
+Iteration (#)
+260000
+270000
+280000
+290000
+300000
+Objective
+Objectives
+Infeas. best
+Infeas. avg.
+Feas. best
+Feas. avg.
+0
+250
+500
+750
+1000
+1250
+1500
+1750
+2000
+Iteration (#)
+0.00
+0.02
+0.04
+0.06
+0.08
+0.10
+0.12
+0.14
+0.16
+Runtime (s)
+Iteration runtimes
+0
+1000
+2000
+3000
+4000
+5000
+0
+1000
+2000
+3000
+4000
+5000
+Solution
+Depot
+Figure 1
+Detailed statistics collected from a single run of Listing 2. The top-left figure shows the average
+diversity of the feasible and infeasible sub-populations. It is clear from this figure that periodic survivor
+selection improves diversity. The middle-left figure shows the best and average objectives of both sub-
+populations, which improve over time as the search progresses. The bottom-left figure shows iteration
+runtimes (in seconds), including a trendline. Finally, the figure on the right plots the best observed
+solution.
+default granular neighbourhood computed by compute neighbours, but this can easily
+be customised by providing an alternative neighbourhood definition. Then, we add all
+node and route operators described in Section 4.3 to the local search object. This is not
+required: any subset of these operators is also allowed, and might even improve the solver
+performance in specific cases. Finally, the penalty manager and population are initialised.
+These track, respectively, the weights of constraint violation penalties, and the feasible
+and infeasible solution subpopulations. An initial population should also be provided to
+the genetic algorithm: here we generate 25 random solutions. A user may wish to apply
+alternative population generation methods here. Finally, the genetic algorithm is initialised
+and run until a stopping criterion is met: in this case, the stopping criterion is 60 seconds
+of runtime. We plot the solver trajectory and best observed solution in Figure 1.
+
+--- PDF PAGE 13 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+13
+5.3.
+Extending PyVRP
+Before writing new code for PyVRP, a few things must be decided about the new con-
+straint. Hard constraints might require changes to PyVRP data structures. Soft constraints
+typically require modifications to the cost evaluation functions. Additionally, the new con-
+straint likely requires additional data attributes that must be added to PyVRP’s data
+instance object, and solution representation. Once that new data is available, the search
+method can be updated to compute the correct cost deltas of each available move. Some of
+the cost delta evaluation may need to be cached to ensure an efficient implementation—this
+is particularly the case for time-related costs, which PyVRP already supports. Entirely
+new problem aspects might need to develop such caching as part of the extension.
+Since we have developed several extensions to PyVRP already, there are some examples
+available of previous work. We have summarised guidelines for extending PyVRP in our
+online documentation, available at https://pyvrp.org/dev/new_vrp_variants.html.
+6.
+Experiments
+In this section we present PyVRP’s performance on widely used CVRP and VRPTW
+benchmark instances. We compare PyVRP’s performance with both the best known solu-
+tions (BKSs), and with results from the literature, accounting for CPU differences by
+adjusting the time limits based on the PassMark score. PyVRP is benchmarked on an
+AMD EPYC 7H12 CPU with a PassMark single thread performance of 2014. We bench-
+mark PyVRP version 0.5.0, which is available as a static archive on the IJOC GitHub
+repository (Wouda et al. 2023). The BKSs were obtained from the CVRPLIB repository
+on 28 February 2023.
+6.1.
+CVRP
+We evaluate our solver for CVRP on the X benchmark instances of Uchoa et al. (2017).
+This set includes 100 instances and covers diverse problem characteristics, such as customer
+geography, demand distributions and route lengths. We follow the convention to minimise
+the total distance. The distances are computed by taking the Euclidean distances rounded
+to the nearest integer. The parameter settings used in our experiments are shown in Table 3
+in Appendix A. We solve each instance with ten different seeds and present the average
+total distance rounded to one decimal. We compare our solver with the results of state-
+of-the-art CVRP solvers HGS-2012 (Vidal et al. 2013) and HGS-CVRP (Vidal 2022). We
+
+--- PDF PAGE 14 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+14
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+Table 1
+Benchmark results for CVRP on X instances of Uchoa et al. (2017).
+Mean cost Mean gap Gap of mean
+PyVRP
+63275.5
+0.22 %
+0.27 %
+HGS-2012
+63285.8
+0.21 %
+0.28 %
+HGS-CVRP
+63206.1
+0.11 %
+0.16 %
+BKS
+63106.7
+0.00 %
+0.00 %
+use the time limits of Vidal (2022): each instance is solved for Tmax = n×240/100 seconds,
+where n denotes the number of customers in the instance. The smallest instance of 100
+customers is thus solved for 4 minutes, and the largest instance with 1000 customers is
+solved for 40 minutes. The experiments from Vidal (2022) were run on a single core of an
+Intel Gold 6148 CPU with PassMark single thread performance of 2183. We normalise the
+time limit by multiplying Tmax with 2183 / 2014 to compensate for the CPU differences.
+Table 1 presents the summarised results for CVRP. We report both the mean gap
+1
+n
+P
+i
+ci
+BKSi −1, as well as the gap of the mean
+1
+n
+P
+i ci
+1
+n
+P
+i BKSi −1. Here i represents a single
+instance, ci denotes the objective value of the solver’s solution, and BKSi the best known
+solution value. The gaps are expressed as percentages. PyVRP obtains a mean gap of 0.22%
+and a gap of the mean of 0.27% on the solved instances. Despite the fact that PyVRP has
+not been specifically designed for the CVRP, these gaps are only slightly higher than the
+gaps of specialised CVRP solvers like HGS-2012 (mean gap 0.21% and gap of mean 0.28
+%) and HGS-CVRP (mean gap 0.11% and gap of mean 0.16%). The complete results for
+each instance can be found in Table 4 in Appendix B.
+6.2.
+VRPTW
+We evaluate our solver on the well-known Homberger and Gehring VRPTW instance set
+(Homberger and Gehring 1999). The set includes five categories of instance sizes with
+200, 400, 600, 800 and 1000 customers. For brevity, we only presents results here for the
+1000 customer instances. The relative performance differences on smaller instances are
+similar to the results on the 1000 customer instances. Following the DIMACS competition
+convention, we minimise the total travel distance and set a time limit of two hours for
+1000 customer instances on a CPU with reference PassMark score of 2000. We normalise
+the time limits for our choice of CPU, so we multiply the time limits by 2000 / 2014 in
+
+--- PDF PAGE 15 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+15
+Table 2
+Benchmark results for VRPTW on 1000 customer instances of Homberger and Gehring (1999).
+Mean cost Mean gap Gap of mean
+PyVRP
+33296.4
+0.40%
+0.46%
+HGS-DIMACS
+33265.5
+0.32%
+0.37%
+DIMACS reference
+33245.1
+0.29%
+0.31%
+BKS
+33143.8
+0.00%
+0.00%
+our numerical experiments. We solve each instance with ten different seeds and present
+the average total distance rounded to 1 decimal. The parameter settings of our solver are
+shown in Table 3 and largely follow the parameter values used by Kool et al. (2022) and
+Van Doorn et al. (2022). We compare PyVRP with the solutions found by Kool et al.
+(2022), denoted as HGS-DIMACS. Since the original DIMACS results were reported as
+gaps to a reference solution provided by the DIMACS organisation, we also include the
+gaps between these reference solutions and the reference BKSs.
+Table 2 summarises the results for VRPTW. The complete results for each instance can
+be found in Table 5 in Appendix C. We again report both the mean gap and the gap
+of the mean. PyVRP achieves a mean gap of 0.40% and gap of mean of 0.46% on the
+VRPTW benchmark instances, which is slightly higher than that of HGS-DIMACS (mean
+gap of 0.32% and gap of mean 0.37%). The difference in performance can be explained by
+the simplified implementation of PyVRP. As a result of this simplification, PyVRP would
+have ended up in second place in the DIMACS VRPTW competition. Furthermore, during
+extended runs, PyVRP managed to improve 27 of the 300 best known solutions of the
+complete Homberger and Gehring instances.
+7.
+Conclusion
+We introduce PyVRP, an open-source Python package for solving the vehicle routing prob-
+lem with time windows, and show numerically that PyVRP achieves excellent performance
+on this problem variant. The package has minimal dependencies and can easily be installed
+in pre-compiled format from the Python package index. The package’s implementation
+is flexible, and can easily be extended with new solution techniques and vehicle routing
+problem variants. Our hope is that PyVRP facilitates furthering the state-of-the-art in
+VRP solving by enabling researchers and practitioners to easily and quickly build on a
+state-of-the-art solver.
+
+--- PDF PAGE 16 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+16
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+Acknowledgments
+We are grateful to Penghui Guo for transferring the ‘PyVRP’ name on the Python package index to us. Leon
+Lan would like to thank TKI Dinalog, Topsector Logistics and the Dutch Ministry of Economic Affairs and
+Climate Policy for funding this project.
+Appendix A:
+Parameter settings
+The parameter settings used in our experiments are shown in Table 3.
+Appendix B:
+CVRP results
+The complete CVRP benchmark results are presented in Table 4.
+Appendix C:
+VRPTW results
+The complete VRPTW benchmark results are presented in Table 5.
+
+--- PDF PAGE 17 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+17
+Table 3
+Parameters values for CVRP and VRPTW. The values are slightly adapted from those of Vidal (2022)
+for CVRP and Kool et al. (2022) for VRPTW.
+Category
+Parameter
+CVRP VRPTW
+Genetic algorithm
+Repair probability
+50%
+80%
+Number of non-improving iterations before restart
+20000
+20000
+Population
+Minimum population size
+25
+25
+Population generation size
+40
+40
+Number of elite solutions
+4
+4
+Number of close solutions
+5
+5
+Lower bound diversity
+0.1
+0.1
+Upper bound diversity
+0.5
+0.5
+Penalty manager
+Initial capacity penalty
+20
+20
+Initial time warp penalty
+-
+6
+Repair booster
+12
+12
+Number of registrations between penalty updates
+100
+50
+Penalty increase factor
+1.25
+1.34
+Penalty decrease
+0.85
+0.32
+Target feasible
+0.43
+0.43
+Local search
+Number of neighbours
+20
+40
+Weight waiting time
+-
+0.2
+Weight time warp
+-
+1.0
+Symmetric proximity
+True
+True
+Symmetric neighbours
+True
+False
+Relocate
+operators
+((1,0)-exchange,
+(2,0)-
+exchange,
+(3,0)-exchange,
+MoveTwoClientsRe-
+versed)
+True
+True
+Swap operators ((1,1)-exchange, (2,1)-exchange,
+(2,2)-exchange, (3,2)-exchange, (3,3)-exchange)
+True
+True
+Include 2-OPT operator
+True
+True
+Include RELOCATE* operator
+True
+True
+Include SWAP* operator
+True
+True
+
+--- PDF PAGE 18 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+18
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+Table 4
+Benchmark results for CVRP on X instances.
+PyVRP
+HGS-2012
+HGS-CVRP
+BKS
+Instance
+Cost
+Gap
+Cost
+Gap
+Cost
+Gap
+Cost
+X-n101-k25
+27591.0
+0.00
+27591.0
+0.00
+27591.0
+0.00
+27591
+X-n106-k14
+26376.0
+0.05
+26408.8
+0.18
+26381.4
+0.07
+26362
+X-n110-k13
+14971.0
+0.00
+14971.0
+0.00
+14971.0
+0.00
+14971
+X-n115-k10
+12747.0
+0.00
+12747.0
+0.00
+12747.0
+0.00
+12747
+X-n120-k6
+13332.0
+0.00
+13332.0
+0.00
+13332.0
+0.00
+13332
+X-n125-k30
+55541.9
+0.01
+55539.0
+0.00
+55539.0
+0.00
+55539
+X-n129-k18
+28940.0
+0.00
+28940.0
+0.00
+28940.0
+0.00
+28940
+X-n134-k13
+10916.2
+0.00
+10916.0
+0.00
+10916.0
+0.00
+10916
+X-n139-k10
+13590.0
+0.00
+13590.0
+0.00
+13590.0
+0.00
+13590
+X-n143-k7
+15719.2
+0.12
+15700.0
+0.00
+15700.0
+0.00
+15700
+X-n148-k46
+43448.0
+0.00
+43448.0
+0.00
+43448.0
+0.00
+43448
+X-n153-k22
+21220.0
+0.00
+21223.5
+0.02
+21225.0
+0.02
+21220
+X-n157-k13
+16876.0
+0.00
+16876.0
+0.00
+16876.0
+0.00
+16876
+X-n162-k11
+14138.0
+0.00
+14138.0
+0.00
+14138.0
+0.00
+14138
+X-n167-k10
+20557.0
+0.00
+20557.0
+0.00
+20557.0
+0.00
+20557
+X-n172-k51
+45607.0
+0.00
+45607.0
+0.00
+45607.0
+0.00
+45607
+X-n176-k26
+47817.0
+0.01
+47812.0
+0.00
+47812.0
+0.00
+47812
+X-n181-k23
+25569.4
+0.00
+25570.2
+0.00
+25569.0
+0.00
+25569
+X-n186-k15
+24149.6
+0.02
+24145.2
+0.00
+24145.0
+0.00
+24145
+X-n190-k8
+16996.2
+0.10
+16992.4
+0.07
+16983.3
+0.02
+16980
+X-n195-k51
+44236.1
+0.03
+44225.0
+0.00
+44225.0
+0.00
+44225
+X-n200-k36
+58583.2
+0.01
+58589.6
+0.02
+58578.0
+0.00
+58578
+X-n204-k19
+19568.5
+0.02
+19565.0
+0.00
+19565.0
+0.00
+19565
+X-n209-k16
+30672.6
+0.05
+30658.7
+0.01
+30656.0
+0.00
+30656
+X-n214-k11
+10874.6
+0.17
+10877.0
+0.19
+10860.5
+0.04
+10856
+X-n219-k73
+117602.3
+0.01
+117601.7
+0.01
+117596.1
+0.00
+117595
+X-n223-k34
+40486.3
+0.12
+40455.3
+0.05
+40437.0
+0.00
+40437
+X-n228-k23
+25752.4
+0.04
+25742.7
+0.00
+25742.8
+0.00
+25742
+X-n233-k16
+19238.4
+0.04
+19233.1
+0.02
+19230.0
+0.00
+19230
+X-n237-k14
+27049.9
+0.03
+27049.4
+0.03
+27042.0
+0.00
+27042
+X-n242-k48
+82875.4
+0.15
+82826.5
+0.09
+82806.0
+0.07
+82751
+X-n247-k50
+37285.0
+0.03
+37295.0
+0.06
+37277.1
+0.01
+37274
+X-n251-k28
+38769.4
+0.22
+38735.9
+0.13
+38689.9
+0.02
+38684
+X-n256-k16
+18880.0
+0.22
+18880.0
+0.22
+18839.6
+0.00
+18839
+X-n261-k13
+26604.5
+0.18
+26594.0
+0.14
+26558.2
+0.00
+26558
+
+--- PDF PAGE 19 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+19
+Table 4
+Benchmark results for CVRP on X instances (continued).
+PyVRP
+HGS-2012
+HGS-CVRP
+BKS
+Instance
+Cost
+Gap
+Cost
+Gap
+Cost
+Gap
+Cost
+X-n266-k58
+75620.7
+0.19
+75646.8
+0.22
+75564.7
+0.11
+75478
+X-n270-k35
+35315.2
+0.07
+35306.4
+0.04
+35303.0
+0.03
+35291
+X-n275-k28
+21245.8
+0.00
+21247.8
+0.01
+21245.0
+0.00
+21245
+X-n280-k17
+33592.6
+0.27
+33573.0
+0.21
+33543.2
+0.12
+33503
+X-n284-k15
+20304.1
+0.44
+20248.0
+0.16
+20245.5
+0.15
+20215
+X-n289-k60
+95304.3
+0.16
+95350.4
+0.21
+95300.9
+0.16
+95151
+X-n294-k50
+47214.0
+0.11
+47217.8
+0.12
+47184.1
+0.05
+47161
+X-n298-k31
+34250.5
+0.06
+34235.9
+0.01
+34234.8
+0.01
+34231
+X-n303-k21
+21862.0
+0.58
+21763.4
+0.13
+21748.5
+0.06
+21736
+X-n308-k13
+25895.4
+0.14
+25879.8
+0.08
+25870.8
+0.05
+25859
+X-n313-k71
+94244.0
+0.21
+94127.7
+0.09
+94112.2
+0.07
+94043
+X-n317-k53
+78360.8
+0.01
+78374.8
+0.03
+78355.4
+0.00
+78355
+X-n322-k28
+29885.6
+0.17
+29887.5
+0.18
+29848.7
+0.05
+29834
+X-n327-k20
+27620.3
+0.32
+27580.4
+0.18
+27540.8
+0.03
+27532
+X-n331-k15
+31147.8
+0.15
+31114.0
+0.04
+31103.0
+0.00
+31102
+X-n336-k84
+139627.1
+0.37
+139437.1
+0.23
+139273.5
+0.12
+139111
+X-n344-k43
+42136.8
+0.21
+42086.0
+0.09
+42075.6
+0.06
+42050
+X-n351-k40
+25998.8
+0.40
+25972.8
+0.30
+25943.6
+0.18
+25896
+X-n359-k29
+51674.7
+0.33
+51653.8
+0.29
+51620.0
+0.22
+51505
+X-n367-k17
+22827.2
+0.06
+22814.0
+0.00
+22814.0
+0.00
+22814
+X-n376-k94
+147729.4
+0.01
+147719.0
+0.00
+147714.5
+0.00
+147713
+X-n384-k52
+66155.7
+0.35
+66163.7
+0.36
+66049.1
+0.18
+65928
+X-n393-k38
+38310.4
+0.13
+38281.4
+0.06
+38260.0
+0.00
+38260
+X-n401-k29
+66264.0
+0.17
+66305.3
+0.23
+66252.5
+0.15
+66154
+X-n411-k19
+19735.6
+0.12
+19723.8
+0.06
+19720.3
+0.04
+19712
+X-n420-k130
+107903.6
+0.10
+107843.3
+0.04
+107839.8
+0.04
+107798
+X-n429-k61
+65556.2
+0.16
+65565.4
+0.18
+65502.7
+0.08
+65449
+X-n439-k37
+36422.6
+0.09
+36426.4
+0.10
+36395.5
+0.01
+36391
+X-n449-k29
+55596.2
+0.66
+55598.1
+0.66
+55368.5
+0.25
+55233
+X-n459-k26
+24191.1
+0.22
+24199.3
+0.25
+24163.8
+0.10
+24139
+X-n469-k138
+222327.0
+0.23
+222364.3
+0.24
+222170.1
+0.16
+221824
+X-n480-k70
+89600.2
+0.17
+89665.0
+0.24
+89524.4
+0.08
+89449
+X-n491-k59
+66751.4
+0.40
+66723.7
+0.36
+66641.5
+0.24
+66483
+X-n502-k39
+69252.4
+0.04
+69300.8
+0.11
+69239.5
+0.02
+69226
+X-n513-k21
+24263.4
+0.26
+24206.5
+0.02
+24201.0
+0.00
+24201
+X-n524-k153
+154881.0
+0.19
+154890.1
+0.19
+154747.6
+0.10
+154593
+
+--- PDF PAGE 20 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+20
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+Table 4
+Benchmark results for CVRP on X instances (continued).
+PyVRP
+HGS-2012
+HGS-CVRP
+BKS
+Instance
+Cost
+Gap
+Cost
+Gap
+Cost
+Gap
+Cost
+X-n536-k96
+95173.6
+0.35
+95205.1
+0.38
+95091.9
+0.26
+94846
+X-n548-k50
+86855.6
+0.18
+86970.8
+0.31
+86778.4
+0.09
+86700
+X-n561-k42
+42834.2
+0.27
+42783.9
+0.16
+42742.7
+0.06
+42717
+X-n573-k30
+50925.0
+0.50
+50861.2
+0.37
+50813.0
+0.28
+50673
+X-n586-k159
+190643.4
+0.17
+190759.3
+0.23
+190588.1
+0.14
+190316
+X-n599-k92
+108813.2
+0.33
+108872.3
+0.39
+108656.0
+0.19
+108451
+X-n613-k62
+59795.0
+0.44
+59801.0
+0.45
+59696.3
+0.27
+59535
+X-n627-k43
+62439.1
+0.44
+62558.7
+0.63
+62371.6
+0.33
+62164
+X-n641-k35
+63993.0
+0.49
+64086.0
+0.63
+63874.2
+0.30
+63682
+X-n655-k131
+106851.9
+0.07
+106865.4
+0.08
+106808.8
+0.03
+106780
+X-n670-k130
+146893.7
+0.38
+147319.0
+0.67
+146777.7
+0.30
+146332
+X-n685-k75
+68532.3
+0.48
+68498.0
+0.43
+68343.1
+0.20
+68205
+X-n701-k44
+82462.8
+0.66
+82457.9
+0.65
+82237.3
+0.38
+81923
+X-n716-k35
+43616.9
+0.56
+43615.1
+0.56
+43505.8
+0.31
+43373
+X-n733-k159
+136526.4
+0.25
+136512.5
+0.24
+136426.9
+0.18
+136187
+X-n749-k98
+77801.3
+0.69
+77783.0
+0.67
+77655.4
+0.50
+77269
+X-n766-k71
+115135.3
+0.63
+114894.6
+0.42
+114764.5
+0.30
+114417
+X-n783-k48
+72915.8
+0.73
+73027.6
+0.89
+72790.7
+0.56
+72386
+X-n801-k40
+73655.2
+0.48
+73803.3
+0.68
+73500.4
+0.27
+73305
+X-n819-k171
+158745.0
+0.39
+158756.1
+0.40
+158511.6
+0.25
+158121
+X-n837-k142
+194291.2
+0.29
+194636.5
+0.46
+194231.3
+0.26
+193737
+X-n856-k95
+89129.8
+0.19
+89216.1
+0.28
+89037.5
+0.08
+88965
+X-n876-k59
+99824.3
+0.53
+99889.4
+0.59
+99682.7
+0.39
+99299
+X-n895-k37
+54281.0
+0.78
+54255.9
+0.74
+54070.6
+0.39
+53860
+X-n916-k207
+329935.4
+0.23
+330234.0
+0.32
+329852.0
+0.20
+329179
+X-n936-k151
+133365.1
+0.49
+133613.7
+0.68
+133369.9
+0.49
+132715
+X-n957-k87
+85678.0
+0.25
+85823.3
+0.42
+85550.1
+0.10
+85465
+X-n979-k58
+119781.8
+0.68
+119502.3
+0.44
+119247.5
+0.23
+118976
+X-n1001-k43
+73001.0
+0.89
+73051.4
+0.96
+72748.8
+0.54
+72355
+Mean
+63275.5
+0.22
+63285.8
+0.21
+63206.1
+0.11
+63106.7
+Gap of mean
+0.27
+0.28
+0.16
+
+--- PDF PAGE 21 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+21
+Table 5
+Benchmark results for VRPTW on 1000-customer Homberger and Gehring instances.
+PyVRP
+HGS-DIMACS
+DIMACS
+BKS
+Instance
+Cost
+Gap
+Cost
+Gap
+Cost
+Gap
+Cost
+C1 10 1
+42444.8
+0.00
+42444.8
+0.00
+42444.8
+0.00
+42444.8
+C1 10 2
+41391.0
+0.13
+41386.4
+0.12
+41392.7
+0.13
+41337.8
+C1 10 3
+40205.4
+0.35
+40216.4
+0.38
+40146.2
+0.20
+40064.4
+C1 10 4
+39544.2
+0.28
+39524.6
+0.23
+39490.9
+0.14
+39434.1
+C1 10 5
+42434.8
+0.00
+42434.8
+0.00
+42434.8
+0.00
+42434.8
+C1 10 6
+42437.0
+0.00
+42437.0
+0.00
+42437.0
+0.00
+42437.0
+C1 10 7
+42420.5
+0.00
+42420.4
+0.00
+42420.4
+0.00
+42420.4
+C1 10 8
+41870.3
+0.52
+41902.5
+0.60
+41837.8
+0.45
+41652.1
+C1 10 9
+40520.8
+0.58
+40425.2
+0.34
+40366.7
+0.19
+40288.4
+C1 10 10
+40134.9
+0.80
+40149.5
+0.84
+39874.5
+0.14
+39816.8
+C2 10 1
+16841.1
+0.00
+16841.1
+0.00
+16841.1
+0.00
+16841.1
+C2 10 2
+16464.8
+0.01
+16462.6
+0.00
+16462.6
+0.00
+16462.6
+C2 10 3
+16041.7
+0.03
+16036.5
+0.00
+16036.5
+0.00
+16036.5
+C2 10 4
+15484.2
+0.16
+15463.6
+0.03
+15482.9
+0.15
+15459.5
+C2 10 5
+16522.0
+0.00
+16521.3
+0.00
+16521.3
+0.00
+16521.3
+C2 10 6
+16296.1
+0.03
+16290.7
+0.00
+16290.7
+0.00
+16290.7
+C2 10 7
+16378.9
+0.00
+16378.4
+0.00
+16378.4
+0.00
+16378.4
+C2 10 8
+16035.5
+0.04
+16029.8
+0.00
+16029.1
+0.00
+16029.1
+C2 10 9
+16089.1
+0.09
+16075.6
+0.00
+16077.0
+0.01
+16075.4
+C2 10 10
+15741.0
+0.08
+15728.6
+0.00
+15728.6
+0.00
+15728.6
+R1 10 1
+53378.9
+0.63
+53341.7
+0.56
+53233.9
+0.35
+53046.5
+R1 10 2
+48684.4
+0.87
+48513.0
+0.52
+48369.1
+0.22
+48263.1
+R1 10 3
+45057.2
+0.85
+44999.1
+0.72
+44862.4
+0.41
+44677.1
+R1 10 4
+42839.8
+0.94
+42625.9
+0.44
+42577.9
+0.32
+42440.7
+R1 10 5
+50572.4
+0.33
+50596.5
+0.38
+50487.8
+0.16
+50406.7
+R1 10 6
+47312.8
+0.82
+47276.2
+0.74
+47145.8
+0.46
+46930.3
+R1 10 7
+44342.7
+0.78
+44174.8
+0.40
+44231.4
+0.53
+43997.4
+R1 10 8
+42611.3
+0.79
+42451.6
+0.41
+42435.9
+0.37
+42279.3
+R1 10 9
+49387.7
+0.46
+49417.9
+0.52
+49334.3
+0.35
+49162.8
+R1 10 10
+47705.7
+0.72
+47690.5
+0.69
+47570.6
+0.43
+47364.6
+R2 10 1
+36932.0
+0.14
+36891.3
+0.03
+36899.4
+0.05
+36881.0
+R2 10 2
+31349.5
+0.34
+31384.7
+0.46
+31296.2
+0.17
+31241.9
+R2 10 3
+24469.2
+0.29
+24429.7
+0.13
+24422.1
+0.09
+24399.0
+R2 10 4
+17926.3
+0.64
+17870.1
+0.33
+17968.1
+0.88
+17811.5
+R2 10 5
+34181.1
+0.14
+34195.3
+0.18
+34233.0
+0.29
+34132.8
+
+--- PDF PAGE 22 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+22
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+Table 5
+Benchmark results for VRPTW on 1000-customer Homberger and Gehring instances (continued).
+PyVRP
+HGS-DIMACS
+DIMACS
+BKS
+Instance
+Cost
+Gap
+Cost
+Gap
+Cost
+Gap
+Cost
+R2 10 6
+29239.6
+0.39
+29179.4
+0.19
+29215.3
+0.31
+29124.7
+R2 10 7
+23237.3
+0.58
+23305.2
+0.88
+23243.8
+0.61
+23102.2
+R2 10 8
+17505.4
+0.58
+17463.3
+0.34
+17512.7
+0.63
+17403.8
+R2 10 9
+32089.8
+0.31
+32058.0
+0.21
+32104.9
+0.36
+31990.6
+R2 10 10
+29934.0
+0.31
+29882.3
+0.14
+29956.9
+0.39
+29840.5
+RC1 10 1
+46018.1
+0.50
+46047.3
+0.56
+45948.5
+0.34
+45790.8
+RC1 10 2
+44078.7
+0.92
+43892.6
+0.49
+43870.6
+0.44
+43678.3
+RC1 10 3
+42537.9
+0.99
+42311.1
+0.45
+42338.0
+0.51
+42122.0
+RC1 10 4
+41669.5
+0.75
+41577.1
+0.53
+41469.2
+0.27
+41357.4
+RC1 10 5
+45333.7
+0.68
+45349.6
+0.71
+45235.5
+0.46
+45028.1
+RC1 10 6
+45176.9
+0.61
+45359.9
+1.02
+45144.0
+0.54
+44903.6
+RC1 10 7
+44742.2
+0.73
+44657.9
+0.54
+44686.2
+0.61
+44417.1
+RC1 10 8
+44221.9
+0.70
+44145.6
+0.52
+44130.8
+0.49
+43916.5
+RC1 10 9
+44153.4
+0.67
+44087.3
+0.52
+44072.4
+0.49
+43858.1
+RC1 10 10
+43815.9
+0.65
+43635.1
+0.23
+43745.6
+0.49
+43533.7
+RC2 10 1
+28168.0
+0.16
+28192.1
+0.25
+28190.8
+0.24
+28122.6
+RC2 10 2
+24276.0
+0.11
+24268.6
+0.08
+24271.7
+0.10
+24248.6
+RC2 10 3
+19673.1
+0.28
+19665.6
+0.24
+19747.9
+0.66
+19618.1
+RC2 10 4
+15744.6
+0.56
+15716.2
+0.38
+15804.9
+0.94
+15657.0
+RC2 10 5
+25851.7
+0.21
+25862.2
+0.25
+25892.3
+0.37
+25797.5
+RC2 10 6
+25854.3
+0.28
+25823.0
+0.16
+25871.0
+0.34
+25782.5
+RC2 10 7
+24458.4
+0.26
+24456.6
+0.25
+24451.7
+0.23
+24395.8
+RC2 10 8
+23331.9
+0.22
+23307.9
+0.12
+23332.3
+0.22
+23280.2
+RC2 10 9
+22784.8
+0.23
+22796.2
+0.28
+22859.3
+0.56
+22731.6
+RC2 10 10
+21838.2
+0.47
+21862.3
+0.58
+21848.3
+0.52
+21736.1
+Mean
+33296.4
+0.40
+33265.5
+0.32
+33245.1
+0.29
+33143.8
+Gap of mean
+0.46
+0.37
+0.31
+References
+Accorsi L, Lodi A, Vigo D (2022) Guidelines for the computational testing of machine learning approaches
+to vehicle routing problems. Operations Research Letters 50(2):229–234, ISSN 0167-6377, URL http:
+//dx.doi.org/10.1016/j.orl.2022.01.018.
+Builuk I (2023) A new solver for rich Vehicle Routing Problem. URL http://dx.doi.org/10.5281/zenodo.
+4624037.
+
+--- PDF PAGE 23 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+23
+Coupey J, Nicod JM, Varnier C (2023) VROOM v1.13, Vehicle Routing Open-source Optimization Machine.
+Verso (https://verso-optim.com/), Besan¸con, France, http://vroom-project.org/.
+Helsgaun K (2017) An Extension of the Lin-Kernighan-Helsgaun TSP Solver for Constrained Traveling
+Salesman and Vehicle Routing Problems. Technical report, Roskilde University.
+Homberger J, Gehring H (1999) Two Evolutionary Metaheuristics For The Vehicle Routing Problem
+With Time Windows. INFOR: Information Systems and Operational Research 37(3):297–318, ISSN
+0315-5986, URL http://dx.doi.org/10.1080/03155986.1999.11732386, publisher: Taylor & Fran-
+cis eprint: https://doi.org/10.1080/03155986.1999.11732386.
+Kool W, Juninck JO, Roos E, Cornelissen K, Agterberg P, van Hoorn J, Visser T (2022) Hybrid Genetic
+Search for the Vehicle Routing Problem with Time Windows: a High-Performance Implementation.
+Technical report.
+Kwon C (2022) PyHygese. URL https://github.com/chkwon/PyHygese.
+Kwon
+YD,
+Choo
+J,
+Bae
+D,
+Kim
+J,
+Hottung
+A
+(2022)
+Cost
+shaping
+via
+reinforcement
+learning
+for
+vehicle
+routing
+problems.
+Technical
+report,
+URL
+https://github.com/ortec/
+euro-neurips-vrp-2022-quickstart/raw/main/papers/Team_SB.pdf.
+Lan L (2023) VRPLIB. URL https://github.com/leonlan/VRPLIB.
+Nagata Y, Kobayashi S (2010) A memetic algorithm for the pickup and delivery problem with time windows
+using selective route exchange crossover. International Conference on Parallel Problem Solving from
+Nature, 536–545 (Springer).
+Perron L, Furnon V (2022) Or-tools. URL https://developers.google.com/optimization/.
+Pessoa A, Sadykov R, Uchoa E, Vanderbeck F (2020) A generic exact solver for vehicle routing and related
+problems. Mathematical Programming 183:483–523.
+Toth P, Vigo D (2003) The Granular Tabu Search and Its Application to the Vehicle-Routing Problem.
+INFORMS Journal on Computing 15(4):333–346, ISSN 1091-9856, URL http://dx.doi.org/10.
+1287/ijoc.15.4.333.24890, publisher: INFORMS.
+Toth P, Vigo D, eds. (2014) Vehicle Routing: Problems, Methods, and Applications, Second Edition (Philadel-
+phia, PA: Society for Industrial and Applied Mathematics), ISBN 978-1-61197-358-7 978-1-61197-359-4,
+URL http://dx.doi.org/10.1137/1.9781611973594.
+Uchoa E, Pecin D, Pessoa A, Poggi M, Vidal T, Subramanian A (2017) New benchmark instances for the
+Capacitated Vehicle Routing Problem. European Journal of Operational Research 257(3):845–858, ISSN
+03772217, URL http://dx.doi.org/10.1016/j.ejor.2016.08.012.
+Van Doorn J, Lan L, Pentinga L, Wouda NA (2022) Solving a static and dynamic VRP with time windows
+using hybrid genetic search and simulation. Technical report.
+Vidal T (2022) Hybrid genetic search for the CVRP: Open-source implementation and SWAP* neighborhood.
+Computers & Operations Research 140:105643.
+
+--- PDF PAGE 24 ---
+Wouda, Lan, and Kool: PyVRP: a high-performance VRP solver package
+24
+Article submitted to INFORMS Journal on Computing; manuscript no. JOC-2023-03-SI-0055.R1
+Vidal T, Crainic TG, Gendreau M, Prins C (2013) A hybrid genetic algorithm with adaptive diversity
+management for a large class of vehicle routing problems with time-windows. Computers & operations
+research 40(1):475–489.
+Wouda NA, Lan L, Kool W (2023) PyVRP: a high-performance VRP solver package. URL http://dx.
+doi.org/10.1287/ijoc.2023.0055.cd, available for download at https://github.com/INFORMSJoC/
+2023.0055.

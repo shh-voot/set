@@ -1,0 +1,443 @@
+{
+  "before_head": "ea5e0fb57065ad843b52f9e9e3ebdbe42582b0c1",
+  "remote_head": "e94e1cc70b6f342282eaa9e7d2b15aa84065e381",
+  "audit_path_collisions": [],
+  "prior_audit_manifest": [
+    {
+      "path": "audit/20260925/check_results.py",
+      "sha256": "a2a0388e750076371e8a6696d8eb8ac5609e2bca36d5812e7d0495134e7d976e"
+    },
+    {
+      "path": "audit/20260925/extract_evidence.py",
+      "sha256": "b80268f62643217bb4e22a0678cb4fe835a8f57b435d6c60a40980557e24f5cc"
+    },
+    {
+      "path": "audit/20260925/package_report.py",
+      "sha256": "e6419a99fab37c6af906527112e9c8fac46dfa659a47b39afab9acc853f10b8d"
+    },
+    {
+      "path": "audit/20260925/README.md",
+      "sha256": "5567d6594e79935edd9ec3591378fb83b2d84e16ab18324945455c6d895b5092"
+    },
+    {
+      "path": "audit/20260925/reproduce.py",
+      "sha256": "ee357a94f5c64fa9ae156f14ffb00d4fda593ff2f361b5cc783ccd599ca6c372"
+    },
+    {
+      "path": "audit/20260925/requirements-audit.txt",
+      "sha256": "28f132e31fc3a0cdce0c02c8e2985417fa35139e785681625f96b0c124c27b98"
+    },
+    {
+      "path": "audit/20260925/targeted_checks.py",
+      "sha256": "7e1b412432fb32f9c3c53ee94e859ea74a335968a55f3cb6a32592a3da8499d5"
+    },
+    {
+      "path": "audit/20260925/审查明细.xlsx",
+      "sha256": "48b86be7deaf2f1630141ff550fd008e54193f26d4240c877bd735bc1a61ed2a"
+    },
+    {
+      "path": "audit/20260925/工作质量与公式溯源审查报告.md",
+      "sha256": "39096e1339f3c22e22c679d8ba10de04dd04fcaa8a0b552934a24db63ccca424"
+    },
+    {
+      "path": "audit/20260925/evidence/audit_summary.json",
+      "sha256": "f249e9d9a6c402846f522217abbbb49c150f2a32a72800079d8a827ecfce1703"
+    },
+    {
+      "path": "audit/20260925/evidence/geo_description.txt",
+      "sha256": "6c9d94f393a16c36d27f4b1bd00b99667cae7f1093f325cee8e9a871adac4cf1"
+    },
+    {
+      "path": "audit/20260925/evidence/input_manifest.json",
+      "sha256": "b681236f0ef4aa8c600f903d5ff1c5e535851f5bfd127a62f9cee58695e2c8bb"
+    },
+    {
+      "path": "audit/20260925/evidence/integrity_check.json",
+      "sha256": "2406163acd9da16571a5f3eb127037895c7cf83992571f271fc9b574e2ca10de"
+    },
+    {
+      "path": "audit/20260925/evidence/pdf_inventory.json",
+      "sha256": "05e76432e14e3a072e06d8c3488362211b661dccf30706b1ace8e1bf546c5aee"
+    },
+    {
+      "path": "audit/20260925/evidence/problem_document.xml",
+      "sha256": "24ad348d25b97605ab496f7a7ac6687cbdcd131d471cc9d872b81da2b46e7709"
+    },
+    {
+      "path": "audit/20260925/evidence/problem_with_formulas.txt",
+      "sha256": "397b7a8ed66f5b521ae31933792a2b4b202210e943492fb30bb1c74a5d4b9819"
+    },
+    {
+      "path": "audit/20260925/evidence/q1_mission_check.csv",
+      "sha256": "4c3ffc27958c4f928ef8ed40242e5be4ea38750ca971686c56803889abff5949"
+    },
+    {
+      "path": "audit/20260925/evidence/q2_cargo_check.csv",
+      "sha256": "b758c997cb7315d9da10b0044ba7745557d6f179f033ebbfea14591be8494a20"
+    },
+    {
+      "path": "audit/20260925/evidence/q2_mission_check.csv",
+      "sha256": "47bb9dfbcb24c4fc753f726251506425bc6adc38e3f90ffc21359d9f00970a30"
+    },
+    {
+      "path": "audit/20260925/evidence/q3_cargo_check.csv",
+      "sha256": "35d01508fbf63367b665ca241ec96194a8d71cf25b3628d4c02b6bc83cd526f8"
+    },
+    {
+      "path": "audit/20260925/evidence/q3_communication_check.csv",
+      "sha256": "aa15c224c9ee78b922f87d44927ae62e83f109e9c9f4d132c3e2413a0fa67564"
+    },
+    {
+      "path": "audit/20260925/evidence/q3_endpoint_robustness.csv",
+      "sha256": "0f0cf88371dac75c60367831bd251b3a3829be2a963268cefbfc8f15cd83462a"
+    },
+    {
+      "path": "audit/20260925/evidence/q3_failed_points.csv",
+      "sha256": "0210b4a3ae020798c5c1c67e2b558193a042b9d7ca4fa8227d39f6b5539320eb"
+    },
+    {
+      "path": "audit/20260925/evidence/q3_mission_check.csv",
+      "sha256": "e183cf9fb6d6cc5ad9c6b3dd42b005be1db6102419ace806df04fa69c8ad94b2"
+    },
+    {
+      "path": "audit/20260925/evidence/q4_2_hard_late.csv",
+      "sha256": "6b9144a547c101056373d7c0c32bb4a4b3caa43c4fddb529d89a525be75464ae"
+    },
+    {
+      "path": "audit/20260925/evidence/q4_3_hard_late.csv",
+      "sha256": "46d0d3ae0960013ccb376aeb8e838279b896b30330dc31f6775dc6b37c61a721"
+    },
+    {
+      "path": "audit/20260925/evidence/q4_from_actual_q3_times.csv",
+      "sha256": "1b3a7a3d2e53ea5d236f13433b23ec841fd124293ce9ad9a4f63ca9064a7e440"
+    },
+    {
+      "path": "audit/20260925/evidence/reproduce_solve_problem1_18trips.log",
+      "sha256": "4b00fac846b10736c51fd465ef64462618c274b6bf9c05319dfcc669a926fd95"
+    },
+    {
+      "path": "audit/20260925/evidence/reproduce_solve_problem2_lns.log",
+      "sha256": "6111d6943724d63a0e73f3b9740f49e7847a88c91d0490a1e7226d1e08cb6b6a"
+    },
+    {
+      "path": "audit/20260925/evidence/reproduce_solve_problem3_relay.log",
+      "sha256": "9a82dadebccebc831a328ecdae5f3fde0c84f601fd30efb6e761475dcdd5e7aa"
+    },
+    {
+      "path": "audit/20260925/evidence/reproduce_solve_problem4_fixed.log",
+      "sha256": "bfc928e8e483ef4893a1a8f26c527452d4194e37b420e3e7df1f6743609303ca"
+    },
+    {
+      "path": "audit/20260925/evidence/reproduction_status.json",
+      "sha256": "93322da849a8cdb714198ea5bae23983e023585751ac89e2c2de99452c844f10"
+    },
+    {
+      "path": "audit/20260925/evidence/targeted_checks.json",
+      "sha256": "fa8c34b4fb01b07ef738234ad45b071f57666fbb7cae5bfe0e5faca40653e156"
+    },
+    {
+      "path": "audit/20260925/evidence/workbook_inventory.json",
+      "sha256": "f1009e531cef7f8854983dbf97a3142a2f698ec71b0b42d2deddea53e33d9af8"
+    },
+    {
+      "path": "audit/20260925/evidence/docx_media/image1.png",
+      "sha256": "eb2b1feaf1cf1249fbaee4bac90e540b952a9060bb9b0afe12fad9d0640b4707"
+    },
+    {
+      "path": "audit/20260925/evidence/docx_media/image2.svg",
+      "sha256": "2fe5a53e7f2bdac1bd68e281d9ae7dfd08a611065a47f24066fc8657609b4825"
+    },
+    {
+      "path": "audit/20260925/evidence/official_xlsx/中继无人机数据.txt",
+      "sha256": "f62e75841093695f48c896dd6511dc8020449ae7fadca266cdffaa11666b8039"
+    },
+    {
+      "path": "audit/20260925/evidence/official_xlsx/物资需求与配送时限.txt",
+      "sha256": "3d2f0e23489ec8eb56962e4c2cfeb4e9ecbb32dd6dcb957aad9c727bf1b96069"
+    },
+    {
+      "path": "audit/20260925/evidence/official_xlsx/结果提交模板.txt",
+      "sha256": "b68e5ab0c5a22d9cb1bba8851cad39631b1befa51f5fc77e7dfa8c8bccb6ad30"
+    },
+    {
+      "path": "audit/20260925/evidence/official_xlsx/调度中心与服务区.txt",
+      "sha256": "04cdf53ca8758a6b903ef8392e52f4470ace2e0db7b07d463061b7ecc931596e"
+    },
+    {
+      "path": "audit/20260925/evidence/official_xlsx/运输无人机数据.txt",
+      "sha256": "376223e4d3c890e4b4e10a16671f3be45f1696e7dd0afc441492bc75ebc66857"
+    },
+    {
+      "path": "audit/20260925/evidence/official_xlsx/通信链路参数.txt",
+      "sha256": "3c0703ec3223cb3f44f68b32f49f14abb1b9535868afb0f325c36ed6207d6b37"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/01_UAV_Medical_Delivery_Trajectory_Optimization_2025.txt",
+      "sha256": "63e1f093facb35c751242a1493e906a4cd8f7e374df759295f418e9c30ec8025"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/02_Post_Disaster_UAV_Vehicle_Routing_Robust_Optimization.txt",
+      "sha256": "0457e723760f807316dee0fb4006e6d7c9d2e13f28c763297801c4a5cb65103f"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/03_Multi_Depot_Multi_Trip_VRP_Completion_Time.txt",
+      "sha256": "d358dada8318e1cca94733913d2f1a05398a3fe8911afa78f2aa128958e4e1da"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/04_Battery_Swapping_Scheduling_Part1.txt",
+      "sha256": "33840ec733a62b1c69c07a05833f760d360b0509045d4fbaca10ed71af653707"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/05_Battery_Swapping_Scheduling_Part2.txt",
+      "sha256": "edcf52083d91bb87a9c78d870cc7c53e55cfe216fcbc4c9698b1653d5ad413d7"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/06_No_Stockout_Charging_Scheduling_2026.txt",
+      "sha256": "85960e2630e522ade242c648eb5310ecbb47786df677b9d5c81f973b2abfff1a"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/07_UAV_3D_Position_Optimization_Solar_Relay.txt",
+      "sha256": "5a632e0b160d21f80a07aa4f375c20bc18cd81f68ca53aeca0f197c87955f021"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/09_UNICEF_Drone_Supply_Chain_Guidance.txt",
+      "sha256": "3c5c28ff5320d742dcfbc8f0d86bd9c1c6a12f7b31ed95c575422485eb1a3bab"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/10_Multi_Truck_Drone_Emergency_Distribution_2026.txt",
+      "sha256": "51b4cc8de10d18059bfd66d536dfe5f2ed416c34172659bb182d05f0a0d11dde"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/11_Heterogeneous_Fleet_VRPTW_Aston.txt",
+      "sha256": "fea72220b638812047e976e353334286b5501cb4383351aafd2942ea983b9a05"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/12_PyVRP_State_of_Art_2024.txt",
+      "sha256": "8c2b9b57969fcfff7f9b9531b6be205a96083f6747243a7fd0d35440bd504e15"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/13_HGS_CVRP_2024.txt",
+      "sha256": "b82e4becfb1f2c09207cb14931a9094ff3a536a3cef72bc642a7c12390a5ba45"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/14_NSGA_II_UAV_Logistics_Springer_2025.txt",
+      "sha256": "f629fcbe1070db2b85d678cffeae9dba2f75e55fb44f954f1b7ef3a5f5254bdd"
+    },
+    {
+      "path": "audit/20260925/evidence/papers/15_Relief_Distribution_Trucks_Drones_Incomplete_Demand.txt",
+      "sha256": "c5c8af3d97ebde50d7dbd5569697ee040f2170e7393be56c9db2e1d22712c4fb"
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题一_18架次方案_修复版.txt",
+      "sha256": "491ed041217d8ea38ef46018f3ff1cfae6250c6365a9c48461c8186e6172f2a5"
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题一_严格约束方案.txt",
+      "sha256": "cec021be5f80ce1c2dfb9daf1934ec3d14af52a71b7d8734b1b0cb13e1b1aab4"
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题三_中继部署方案_修复版.txt",
+      "sha256": "b79c979aadd4d0a9c6f431724c9b2f52b07d9d59b7b7f55d66dbd24f5fb3f0b8"
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题三_覆盖核验_修复版.txt",
+      "sha256": "75cf7acf3c48deb73863141c116b9eb0ebf02fcede382971355c3d274f486ca5"
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题三_运输调度_修复版.txt",
+      "sha256": "ff15a4dccd8f3f0784900e56722627bad3231892ca0ddb6290947ac38acacde3"
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题二_优化修复版.txt",
+      "sha256": "442feda50b530774452bbd4401fd0743486302d64ec494807b08c699e7b3f1f5"
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题二_增强优化版.txt",
+      "sha256": "aaa87c2fe8975283bce05694d171de50a5daaed0496be181e481a7e5b98a7e00"
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题四_2批次_修复版.txt",
+      "sha256": "071c8ffe9de9a9e4378412d1001ef6a42ea31ac745059fe335854e2a9c2ece75"
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题四_2批次_错峰复用优化.txt",
+      "sha256": "23534948ebb818aaad000e403414fb1a68f543228ef318411af33be8ee24fc12"
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题四_3批次_修复版.txt",
+      "sha256": "251d24dc8a027e67f8f977fb50653c21a5cae7af469a50dec80778211d3ca28c"
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题四_3批次_错峰复用优化.txt",
+      "sha256": "901eef955ec9cde12ea214af1102160135758039635bb1c8afe41ed9ba67867f"
+    },
+    {
+      "path": "audit/20260925/reproduction/.gitignore",
+      "sha256": "45549a9ffd9963f855d72829e978a31c05b82894b14b1d8fbdd43083b20c2d86"
+    },
+    {
+      "path": "audit/20260925/reproduction/solve_problem1_18trips.py",
+      "sha256": "25186922f8861c749b27f3cf7f68efe9b71c1b21cb2961af64353c4b5a100421"
+    },
+    {
+      "path": "audit/20260925/reproduction/solve_problem2_lns.py",
+      "sha256": "22cccdc54fd387d28812f1a1005e08fdc287828f23a49557c5e63a03713fcc24"
+    },
+    {
+      "path": "audit/20260925/reproduction/solve_problem2_optimized.py",
+      "sha256": "1713d2d64e2bdb2176df8aec7b427b438d19bb8e0a708c3e0f25173a3f17e67d"
+    },
+    {
+      "path": "audit/20260925/reproduction/solve_problem3_relay.py",
+      "sha256": "f4fa1d7ed92999cc2dde71ed2bdd510a79240d3e365f639f09afe372ab6c6d92"
+    },
+    {
+      "path": "audit/20260925/reproduction/solve_problem4_fixed.py",
+      "sha256": "dedcd873ca7ba9a732a8d1c209da94e80ce71a002c368699c781874688bafa6e"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/batch/batch_optimizer.py",
+      "sha256": "61e8ea0a3e8b7778207312bcb861ef44e18c7a117a1e7fd1958aa129e4db4aa8"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/battery/battery_manager.py",
+      "sha256": "a50bb8122183b776f25d37d6dcdb89fe443d584211c29540773b833df9875cc8"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/battery/charging_model_correct.py",
+      "sha256": "70b91d9b04e712da08253033ee1c60cb5b19cd304fb392305128dbefc457f3c7"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/battery/__pycache__/charging_model_correct.cpython-310.pyc",
+      "sha256": "0232a1c768bbd7c35e2d5e0ef8df4a240918a3fbdb51afbf333f1803a9bd2d20"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/communication/los_model.py",
+      "sha256": "6cf3c18db108c7870106e28e9ef276660f24718ede920872c6d0e4b26c5abfff"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/communication/__pycache__/los_model.cpython-310.pyc",
+      "sha256": "5f53b57c5a575d3cdc2f2d6bcd5123fb6fef86ee7ca8a59b23117da531da5cd5"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/data/data_loader.py",
+      "sha256": "5467d079aac4aa16eb0eb558641c90b2fa6248ed6cccc8f45d4f9c282a54e39f"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/data/__pycache__/data_loader.cpython-310.pyc",
+      "sha256": "7eabe2069ce110a2d8fabc17acfa8b9bf60f934abaf98f27407fa0c42966c925"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/energy/battery_manager.py",
+      "sha256": "06aaa38e3e7816887a81b53aab7fa55f4aaa64977da3f90328aa20a6f1492419"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/energy/energy_model.py",
+      "sha256": "67047b841196f7ab96305421144b36cfa41bcf6483337ed3ce83f0f21c561d48"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/energy/__pycache__/energy_model.cpython-310.pyc",
+      "sha256": "14e411a64dd0d90dbcd628369d451651ffcc4b7d818a5712d2a12bc2bdd7f2e9"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/problem1/knapsack_solver.py",
+      "sha256": "d98aa3827033aa826fa9c80fe696a990f622398d7c534e3e6ae188320b6bdef3"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/relay/deployment_optimizer.py",
+      "sha256": "6755b5dfd6fba149fec2d743f50521778a23bd3083b0eab254df068d0a86a7a5"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/terrain/dem_loader.py",
+      "sha256": "8f7d04872dd817fb3115998aa47de748ded1bc9ad2dd8f00e4d16a6d7999face"
+    },
+    {
+      "path": "audit/20260925/reproduction/src/terrain/__pycache__/dem_loader.cpython-310.pyc",
+      "sha256": "148fa76c1c509c39e5734e511493ddaf164864f1fb1edd394eed5dab5ff3145d"
+    },
+    {
+      "path": "audit/20260925/reproduction/__pycache__/solve_problem1_18trips.cpython-310.pyc",
+      "sha256": "7cd66c2f6605ee0b97ea8831edcd230775d7074d9e520438c16221cd66a9f0a7"
+    },
+    {
+      "path": "audit/20260925/reproduction/__pycache__/solve_problem2_optimized.cpython-310.pyc",
+      "sha256": "0a56fbcad3d5be9356cdf6be68eadc74c16649306d471848911c9840f7bca965"
+    },
+    {
+      "path": "audit/20260925/reproduction/数据/无人机应急物资运输基础数据/中继无人机数据.xlsx",
+      "sha256": "be52643ff29419233e6a141dca03a04160a8af551cab36d8c49b51bb836bea04"
+    },
+    {
+      "path": "audit/20260925/reproduction/数据/无人机应急物资运输基础数据/物资需求与配送时限.xlsx",
+      "sha256": "5a3346159ceddcf585859d270b8f62114b388a1f737fbe64ffde0ee1fdc8170a"
+    },
+    {
+      "path": "audit/20260925/reproduction/数据/无人机应急物资运输基础数据/调度中心与服务区.xlsx",
+      "sha256": "541a7af1ded08c9a3ff448480332cb5f6a54902f0afa6e9bcd50c1d2b2b34e38"
+    },
+    {
+      "path": "audit/20260925/reproduction/数据/无人机应急物资运输基础数据/运输无人机数据.xlsx",
+      "sha256": "9296a657c07e042afba6aeea7999665d9cd24e00b592fd6c269de6e338480dcb"
+    },
+    {
+      "path": "audit/20260925/reproduction/数据/无人机应急物资运输基础数据/通信链路参数.xlsx",
+      "sha256": "1860d153199e7ae460ba36e83b673374e640e19de91ea167f2877271001f5f81"
+    },
+    {
+      "path": "audit/20260925/reproduction/数据/镇龙乡地理空间数据/镇龙乡及周边地理数据/数字高程模型数据（DEM）/镇龙乡及周边30米DEM.mat",
+      "sha256": "c68703e0cc8f94f4bd52ff6e9974b66a2dae33865f0723ad71c04b6694bf4fbf"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题一_18架次方案_修复版.xlsx",
+      "sha256": "da11af7293036949492e4bf387e3d9096375449bc873a0d365864bba743e267c"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题三_中继部署方案_修复版.xlsx",
+      "sha256": "6665df7bba8d3cdc10369e667639250874d351498352e477f156fae1a0acd2f1"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题三_汇总_修复版.json",
+      "sha256": "623d8767663b1934818ddfbc0400ec8e1bfe165d96275f491396db29f63b2008"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题三_覆盖核验_修复版.xlsx",
+      "sha256": "cb4b51897681fb189d8e74177fbfe28f603976adcccc820c3c06087958625b8b"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题三_运输调度_修复版.xlsx",
+      "sha256": "622e13c094926781c02afe6b9448bd2aadbe2c01974a178f971bdf9d43f49cb6"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题二_增强优化版.xlsx",
+      "sha256": "e470e919bf030f084ccb39ff21a700c29dd97bce67d59aefc4a6d80dc570a691"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_2批次_修复版.json",
+      "sha256": "a55bef7457cdea8d29435c9ae24035f72c67779e61413695079641e02c93b502"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_2批次_修复版.xlsx",
+      "sha256": "a085e559122edf77001249ad309ad289a35b71320d309dcec5ce1edad5a03ebe"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_2批次_错峰复用优化.xlsx",
+      "sha256": "4e3ac8a899c1e5ab3f327c83eed8e4d3d8253290d83b8d5d12a21a3c2051d805"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_3批次_修复版.json",
+      "sha256": "45f8c7624a445714b87a0d46a37678d2573d70b16e8b202cfad4e87e275a9a68"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_3批次_修复版.xlsx",
+      "sha256": "c875136bdc29ae0025ef4075b28a7202ad3ac6b1c8a06af2ed5a8f8b4b3c6b8b"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_3批次_错峰复用优化.xlsx",
+      "sha256": "e92ee90c69912c3c66d9396ddea67a51ec56df219afdee60513902dba929646b"
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_错峰复用汇总.json",
+      "sha256": "8081a3bb8151aaa5e5cefb0492af886d01be86f260998223e54e8eff82e85c0d"
+    }
+  ]
+}

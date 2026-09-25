@@ -1,0 +1,1444 @@
+--- PDF PAGE 1 ---
+Scheduling of EV Battery Swapping, I: Centralized
+Solution
+Pengcheng You, Student Member, IEEE, Steven H. Low, Fellow, IEEE,
+Wayes Tushar, Member, IEEE, Guangchao Geng, Member, IEEE,
+Chau Yuen, Senior Member, IEEE, Zaiyue Yang, Member, IEEE, and Youxian Sun
+Abstract—We formulate an optimal scheduling problem for
+battery swapping that assigns to each electric vehicle (EV) a
+best station to swap its depleted battery based on its current
+location and state of charge. The schedule aims to minimize total
+travel distance and generation cost over both station assignments
+and power ﬂow variables, subject to EV range constraints, grid
+operational constraints and AC power ﬂow equations. To deal
+with the nonconvexity of power ﬂow equations and the binary
+nature of station assignments, we propose a solution based on
+second-order cone programming (SOCP) relaxation of optimal
+power ﬂow (OPF) and generalized Benders decomposition. When
+the SOCP relaxation is exact, this approach computes a globally
+optimal solution. We evaluate the performance of the proposed
+algorithm through simulations. The algorithm requires global
+information and is suitable for cases where the distribution
+network, stations, and EVs are managed centrally by the same
+operator. In Part II of the paper, we develop distributed solutions
+for cases where they are operated by different organizations that
+do not share private information.
+Index Terms—DistFlow equations, electric vehicle, battery
+swapping, convex relaxation, generalized Benders decomposition.
+I. INTRODUCTION
+A. Motivation
+We are at the cusp of a historic transformation of our
+energy system into a more sustainable form in the coming
+decades. Electriﬁcation of our transportation system will be
+an important component because vehicles today consume more
+than a quarter of energy in the US and emit more than a quarter
+of energy-related carbon dioxide [1], [2]. Electriﬁcation will
+not only greatly reduce greenhouse gas emission, but will
+also have a big impact on the future grid because electric
+vehicles are large but ﬂexible loads [3]. It is widely believed
+that uncontrolled EV charging may stress the distribution grid
+and cause voltage instability, but well controlled charging can
+help stabilize the grid and integrate renewables. As we will
+see below there is a large literature on various aspects of EV
+charging.
+P. You, G. Geng, Z. Yang and Y. Sun are with the State Key Laboratory
+of Industrial Control Technology, Zhejiang University, Hangzhou, 310027,
+China (e-mail: pcyou@zju.edu.cn; ggc@zju.edu.cn; yangzy@zju.edu.cn; yx-
+sun@iipc.zju.edu.cn).
+P. You and S. H. Low are with the Engineering and Applied Science
+Division, California Institute of Technology, Pasadena, CA 91125 USA (e-
+mail: pcyou@caltech.edu; slow@caltech.edu).
+W. Tushar and C. Yuen are with Singapore University of Technology
+and Design (SUTD), Singapore 487372 (e-mail: wayes tushar@sutd.edu.sg;
+yuenchau@sutd.edu.sg).
+We study a different problem here, motivated by a battery
+swapping model currently being pursued in China, especially
+for electric buses and electric taxis [4]. The State Grid (one of
+the two national utility companies) of China is experimenting
+with a new business model where it operates not only the grid,
+but also battery stations and a taxi service around a city, e.g.,
+Hangzhou. When the state of charge of a State Grid taxi is
+low, it goes to one of State Grid operated battery stations to
+exchange its depleted battery for a fully-charged battery. While
+battery swapping takes only a few minutes, it is not uncommon
+for a taxi to arrive at a station only to ﬁnd that it runs out of
+fully-charged batteries and there is a queue of taxis waiting
+to swap their batteries. The occasional multi-hour waits are a
+serious impediment to the battery swapping model.
+In this paper, we formulate in Section II an optimal
+scheduling problem for battery swapping that assigns to each
+EV a best station to swap its depleted battery based on its
+current location and state of charge. The station assignment
+not only determines EVs’ travel distance, but can also impact
+signiﬁcantly the power ﬂows on a distribution network because
+batteries are large loads. The schedule aims to minimize a
+weighted sum of total travel distance and generation cost over
+both station assignments and power ﬂow variables, subject
+to EV range constraints, grid operational constraints and AC
+power ﬂow equations.
+This joint battery swapping scheduling and OPF problem is
+nonconvex and computationally difﬁcult for two reasons. First
+the AC power ﬂow equations are nonlinear. Second, the station
+assignment variables are binary. We address the ﬁrst difﬁculty
+in Section III using the recently developed SOCP relaxation
+of OPF. Fixing any station assignment, the relaxation of OPF
+is then convex. Sufﬁcient conditions are known that guarantee
+an optimal solution to the nonconvex OPF problem can be
+recovered from an optimal solution to its relaxation; see [5],
+[6] for a comprehensive tutorial and references therein. Even
+when these conditions are not satisﬁed, SOCP relaxation is
+often exact for practical radial networks, as conﬁrmed also by
+our simulations.
+The second difﬁculty can be addressed using two different
+approaches. The ﬁrst approach, presented in Section III of this
+paper, applies generalized Benders decomposition to the mixed
+integer convex relaxation, and is suitable for cases where the
+distribution network, stations, and EVs are managed centrally
+by the same operator. When the underlying relaxation of OPF
+is exact, the generalized Benders decomposition computes a
+global optimum. In Section IV we illustrate the performance of
+arXiv:1611.07943v1  [math.OC]  23 Nov 2016
+
+--- PDF PAGE 2 ---
+our centralized solution through simulations. The simulation
+results suggest that the proposed algorithm is effective and
+computationally efﬁcient for practical application.
+In the ﬁrst approach, the operator needs global information
+such as the grid topology, impedances, operational constraints,
+background loads, availability of fully-charged batteries at
+each station, locations and states of charge of EVs. The second
+approach relaxes the binary station assignment variables to
+real variables in [0, 1]. With both relaxations the resulting
+approximate problem of joint battery swapping scheduling
+and OPF is a convex problem. This allows us to develop
+distributed solutions that are suitable for cases where the grid,
+stations, and EVs are operated by different organizations that
+do not share their private information. Their respective deci-
+sions are coordinated through privacy-preserving information
+exchanges. This will be explained in Part II of this paper.
+B. Literature
+There is a large literature on EV charging, e.g., optimiz-
+ing charging schedule for various purposes such as demand
+response, load proﬁle ﬂattening, or frequency regulation,
+e.g., [7]–[11]; architecture for mass charging [12]; locational
+marginal pricing for EV [13]; or the interaction of EV penetra-
+tion and the optimal siting and investment of charging stations
+[14].
+Sojoudi et al. [15] seems to be the ﬁrst to jointly optimize
+EV charging and AC power ﬂow spatially and temporally
+through semideﬁnite relaxation. Zhang et al. [16] extends
+the joint OPF-charging problem to multiphase distribution
+networks and proposes a distributed charging algorithm based
+on the alternating direction method of multipliers (ADMM).
+Chen et al. [17] decomposes the joint OPF-charging prob-
+lem into an OPF subproblem that is solved centrally by a
+utility company and a charging subproblem that is solved in
+a distributed manner by the EVs coordinated by a valley-
+ﬁlling signal from the utility. De Hoog et al. [18] uses a
+linear model and formulates EV charging on a three-phase
+unbalanced grid as a receding horizon optimization problem.
+It shows that optimizing charging schedule can increase the
+EV penetration that is sustainable by the grid from 10–15% to
+80%. Linearization is also used in [19] to model EV charging
+on a three-phase unbalanced grid as a mixed-integer linear
+program (binary because an EV is either being charged at
+peak rate or off).
+The literature on battery swapping is comparatively much
+smaller. Tan et al. [20] proposes a mixed queueing network
+that consists of a closed queue of batteries and an open queue
+of EVs to model the battery swapping processes, and analyzes
+its steady-state distribution. Yang et al. [21] designs a dynamic
+operation model of a battery swapping station and devises
+a bidding strategy in power markets. You et al. [22] studies
+the optimal charging schedule of a battery swapping station
+serving electric buses and proposes an efﬁcient distributed
+solution that scales with the number of charging boxes in
+the station. Sarker et al. [23] proposes a day-ahead model
+for the operation of battery swapping stations and uses ro-
+bust optimization to deal with future uncertainty of battery
+demand and electricity prices. Zheng et al. in [24] studies
+the optimal design and planning of a battery swapping station
+in a distribution system to maximize its net present value
+taking into account life cycle cost of batteries, grid upgrades,
+reliability, operational costs and investment costs. Zhang et al.
+[25] discusses several potential commercial modes of battery
+swapping and leasing service in China, and presents a beneﬁt
+analysis from perspectives of utility companies and battery
+manufacturers.
+II. PROBLEM FORMULATION
+We focus on the scenario where a ﬂeet of EVs and a set
+of stations1 operate in a region that is supplied by an active
+distribution network. We assume the EVs, the stations, and
+the distribution network are managed centrally by the same
+operator, e.g., the State Grid in China. Periodically, say, every
+15 minutes, the system determines a set of EVs that should
+be scheduled for battery swapping, e.g., based on their current
+state of charge or EVs’ requests for battery swapping. At the
+beginning of the control interval the system assigns to each
+EV in the set a station for battery swapping. The EVs travel to
+their assigned station to swap their batteries before the end of
+the current interval, and batteries returned by the EVs start to
+be charged at the stations from the next interval. Our goal is
+to design an assignment algorithm that optimizes a weighted
+sum of electricity generation cost and the distance travelled for
+battery swapping, while respecting the operational constraints
+of the distribution network.
+We make two simplifying assumptions. First we assume
+that all EVs in the set can arrive at their assigned station
+and ﬁnish battery swapping before the next interval, so we
+do not consider scheduling across multiple intervals. This
+assumption is reasonable because the geographic area covered
+by a distribution network is usually relatively small. Typically
+a city substation (50MVA, 110kV) has a service radius of 3–
+5km, depending on its load density [26]. Second we ignore
+the possibility that an EV does not swap its battery as
+recommended or swaps its battery at a station different from
+its assigned station. These complications affect the initial state
+at the beginning of the next interval, but in this paper, we focus
+only on optimal scheduling in the current interval.
+In the following we present a mathematical model of a radial
+distribution network and formulate our optimal scheduling
+problem for battery swapping. All vectors x in this paper are
+column vectors; xT denotes its transpose.
+A. Network model
+Consider a radial distribution network with a connected
+directed graph G = (N, E), where N := {0, 1, 2, . . . , N} and
+E ⊆N×N. Each node in N represents a bus and each edge in E
+represents a distribution line. We assume G has a radial (tree)
+topology with bus 0 representing a substation that extracts
+power from a transmission network to feed the loads in G,
+as illustrated in Fig. 1. We orient the graph, without loss of
+generality, so that each line points away from bus 0. Denote
+1Throughout this paper stations refer to battery stations.
+
+--- PDF PAGE 3 ---
+root node (bus 0)
+leaf nodes
+Fig. 1.
+Radial topology of G.
+a line in E by (j, k) or j →k if it points from bus j to bus
+k. Each bus j (except bus 0) has a unique parent bus i := ij.
+Let zjk be the complex impedance of line (j, k) ∈E. Let
+Sjk := Pjk + iQjk denote the sending-end complex power
+from bus j to bus k where Pjk and Qjk denote the real and
+reactive power ﬂows. Let ljk denote the squared magnitude of
+the complex current from bus j to bus k. Let vj denote the
+squared magnitude of the complex voltage phasor of bus j.
+We assume the voltage v0 of bus 0 is ﬁxed.
+Each bus j has a base load sb
+j := pb
+j + iqb
+j (excluding
+the battery charging loads from stations), where pb
+j and qb
+j
+denote the real and reactive power. Each bus j may also have
+distributed generation sg
+j := pg
+j + iqg
+j . Let sj denote the net
+complex power injection given by
+sj :=
+(
+sg
+j −sb
+j −se
+j
+if j supplies a station
+sg
+j −sb
+j
+otherwise
+where se
+j denotes the total charging load at bus j. We assume
+the base loads sb
+j are given and the generations sg
+j and charging
+loads se
+j are variables.
+We use the DistFlow equations proposed by Baran and Wu
+in [27] to model the power ﬂows on the network:
+X
+k:(j,k)∈E
+Sjk = Sij −zijlij + sj,
+j ∈N
+(1a)
+vj −vk = 2Re(zH
+jkSjk) −|zjk|2ljk,
+j →k ∈E (1b)
+vjljk = |Sjk|2,
+j →k ∈E
+(1c)
+where vj =: |Vj|2 and ljk := |Ijk|2. The equations (1a)
+impose power balance at each bus, (1b) model the Ohm’s law,
+and (1c) deﬁne branch power ﬂows. Note that Si0 := 0 and
+Ii0 := 0 if j = 0 is the substation bus. When bus j is a leaf
+node of G, all Sjk = 0 in (1a). The quantity zij|Iij|2 is the
+loss on line (i, j), and hence Sij−zij|Iij|2 is the receiving-end
+complex power at bus j from i.
+The complex notation of the DistFlow equations (1)
+is only a shorthand for a set of real equations in the
+real vector variables (s, v, l, S)
+:=
+(p, q, v, l, P, Q)
+:=
+(pj, qj, vj, ljk, Pjk, Qjk, j, k ∈N, (j, k) ∈E). The equations
+(1a)–(1b) are linear in these variables but (1c) are quadratic,
+one of the two sources of nonconvexity in our joint battery
+swapping scheduling and OPF problem formulated below.
+The operation of the distribution network must meet certain
+speciﬁcations. The squared voltage magnitudes must satisfy
+vj ≤vj ≤vj,
+j ∈N
+(2a)
+where vj and vj are given lower and upper bounds on the
+squared voltage magnitude at bus j. The distributed real and
+reactive generations must satisfy
+pg
+j ≤pg
+j ≤pg
+j,
+j ∈N
+(2b)
+qg
+j ≤qg
+j ≤qg
+j,
+j ∈N
+(2c)
+where pg
+j, pg
+j, qg
+j, and qg
+j are given lower and upper bounds on
+the real and reactive power generation at bus j respectively.
+The power ﬂows on line (j, k) must satisfy
+|Sjk| ≤Sjk,
+j →k ∈E
+(2d)
+where Sjk denotes the capacity of line (j, k).
+The model is quite general. For example, if a quantity is
+known and ﬁxed, then we set both its upper and lower bounds
+to the given quantity, e.g., for the voltage of the substation
+bus, v0 = v0. If there is no distributed generation at bus j
+then pg
+j = pg
+j = qg
+j = qg
+j = 0.
+B. Battery swapping scheduling
+Let Nw := {1, 2, . . . , Nw} ⊆N denote the set of buses
+that supply electricity to stations. Their locations are ﬁxed and
+known. There is a station connected to each bus j ∈Nw and
+we use j to index both the bus and the station. The batteries
+at station j are either charging at a constant rate r or already
+fully-charged and ready for swapping. Denote the total number
+of batteries and fully-charged batteries at the beginning of the
+current control interval by Mj and mj respectively.
+Let A := {1, 2, . . . , A} denote the set of EVs in the
+geographic area served by the distribution network that require
+battery swapping in the current interval. Let their states of
+charge be (ca, a ∈A). Let uaj, a ∈A, j ∈Nw, represent the
+assignment:
+uaj
+=
+(
+1,
+if EV a is assigned to station j
+0,
+otherwise
+and let u := (uaj, a ∈A, j ∈Nw) denote the vector of
+assignments.
+Assumption 1. A ≤P
+j∈Nw mj.
+Under Assumption 1, there are enough fully-charged batteries
+in the system for all EVs in A in the current interval. This can
+be enforced when choosing the candidate set A of EVs for
+battery swapping, e.g., ranking EVs according to their states
+of charge and scheduling in an increasing order for at most
+P
+j∈Nw mj EVs.
+The assignment u satisﬁes the following conditions:
+X
+j∈Nw
+uaj
+=
+1,
+a ∈A
+(3a)
+X
+a∈A
+uaj
+≤
+mj,
+j ∈Nw
+(3b)
+i.e., exactly one station is assigned to every EV and every
+assigned station has enough fully-charged batteries to serve
+EVs.
+The system knows the current location of every EV a
+and therefore can calculate the distance daj from its current
+
+--- PDF PAGE 4 ---
+location to the assigned station j. If the EV is not currently
+carrying passengers and can go to swap its battery immedi-
+ately, then daj is the travel distance from its current location
+to station j, e.g., calculated from a routing application (such
+as Google map). If the EV must ﬁrst complete its current
+passenger run before going to station j, then the distance daj
+is the travel distance from its current location to the destination
+of its passengers and then to station j. The assigned station j
+must be within each EV a’s driving range, i.e.,
+uajdaj ≤γaca,
+j ∈Nw, a ∈A
+(3c)
+where ca is EV a’s current state of charge and γa is its driving
+range per unit state of charge.
+Since every EV produces a depleted battery that needs to
+be charged at rate r, we can express the net power injection
+sj = pj + iqj at bus j in terms of assignment u as:
+pj =
+
+
+
+
+
+
+
+pg
+j −pb
+j −r
+ 
+Mj −mj +
+X
+a∈A
+uaj
+!
+, j ∈Nw
+pg
+j −pb
+j,
+j ∈N \ Nw
+(4a)
+qj =
+qg
+j −qb
+j,
+j ∈N
+(4b)
+Let fj : R →R models the generation cost at bus j, e.g.,
+for a distributed gas generator. We assume all fj are strictly
+convex increasing functions [15]–[17]. We are interested in the
+following optimization problem:
+min
+u,s,sg,
+v,l,S
+X
+j∈N
+fj(pg
+j) + α
+X
+a∈A
+X
+j∈Nw
+dajuaj
+(5)
+s.t.
+(1)(2)(3)(4), uaj ∈{0, 1}
+where P
+a∈A
+P
+j∈Nw
+uajdaj is the total travel distance of EVs and
+α > 0 is a weight that makes the generation cost and the travel
+distance comparable.
+III. SOLUTION
+The joint battery swapping scheduling and OPF problem
+(5) is generally difﬁcult to solve because (1c) is nonconvex,
+as mentioned above, and u is discrete. Our solution strategy
+has two steps.
+1. SOCP relaxation. We ﬁrst relax the nonconvex constraint
+(1c) into a second-order cone. Speciﬁcally, replace the Dist-
+Flow equations (1) by
+X
+k:(j,k)∈E
+Sjk = Sij −zijlij + sj,
+j ∈N
+(6a)
+vj −vk = 2Re(zH
+jkSjk) −|zjk|2ljk,
+j →k ∈E (6b)
+vjljk ≥|Sjk|2,
+j →k ∈E
+(6c)
+Then the SOCP relaxation of the problem (5) is:
+min
+u,s,sg,
+v,l,S
+X
+j∈N
+fj(pg
+j) + α
+X
+a∈A
+X
+j∈Nw
+dajuaj
+(7)
+s.t.
+(6)(2)(3)(4), uaj ∈{0, 1}
+Fix any assignment u ∈{0, 1}A. Then the problem (7) is
+a convex problem. It is a relaxation of the problem (5),
+given u, in the sense that the optimal objective value of the
+relaxation (7) lower bounds that of the original problem (5).
+If an optimal solution to the relaxation (7) attains equality in
+(6c) then the solution is also feasible, and therefore optimal,
+for the original problem (5). In this case, we say that the
+SOCP relaxation is exact. Sufﬁcient conditions are known
+that guarantee the exactness of the SOCP relaxation; see [5],
+[6] for a comprehensive tutorial and references therein. Even
+when these conditions are not satisﬁed, SOCP relaxation for
+practical radial networks is often exact, as conﬁrmed also by
+our simulations in Section IV.
+Hence we will solve (7) instead of (5).
+2. Generalized Benders decomposition. To deal with the
+discrete variables in (7), we apply generalized Benders decom-
+position. Benders decomposition was ﬁrst proposed in [28] for
+problems where, when a subset of the variables are ﬁxed, the
+remaining subproblem is a linear program. It is extended in
+[29] to the broader class of problems where the remaining
+subproblem is a convex program. We now apply it to solving
+(7).
+Denote the continuous variables by x := (s, sg, v, l, S) and
+the discrete variables by u. Denote the objective function by
+F(x, u)
+:=
+X
+j∈N
+fj(pg
+j) + α
+X
+a∈A
+X
+j∈Nw
+dajuaj
+Given any u, F(x, u) is convex in x since fj’s are assumed
+to be strictly convex. Denote the constraint set for x by
+X
+:=
+{x ∈R(5|N|+3|E|) : x satisﬁes (2)(6)}
+the constraint set for u by
+U
+:=
+{u ∈{0, 1}ANw : u satisﬁes (3)}
+and the constraints (4) on (x, u) by G(x, u) = 0. Then the
+relaxation (7) takes the standard form for generalized Benders
+decomposition:
+min
+x,u
+F(x, u)
+(8)
+s.t.
+G(x, u) = 0, x ∈X, u ∈U
+where F : R(5|N|+3|E|) × {0, 1}ANw →R is a scalar-valued
+function, and G : R(5|N|+3|E|) × {0, 1}ANw →R2|N| is a
+vector-valued constraint function. Fixing any u ∈U, (8) is a
+convex subproblem in x. We now apply generalized Benders
+decomposition of [29] to (8).
+Write (8) in the following equivalent form:
+min
+u
+W(u)
+s.t.
+u ∈U ∩W
+(9a)
+where
+W(u) := min
+x∈X
+F(x, u)
+s.t.
+G(x, u) = 0
+(9b)
+and
+W := {u : G(x, u) = 0 for some x ∈X}
+(9c)
+The problem (9b), called the slave problem, is convex and
+much easier to solve than (8). The set W consists of all u
+for which (9b) is feasible and hence U ∩W is the projection
+
+--- PDF PAGE 5 ---
+of the feasible region of (8) onto the u-space. The central
+idea of generalized Benders decomposition is to invoke the
+dual representations of W(u) and W to derive the following
+equivalent problem to (9) (see [29, Theorems 2.2 and 2.3]):
+min
+u∈U
+sup
+µ∈R2|N|
+
+min
+x∈X
+
+F(x, u) + µT G(x, u)
+	
+s.t.
+min
+x∈X
+
+λT G(x, u)
+	
+= 0,
+∀λ ∈R2|N|
+Here λ and µ are Lagrangian multiplier vectors for W and
+W(u) respectively. This problem is equivalent to:
+min
+u∈U,u0
+u0
+(10)
+s.t.
+u0 ≥min
+x∈X
+
+F(x, u) + µT G(x, u)
+	
+,
+∀µ ∈R2|N|
+min
+x∈X
+
+λT G(x, u)
+	
+= 0,
+∀λ ∈R2|N|
+In summary, the series of manipulations has transformed the
+relaxation (7) into the master problem (10).
+Since (10) has uncountably many constraints with all pos-
+sible λ’s and µ’s, it is neither practical nor necessary to
+enumerate all constraints in solving (10). Generalized Benders
+decomposition starts by solving a relaxed version of (10) that
+ignores all but a few constraints. If a solution of the relaxed
+version of (10) satisﬁes all the ignored constraints, then it
+is an optimal solution of (10) and the algorithm terminates.
+Otherwise, the solution process of the relaxed version of (10)
+will identify one µ or λ for which the constraints are violated.
+These constraints are then added to the relaxed version of (10),
+and the cycle repeats.
+Speciﬁcally the Benders decomposition algorithm for (7)
+(or equivalently (8)) is as follows.
+• Step 1. Pick any ¯u ∈U ∩W. Solve (9b) with u = ¯u
+to obtain an optimal Lagrangian multiplier vector ¯µ. Let
+nµ = 1, nλ = 0, µ1 = ¯µ, and UBD = W(¯u), where nµ,
+nλ are counters for the two types of constraints in (10),
+and UBD denotes an upper bound on the optimal value
+of (8).
+• Step 2. Solve the current relaxed master problem:
+min
+u∈U,u0
+u0
+(11)
+s.t.
+u0 ≥min
+x∈X
+n
+F(x, u) +
+ µiT G(x, u)
+o
+,
+i = 1, . . . , nµ
+min
+x∈X
+n λiT G(x, u)
+o
+= 0,
+i = 1, . . . , nλ
+Let (ˆu, ˆu0) be the optimal solution to (11). Clearly ˆu0 is
+a lower bound on the optimal value of (8) since the con-
+straints in (10) are relaxed to a smaller set of constraints
+in (11). Terminate the algorithm if UBD−ˆu0 ≤ϵ, where
+ϵ > 0 is a sufﬁciently small threshold.
+• Step 3. Solve the dual problem of (9b) with u = ˆu. The
+solution falls into the following two cases.
+1) Step 3a. The dual problem of (9b) has a ﬁnite solution
+ˆµ. W(ˆu) is ﬁnite. Let UBD = min{UBD, W(ˆu)}.
+Terminate the algorithm if UBD −ˆu0 ≤ϵ. Otherwise,
+increase nµ by 1 and let µnµ = ˆµ. Return to Step 2.
+2) Step 3b. The dual problem of (9b) has an unbounded
+solution. Then (9b) is infeasible. Determine ˆλ through
+a feasibility check problem and its dual [30]. Increase
+nλ by 1 and let λnλ = ˆλ. Return to Step 2.
+We make three remarks. First, the slave problem (9b) is
+convex and hence can generally be solved efﬁciently. The
+relaxed problem (11) involves discrete variables and are gen-
+erally nonconvex, but it is much simpler than the original
+problem (8). Second, for our problem, (11) turns out to be
+a binary linear program because both F and G are separable
+functions in (x, u) of the form:
+F(x, u)
+=:
+f1(x) + f2(u)
+G(x, u)
+=:
+g1(x) + g2(u)
+where f2 and g2 are both linear in u. Indeed the constraints
+in (11) are
+u0 −f2(u) −
+ µiT g2(u)
+≥
+min
+x∈X
+n
+f1(x) +
+ µiT g1(x)
+o
+i = 1, . . . , nµ
+ λiT g2(u)
+=
+−min
+x∈X
+ λiT g1(x)
+i = 1, . . . , nλ
+where the left-hand side is linear in the variable u and the
+right-hand side is independent of u. Hence, in each iteration,
+the algorithm solves a binary linear program (11) and a convex
+program (9b). Finally, every time Step 2 is entered, one or two
+additional constraints are added to the binary linear program
+(11). This generally makes (11) harder to compute but also
+a better approximation of (10). It is proved in [29, Theorem
+2.4] that the algorithm will terminate in ﬁnite steps since U is
+discrete and ﬁnite.
+IV. NUMERICAL RESULTS
+In this section, we evaluate the proposed algorithm through
+numerical simulations using a 56-bus distribution feeder of
+Southern California Edison (SCE) with a radial structure. More
+details about the feeder can be found in [31, Figure 2, TABLE
+I]. We add 4 distributed generators and 4 stations at different
+buses. The setup of the distributed generators is given in Table
+I(a)2. The 4 stations are assumed to be uniformly located in a
+4km×4km square area supplied by the distribution feeder, as
+shown in Table I(b). Suppose in a certain control interval, there
+are A number of EVs that request battery swapping. Their
+current locations are randomized uniformly within the square
+area while their destinations are ignored. We use the Euclidean
+distance for daj. For convenience, it is assumed that Mj =
+mj, mj = A, j ∈Nw, which means in each station batteries
+are all fully-charged and sufﬁcient to serve all EVs. We assume
+all EVs have sufﬁcient battery energy to reach any of the 4
+stations, which means (3c) is readily satisﬁed. The extension
+to the general case where each EV has a limited driving range
+and can only reach some of the stations is straightforward. The
+constant charging rate is r = 0.01MW [32] at all stations. To
+2The units of the real power, reactive power, cost (for the whole control
+interval), distance and weight in this paper are MW, Mvar, $, km and $/km,
+respectively.
+
+--- PDF PAGE 6 ---
+0
+1
+2
+3
+4
+0
+1
+2
+3
+4
+x (km)
+y (km)
+ 
+ 
+EV
+station 1
+station 2
+station 3
+station 4
+(a)
+0
+1
+2
+3
+4
+0
+1
+2
+3
+4
+x (km)
+y (km)
+ 
+ 
+EV
+station 1
+station 2
+station 3
+station 4
+(b)
+Fig. 2.
+#EVs=100 (a) Nearest-station policy. (b) Optimal assignment.
+0
+1
+2
+3
+4
+0
+1
+2
+3
+4
+x (km)
+y (km)
+ 
+ 
+EV
+station 1
+station 2
+station 3
+station 4
+(a)
+0
+1
+2
+3
+4
+0
+1
+2
+3
+4
+x (km)
+y (km)
+ 
+ 
+EV
+station 1
+station 2
+station 3
+station 4
+(b)
+Fig. 3.
+#EVs=300 (a) Nearest-station policy. (b) Optimal assignment.
+make the two components of the objective comparable, we set
+the weight α to be 0.02$/km ﬁrst [33], and will then allow it
+to take different values to reveal its impact. Note that due to
+the randomness of EVs’ initialized locations, we conduct 10
+simulation runs for each case setup. All numerical tests are
+run on a laptop with Intel Core i7-3632QM CPU@2.20GHz,
+8GB RAM, and 64-bit Windows 10 OS.
+TABLE I
+SETUP
+(a) Distributed generator
+Bus
+pg
+j
+pg
+j
+qg
+j
+qg
+j
+Cost function
+1
+4
+0
+2
+-2
+0.3pg2 + 30pg
+4
+2.5
+0
+1.5
+-1.5
+0.1pg2 + 20pg
+26
+2.5
+0
+1.5
+-1.5
+0.1pg2 + 20pg
+34
+2.5
+0
+1.5
+-1.5
+0.1pg2 + 20pg
+(b) Station
+Bus
+Location
+Mj
+mj
+5
+(1,1)
+mj
+A
+16
+(3,1)
+mj
+A
+31
+(1,3)
+mj
+A
+43
+(3,3)
+mj
+A
+Nearest-station policy. Without optimization, the default pol-
+icy is that all EVs head for their nearest stations to swap
+batteries. This is shown in Fig. 2(a) and Fig. 3(a) for two
+speciﬁc cases with 100 and 300 EVs, respectively. In practice
+this myopic policy can lead to battery shortage at a station
+if many EVs cluster around that station due to correlation in
+trafﬁc patterns. Moreover it can cause voltage instability: the
+voltage magnitudes of some buses drop below the threshold
+0.95 p.u. in the 300-EV case, as shown in Table II.
+Optimal assignment. Fig. 2(b) and Fig. 3(b) show the optimal
+assignments computed using the proposed algorithm for the
+above two cases, respectively. The nearest stations are not
+TABLE II
+PARTIAL BUS DATA UNDER NEAREST-STATION POLICY (300 EVS)
+Bus
+|Vj | (p.u.)
+pg
+j
+qg
+j
+r
+P
+a∈A
+uaj
+1
+1.050
+0.571
+0.000
+/
+4
+1.047
+2.500
+0.663
+/
+5
+1.031
+/
+/
+0.660
+16
+0.941
+/
+/
+0.700
+18
+0.948
+/
+/
+/
+19
+0.944
+/
+/
+/
+26
+1.050
+2.500
+0.410
+/
+31
+1.020
+/
+/
+0.830
+34
+1.044
+2.500
+1.500
+/
+43
+1.015
+/
+/
+0.810
+assigned to some of the EVs (marked black in the ﬁgures)
+when grid operational constraints such as voltage stability are
+taken into account. The numbers of such EVs is higher in
+the 300-EV case than that in the 100-EV case. The tradeoff
+between EVs’ total travel distance and the total generation cost
+is optimized. For comparison with Table II, the corresponding
+partial OPF results of the 300-EV case are listed in Table III.
+As we can see from Table III, the outputs (2.500 MW) of the
+distributed generators at buses 4, 26 and 34 have reached their
+full capacity (2.5 MW) while the injection (0.520 MW) at bus
+1 (root bus) is far from its capacity (4 MW). This is consistent
+with our intuition that distributed generators that are closer to
+users and potentially cheaper than power from the transmission
+grid are favored in OPF. Under the optimal assignment, the
+deviations of voltages from their nominal value are all less
+than the 5%.
+TABLE III
+PARTIAL BUS DATA UNDER OPTIMAL ASSIGNMENT (300 EVS)
+Bus
+|Vj | (p.u.)
+pg
+j
+qg
+j
+r
+P
+a∈A
+uaj
+1
+1.050
+0.520
+0.000
+/
+4
+1.048
+2.500
+0.590
+/
+5
+1.025
+/
+/
+0.990
+15
+0.981
+/
+/
+/
+16
+0.974
+/
+/
+0.300
+17
+0.980
+/
+/
+/
+18
+0.973
+/
+/
+/
+19
+0.969
+/
+/
+/
+26
+1.050
+2.500
+0.439
+/
+31
+1.019
+/
+/
+0.840
+34
+1.044
+2.500
+1.500
+/
+43
+1.013
+/
+/
+0.870
+Optimality of generalized Benders decomposition. The
+upper and lower bounds on the optimal objective values for
+the above two cases are plotted in Fig. 4(a) and Fig. 4(b),
+respectively, as the algorithm iterates between the master and
+slave problems. Basically, more iterations are required for
+larger-scale cases since it usually takes more iterations to attain
+an initial feasible solution. However, once we have a feasible
+solution, the gap between the upper and lower bounds starts to
+shrink rapidly and the convergence to optimality is achieved
+within a few iterations.
+Exactness of SOCP relaxation. We check whether the solu-
+tion computed by generalized Benders decomposition attains
+equality in (6c), i.e., whether the solution satisﬁes power ﬂow
+
+--- PDF PAGE 7 ---
+0
+1
+2
+3
+4
+0
+60
+120
+180
+240
+300
+Iteration number
+Objective value ($)
+ 
+ 
+infinity
+upper bound
+lower bound
+(a)
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+0
+60
+120
+180
+240
+300
+Iteration number
+Objective value ($)
+ 
+ 
+infinity
+upper bound
+lower bound
+(b)
+Fig. 4.
+Convergence of generalized Benders decomposition (a) #EVs=100.
+(b) #EVs=300.
+equations and is implementable. Our ﬁnal result conﬁrms the
+exactness of the SOCP relaxation for the above two cases, and
+the relaxation is exact for most other cases we have tested on.
+Due to space limit, only some partial data of the 300-EV case
+are shown in Table IV.
+In summary, SOCP relaxation and generalized Benders de-
+composition have solved our joint battery swapping scheduling
+and OPF problem (5) exactly.
+TABLE IV
+EXACTNESS OF SOCP RELAXATION (PARTIAL RESULTS FOR 300 EVS)
+Bus
+vj ljk
+|Sjk|2
+Residual
+From
+To
+1
+2
+0.271
+0.271
+0.000
+2
+3
+0.006
+0.006
+0.000
+2
+4
+0.202
+0.202
+0.000
+4
+5
+1.369
+1.369
+0.000
+4
+6
+0.005
+0.005
+0.000
+4
+7
+1.952
+1.952
+0.000
+7
+8
+1.691
+1.691
+0.000
+8
+9
+0.009
+0.009
+0.000
+8
+10
+1.269
+1.269
+0.000
+10
+11
+1.092
+1.092
+0.000
+Computational effort. To demonstrate the potential of the
+proposed algorithm for practical application, we check its
+required computational effort by counting its computation time
+for different number of EVs, since the number of discrete
+variables in the optimization problem is the computational
+bottleneck. We use Gurobi to solve the master problem (integer
+programming) and SDPT3 to solve the slave problem (convex
+programming) on the MATLAB R2012b platform. Fig. 53
+shows the average computation time required by the proposed
+algorithm to ﬁnd a global optimum for different numbers of
+EVs, which validates its computational efﬁciency.
+Beneﬁt. Fig. 6 displays the average relative reduction in
+the objective value with different α’s using our algorithm,
+compared with the nearest-station policy. Scheduling ﬂexibility
+is enhanced with more EVs, thus improving the savings.
+Clearly the smaller the weight α on EVs’ travel distance,
+the more beneﬁt the proposed algorithm provides over the
+nearest-station policy. However, Fig. 6 also suggests that the
+improvement is small, i.e., the nearest-station policy is good
+enough if it is implementable.
+The nearest-station policy is sometimes infeasible when
+3Due to the randomization of EVs’ initial locations, each datapoint in Fig. 5,
+Fig. 6, Fig. 7 and Fig. 8 is an average over 10 simulation runs.
+0
+100 200 300 400 500 600 700 800 900 1000
+0
+40
+80
+120
+160
+200
+Number of EVs
+Average computation time (s)
+Fig. 5.
+Average computation time as a function of #EVs.
+40
+80
+120
+160
+200
+0
+0.05
+0.1
+0.15
+0.2
+0.25
+0.3
+0.35
+Number of EVs
+Average relative reduction in obj. value (%)
+ 
+ 
+alpha=0.01
+alpha=0.02
+alpha=0.05
+alpha=0.1
+Fig. 6.
+Average relative reduction in objective value.
+there are more EVs nearest to a station than the number of
+fully-charged batteries at that station or when some operational
+constraints of the distribution network are violated. In our case
+study, infeasibility is mainly due to some voltages dropping
+below their lower limits. Deﬁne a metric voltage drop violation
+as VDV := P
+j∈N max{√vj −|Vj|, 0} to quantify the degree
+of voltage violation. Fig. 7 shows the average VDV for the
+number of EVs ranging from 240 to 400 under the nearest-
+station policy. The voltage violation becomes more severe
+when the number of EVs increases.
+It is also interesting to look at cases where there are more
+EVs nearest to a station than fully-charged batteries that
+station can provide, which, as far as we know, are common
+in practice. We reset M1 = m1 = M2 = m2 =
+1
+2A and
+M3 = m3 = M4 = m4 = 1
+8A to simulate these situations.
+Hence the total number of fully-charged batteries in the system
+is 5
+4A. Fig. 8(a) shows, for each station, the average ratio of
+the number of EVs that go to the station for battery swapping
+to the number of fully-charged batteries at the station, under
+both the nearest-station policy and an optimal assignment.
+Under the optimal assignment, 99.40% of station 1’s batteries,
+50.60% of station 2’s batteries, and all the batteries at stations
+3, 4 are used, thus they have collectively served all A EVs.
+Under the nearest-station policy, however, only 51.55% and
+48.89% of stations 1 and 2’s batteries respectively (i.e., a
+total of around 1
+2A batteries) are used for swapping. At either
+of stations 3 and 4, the number of EVs is approximately
+double that of available fully-charged batteries (192.61% and
+205.62%, respectively). Fig. 8(b) shows the average number
+of unserved EVs under the nearest-station policy as a function
+of the total number A of EVs. On average, a total of
+1
+4A
+EVs cannot be served at their nearest stations, mainly due to
+congestion at stations 3 and 4, while available fully-charged
+batteries at stations 1 and 2 are not fully utilized.
+
+--- PDF PAGE 8 ---
+240
+280
+320
+360
+400
+0
+0.05
+0.1
+0.15
+0.2
+Number of EVs
+Average VDV (p.u.)
+Fig. 7.
+Average VDV under nearest-station policy.
+1
+2
+3
+4
+0
+50
+100
+150
+200
+250
+Station
+Average ratio of #EVs / #batteries (%)
+ 
+ 
+nearest−station policy
+optimal assignment
+(a)
+40
+80
+120
+160
+200
+0
+10
+20
+30
+40
+50
+Number of EVs
+Average number of unserved EVs
+(b)
+Fig. 8.
+(a) Average ratio of the number of EVs to that of fully-charged
+batteries. (b) Average number of unserved EVs under nearest-station policy.
+V. CONCLUSION
+We formulate an optimal scheduling problem for battery
+swapping that assigns to each EV a best station to swap
+its depleted battery based on its current location and state
+of charge. The schedule aims to minimize total travel dis-
+tance and generation cost over both station assignments and
+power ﬂow variables, subject to EV range constraints, grid
+operational constraints and AC power ﬂow equations. We
+propose a centralized solution that relaxes the nonconvex
+constraint of OPF into a second-order cone and then applies
+generalized Benders decomposition to handle the binary nature
+of station assignments. Numerical case studies on the SCE 56-
+bus distribution feeder show the SOCP relaxation is mostly
+exact and generalized Benders decomposition computes an
+optimal solution efﬁciently.
+REFERENCES
+[1] C2ES, “Climate TechBook,” Center for Climate and Energy Solutions,
+US: www.c2es.org/energy/use/transportation, 2016.
+[2] EIA, “Monthly energy review,” Energy Information Administration, US
+Department of Energy: www.eia.gov/totalenergy/data/monthly/, 2015.
+[3] R.-C. Leou, C.-L. Su, and C.-N. Lu, “Stochastic analyses of electric
+vehicle charging impacts on distribution network,” IEEE Trans. on
+Power Systems, vol. 29, no. 3, pp. 1055–1063, 2014.
+[4] T. Shang, Y. Chen, and Y. Shi, “Orchestrating ecosystem co-opetition:
+Case studies on the business models of the EV demonstration pro-
+gramme in China,” Electric Vehicle Business Models, pp. 215–227, 2015.
+[5] S. H. Low, “Convex relaxation of optimal power ﬂow, I: formulations
+and relaxations,” IEEE Trans. on Control of Network Systems, vol. 1,
+no. 1, pp. 15–27, 2014.
+[6] S. H. Low, “Convex relaxation of optimal power ﬂow, II: exactness,”
+IEEE Trans. on Control of Network Systems, vol. 1, no. 2, pp. 177–189,
+2014.
+[7] Z. Ma, D. Callaway, and I. Hiskens, “Decentralized charging control of
+large populations of plug-in electric vehicles,” IEEE Trans. on Control
+Systems Technology, vol. 21, no. 1, pp. 67–78, 2013.
+[8] L. Gan, U. Topcu, and S. H. Low, “Optimal decentralized protocol for
+electric vehicle charging,” IEEE Trans. on Power Systems, vol. 28, no. 2,
+pp. 940–951, 2013.
+[9] P. Papadopoulos, N. Jenkins, L. M. Cipcigan, I. Grau, and E. Zabala,
+“Coordination of the charging of electric vehicles using a multi-agent
+system,” IEEE Trans. on Smart Grid, vol. 4, no. 4, pp. 1802–1809, 2013.
+[10] S. Han, S. Han, and K. Sezaki, “Estimation of achievable power capacity
+from plug-in electric vehicles for V2G frequency regulation: Case
+studies for market participation,” IEEE Trans. on Smart Grid, vol. 2,
+no. 4, pp. 632–641, 2011.
+[11] A. O’Connell, D. Flynn, and A. Keane, “Rolling multi-period optimiza-
+tion to control electric vehicle charging in distribution networks,” IEEE
+Trans. on Power Systems, vol. 29, no. 1, pp. 340–348, 2014.
+[12] S. Chen and L. Tong, “iEMS for large scale charging of electric vehicles:
+Architecture and optimal online scheduling,” in Proc. of IEEE Interna-
+tional Conference on Smart Grid Communications (SmartGridComm),
+pp. 629–634, 2012.
+[13] R. Li, Q. Wu, and S. S. Oren, “Distribution locational marginal pricing
+for optimal electric vehicle charging management,” IEEE Trans. on
+Power Systems, vol. 29, no. 1, pp. 203–211, 2014.
+[14] Z. Yu, S. Li, and L. Tong, “On market dynamics of electric vehicle
+diffusion,” in Proc. of the 52nd Annual Allerton Conferene on Commu-
+nication, Control, and Computing, pp. 1051–1057, 2014.
+[15] S. Sojoudi and S. H. Low, “Optimal charging of plug-in hybrid electric
+vehicles in smart grids,” in Proc. of IEEE Power & Energy Society
+General Meeting, pp. 1–6, 2011.
+[16] L. Zhang, V. Kekatos, and G. B. Giannakis, “Scalable network-
+constrained electric vehicle charging in multiphase distribution grids,”
+arXiv preprint arXiv:1510.00403, 2015.
+[17] N. Chen, C. W. Tan, and T. Q. Quek, “Electric vehicle charging in smart
+grid: Optimality and valley-ﬁlling algorithms,” IEEE Journal of Selected
+Topics in Signal Processing, vol. 8, no. 6, pp. 1073–1083, 2014.
+[18] J. de Hoog, T. Alpcan, M. Brazil, D. A. Thomas, and I. Mareels, “Opti-
+mal charging of electric vehicles taking distribution network constraints
+into account,” IEEE Trans. on Power Systems, vol. 30, no. 1, pp. 365–
+375, 2015.
+[19] J. Franco, M. Rider, and R. Romero, “A mixed-integer linear program-
+ming model for the electric vehicle charging coordination problem in
+unbalanced electrical distribution systems,” IEEE Trans. on Smart Grid,
+vol. 6, no. 5, pp. 2200–2210, 2015.
+[20] X. Tan, B. Sun, and D. H. Tsang, “Queueing network models for electric
+vehicle charging station with battery swapping,” in Proc. of IEEE Inter-
+national Conference on Smart Grid Communications (SmartGridComm),
+pp. 1–6, 2014.
+[21] S. Yang, J. Yao, T. Kang, and X. Zhu, “Dynamic operation model of the
+battery swapping station for EV (electric vehicle) in electricity market,”
+Energy, vol. 65, pp. 544–549, 2014.
+[22] P. You, Z. Yang, Y. Zhang, S. H. Low, and Y. Sun, “Optimal charging
+schedule for a battery switching station serving electric buses,” IEEE
+Trans. on Power Systems, vol. 31, no. 5, pp. 3473–3483, 2016.
+[23] M. R. Sarker, H. Pandˇzi´c, and M. A. Ortega-Vazquez, “Optimal oper-
+ation and services scheduling for an electric vehicle battery swapping
+station,” IEEE Trans. on Power Systems, vol. 30, no. 2, pp. 901–910,
+2015.
+[24] Y. Zheng, Z. Y. Dong, Y. Xu, K. Meng, J. H. Zhao, and J. Qiu,
+“Electric vehicle battery charging/swap stations in distribution systems:
+comparison study and optimal planning,” IEEE Trans. on Power Systems,
+vol. 29, no. 1, pp. 221–229, 2014.
+[25] X. Zhang and R. Rao, “A beneﬁt analysis of electric vehicle battery
+swapping and leasing modes in china,” Emerging Markets Finance and
+Trade, vol. 52, no. 6, pp. 1414–1426, 2016.
+[26] Q. Wang, K. Qin, and D. Chen, “Power supply radius optimization
+for substations with large capacity transformers.” http://www.cqvip.com/
+read/read.aspx?id=83887068504849524852484852.
+[27] M. E. Baran and F. F. Wu, “Optimal capacitor placement on radial
+distribution systems,” IEEE Trans. on Power Delivery, vol. 4, no. 1,
+pp. 725–734, 1989.
+[28] J. F. Benders, “Partitioning procedures for solving mixed-variables
+programming problems,” Numerische mathematik, vol. 4, no. 1, pp. 238–
+252, 1962.
+[29] A. M. Geoffrion, “Generalized benders decomposition,” Journal of
+optimization theory and applications, vol. 10, no. 4, pp. 237–260, 1972.
+[30] P. You, Z. Yang, M. Y. Chow, and Y. Sun, “Optimal cooperative charging
+strategy for a smart charging station of electric vehicles,” IEEE Trans.
+on Power Systems, vol. 31, no. 4, pp. 2946–2956, 2016.
+[31] M. Farivar, R. Neal, C. Clarke, and S. Low, “Optimal inverter var control
+in distribution systems with high PV penetration,” in Proc. of IEEE
+Power & Energy Society General Meeting, pp. 1–7, 2012.
+
+--- PDF PAGE 9 ---
+[32] M. Yilmaz and P. T. Krein, “Review of battery charger topologies,
+charging power levels, and infrastructure for plug-in electric and hybrid
+vehicles,” IEEE Trans. on Power Electronics, vol. 28, no. 5, pp. 2151–
+2169, 2013.
+[33] EIA, “Annual energy review,” Energy Information Administration, US
+Department of Energy: www.eia.doe.gov/emeu/aer, 2011.

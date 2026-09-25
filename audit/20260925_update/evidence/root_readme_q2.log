@@ -1,0 +1,20 @@
+正在加载DEM数据: 镇龙乡及周边30米DEM.mat
+  加载MATLAB格式DEM...
+  DEM尺寸: (1309, 1486)
+  高程范围: 41.7 - 1132.9 米
+  地理范围: (109.0326, 22.8612) - (109.4454, 23.2249)
+  分辨率: 0.000278 度
+Traceback (most recent call last):
+  File "E:\workspace-e\set\audit\20260925_update\reproduction\solve_problem2_lns.py", line 182, in <module>
+    main()
+  File "E:\workspace-e\set\audit\20260925_update\reproduction\solve_problem2_lns.py", line 169, in main
+    with pd.ExcelWriter(output, engine="openpyxl") as writer:
+  File "E:\workspace-e\set\.audit-env\lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "E:\workspace-e\set\.audit-env\lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+  File "E:\workspace-e\set\.audit-env\lib\site-packages\pandas\io\common.py", line 749, in get_handle
+    check_parent_directory(str(handle))
+  File "E:\workspace-e\set\.audit-env\lib\site-packages\pandas\io\common.py", line 616, in check_parent_directory
+    raise OSError(rf"Cannot save file into a non-existent directory: '{parent}'")
+OSError: Cannot save file into a non-existent directory: 'E:\workspace-e\set\audit\20260925_update\reproduction\结果'

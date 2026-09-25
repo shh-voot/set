@@ -1,0 +1,63 @@
+正在加载DEM数据: 镇龙乡及周边30米DEM.mat
+  加载MATLAB格式DEM...
+  DEM尺寸: (1309, 1486)
+  高程范围: 41.7 - 1132.9 米
+  地理范围: (109.0326, 22.8612) - (109.4454, 23.2249)
+  分辨率: 0.000278 度
+{
+  "endpoint_fail_areas": [
+    "S003",
+    "S004",
+    "S008",
+    "S014"
+  ],
+  "reserve_sensitivity": [
+    {
+      "rho": 0.1,
+      "energy_kwh": 6.244469657138534,
+      "limit_kwh": 7.2,
+      "energy_limit_ratio": 0.867287452380352,
+      "feasible": true
+    },
+    {
+      "rho": 0.2,
+      "energy_kwh": 5.550639695234253,
+      "limit_kwh": 6.4,
+      "energy_limit_ratio": 0.867287452380352,
+      "feasible": true
+    },
+    {
+      "rho": 0.3,
+      "energy_kwh": 4.85680973332997,
+      "limit_kwh": 5.6,
+      "energy_limit_ratio": 0.8672874523803519,
+      "feasible": true
+    },
+    {
+      "rho": 0.4,
+      "energy_kwh": 4.162979771425689,
+      "limit_kwh": 4.8,
+      "energy_limit_ratio": 0.8672874523803519,
+      "feasible": true
+    }
+  ],
+  "q4_resource_totals_inheriting_q3": {
+    "2": {
+      "A_uav": 6,
+      "A_battery": 8,
+      "B_uav": 3,
+      "B_battery": 5,
+      "C_uav": 3,
+      "C_battery": 6
+    },
+    "3": {
+      "A_uav": 8,
+      "A_battery": 10,
+      "B_uav": 3,
+      "B_battery": 5,
+      "C_uav": 4,
+      "C_battery": 7
+    }
+  }
+}
+Reproduction differing sheets: 4

@@ -1,0 +1,17 @@
+SHEET Sheet1 (16 x 4)
+A1=area_id | B1=direct_gateway | C1=covered | D1=relay_required
+A2=S001 | B2=True | C2=True | D2=False
+A3=S002 | B3=False | C3=True | D3=True
+A4=S003 | B4=False | C4=True | D4=True
+A5=S004 | B5=False | C5=True | D5=True
+A6=S005 | B6=False | C6=True | D6=True
+A7=S006 | B7=True | C7=True | D7=False
+A8=S007 | B8=False | C8=True | D8=True
+A9=S008 | B9=False | C9=True | D9=True
+A10=S009 | B10=False | C10=True | D10=True
+A11=S010 | B11=False | C11=True | D11=True
+A12=S011 | B12=True | C12=True | D12=False
+A13=S012 | B13=False | C13=True | D13=True
+A14=S013 | B14=False | C14=True | D14=True
+A15=S014 | B15=False | C15=True | D15=True
+A16=S015 | B16=False | C16=True | D16=True

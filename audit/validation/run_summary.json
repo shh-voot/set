@@ -1,0 +1,101 @@
+{
+  "run_dir": ".runs/20260925T163012Z_8c678218",
+  "full": true,
+  "rounds": [
+    {
+      "round": "1",
+      "revision": "ea5e0fb57065ad843b52f9e9e3ebdbe42582b0c1",
+      "snapshot_files": 59,
+      "commands": [
+        {
+          "script": "check_results.py",
+          "exit_code": 0
+        },
+        {
+          "script": "reproduce.py",
+          "exit_code": 0
+        },
+        {
+          "script": "targeted_checks.py",
+          "exit_code": 0
+        }
+      ],
+      "expectations": {
+        "checks": {
+          "q2_count_q3_overload_q4_hard_late": true,
+          "q1_unique_80": true,
+          "q2_unique_80": true,
+          "q3_unique_80": true,
+          "two_relays_exceed_component": true,
+          "four_endpoint_failures": true
+        },
+        "expected": [
+          45,
+          0,
+          28,
+          28
+        ],
+        "actual": [
+          45,
+          0,
+          28,
+          28
+        ],
+        "passed": true
+      }
+    },
+    {
+      "round": "2",
+      "revision": "e94e1cc70b6f342282eaa9e7d2b15aa84065e381",
+      "snapshot_files": 78,
+      "commands": [
+        {
+          "script": "check_results.py",
+          "exit_code": 0
+        },
+        {
+          "script": "reproduce_update.py",
+          "exit_code": 0
+        },
+        {
+          "script": "run_extras.py",
+          "exit_code": 0
+        },
+        {
+          "script": "targeted_checks.py",
+          "exit_code": 0
+        },
+        {
+          "script": "check_additions.py",
+          "exit_code": 0
+        }
+      ],
+      "expectations": {
+        "checks": {
+          "q2_count_q3_overload_q4_hard_late": true,
+          "q1_unique_80": true,
+          "q2_unique_80": true,
+          "q3_unique_80": true,
+          "two_relays_exceed_component": true,
+          "four_endpoint_failures": true,
+          "cp_accepts_late_example": true,
+          "cp_real_overlap": true,
+          "alns_saved_candidate_80": true
+        },
+        "expected": [
+          43,
+          3,
+          23,
+          25
+        ],
+        "actual": [
+          43,
+          3,
+          23,
+          25
+        ],
+        "passed": true
+      }
+    }
+  ]
+}

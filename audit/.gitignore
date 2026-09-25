@@ -1,0 +1,8 @@
+# Local environments and isolated replays are not review deliverables.
+.runs/
+**/reproduction/
+# The original input DOCX already contains these large, duplicated images.
+**/evidence/docx_media/
+# Preserve the actual audit logs despite the repository-wide *.log rule.
+!**/evidence/*.log
+!validation/**/*.log

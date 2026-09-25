@@ -1,0 +1,11 @@
+SHEET 分组资源 (4 x 19)
+A1=group | B1=service_area_ids | C1=population | D1=mission_count | E1=cargo_count | F1=completion_min | G1=transport_energy_kwh | H1=A_uav | I1=A_battery | J1=A_charger | K1=B_uav | L1=B_battery | M1=B_charger | N1=C_uav | O1=C_battery | P1=C_charger | Q1=relay_uav | R1=relay_ids | S1=relay_energy_components
+A2=G1 | B2=S001 | C2=2100 | D2=5 | E2=15 | F2=103.1152421386595 | G2=7.562048201282888 | H2=2 | I2=2 | J2=2 | K2=1 | L2=1 | M2=1 | N2=2 | O2=2 | P2=2 | Q2=0 | S2=0
+A3=G2 | B3=S002,S003,S004,S005,S007,S008,S009,S010,S012,S013,S014,S015 | C3=1171 | D3=33 | E3=56 | F3=171.5840041697735 | G3=80.3522525201734 | H3=4 | I3=6 | J3=4 | K3=2 | L3=3 | M3=2 | N3=2 | O3=4 | P3=4 | Q3=2 | R3=R01,R02 | S3=4
+A4=G3 | B4=S006,S011 | C4=151 | D4=5 | E4=9 | F4=135.5260548356059 | G4=5.93966133591477 | H4=1 | I4=1 | J4=1 | K4=1 | L4=1 | M4=1 | N4=1 | O4=1 | P4=1 | Q4=0 | S4=0
+SHEET 官方库存 (2 x 8)
+A1=A_uav | B1=B_uav | C1=C_uav | D1=A_battery | E1=B_battery | F1=C_battery | G1=relay_uav | H1=relay_energy_components
+A2=4 | B2=2 | C2=2 | D2=6 | E2=4 | F2=4 | G2=2 | H2=6
+SHEET 资源缺口 (2 x 8)
+A1=A_uav | B1=B_uav | C1=C_uav | D1=A_battery | E1=B_battery | F1=C_battery | G1=relay_uav | H1=relay_energy_components
+A2=3 | B2=2 | C2=3 | D2=3 | E2=1 | F2=3 | G2=0 | H2=0

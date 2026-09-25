@@ -1,0 +1,3579 @@
+--- PDF PAGE 1 ---
+Annals of Operations Research
+https://doi.org/10.1007/s10479-025-06504-z
+ORIGINAL RESEARCH
+Enhancing unmanned aerial vehicles logistics for dynamic
+delivery: a hybrid non-dominated sorting genetic algorithm
+II with Bayesian belief networks
+Armin Mahmoodi1 · Seyed Mojtaba Sajadi2
+· Abdellatif M. Sadeq3 ·
+Masoud Narenji4 · Mehdi Eshaghi1 · Milad Jasemi5
+Received: 12 May 2024 / Accepted: 21 January 2025
+© The Author(s) 2025
+Abstract
+To address the complexities of managing networks of unmanned aerial vehicles (UAVs) and
+Just-in-Time problem solving, this study introduces a cutting-edge multi-objective location-
+routing optimization model. This model integrates time window constraints, concurrent pick-
+up and delivery demands, and rechargeable battery functionality, signiﬁcantly enhancing the
+efﬁciency of UAV operations. It reduces battery consumption and transportation costs while
+optimizing delivery times and reducing operational risks. The model improves the reﬁnement
+of delivery schedules by accounting for uncertain trafﬁc scenarios, thereby increasing its
+accuracy and reliability in dynamic environments. Additionally, a Bayesian belief networks
+approach for risk assessment introduces a new layer to operational risk management. The
+model’sperformanceanditstrade-offsaredemonstratedthroughadvanceddatavisualizations
+such as 3D Pareto fronts, pair plots, and network graphs, with validation via the NSGA-II
+approach conﬁrming its reliability and practical applicability. This research represents a
+major leap forward in drone routing strategies, focusing on efﬁciency, adaptability, and risk
+management in UAV logistics and provides a comprehensive framework that bridges the gap
+between theoretical exploration and practical application.
+Keywords Routing problem · Drone delivery · NSGA-II algorithm · Multi-objective
+optimization · Bayesian belief networks · Risk assessment
+1 Introduction
+Unmanned aerial vehicles (UAV) are one of the most intensively studied technologies in
+logistics in recent years (Mulumba & Diabat, 2024; Chung et al., 2020; Li et al., 2021; Mah-
+moodi et al., 2024). In this system, as a UAV delivers logistics services to customers, it can
+also concurrently serve nearby customers. This collaborative delivery system enhances the
+overall efﬁciency of logistics operations (Bi et al., 2024; Luo et al., 2021a, 2021b; Murray &
+Chu, 2015). In contrast to other vehicles, UAVs offer several advantages, including lower cap-
+ital and operating costs, the ability to take off and land in conﬁned spaces without the need for
+costly infrastructure, and the elimination of the requirement for an onboard operator. These
+advantages make UAVs highly beneﬁcial for various transportation and logistics activities
+Extended author information available on the last page of the article
+123
+
+--- PDF PAGE 2 ---
+Annals of Operations Research
+(Wei et al., 2021). Numerous industrial companies, including Amazon, FedEx and DHL are
+actively vying to pioneer the implementation of UAV delivery systems (Wang et al., 2024).
+These companies integrate technological features aligned with current trends in the trans-
+portation industry and society, such as autonomy, ﬂexibility, and agility. The primary goal of
+UAV deployment is to reduce overall costs and enhance customer satisfaction through swift
+last-mile deliveries. The efﬁciency of last-mile operations not only impacts the proﬁtabil-
+ity of retailing but also inﬂuences environmental and social performance criteria, including
+emissions and trafﬁc congestion in various regions. The adoption of UAVs in delivery pro-
+cesses has a substantial effect on energy consumption and contributes to the reduction of
+pollution, including greenhouse gas emissions and carbon footprint (Chi et al., 2023; Sham
+et al., 2023).
+While the developed UAV system offers advantages, challenges arise in real-time pro-
+cesses, including unexpected weather, safety, security of data, limited capacity, and budget
+of purchasing equipment and infrastructure. These challenges become more prominent when
+UAVs need to predict cases and choose optimal routes. However, ongoing development and
+testing may soon enable UAVs to deliver packages using AI technology. This encompasses
+tasks like launch, navigation, data acquisition, transmission, and analysis. An accurately
+designed AI optimization model ensures feasible and efﬁcient operating decisions for UAV
+delivery systems (Eskandaripour & Boldsaikhan, 2023; Yu et al., 2022).
+In mission platform design models, the comprehensiveness of objectives correlates with
+real-world applicability, enabling the model to generate pragmatic solutions. Key objectives
+explored in these cases involve minimizing travel time, reducing energy consumption, maxi-
+mizing reliability, and lowering operational costs (Kumbhar & Shin, 2022; Wei et al., 2021).
+In this research to enhance the UAV delivery system, we create a comprehensive multi-
+objective optimization model. The aim was to devise an advanced transportation scheme
+addressing four pivotal objectives: Minimizing operational cost, reliable delivery time esti-
+mation, imposed risk, and battery consumption. These factors were identiﬁed as crucial for
+optimizing the delivery system. The optimization is represented through an integrated mixed-
+integer non-linear program (MINLP) problem in the objective function, framing the decision
+problem to determine the optimal location and routing for a ﬂeet of UAVs (Yakıcı & Karatas,
+2021). In this scenario, there is a set of demand points, UAV ﬂeets, and candidate distribution
+centers (DCs) considered. While not all demand points need to be visited, each visited point
+yields a speciﬁc beneﬁt. The primary objective is to maximize the overall operational beneﬁt
+obtained by visiting these points. The simultaneous execution involves selecting allowed
+stations, assigning UAVs to these stations, and assigning UAVs to DCs. Additionally, the
+authors address an extension of this problem, allowing demand points to have time windows
+for UAV visits and enabling UAV takeoff and landing at assigned DCs and different demand
+points. The model focuses on location, routing, and prize (beneﬁt) collection, contributing
+signiﬁcant advancements to each aspect of the optimization goals (Sham et al., 2023). Below
+the contributions featured in this article:
+This paper makes signiﬁcant strides in UAV logistics through a series of interconnected
+contributions, starting with its sophisticated mathematical formulation that tackles the UAVs’
+location-routing problem with dual objectives of minimizing operational costs and maxi-
+mizing customer satisfaction, as innovatively proposed by Ning and You (2019). It further
+introduces a nuanced battery consumption model, highlighted by Torabbeigi et al. (2020),
+which smartly integrates the payload’s effect on battery life into the operational planning,
+balancing efﬁciency with cost-effectiveness. The inclusion of a risk assessment model,
+as explored by Jiao et al. (2022), introduces a fourth objective function using Bayesian
+belief networks to proactively manage the operational risks associated with increasing UAV
+123
+
+--- PDF PAGE 3 ---
+Annals of Operations Research
+usage, enhancing system reliability and airspace security. Lastly, the application of a genetic
+algorithm validates the model’s effectiveness, demonstrating UAVs as a time-saving and
+environmentally friendly alternative for package delivery. Collectively, these contributions
+not only advance the academic discourse on UAV logistics but also provide tangible, practical
+solutions for real-world challenges in the delivery sector, setting new standards for efﬁciency,
+reliability, and sustainability (Yang et al., 2023).
+The remaining sections of our paper are organized as follows. In Sect. 2, we provide an
+overview of existing models related to the UAV routing problem, highlighting their distinctive
+features. Section 3 is dedicated to elucidating the formulation of our model and detailing its
+components. Moving on to Sect. 4, solutions are presented, addressing various aspects of the
+model through the application of a reinforcement algorithm. In Sect. 5, numerical results are
+presented, followed by Sect. 6, which provides a comparative analysis and validation of the
+optimization results. Finally, Sect. 7 concludes the paper, offering a summary of the entire
+research structure.
+2 Literature review
+Optimizing UAV routing has become a focal point for researchers in recent times. Numerous
+research teams have undertaken thorough examinations of contemporary studies related to
+UAV delivery and operations. Notably, Rojas et al. (2021) and Marcina et al. (2020) have
+conducted reviews focusing on generic UAV routing issues and parcel delivery, respectively.
+The common thread in these studies is the assumption that minimizing delivery completion
+time or costs constitutes a primary optimization objective for UAV delivery models. The
+landscape of modern transportation is rapidly evolving, posing a complex challenge for
+conventional routing methods originally designed for traditional vehicles. Nonetheless, there
+is a promising subset of solutions embracing a rigorous analytical approach. These solutions
+employ mathematical calculations to discern optimal routes while simultaneously addressing
+multiple objectives (Kumbhar & Shin, 2022).
+2.1 UAV routing problem utilizing a multi-objective hybrid optimization framework
+The literature on UAV-based product delivery has seen numerous studies, signiﬁcantly con-
+tributing to the advancement of routing and location problems associated with distribution
+centers (DCs) (Wang et al., 2024). Some studies have introduced innovative routing models,
+proposing operations that involve both UAVs and trucks. In a recent investigation, Bhuiyan
+et al. (2022) delved into the optimization of UAV deployment for direct goods delivery within
+speciﬁed time windows. They presented a multi-objective model, employing a novel mathe-
+matical optimization-based decision-making approach. This model assists business owners
+in optimally routing their UAV ﬂeets by minimizing total energy consumption, required ﬂeet
+size, and the number of additional batteries needed. In addition to them, Hashemi et al.,
+(2021, 2022) in another research focused on location and routing problems within the supply
+chain, involving manufacturers, distributor candidate sites, and retailers. The objective is to
+minimize delivery times and system costs for retailers, with a focus on determining opti-
+mal routing and distributor locations. The study employs unique criteria, considering factors
+such as simultaneous deliveries and pickups, soft and hard time windows for retail services,
+and various costs including transportation, distributor construction, vehicle acquisition, and
+manufacturing. The conceptual model is developed and modeled, and solutions are explored
+123
+
+--- PDF PAGE 4 ---
+Annals of Operations Research
+using General Algebraic Modeling System software (GAMS), as well as Multiple Objec-
+tive Particle Swarm Optimization (MOPSO) and non-dominated sorting genetic algorithm II
+(NSGAII) algorithms in small dimensions (Freitas et al., 2022).
+Another noteworthy contribution comes from Mahmoodi et al., who pioneered a combined
+parcel delivery routing problem with the aim of minimizing total delivery time, cost, and time.
+Their model incorporates realistic features of UAV delivery networks, considering routing
+limitations, costs, various distance metrics for UAVs, and risk assessment based on the Spe-
+ciﬁc Operations Risk Assessment (SORA) standard. This study proposes a multi-objective
+location-routing optimization model that addresses time window constraints, simultaneous
+pick-up and delivery demands, and the potential for recharging used batteries. The objec-
+tives include reducing transport costs, delivery times, and estimated risks. The optimization of
+delivery time also accounts for uncertain conditions in potential trafﬁc scenarios. Risk assess-
+ment follows the SORA standard, aligning with the approach of previous studies (Zhang et al.,
+2022).
+They present a groundbreaking approach to enhance UAV logistics through a sophisticated
+multi-objective hybrid optimization model. The framework is meticulously crafted, draw-
+ing inspiration from the SORA standards, to elevate the performance of advanced delivery
+systems. They made a noteworthy contribution by addressing a combined parcel delivery
+routing problem, minimizing total delivery time, cost, and time. Their model incorporates
+realistic features of UAV delivery networks, considering routing limitations, costs, various
+distance metrics for UAVs, and risk assessment based on the Speciﬁc Operations Risk Assess-
+ment (SORA) standard. This study proposes a multi-objective location-routing optimization
+model, addressing time window constraints, simultaneous pick-up and delivery demands, and
+the potential for recharging used batteries, with objectives encompassing reduced transport
+costs, delivery times, and estimated risks (Mahmoodi et al., 2022).
+Millar et al. (2023) introduced a novel concept involving the coordinated operation of
+multiple Unmanned Aerial Vehicles (UAVs) under the guidance of a manned "Tender" air
+vehicle equipped with a pilot and ﬂight manager(s). The paper also addresses trajectory
+optimization for UAVs tasked with collecting data from sensors in a continuous space. The
+path-planning problem is formulated for a cooperative swarm of UAVs, aiming to maximize
+data accumulation within ﬂight time constraints and minimize potential risks. Risk assess-
+ment is conducted using a Speciﬁc Operation Risk Assessment—Bayesian belief network
+approach, and the resulting analysis is weighted through an analytic hierarchy process rank-
+ing model. The proposed network architecture demonstrates the capability of UAVs to make
+optimal movement decisions while addressing various objectives (Sajid et al., 2022).
+An UAV-based routing problem with multiple objectives, including minimizing distance
+traveled, increasing customer satisfaction, and reducing the number of used UAV has been
+tackled (Macrina et al., 2020). Their study resulted in obtaining the Pareto Front (Janik et al.,
+2021; Nguyen et al., 2023). In a different approach, adapted a strategy from the traveling
+salesman location routing problem to determine the UAV’s shortest route. They utilized the
+ant algorithm to identify the optimal route and select an ideal location for DCs (Chauhan
+et al., 2020).
+2.2 Cost-integrated UAV routing problem
+We improve upon the multi-routing delivery problem by incorporating pick-up services.
+Speciﬁcally, our focus involves three categories of customers: those requiring delivery, pick-
+up, and simultaneous delivery & pick-up services. In this context, a truck, in conjunction
+123
+
+--- PDF PAGE 5 ---
+Annals of Operations Research
+with multiple UAVs, caters to all customer needs. A UAV, upon completing a delivery ser-
+vice, can redirect to a customer requiring pick-up service rather than returning directly to
+the truck or depot. This approach maximizes UAV capacity utilization, ensuring diverse cus-
+tomer demands are met efﬁciently. Unlike prior studies that predominantly optimize either
+transportation costs (Liu et al., 2021; Luo et al., 2021a, 2021b; Mahmoodi & Hashemi,
+2024; Ha et al., 2018) or delivery time (Murray & Chu, 2015; Dell’Amico et al., 2022;
+Vu et al., 2022), our consideration encompasses broader aspects of logistics activities cru-
+cial for a logistics company. For instance, non-emergency logistics services may have soft
+time windows, necessitating vehicles to complete services within an optimal time range,
+referred to as service reliability. Given that the initial arriving vehicle at a rendezvous may
+need to wait for others, minimizing waiting time becomes pivotal. Therefore, we introduce a
+multi-objective truck-UAV collaborative routing problem incorporating delivery and pick-up
+services (MCRP-DP). This model simultaneously accounts for transportation costs, service
+reliability, and vehicle waiting time.
+Furthermore, several studies have implemented multi-objective optimization in truck-
+UAV collaborative delivery systems. Wang et al. (2020) proposed a bi-objective version
+of the FSTSP and an improved NSGA-II algorithm to address the problem. In a similar
+vein, Das et al. (2020) implemented collaborative Pareto ant colony optimization to optimize
+transportation costs and customer service levels, speciﬁcally focusing on timely deliveries in
+a synchronized truck and UAV delivery system.
+2.3 UAV routing problem with risk assessment incorporating bayesian belief
+networks
+The incorporation of IoT devices during data transmission increases the susceptibility of
+UAVs to security risks and safety hazards (Balador et al., 2018). Recent advances in state-
+space models (SSMs) and Gaussian graphical models have signiﬁcantly contributed to
+constructing Bayesian belief networks for biological systems. Dynamic state space mod-
+els with hierarchical Bayesian settings have been developed to infer genetic networks and
+dynamic proﬁles associated with disease treatments, effectively capturing genomic changes
+and gene–gene interactions over time using Monte Carlo Markov Chain and Gibbs sampling
+algorithms (Liang & Kelemen, 2016; Roweis & Ghahramani, 1999). Additionally, GraphEM,
+a method for estimating transition matrices in linear-Gaussian SSMs by relating them to adja-
+cency matrices of directed graphs, has demonstrated good performance and interpretability
+in uncovering causal relationships (Elvira & Chouzenoux, 2022). Converting Markov chains
+and hidden Markov models into Gaussian processes has provided the advantage of continu-
+ous time scale support and ﬂexible covariance function modiﬁcation, addressing limitations
+of discrete time scales and linear conditional relationships (Chouzenoux & Elvira, 2024).
+Furthermore, LaGrangEM estimates parameters in non-Markovian linear-Gaussian latent
+processes by incorporating prior knowledge through a graphical interpretation, connecting
+with Granger causality and offering superior performance in estimating causal relationships
+and delays (Nagakura, 2019). These methodologies enhance the robustness and applicabil-
+ity of Bayesian belief networks in precision medicine and personalized healthcare. Various
+measures have been employed by researchers to analyze the operational risks of UAVs.
+Millar et al., introduced the Bayesian belief network (BBN) for interim ﬂight clearances,
+using this method to identify key elements contributing to risks and dangers in experimental
+Unmanned Aircraft Systems (UAS) ﬂight tests (Millar, 2015). In another study (Millar et al.,
+2023), examined several research questions in their study. Firstly, they sought to assess the
+123
+
+--- PDF PAGE 6 ---
+Annals of Operations Research
+feasibility and potential of operating multiple UAVs commanded and supported by a manned
+’Tender’ air vehicle. Secondly, they aimed to ﬁnd the optimal trajectories for UAVs to collect
+data from sensors in a predeﬁned continuous space. Lastly, they aimed to formulate the path-
+planning problem for a cooperative, diverse swarm of UAVs tasked with optimizing multiple
+objectives simultaneously. The key ﬁndings of the study indicate that the multi-objective
+reinforcement learning (MORL) architecture can successfully train each UAV to make opti-
+mal movement decisions based on network state observations. Additionally, the algorithm
+demonstrated decreasing errors in the learning process as the epoch number increased (Shen
+& Sun, 2023).
+To enhance operational safety, researchers have devised autonomous mechanisms for
+prompt error response in UAV networks, as demonstrated in work by Allouch et al. (2019).
+Additionally, Kishk et al. developed a UAV-enabled cellular network using tethered UAVs
+(UAVs), making the UAV safer and more resilient to winds and adverse weather conditions
+throughthetetheredconnectiontoaGroundStation(GS)(Kishketal.,2020).Inanotherstudy,
+Mahmoodi et al. estimate the imposed risks of selected trajectories using the SORA stan-
+dard developed by the European Aviation Safety Agency (EASA). The study demonstrated
+that identiﬁed risks in each trajectory were modeled and minimized as the third objective.
+Notably, this research marked the ﬁrst instance of risk assessment utilizing an AHP approach
+based on the SORA standard (Mahmoodi et al., 2022). In the same way (Janik et al., 2021; Hu
+et al., 2020; Baubion, 2013; Erkut & Ingolfsson, 2005; SORA Standard, 2021). Capitán et al.
+conducted a risk assessment for aerial shooting operations using the SORA method in their
+papers. The papers comprehensively explore all stages of the SORA, assesses operational
+risks, and proposes corrective actions to mitigate risks within the system. Moreover, Chang
+and Laliberte (2023) in a research study covers the optimization of trajectories for Unmanned
+Aerial vehicles (UAV), incorporating aspects such as solar energy systems, energy harvesting,
+wing planforms, dynamic soaring, and sensitivity analysis. The focus is likely on enhancing
+the efﬁciency and performance of UAV by optimizing their ﬂight paths, considering renew-
+able energy sources like solar power, and analyzing the sensitivity of the system to various
+parameters. The study may explore innovative wing designs and dynamic soaring techniques
+for improved trajectory planning and energy efﬁciency in Remotely Piloted Aircraft System
+(RPAS) (Nguyen et al., 2022).
+2.4 UAV routing problem incorporating battery consumption considerations
+The primary constraint in practical UAV-based deliveries is the limited battery energy capac-
+ity, which restricts the range of UAV delivery. In the context of drone deployment optimization
+fordirectdeliverywithtimewindowsandbatteryreplacements,themostusedtheoriesinclude
+mathematical optimization-based decision-making methodology, which serves as the founda-
+tion for developing mathematical optimization models for drone ﬂeet routing. The research
+methods commonly employed in this ﬁeld are mixed-integer programming (MIP) models
+(Bhuiyan et al., 2022), which are utilized to formulate and solve the optimization with drone
+with drone and energy and energy consumption analysis. The authors (Bhuiyan et al., 2022)
+The study developed an optimization model for efﬁcient drone ﬂeet routing to minimize ﬂeet
+size, battery needs, and energy consumption; investigated how business and drone operating
+conditions affect these metrics; and analyzed real ﬂight and delivery data to understand the
+impact of operating parameters on energy consumption, ﬂeet size, and battery replacement
+needs. The key ﬁndings of the study indicate that ﬂying drones over road networks sig-
+niﬁcantly increases total energy consumption, required ﬂeet size, and the required number
+123
+
+--- PDF PAGE 7 ---
+Annals of Operations Research
+of battery replacements compared to ﬂying in a straight path. Additionally, using a mixed
+ﬂeet of hexacopter and quadcopter drones reduces total energy consumption compared to
+using a homogeneous ﬂeet of only hexacopters. The delivery range, energy consumption,
+and required ﬂeet size are also affected by drone speed, package weight, ﬂight path, and
+minimum required battery energy (Kyriakakis et al., 2023).
+San et al. (2016) introduced a Genetic algorithm-based procedure for assigning UAVs
+to deliver packages to customer locations. Subsequently, Song et al. (2018) formulated the
+UAV delivery problem as a mixed-integer program, solved through a heuristic algorithm.
+Unlike previous works by Yadav and Narasimhamurthy (2017) and San et al. (2016), Song
+et al. considered the impact of package weight on UAV ﬂight time, reﬂecting the limitations
+of battery capacity. However, other factors such as UAV speed and ﬂight path were not
+incorporated into the energy consumption calculations, and there was no explicit modeling
+of battery energy consumption or replacements.
+Dorling et al. (2017) addressed battery energy consumption by modeling it as a func-
+tion of UAV battery and package weight. They proposed mixed-integer linear programming
+formulations for two variants of a UAV routing problem, with the objectives of minimizing
+total delivery time and total cost, respectively. The model assumes that each UAV can deliver
+multiple packages to different customers in a single trip, ensuring that the battery capacity
+is sufﬁcient for a trip before it commences. However, this study does not explicitly model
+the minimum energy requirement for determining battery replacement, nor does it aim to
+minimize the number of battery replacements.
+Rabta et al (2018) tackled a UAV routing problem along with decisions regarding UAV
+battery charging locations for delivering disaster relief packages, presented as a mixed-
+integer program. Like (Dorling et al., 2017), each UAV can deliver multiple packages in a
+single trip, and battery consumption is inﬂuenced by package weight. Their model tracks
+the remaining UAV battery energy using a variable in the model to determine the need for
+charging. However, the battery charging process was not explicitly modeled to account for
+charging time or rate.
+2.5 UAV routing problem incorporating time constraints
+Several studies have addressed the incorporation of time windows for customer deliveries
+in UAV routing problems, optimizing ﬂeet size to enhance customer order fulﬁllment. A
+capacitated vehicle routing problem with time windows as a mixed-integer program to min-
+imize the required number of UAVs and batteries has been formulated by Troudi (Troudi
+et al., 2018). Like (Dorling et al., 2017), the authors assumed multiple packages could be
+carried by each UAV in a single trip, with battery replacement after each trip. They aimed to
+minimize the number of batteries used by reducing the number of trips.
+Cheng et al. (2020) delved into a multi-trip UAV routing problem with time windows,
+seeking to minimize travel and electricity consumption costs related to UAV batteries. They
+considered UAV energy consumption as a function of package weight and distance trav-
+eled, although they used theoretical power consumption during hovering, which may not
+be realistic. Kong et al. (2023) studied another multi-trip UAV delivery problem with time
+windows, aiming to minimize the total routing distance in delivering parcels to customers.
+Choi and Schonfeld (2017) focused on an automated UAV delivery system, optimizing ﬂeet
+size to minimize the total cost. The authors showcased the sensitivity of UAV speed and
+battery capacity on the system cost and ﬂeet size, respectively. All these studies assumed a
+homogeneous UAV ﬂeet.
+123
+
+--- PDF PAGE 8 ---
+Annals of Operations Research
+Coelho et al. (2017) expanded the scope to a mixed ﬂeet of UAVs, aiming to minimize
+total distance, delivery time, and the number of UAVs used. However, they considered UAV
+energyconsumptionsolelyasafunctionofUAVspeed.It’sworthnotingthatallthementioned
+studies assume each UAV delivers packages to multiple customers in a single trip, replacing
+the battery after each trip. This assumption, however, may not align with practical scenarios
+where UAVs are designed to carry a single package on a trip. Replacing the battery after each
+return can lead to unnecessary battery replacements and reduced UAV utilization (Bi et al.,
+2023).
+In addition to these studies, some focused on the impact of UAV delivery on carbon
+emissions (Chiang et al., 2019; Figliozzi, 2017) as well as the location of UAV deployment
+and charging facilities to improve demand coverage (Chauhan et al., 2019; Trotta et al.,
+2018). Notably, only two variants of the UAV collaborative routing problem considered both
+delivery and pick-up services based on the SORA standard (Janik et al., 2021; Mahmoodi
+et al., 2022). However, these studies lacked synchronization in UAV service to customers,
+updated UAV capacity based on parcel weight, and overlooked customer residence details.
+The current study distinguishes itself by simultaneously optimizing four objectives using a
+novel evolutionary multi-objective algorithm, setting it apart from other investigations.
+A thorough review of literature on multiple criteria in course scheduling issues was con-
+ducted using the Scopus database. The search terms included combinations of " Optimization
+Methods " or " Hybridization " with " Truck-Drone Delivery ", " Drone Delivery". Since 1995,
+this search identiﬁed 71 relevant papers. However, exclusions were made for reasons such
+as duplication, and non-research content like editorial notes, leaving 30 papers that address
+multiple objective issues in course scheduling, as detailed in Table 1.
+3 Problem description and formulation
+In the rapidly evolving landscape of logistics and transportation, the integration of unmanned
+aerial vehicles (UAVs) or UAVs has emerged as a promising solution to address the chal-
+lenges of last-mile delivery. The efﬁciency and speed of UAV deliveries have the potential to
+revolutionize the way goods are transported, offering swift and cost-effective alternatives to
+traditional delivery methods. However, to fully harness the beneﬁts of UAV technology, it is
+crucial to develop sophisticated optimization strategies that consider real-world constraints.
+This problem description revolves around the design and optimization of a UAV deliv-
+ery system, considering the intricate interplay between distributor locations, facility hubs,
+customer demand points, and the unique challenges posed by recharging constraints. With
+a carefully deﬁned set of parameters, including distributor candidate locations (D), facility
+locations (F), demand points (P), the ﬂeet of UAVs (K), recharging-capable points (D1),
+non-recharging points (D2), and distinct scenarios (U), the task at hand is to create a system
+that maximizes operational efﬁciency while adhering to the constraints imposed by energy
+limitations.
+3.1 Problem description
+In the context of designing an efﬁcient UAV delivery system, the objective is to optimize the
+delivery routes and UAV assignments for a given set of parameters. The system is character-
+ized by the following assumptions:
+123
+
+--- PDF PAGE 9 ---
+Annals of Operations Research
+Table 1 Comprehensive review of global academic databases addressing multiple objective course scheduling challenges
+References
+Optimization methods
+Hybridization
+Datasets
+Objective functions
+Truck-drone delivery
+Drone delivery
+benchmark
+Real world
+Reference point
+Weight sum
+Pareto dominance
+Bi et al. (2024)
+Multi-Agent Reinforcement Learning
+✔
+✔
+✔
+Mulumba and Diabat (2024)
+Metaheuristic Optimization Algorithms
+✔
+✔
+✔
+Eskandaripour and Boldsaikhan (2023)
+Metaheuristic Optimization Algorithms
+✔
+✔
+✔
+Kumbhar and Shin (2022)
+Machine Learning
+✔
+✔
+✔
+✔
+Arishi et al. (2022)
+Machine Learning
+✔
+✔
+✔
+✔
+Guo et al. (2023)
+Reinforcement Learning
+✔
+✔
+✔
+Jiao et al. (2023)
+Dynamic Model
+✔
+✔
+Kyriakakis et al. (2023)
+GRASP/VND algorithm
+✔
+✔
+✔
+Sham et al. (2023)
+Metaheuristic Optimization Algorithms
+✔
+✔
+✔
+Bhuiyan et al. (2022)
+Metaheuristic Optimization Algorithms
+✔
+✔
+✔
+Hashemi et al (2022)
+Meta-Heuristic Algorithms
+✔
+✔
+✔
+Nguyen et al (2022)
+Meta-Heuristic Algorithms
+✔
+✔
+✔
+✔
+Mahmoodi et al. (2022)
+Robust Optimization Model
+✔
+✔
+✔
+Millar et al. (2023)
+Reinforcement Learning Algorithm
+✔
+✔
+✔
+Dell’Amico et al. (2022)
+Meta-Heuristic Algorithms
+✔
+✔
+Vu et al. (2022)
+Meta-Heuristic Algorithms
+✔
+✔
+✔
+Liu et al. (2022)
+Reinforcement Learning
+✔
+✔
+✔
+Gohari et al. (2022)
+Meta-Heuristic Algorithms
+✔
+✔
+✔
+Chang and Laliberte (2023)
+Meta-Heuristic Algorithms
+✔
+✔
+✔
+Wu et al. (2022)
+Meta-Heuristic Algorithms
+✔
+✔
+✔
+Kong et al. (2023)
+Meta-Heuristic Algorithms
+✔
+✔
+✔
+Nguyen et al. (2022)
+Metaheuristic Optimization Algorithms
+✔
+✔
+✔
+Shen and Sun (2023)
+Meta-Heuristic Algorithms
+✔
+✔
+✔
+Zhang et al. (2022)
+Machine Learning
+✔
+✔
+✔
+Yu et al. (2022)
+Meta-Heuristic Algorithms
+✔
+✔
+✔
+123
+
+--- PDF PAGE 10 ---
+Annals of Operations Research
+Table 1 (continued)
+References
+Optimization methods
+Hybridization
+Datasets
+Objective functions
+Truck-drone delivery
+Drone delivery
+benchmark
+Real world
+Reference point
+Weight sum
+Pareto dominance
+Yang et al. (2023)
+Multi-Agent Reinforcement Learning
+✔
+✔
+✔
+Freitas et al. (2022)
+Exact And Heuristic Approaches
+✔
+✔
+✔
+Sajid et al. (2022)
+Metaheuristic Optimization Algorithms
+✔
+✔
+✔
+Bi et al. (2023)
+Deep Reinforcement Learning
+✔
+✔
+✔
+Our Article
+Meta-Heuristic Algorithms
+✔
+✔
+✔
+References
+Criteria for optimization
+Costing
+Non-Costing
+Operating
+Cost
+Non-Operating
+Cost
+Room
+stability
+Room
+capacity
+Workload
+Capacity
+Working
+days
+Time
+Consecutive
+Periods
+Risk assessment
+Time
+Windows
+Idle Time
+AHP
+BBN
+SORA
+Standard
+Bi et al. (2024)
+✔
+✔
+✔
+✔
+Mulumba and Diabat
+(2024)
+✔
+✔
+✔
+✔
+Eskandaripour and
+Boldsaikhan (2023)
+✔
+✔
+✔
+Kumbhar and Shin
+(2022)
+✔
+✔
+✔
+✔
+Arishi et al. (2022)
+✔
+✔
+✔
+✔
+Guo et al. (2023)
+✔
+✔
+✔
+✔
+Jiao et al. (2023)
+✔
+✔
+✔
+123
+
+--- PDF PAGE 11 ---
+Annals of Operations Research
+Table 1 (continued)
+References
+Criteria for optimization
+Costing
+Non-Costing
+Operating
+Cost
+Non-Operating
+Cost
+Room
+stability
+Room
+capacity
+Workload
+Capacity
+Working
+days
+Time
+Consecutive
+Periods
+Risk assessment
+Time
+Windows
+Idle Time
+AHP
+BBN
+SORA
+Standard
+Kyriakakis et al.
+(2023)
+✔
+✔
+✔
+✔
+Sham et al. (2023)
+✔
+✔
+✔
+Bhuiyan et al. (2022)
+✔
+Hashemi et al (2022)
+✔
+✔
+✔
+✔
+✔
+Nguyen et al (2022)
+✔
+✔
+✔
+✔
+Mahmoodi et al.
+(2022)
+✔
+✔
+✔
+✔
+Millar et al. (2023)
+✔
+✔
+✔
+✔
+✔
+Dell’Amico et al.
+(2022)
+✔
+✔
+✔
+✔
+Vu et al. (2022)
+✔
+✔
+✔
+✔
+✔
+Liu et al. (2022)
+✔
+✔
+✔
+✔
+Gohari et al. (2022)
+✔
+✔
+✔
+✔
+✔
+✔
+Chang and Laliberte
+(2023)
+✔
+✔
+✔
+✔
+123
+
+--- PDF PAGE 12 ---
+Annals of Operations Research
+Table 1 (continued)
+References
+Criteria for optimization
+Costing
+Non-Costing
+Operating
+Cost
+Non-Operating
+Cost
+Room
+stability
+Room
+capacity
+Workload
+Capacity
+Working
+days
+Time
+Consecutive
+Periods
+Risk assessment
+Time
+Windows
+Idle Time
+AHP
+BBN
+SORA
+Standard
+Wu et al. (2022)
+✔
+✔
+✔
+✔
+✔
+Kong et al. (2023)
+✔
+✔
+✔
+✔
+✔
+✔
+Nguyen et al (2022)
+✔
+✔
+✔
+Shen and Sun (2023)
+✔
+✔
+✔
+✔
+Zhang et al. (2022)
+✔
+✔
+✔
+✔
+✔
+Yu et al. (2022)
+✔
+✔
+✔
+✔
+✔
+Yang et al. (2023)
+✔
+✔
+✔
+✔
+✔
+Freitas et al. (2022)
+✔
+✔
+✔
+✔
+✔
+Sajid et al. (2022)
+✔
+Bi et al. (2023)
+✔
+✔
+✔
+✔
+✔
+Our Article
+✔
+✔
+✔
+✔
+✔
+✔
+✔
+✔
+References
+Criteria for optimization
+Non-Costing
+Battery Consumption
+Perturbation
+Travel distance
+Room facilities
+Robustness
+Others
+Bi et al. (2024)
+✔
+✔
+Mulumba and Diabat (2024)
+✔
+✔
+123
+
+--- PDF PAGE 13 ---
+Annals of Operations Research
+Table 1 (continued)
+References
+Criteria for optimization
+Non-Costing
+Battery Consumption
+Perturbation
+Travel distance
+Room facilities
+Robustness
+Others
+Eskandaripour and Boldsaikhan (2023)
+✔
+✔
+✔
+Kumbhar and Shin (2022)
+✔
+✔
+Arishi et al. (2022)
+✔
+✔
+✔
+Guo et al. (2023)
+✔
+✔
+Jiao et al. (2023)
+✔
+✔
+Kyriakakis et al. (2023)
+✔
+✔
+Sham et al. (2023)
+✔
+✔
+✔
+Bhuiyan et al. (2022)
+✔
+✔
+✔
+Hashemi et al (2022)
+✔
+✔
+Nguyen et al (2022)
+✔
+✔
+Mahmoodi et al. (2022)
+✔
+✔
+Millar et al. (2023)
+✔
+Dell’Amico et al. (2022)
+✔
+✔
+✔
+✔
+Vu et al. (2022)
+✔
+Liu et al. (2022)
+✔
+✔
+Gohari et al. (2022)
+✔
+✔
+Chang and Laliberte (2023)
+✔
+✔
+✔
+Wu et al. (2022)
+✔
+Kong et al. (2023)
+✔
+✔
+Nguyen et al (2022)
+✔
+✔
+✔
+Shen and Sun (2023)
+✔
+✔
+✔
+Zhang et al. (2022)
+✔
+✔
+Yu et al. (2022)
+✔
+✔
+✔
+123
+
+--- PDF PAGE 14 ---
+Annals of Operations Research
+Table 1 (continued)
+References
+Criteria for optimization
+Non-Costing
+Battery Consumption
+Perturbation
+Travel distance
+Room facilities
+Robustness
+Others
+Yang et al. (2023)
+✔
+✔
+Freitas et al. (2022)
+✔
+✔
+✔
+Sajid et al. (2022)
+✔
+✔
+✔
+Bi et al. (2023)
+✔
+✔
+✔
+Our Article
+✔
+✔
+✔
+123
+
+--- PDF PAGE 15 ---
+Annals of Operations Research
+Distributor Locations (D): There are n potential locations where distributors can be stationed
+to facilitate UAV operations.
+Facility Locations (F): There are m designated facilities that serve as operational hubs for
+managing and dispatching UAVs.
+Demand Points or Customers (P): The system caters to the delivery demands of k distinct
+points, representing customers or delivery destinations.
+UAVs (K): A ﬂeet of L UAVs is available for conducting deliveries.
+RechargingPoints(D1):HdemandpointsareidentiﬁedaslocationswhereUAVscanrecharge
+during their operations.
+Non-Recharging Points (D2): Q demand points are speciﬁed as locations where recharging
+is not possible, necessitating careful planning for energy conservation.
+Scenarios (U): The system operates under three different scenarios, each representing a
+unique set of conditions or constraints that may inﬂuence the optimal conﬁguration of routes
+and UAV assignments.
+The optimization problem is multi-faceted, requiring a strategic approach to route plan-
+ning, UAV allocation, and recharging station utilization. By strategically placing distributors
+and facilities, assigning UAVs judiciously, and navigating through the intricacies of recharg-
+ing constraints at speciﬁc demand points, the aim is to minimize delivery times, reduce energy
+consumption, and enhance the overall sustainability of the UAV delivery system. This chal-
+lenge is not only technologically demanding but also addresses practical considerations for
+real-world implementation. The outcome of this optimization endeavor has the potential not
+only to redeﬁne last-mile logistics but also to contribute to a more sustainable and envi-
+ronmentally conscious approach to delivery services. As we delve into the complexities of
+optimizing a UAV delivery system within the outlined constraints, innovative solutions will
+pave the way for a future where unmanned aerial vehicles seamlessly navigate the skies,
+delivering goods efﬁciently and responsibly.
+The primary challenge is to develop algorithms and strategies that optimize the delivery
+routes while considering the recharging constraints at speciﬁc demand points. This includes
+determining the most efﬁcient distribution of UAVs among distributor and facility locations,
+minimizing delivery times, and ensuring that recharging points are strategically utilized to
+maximize the overall effectiveness of the UAV delivery system.
+The optimization process must consider the diverse scenarios, accommodating variations
+in demand, operational conditions, and the recharging capabilities of the UAV ﬂeet. The goal
+is to enhance the overall efﬁciency, reliability, and sustainability of the UAV delivery system
+within the speciﬁed framework.
+3.2 Mathematical model
+Based on the previous deﬁnitions, the model can be explained as Tables 2, 3 and 4. Also, in
+“Appendix A”, parameters initialization and values assignment details how parameters in a
+system or model are initialized and assigned values, including descriptions, initial settings.
+Tables 2, 3 and 4 shows decision variables and parameters including point-speciﬁc val-
+ues, service times, drone capacities, operational time windows, cost factors, battery-related
+parameters, and penalties associated with various operational conditions. Hence, the Python
+workﬂow for optimizing drone routing is presented, which encompasses phases such as
+importinglibraries,settinguptheenvironment,deﬁningsetsandscenarios,initializingparam-
+eters and decision variables, deﬁning the objective function, setting constraints, assigning
+penalty values, and conﬁguring a genetic algorithm for multi-objective optimization.
+123
+
+--- PDF PAGE 16 ---
+Annals of Operations Research
+Z1 = min
+
+k∈K
+
+d∈vd
+
+j∈v
+
+i∈v
+Xi jkd.FCk.dxi j.C + W2.
+
+i∈p
+Ei + W3.
+
+i∈p
+Li +
+
+d∈D
+
+k∈K
+Zd. f ixd
++
+
+d∈D
+
+k∈K
+
+i∈p
+Xdikd. f ix′
+k +
+
+f ∈F
+Yd f .ded.Cp f
+(1)
+The ﬁrst objective function, denoted as Z1, aims to minimize the overall operational cost.
+This includes costs associated with drone transportation, battery usage along routes, ﬁxed
+drone usage costs, cost for constructing distribution points at potential locations, penalties
+for not adhering to soft time windows, and preparatory expenses.
+Z2 = min
+
+u ∫U
+pu.
+
+i∈P
+siu + λ
+
+u∈U
+pu
+
+i∈P
+siu −
+
+u∈U
+pu
+
+i∈P
+siu
+2
+(2)
+The second objective function, denoted as Z2, seeks to minimize the service time. Since
+UAV velocity has different modes according to different routing scenarios while they are
+distinctive by the level of air trafﬁc conditions. In a way, there is a set of U scenarios adjusted
+with possible routes which end in the set of j nodes. The number of scenarios is determined
+by experts who investigate the trafﬁc conditions based on factors such as air parcels, severe
+climate, The National Aviation System (NAS) regulations, and so on, in the possible routes
+from nodes i to j.
+Due to the uncertainty condition of scenarios, robust optimization is the appropriate
+method to estimate the solutions exactly. This optimization is done while unexpected condi-
+tions are considered and controlled. We used the Mulvey model (Mulvey et al., 1995) as the
+general form of robust optimization.
+Z3 = minmax
+
+i, ji∈P∪D
+sk
+i j Xi jkd
+(3)
+The third objective function, labeled as Z3, is designed to reduce the risk index. This index
+is computed as the highest value among the sums of routing risks associated with each pair
+of nodes i and j, where i and j are part of the combined set P ∪D (meaning, they belong to
+either P or D). The risk index is inﬂuenced by the aggregate of weighted components (factors)
+representing the routing risk for individual node pairs. The applied weighting method has
+been inspired from the (Mahmoodi et al., 2022) work. In their study, the SORA standard
+has been applied to estimate the imposed risk index, but, in this case, it has been tried to
+apply the BBN method to provide a risk index instead of the SORA approach. Concerning
+Table 2 Deﬁning sets: the
+foundation of optimization
+Sets
+Deﬁnitions
+D
+A set of distributor candidate locations
+F
+A set of facility locations
+P
+A set of demand points
+K
+A set of drones
+D1
+A set of demand points where recharging is possible
+D2
+A set of demand points where recharging is not possible
+U
+A set of different scenarios
+123
+
+--- PDF PAGE 17 ---
+Annals of Operations Research
+Table 3 Deﬁning parameters: the foundation of optimization
+Parameters
+Deﬁnitions
+ri
+The amount of delivery demand of demand points i
+Pi
+The amount of pickup demand of demand points i
+Si
+Time to provide service to demand points i
+Qk
+Loading capacity of each RPA k
+ai
+The earliest time allowed to provide service to distributor i in the hard time window
+bi
+The latest time allowed to provide service to distributor i in the hard time window
+M
+Optional large number
+ESi
+The earliest time allowed to provide service to distributor i in the soft time window
+LSi
+The latest time allowed to provide service to distributor i in the soft time window
+W2
+Cost per unit time deviation from the earliest time allowed in the soft time window
+W3
+Cost per unit time deviation from the latest time allowed in the soft time window
+f ix/
+k
+Fixed cost of using RPA k
+C
+Cost of one charging unit
+AT
+Minimum amount of charging allowed inside the RPA
+C f f
+Preparing cost of a unit in facility location f
+f ixd
+Cost of constructing distributor candidate location d
+T Si
+Time to provide service to demand point i
+DAY
+The length of a working day
+cp ji
+RPA battery consumption from node i to node j
+dxij
+The distance between node i and node j
+full
+Battery charging capacity
+pu
+The probability of occurrence of scenarios u
+Vku
+The velocity of RPA k in event u
+capd
+The capacity of candidate location of distributor d
+cap f
+The capacity of facility location f
+L0k
+The load on RPA k when leaving the distributor
+Sk
+i j
+The risk of route deriving from node i to node j with RPA k
+xi jkd
+The variables zero and one. If RPA k ∈K belonging to candidate distributor locations d
+travels from node i to node j, it is equal to one and otherwise zero
+siu
+The time to start providing service to demand point i in scenario u
+Lj
+The weight of the load remaining on the RPA after service to demand point j
+Zd
+The variables zero and one. If distributor d is constructed, it is equal to one and otherwise
+zero
+Eiu
+The time deviation from the earliest time allowed to provide service to demand point i in
+the soft time window in scenario u
+Liu
+The time deviation from the latest time allowed to provide service to demand point i in the
+soft time window in scenario u
+123
+
+--- PDF PAGE 18 ---
+Annals of Operations Research
+Table 3 (continued)
+Parameters
+Deﬁnitions
+FCk
+The time to end the route of RPA k
+ded
+The center demand of distributor d
+Yd f
+Variables zero and one. If distributor d is assigned to facility location f, it is equal to one
+and otherwise zero
+Ai
+The amount of battery available on the RPA
+ck
+i j
+ij Energy consumption by a drone of type k to ﬂy from
+Ck
+Ck Amortized cost of the drone type k
+Ck
+bat
+bat Amortized cost of the battery of drone type k
+v
+Drone speed
+CE
+Cost of per unit of energy
+CL
+Wage of a drone operators
+nk
+Number of drones of type k a drone operator can operate
+C M
+k
+Maintenance cost of a drone of type k
+tbat
+k
+Time required to replace the battery of drone type k
+li
+Distance of delivery location i from depot
+l j
+Distance of delivery location j from depot
+ti j
+Time required for drone to arrive at delivery location from i to j
+ei
+Earliest possible pickup time
+cho
+k
+Initial energy in the battery of drone type k
+chmin
+k
+Minimum remaining energy required in the battery of drone type k
+chmax
+k
+Maximum remaining energy required in the battery of drone type k
+ch j
+Maximum permissible delay for point j
+Mmax
+k
+Maximum package weight carrying capacity of drone type k
+Mi
+Package weight for delivery location i
+BBN methodology, it focuses on categorizing the risks associated with operating UAVs. The
+tool effectively integrates a wide variety of elements that may be responsible for the dangers
+and risks associated with UAV ﬂight experiments. Through the BBN, one can visualize and
+numerically evaluate the causal relationships and inﬂuences affecting probabilistic outcomes
+by using Bayes’ theorem to propagate causal probabilities across the whole system. We would
+like to investigate using this method for a full mission’s safety assurance and assessment.
+Considering the important steps mentioned earlier, we apply the Analytic Hierarchy Process
+(AHP) ranking technique to assess the consequences of imposed risks by weighing them, in
+this way, the lk
+i j has been achieved according to the relation (3).
+123
+
+--- PDF PAGE 19 ---
+Annals of Operations Research
+Table 4 Deﬁning decision variables: the foundation of optimization
+Decision variables
+Description
+xi jkd
+The variables zero and one. If RPA k ∈K belonging to candidate distributor
+locations d travels from node i to node j, it is equal to one and otherwise zero
+Zd
+The variables zero and one. If distributor d is constructed, it is equal to one and
+otherwise zero
+Yd f
+Variables zero and one. If distributor d is assigned to facility location f, it is
+equal to one and otherwise zero
+zi j
+1 if delivery location i is served immediately before j by a drone, 0 otherwise
+yi
+1 if drone battery is replaced after returning from delivery location i, 0
+otherwise
+gi
+Remaining battery energy of a drone after returning from delivery location i
+gt
+i
+Auxiliary variable storing the remaining battery energy after returning from
+delivery location i
+fi
+Timing of when a drone picks-up the package for delivery location i at depot
+xki
+1 if drone type k is assigned to deliver a package to location i, 0 otherwise
+X Dji
+Binary variable indicating whether a route exists from the depot to i
+Xi Dj
+Binary variable indicating whether a route exists from the j to depot
+Yi j
+Binary variable indicating whether a drone travels from point i to a charging
+point j
+3.2.1 BBN framework compatible with the established UAV network
+BBN determine the signiﬁcance of component sk
+i j depending on the perspective of the
+decision-makers. Nevertheless, it is important to remember that each risk factor stated is
+analyzed in the classiﬁcation of SORA standard approach. Based on this methodology, risks
+categorized in two levels of aerial risk and ground risk. Based on this classiﬁcation, all the
+incurred risks and their subcategories are categorized according to the origin of their occur-
+rence. From this stage onwards, based on the BBN method, the parameter sk
+i j is obtained."
+Which shows the level of signiﬁcance of imposed risks For this purpose, Causing Risk Factor
+(CRF) identiﬁcation starts after the BBN is formulated when qualitative indices are identiﬁed
+and classiﬁed according to AHP approach. At this point, based on the BBN model, a system
+is represented as a graphical representation of probabilities showing the level of dependence
+among the random variables in the system. This network has nodes that are variables, and
+arcs that connect them. Whenever there is an arc between two nodes, there is a causal rela-
+tionship between them, while if there is none, there is no causal relationship between them.
+The parent nodes in this network are CRFs, and their subset of nodes is known as child
+nodes. It is possible for a node to be both a child and a parent node simultaneously. This
+study proposes a risk model according to BBN and the architectural elements of a network
+of semi-autonomous unmanned aerial vehicles that has three sub-layers. The mission of the
+UAV is managed automatically and manually in three sub-layers. These layers are the UAV,
+GBS, and Tender by humans to monitor and control UAVs’ operation manually. Experts
+evaluate the potential risks in each of these levels (Han et al., 2022; Hashemi et al., 2021).
+The CRFs of the system are then identiﬁed and presented in a matrix format with the system
+dimensions as columns and risk levels as rows.
+123
+
+--- PDF PAGE 20 ---
+Annals of Operations Research
+Fig. 1 Illustrative Bayesian network describing the inducements of UAV System in SORA standard classiﬁca-
+tion
+To create the BBN in this paper, a series of steps are taken:
+1. The potential and essential occurrences and their effects on UAV missions are identiﬁed
+and chosen.
+2. Detected events are assessed according to their primary CRFs and the degree to which
+those CRFs affect the event.
+3. The CRFs are ranked according to their signiﬁcance, which reﬂects their level of reliance.
+A dependence graph is created with no return paths between the nodes of the graph and
+with direct causal connections between them.
+4. At this point, the BNN is represented by a conditional probability table (CPT). This table
+is generated considering the outcome anticipated from the presence of the CRFs and
+aggregation of experts’ opinions.
+5. The proportionality of the evaluation of the solution for modifying and eliminating each
+potential risk and its potential impact on enhancing the system’s safety is considered.
+6. Subsequently, at each risk level in the BNN graph, the overall risk level is determined
+based on the computed likelihood of a mishap for each CRF.
+An illustration of this sensitivity evaluation can be seen in Fig. 1 (Bareither & Luxhøj,
+2007; Millar, 2015).
+Figure 2 illustrates the CRFs for the risk level of a UAV system and its connections. The
+same process depicted in Fig. 2 is applied to calculate all the CRFs for the remaining detected
+events.
+According to the recorded statistical results from the data analysis and the literature
+(Washingtona et al., 2017; Kevorkian et al., 2016; Millar, 2015; Allouch et al., 2019; Han
+et al., 2020), the BNN graph showing the failure of a UAV system can be seen in Fig. 2.
+123
+
+--- PDF PAGE 21 ---
+Annals of Operations Research
+Fig. 2 llustrative Bayesian network describing the inducements of UAV System Failure
+The CPT can then be calculated by measuring the strength of connections between the
+nodes. The output of the CPT in this state is as follows if the variables, or system elements,
+are in the form of the set N = {n1, . . . , nr}:
+P
+
+nq|πq
+
+denotes the likelihood that each node nq will exist if a set of πq parents are
+available for it. Based on their relationship with their parents, this conditional probability
+is determined (Noriega et al., 2019). Figure 1 shows a computed example based on a BBN
+graph of Fig. 2 and an electrical failure intermediate event from CPT. In this table, conditional
+probabilities are calculated using Eqs. (4) and (5):
+P(n1, . . . , nr) =
+r
+q=1
+P
+
+nq|πq
+
+(4)
+p
+
+nq|πq
+
+= p
+
+πq|nq
+
+.p
+
+nq
+
+p
+
+πq
+
+(5)
+Many parents result in a tremendous amount of cognitive load for experts in this domain,
+as they must calculate the conditional probability of all parent variables by comparing their
+probability distribution with that of the number of child nodes. Additionally, every con-
+ditional probability is determined by the domain expert’s personal experience and reﬂects
+their subjective probability. This Knowledge is inﬂuenced by experience and biases based
+on individuals’ experiences (Das et al., 2004).
+In every episode of UAV action in the predeﬁned plane ψ, the risk index sk
+i j relies on the
+average of the CRFs that experts determine for the candidate range of the next actions from
+the origin point (UAV) n to the destination point (Tender) m in the episode.
+ace, experts evaluated each CRF. In fact, N1 × N2 squares, which correspond to the size of
+a time slot, divide the possible zone, thus at this stage, the experts select a set of these squares
+as a speciﬁc area and provide their assessment of the probable risk index for these predeﬁned
+areas. The weights of each identiﬁed risk indicator are assessed using AHP to ensure that
+123
+
+--- PDF PAGE 22 ---
+Annals of Operations Research
+the opinions of the experts are not inconsistent. In accordance with the recorded data, events
+occurred in different risk categories and had various probabilities, so expert opinions can
+change from one period to the next.
+Z4 = minCE
+⎛
+⎝
+i∈P
+
+j∈P
+Ck
+i jzi j
+⎞
+⎠+
+
+Ck + CL
+nk
++ C M
+k
+ 
+j∈P
+z0 j + Ck
+bat
+
+i∈P
+yi
+
+(6)
+The fourth objective function, denoted as Z4, aims to minimize the overall expenditure
+associated with the following components: total energy consumption cost (component 1),
+total investment and operational expenses for the drones (component 2), and investment costs
+related to the batteries (component 3). This optimization is conducted to efﬁciently deliver
+all customer orders while adhering to speciﬁed pickup time windows within the planning
+horizon.
+Subject to:
+
+d∈D
+
+k∈K
+
+i∈P∪D
+Xi jkd ≥1, ∀j ∈P
+(7)
+
+i∈D∪P
+Xi jkd =
+
+i∈D∪P
+X jikd, ∀d ∈D, k ∈K, j ∈P
+(8)
+
+d∈D
+
+i∈v
+Xdikd ≥1, ∀k ∈K
+(9)
+Xiikd = 0,
+∀d ∈D, k ∈K, i ∈D ∪P
+(10)
+Siu + dxi j
+Vku
+−M.
+
+1 −Xi jkd
+
+≤Sju, ∀d ∈D, k ∈K, i ∈D ∪P, j ∈P, u ∈U
+(11)
+Siu + dxi j
+Vku
++ M.
+
+1 −Xi jkd
+
+≥Sju, ∀d ∈D, k ∈K, i ∈D ∪P, j ∈P, u ∈U
+(12)
+Sdu = 0, ∀d ∈D, u ∈U
+(13)
+ai ≤Siu ≤bi, ∀i ∈P, u ∈U
+(14)
+LOk =
+
+d∈D
+
+i∈v
+
+j∈P
+r j × Xi jkd, ∀k ∈K
+(15)
+LOk ≤Qk, ∀k ∈K
+(16)
+L j ≥LOk −r j + p j −M.
+
+1 −Xdjkd
+
+, ∀d ∈D, k ∈K, j ∈P
+(17)
+L j ≤LOk −r j + p j + M.
+
+1 −Xdjkd
+
+, ∀d ∈D, k ∈K, j ∈P
+(18)
+L j ≥Li −r j + p j −M.
+
+1 −
+
+d∈P
+
+k∈K
+Xi jkd
+
+, ∀j ∈P, ∀i ∈D
+(19)
+L j ≤Li −r j + p j + M.
+
+1 −
+
+d∈P
+
+k∈K
+Xi jkd
+
+, ∀j ∈P, ∀i ∈D
+(20)
+L j.
+
+d∈D
+
+i∈P∪D
+Xi jkd
+
+≤Qk, ∀j ∈P
+(21)
+Eiu ≥α(ESi −Siu), ∀i ∈P, u ∈U
+(22)
+123
+
+--- PDF PAGE 23 ---
+Annals of Operations Research
+Liu ≥β(Siu −LSi), ∀i ∈P, u ∈U
+(23)
+Ai = full , ∀i ∈D1
+(24)
+Ai ≤A j −DX ji.FCk + M.
+
+1 −X jikd
+
+, ∀i ∈D2, j ∈P ∪D, k ∈K, d ∈D
+(25)
+Ai ≥AT , ∀i ∈P
+(26)
+Zd.M ≥
+
+k∈K
+
+i∈P
+Xdikd, ∀d ∈D
+(27)
+
+f ∈F
+Yd f ≥1, ∀d ∈D
+(28)
+ded =
+
+k∈K
+
+i∈P∪D
+
+j∈P
+ded × Xi jkd, ∀d ∈D
+(29)
+ded = capd, ∀d ∈D
+(30)
+
+f ∈F
+
+d∈D
+Yd f .ded ≤cap f , ∀f ∈F
+(31)
+FCk ≥Siu + dxid
+Vku
+−M.(1 −Xidkd), ∀k ∈K, i ∈P, d ∈D, u ∈U
+(32)
+
+k∈K
+
+i∈P∪D
+
+j∈P
+Si × Xi jkd ≤DAY, ∀k ∈K
+(33)
+Xi jkd, Zd, Yd f = 0 or 1
+(34)
+L j, Siu, LOdk ≥0
+(35)
+sk
+i j ≤M
+
+i∈P∪D
+X jikd, ∀j ∈P, k ∈K
+(36)
+sk
+i j ≤M
+
+i∈P∪D
+Xi jkd, ∀j ∈P, k ∈K
+(37)
+sk
+i j = 0 , ∀j ∈D, k ∈K
+(38)
+
+i∈P
+zi j ≥1, ∀j ∈P
+(39)
+
+j∈P
+zi j ≥1, ∀i ∈P
+(40)
+
+i∈P
+zi j =
+
+i∈P
+z ji, ∀j ∈P
+(41)
+
+i∈P
+ck
+i jzi j ≤
+
+ch0
+k −chmin
+k
+
+, ∀j ∈P
+(42)
+M j
+
+i∈P
+zi j ≤Mmax
+k
+, ∀j ∈P
+(43)
+f j ≥fi +
+
+tl + ti j + tu
+
++ tbat
+k
+yi −M
+
+1 −zi j
+
+, ∀i, j ∈P, i̸ = j
+(44)
+ei ≤fi ≤li, ∀i ∈P
+(45)
+123
+
+--- PDF PAGE 24 ---
+Annals of Operations Research
+
+j∈P
+gt
+j +
+
+j∈D1
+ch j ≤ch0
+k −
+
+i, j∈P
+ck
+i j.Xi jkd
+(46)
+ch0
+k −
+
+i, j∈P
+ck
+i j.Xi jkd ≥chmin
+k
+(47)
+ch0
+k −
+
+i, j∈P
+ck
+i j.Xi jkd +
+
+j∈D2
+ch j ≤chmax
+k
+(48)
+g j ≤ch0
+k −
+
+i, j∈P
+ck
+i j.Xi jkd
+(49)
+zi j ∈{0, 1}, ∀i, j ∈P, i̸ = j
+(50)
+gi ≥0, ∀i ∈P
+(51)
+gt
+i ≥−chmin
+k
+, ∀i ∈P
+(52)
+fi ≥0, ∀i ∈P
+(53)
+min
+
+i∈P
+
+k∈K
+ck
+i j xki
+(54a)
+s.t,
+
+k∈K
+xki = 1, i ∈P
+(54b)
+ck
+i j xki ≤
+
+ch0
+k −chmin
+k
+
+, ∀k ∈K, ∀i ∈P
+(54c)
+Mi xki ≤Mmax
+k
+, ∀i ∈P, k ∈K
+(54d)
+xki ∈{0, 1}, ∀i ∈P, k ∈K
+(54e)
+if ei + tl + ti j + tu > li
+then zi j = 0, ∀i, j ∈P
+(55)
+if l j > li + ti j + 2
+
+tl + tu + 2tRange
+
+then zi j = 0, ∀i, j ∈P
+(56)
+
+j∈P
+X Dji = 1, ∀i ∈P
+(57)
+
+j∈P
+Xi Dj = 1, ∀j ∈P
+(58)
+
+j∈D1
+Yi j ≥1, ∀i ∈P\D1
+(59)
+gi + ch j ≤chmax
+k
+, ∀j ∈D1
+(60)
+The sophisticated framework of constraints within the UAV logistics system underscores
+its multifaceted approach to enhancing operational efﬁciency and ﬂexibility. Constraints (7)
+through (10) are pivotal in allocating UAVs to demand points with enhanced ﬂexibility, ensur-
+ing efﬁcient service even when the demand requires multiple drones at a single point. This
+set includes mandates for UAV allocation to speciﬁc demand points, the use of UAVs by
+multiple distributors, and the prevention of redundant routing paths. Following closely, con-
+straints (11) through (16) focus on the initiation phase of UAV operations, including service
+123
+
+--- PDF PAGE 25 ---
+Annals of Operations Research
+start times and initial load capacities. These constraints are designed to set the operational
+groundwork, ensuring UAVs begin their routes efﬁciently and are prepared for their delivery
+tasks.
+The subsequent section delves into the UAVs’ operational constraints during their delivery
+routes, with constraints (17) through (26) meticulously calculating load weights and ensuring
+adherence to the UAV’s battery and capacity limitations. This segment emphasizes the impor-
+tance of maintaining operational integrity throughout the UAV’s journey, from departure to
+service completion at demand points. Particularly, constraints (24) through (26) highlight the
+critical aspect of battery management, ensuring UAVs operate within their energy capacities,
+which is vital for sustaining longer operational periods and enhancing reliability.
+To optimize the distribution network and resource allocation, constraints (27) through
+(33) introduce the construction and association of distribution centers (DCs) with facility
+locations, alongside evaluating demand restrictions and travel times. This part of the model
+enhances the ﬂexibility and effectiveness of facility allocation within the network, ensuring
+that demand is aligned with available resources and that UAV travel times are optimized for
+efﬁciency. These constraints collectively aim to bolster the logistical backbone of the UAV
+delivery system, ensuring that distribution centers and UAVs are strategically aligned with
+the overarching goals of operational efﬁciency and resource optimization.
+Finally, the model extends its meticulous planning to route safety, delivery efﬁciency,
+and energy management with constraints (34) through (60). This includes binary decision-
+making for travel routes, ensuring energy consumption remains within operational limits,
+and mandating that every delivery route originates and concludes at the depot to maintain a
+centralized routing strategy. Particularly noteworthy are constraints (46) through (60), which
+focus on energy management and the strategic scheduling of pickups and deliveries to ensure
+timely and efﬁcient operations. The overarching aim, encapsulated in constraints (54a) to
+(54e), is to minimize total energy consumption while aligning operational efﬁciency with the
+practical capabilities of the drones. This comprehensive set of constraints ensures that the
+UAV logistics system operates within a framework designed to maximize efﬁciency, safety,
+and reliability, thereby optimizing the delivery process in an innovative and forward-thinking
+manner.
+4 Solution approach
+To have a comprehensive analysis of NSGAII algorithm performance, the optimal ﬂight path
+has been obtained through the developed Genetic algorithm. In this case, since the whole
+ﬂight space is considered a grid network, UAVs start their mission in a set of Ne × N f
+small squares in this network. In the GA, each chromosome represents the sequence of
+paths between the hypothetical start point to the endpoint. Selection of the best path is
+applied for the whole chromosome with respect to the value of the proposed four objective
+functions. Hence, the next generation of chromosomes will be the all-possible routes between
+the Nef to its neighboring sequence, the Ne+1 f +1, which are identiﬁed as Ref . Crossover
+and mutation operators have been applied to produce next generation from parent squares
+because their visiting order is completely relied on the degree of optimality of objectives
+in the selected square. Their concerned values are depicted in table A2. Figure 3 show m
+strings of chromosome and crossover strategy of the proposed GA algorithm. In the sequence
+of chromosome some squares highlighted as potential nodes in the UAV networks, between
+the adjacent nodes, random sequence of possible path cells exists. GA begins with initial
+123
+
+--- PDF PAGE 26 ---
+Annals of Operations Research
+population of chromosome in this shape of structure, the follow the steps of objectives
+evaluation, applying genetic operators and regeneration at the end.
+Every chromosome which is made in child generation is evaluated by the proposed objec-
+tives of the model. Then the chromosome with the optimal values is targeted as the best ﬂight
+path for UAVs. According to the multi-objective model in metaheuristic algorithm, best solu-
+tions are the category of points in the Pareto front in which none of them will triumph over
+the other for any of the objective functions and a solution is superior when at least one of the
+objectives has an optimal value.
+To address the multi-objective optimal allocation problem, formulated as a mixed-integer
+non-linear program (MINLP), we propose employing the non-sorting genetic algorithm
+(NSGA-II) as outlined in the ﬂowchart in Fig. 4. The primary advantage of this method
+is that NSGA-II concurrently optimizes each objective. NSGA-II is a widely used and efﬁ-
+cient sorting multi-objective genetic algorithm capable of handling non-penalty constraints.
+It exhibits fast and effective convergence, making it well-suited for large-scale searches and
+proﬁcient at addressing problems that initiate with a non-feasible solution. The proposed
+algorithm involves multiple layers of individual classiﬁcations, where non-dominated indi-
+viduals receive a speciﬁc dummy ﬁtness value before being removed from the population.
+This process iterates until the entire population is classiﬁed. NSGA-II offers advantages
+such as introducing elitism to NSGA and preserving diversity within a fast and less complex
+algorithm.
+In a more detailed breakdown, NSGA-II undertakes the selection of the optimal number
+of UAVs, their appropriate battery sizes, the designated charging point (starting point), and
+the assignment of buses to each UAV. Additionally, the algorithm allocates these buses to
+speciﬁc trips, determining the optimal number of buses to be monitored and their respective
+locations. Subsequently, all these selections are fed into the ﬁtness calculation of NSGA,
+which comprises two distinct parts.
+Fig. 3 The proposed crossover strategy
+123
+
+--- PDF PAGE 27 ---
+Annals of Operations Research
+The ﬁrst part is responsible for calculating the loss of observability (objective one) and
+takes the number of buses to be monitored and their locations as inputs. The second part
+is tasked with computing the total annual cost (objective two), with inputs including the
+selection of the number of UAVs, their appropriate battery sizes, their designated charging
+point (starting point), and the assigned buses to each UAV. Within the second part, an internal
+subproblem arises to derive the optimum route for each trip.
+Following the calculation of the optimal route for each trip, NSGA utilizes the selected
+route and battery speciﬁcations to check the constraints for each trip. Speciﬁcally, it veriﬁes
+that the maximum hovering and ﬂying power are less than or equal to the selected battery’s
+power consumption (as in Eq. (6)). Furthermore, the consumed energy must be less than or
+equal to the actual useful energy of the battery, as stipulated in Eq. (6).
+NSGA-II employs a robust elitism approach, combining parent and offspring populations
+to create tiers based on non-dominance, organizing solutions into several fronts. Each front
+categorizes solutions based on their level of dominance, starting with non-dominated solu-
+tions and proceeding to those dominated by progressively more solutions. Within each front,
+solutions are further sorted by crowding distance, a measure of the spacing between solutions,
+to ensure diversity. This dual sorting method—by dominance level and crowding distance—-
+facilitates the selection process, prioritizing non-dominated solutions and, among those of
+equal dominance, the ones with greater spacing. The algorithm continually evolves through
+Fig. 4 Displays the ﬂowchart for the suggested NSGA-II algorithm
+123
+
+--- PDF PAGE 28 ---
+Annals of Operations Research
+Fig. 5 Pseudocode of NSGA-II
+selecting the ﬁttest solutions, followed by their recombination and mutation, to generate new
+populations. The pseudocode NSGA-II can be seen in Fig. 5.
+5 Results and discussions
+This section outlines the experimental studies conducted. All algorithms are coded in Python
+and implemented on a 64-bit Windows OS with Intel Core (TM) i7-10700, 2.9 GHz, and
+32 GB RAM. These following results are obtained using NSGAII (Non-dominated Sorting
+Genetic Algorithm II) with the following parameters:
+Population: 120 individuals
+Number of Generations (Iterations): 100 generations
+Crossover Probability (CXPB): 0.7
+Mutation Probability (MUTPB): 0.1
+Independent Probability (indpb): 0.1
+123
+
+--- PDF PAGE 29 ---
+Annals of Operations Research
+Table 5 Comprehensive analysis of optimal parameters for drone routing
+Index
+Cost
+Time
+Risk
+Battery Usage
+Penalties
+Count
+28
+28
+28
+28
+28
+Mean
+116,393
+19
+345
+312
+2748
+Std
+15,358
+2
+123
+479
+119
+Min
+87,480
+19
+204
+100
+2555
+25%
+105,666
+19
+276
+181
+2675
+50%
+116,074
+19
+295
+220
+2730
+75%
+129,754
+19
+450
+268
+2835
+Max
+139,887
+28
+605
+2734
+2900
+5.1 Summary and descriptive analysis
+5.1.1 Table of statistics
+The Table 5 provides a succinct summary of the dataset across ﬁve different variables: Cost,
+Time, Risk, Battery Usage, and Penalties. With a count of 28 for each variable, there is a
+sufﬁcient sample size to understand the trends and distributions within the data. The mean
+cost is relatively high at 116,393, but it is important to consider the standard deviation, which
+at 15,358, suggests a moderate spread around the mean. This spread indicates variability
+in costs, which could be due to a range of factors that would require further investigation.
+The ’Time’ variable exhibits a narrow standard deviation, indicating that this measurement
+is uniform throughout the dataset, which denotes a consistent performance on this metric.
+The parameters governing the time objective function, namely ’pu’ and ’siu’, were assigned
+values that are nearly identical across various points and scenarios. As a result, this uniformity
+in parameter settings has led to the reduced variability in ’Time’. ’Battery Usage’ presents
+with the largest standard deviation relative to its mean, indicating very high variability.
+This is further highlighted by the maximum value, which is signiﬁcantly higher than the
+75th percentile, suggesting the presence of outliers that dramatically affect the average. For
+’Penalties’, the lower standard deviation indicates that penalties do not vary as much as some
+of the other variables, such as ’Battery Usage’, but there is still a noticeable range between
+the minimum and maximum values.
+5.1.2 Table of non-dominated individuals
+The Table 6 illustrates the best-performing individuals based on the criteria that no other
+individual is better in all the objectives. These are essentially the solutions that offer the best
+trade-offs among the objectives considered. For instance, Index 0 has a high cost but compen-
+sates with lower risk and penalties, while Index 4 has the highest risk but does not have the
+highest cost or penalties, which may suggest it is a viable option under certain circumstances
+where risk is less of a concern. It is important to note the presence of signiﬁcant variation in
+’Battery Usage’ and ’Risk’ among the non-dominated individuals, which indicates that the
+trade-offs between these two variables are quite substantial and likely to be a focal point in
+decision-making processes. The consistency of the ’Time’ across most non-dominated indi-
+viduals suggests that it is not a differentiating. factor in the optimization process. Moreover,
+123
+
+--- PDF PAGE 30 ---
+Annals of Operations Research
+some individuals like Index 14 show an extremely high ’Battery Usage’, which is an outlier
+that could be a result of speciﬁc operational requirements or an error in data recording. This
+kind of outlier needs special attention as it can skew the overall analysis and may represent
+a special case that is not generalizable. From the summary statistics, it becomes evident
+that ’Cost’ and ’Risk’ are variables with high variability, suggesting a varied dataset where
+each observation might represent different operational scenarios or decision contexts. The
+’Battery Usage’ variable, particularly, with its high variability and extreme maximum value,
+requires closer scrutiny to understand the underlying factors causing such discrepancies. The
+analysis of non- dominated individuals provides insights into the complex trade-offs between
+different objectives. It highlights the potential for multiple optimal solutions depending on
+the weightings of various objectives, such as cost, risk, and battery usage. In interpreting
+Table 6 Non-dominated individuals—identifying optimal solutions with superior trade-offs across multiple
+objectives
+Index
+Cost
+Time
+Risk
+Battery Usage
+Penalties
+0
+129447
+28
+400
+183
+2555
+1
+130676
+19
+315
+175
+2710
+2
+103888
+19
+450
+263
+2835
+3
+125911
+19
+204
+281
+2675
+4
+103782
+19
+605
+281
+2835
+5
+139887
+21
+450
+100
+2780
+6
+138876
+19
+204
+234
+2555
+7
+108258
+19
+491
+234
+2745
+8
+136199
+19
+276
+175
+2900
+9
+114315
+19
+605
+124
+2900
+10
+127436
+19
+205
+183
+2835
+11
+107547
+19
+205
+307
+2675
+12
+117832
+19
+276
+183
+2715
+13
+139160
+19
+205
+183
+2715
+14
+126518
+19
+450
+2734
+2590
+15
+87480
+19
+495
+183
+2715
+16
+107329
+19
+276
+229
+2900
+17
+132499
+19
+276
+234
+2555
+18
+105449
+19
+315
+175
+2900
+19
+108782
+19
+276
+211
+2675
+20
+118152
+19
+315
+151
+2790
+21
+107496
+19
+276
+253
+2835
+22
+89029
+21
+400
+406
+2675
+23
+93556
+19
+276
+307
+2675
+24
+119603
+27
+276
+341
+2555
+25
+105738
+19
+491
+151
+2900
+26
+131441
+19
+204
+199
+2835
+27
+102721
+19
+450
+250
+2900
+123
+
+--- PDF PAGE 31 ---
+Annals of Operations Research
+Fig. 6 Objective functions penalties distribution
+these results, it is crucial to consider the context in which the data was collected, as the
+importance and impact of each variable may vary signiﬁcantly across different operational
+environments. Additionally, the presence of outliers suggests that there may be extreme cases
+that are signiﬁcantly different from the norm, and these warrant separate analysis to ensure
+they do not distort the overall understanding of the data. Ultimately, this analysis lays the
+groundwork for a deeper exploration into the factors that drive these variables and how they
+can be managed or optimized in the speciﬁc context from which the data is drawn.
+5.2 Data distribution
+5.2.1 Box plots for objectives and penalties
+The Fig. 6 for box plots for ’Cost’, ’Time’, ’Risk’, ’Battery Usage’, and ’Penalties’ provide
+a visual summary of the distribution and variability of these variables within the dataset.
+• Cost: The box plot for ’Cost’ shows a median around 116,000, with the interquartile
+range (IQR) indicating that the middle 50% of costs are tightly packed. This suggests a
+moderate consistency in cost across the dataset, with a few outliers indicating instances of
+signiﬁcantly higher costs.
+• Time: ’Time’ presents with a very narrow IQR, and all but three data points are identical.
+The outliers suggest only occasional variation from a standard time value, which implies
+that the duration of the observed activities or processes is generally consistent.
+• Risk: The ’Risk’ variable has a wider IQR, demonstrating more variability in the dataset’s
+risk levels. The presence of upper outliers indicates that there are scenarios with substan-
+tially higher risk, although the bulk of the data is less variable.
+• Battery Usage: This box plot is particularly notable for the extreme outlier, which is
+signiﬁcantly higher than all other observations. This suggests a special case within the
+dataset where battery usage is exceptionally high compared to the norm.
+• Penalties: The ’Penalties’ distribution is relatively symmetrical with a slight skew towards
+the upper end, indicated by a median that is closer to the lower quartile. This suggests that
+while there is some variation in penalties, it does not vary as extremely as battery usage.
+123
+
+--- PDF PAGE 32 ---
+Annals of Operations Research
+Fig. 7 The frequency distribution of the dataset’s variables. The provided histograms offer a visual represen-
+tation of the frequency distribution of the dataset’s variables: Cost, Time, Risk, Battery Usage, and Penalties
+These box plots are critical for understanding the underlying distributions of each variable,
+identifying outliers, and assessing the spread and symmetry of the data. Outliers warrant
+further investigation to determine whether they represent data recording errors, special cases,
+or if they are a part of the natural variability in the dataset. The relatively stable ’Time’ variable
+contrasts with the high variability seen in ’Risk’ and ’Battery Usage’, which could imply that
+different factors or levels of control affect these areas. This kind of analysis is instrumental
+for developing strategies to manage or optimize each objective and penalty within the given
+operational context.
+5.2.2 Distribution of objectives and penalties
+The Fig. 7 presented show how often each value or range of values occurs within the dataset
+for ﬁve variables: Cost, Time, Risk, Battery Usage, and Penalties. Each histogram’s horizontal
+axis represents the possible values or ranges for a variable, while the vertical axis indicates
+how frequently these values occur. This visual analysis helps to understand the distribution
+and central tendencies like the mean or median, and the variability or spread of the data for
+each variable, aiding in further statistical analysis or modeling. The detailed explanation of
+each section is provided below:
+• Cost: The histogram for Cost shows a relatively even distribution across several bins, with
+frequencies tapering off as the cost increases. This indicates a range of cost values within
+the dataset, with fewer instances of very high costs.
+• Time: The Time distribution is highly skewed, with most observations clustered around
+a single value, which indicates very little variation in the time metric across different
+observations. The few occurrences of higher time values are outliers.
+123
+
+--- PDF PAGE 33 ---
+Annals of Operations Research
+Fig. 8 Comparative contour plots ofobjectives
+• Risk: The Risk histogram displays a multi-modal distribution with several peaks, suggest-
+ing that certain risk levels occur more frequently than others. This could point to common
+risk proﬁles within the operational context from which the data was collected.
+• Battery Usage: The Battery Usage distribution is highly skewed with one signiﬁcant
+outlier, which suggests that one observation or set of conditions led to an unusually high
+battery usage. This outlier could potentially be an area of concern or interest for further
+investigation.
+• Penalties: The Penalties distribution appears to be bi-modal, with two peaks suggesting
+that there are two common penalty values within the dataset. This could indicate the
+presence of two distinct groups or conditions under which penalties are typically incurred.
+5.3 Density analysis
+5.3.1 Contour plots
+The ﬁgure 8 indicated a visual narrative for the interplay between paired variables, revealing
+the density and distribution that might not be as apparent through numerical analysis alone.
+In the interrelation of cost and risk, the data congregates within a middle ground, suggesting
+a balanced operational approach where neither extreme cost nor high risks are prevalent. This
+123
+
+--- PDF PAGE 34 ---
+Annals of Operations Research
+pattern is a testament to an underlying strategy that might be prioritizing cost-efﬁciency up
+to a certain threshold of acceptable risk. This strategic balance is disrupted when considering
+the battery usage outliers, which stand apart in the contour plot of time versus battery usage.
+The stark isolation of these outliers indicates exceptional cases, perhaps indicative of atypical
+scenarios or data anomalies, which starkly contrast with the otherwise homogenous spread
+signifying operational standardization. Furthermore, the risk versus penalties contour plot
+intimates a correlation where moderate risks are commonly paired with proportionate penal-
+ties. The plot unveils a central tendency in the data, suggesting a predictive nature of penalties
+based on risk levels, which could be a valuable insight for risk mitigation strategies. Similarly,
+cost and time exhibit a relationship that is clustered around speciﬁc values, reinforcing the
+notion of standard. Operating times across varied costs. The existence of these clusters points
+to established procedures and a potential efﬁciency ceiling that might be explored for further
+optimization. The collective insights from these contour plots are instrumental for strategic
+planning. They highlight the prevailing operational regimes, while also ﬂagging outliers and
+anomalies for further inquiry. Such visual tools allow for an aggregated comprehension of
+complex data interactions, laying the groundwork for reﬁned resource management and more
+targeted risk control measures. In addition to the detailed explanation provided in the article,
+the contour plots in Fig. 8 offer further insights:
+1. Cost versus Risk: The plot reveals a concentration of data in a speciﬁc range, indicating
+an operational preference for balancing moderate costs and risks. This suggests a tactical
+approach where cost and risk are managed to avoid extremes, enhancing operational
+stability.
+2. Time versus Battery Usage: Notable outliers in this plot signify unusual cases that
+deviate signiﬁcantly from the norm, pointing to potential anomalies or special operational
+scenarios that require further investigation.
+3. Risk versus Penalties: The data suggests a direct relationship between risk and penal-
+ties, where moderate risks correspond to proportionate penalties, providing a basis for
+predictive risk management and mitigation strategies.
+4. Cost versus Time: The clustering around particular values suggests a standardized oper-
+ating time for various costs, indicating potential efﬁciency limits that could be optimized
+further.
+These visual insights are crucial for strategic planning, highlighting standard operational
+regimes and identifying outliers for focused analysis, thus aiding in reﬁned resource man-
+agement and targeted risk control measures.
+5.4 Relationship and correlation analysis
+5.4.1 Heatmap of data correlation
+The Fig. 9 presented the heatmap of objective correlations offers a compelling visual guide
+to the relationships between various operational metrics. Each square on the heatmap rep-
+resents the correlation coefﬁcient between two variables, ranging from −1 to 1. A value
+of 1 indicates perfect positive correlation, −1 indicates perfect negative correlation, and 0
+denotes no correlation. In this heatmap, the correlation between cost and risk stands out with
+a coefﬁcient of −0.40, suggesting a moderate negative relationship. This could imply that as
+cost decreases, risk might increase, or vice versa, pointing towards a trade-off between these
+two objectives where a balance might be sought. The relationship between time and penalties
+is also notable, marked by a correlation coefﬁcient of −0.45. This suggests that longer times
+123
+
+--- PDF PAGE 35 ---
+Annals of Operations Research
+might be associated with fewer penalties, or shorter times could correlate with increased.
+Penalties, hinting at a possible efﬁciency versus compliance scenario. Conversely, the corre-
+lation between risk and penalties is positive, with a value of 0.28, which may indicate that
+higher risk levels are associated with increased penalties. This relationship underscores the
+potential cost of risk within operations, where higher risk actions are more likely to result in
+penalties. Notably, battery usage does not show a strong correlation with any other variable,
+the strongest being a negative −0.31 with penalties, which might suggest that higher battery
+usage is not necessarily associated with higher penalties. This could be reﬂective of oper-
+ational scenarios where battery usage is independent of the penalty- incurring actions. The
+subtle correlations between these metrics reﬂect the complexities of operational dynamics,
+where each decision or change in one area can have a varied impact on others. Understanding
+these correlations is essential for informed decision-making, allowing for strategic adjust-
+ments that consider the ripple effects across different areas of operation. In addition to the
+detailed explanation provided, the heatmap in Fig. 9 reveals further nuance. The heatmap in
+Fig. 9 highlights key relationships between operational metrics: a moderate negative correla-
+tion (−0.40) between cost and risk indicates that higher costs are associated with lower risks,
+suggesting a strategic balance. The negative correlation (−0.45) between time and penalties
+implies longer operational times reduce penalties, indicating an efﬁciency-compliance trade-
+off. A positive correlation (0.28) between risk and penalties shows that higher risks result in
+increased penalties, emphasizing the ﬁnancial impact of risky operations.
+Fig. 9 The heatmap of objectives correlates
+123
+
+--- PDF PAGE 36 ---
+Annals of Operations Research
+Fig. 10 3D pareto Front of objective functions
+5.4.2 3D Pareto Front
+The 3D schematic view of Pareto Front Chart in Fig. 10 illustrates the complex interplay
+between cost, risk, and time, crucial metrics for evaluating performance and efﬁciency.
+Observations reveal trade-offs and the extent to which one variable may affect another.
+Points’ positions and colors convey multiple pieces of information, showing that scenarios
+with minimized risk do not necessarily align with lower costs or penalties. For instance,
+higher battery usage does not correspond with higher penalties or risk, indicating efﬁcient
+energy use. This chart helps stakeholders identify areas for improvement by examining the
+balance of operational metrics.
+For instance, points with lower risk values that are closer to the front of the chart represent
+scenarios with minimized risk. However, these points do not necessarily align with lower
+costs or penalties, suggesting that reducing risk might come at a higher ﬁnancial or penal
+cost. Conversely, points that are higher on the risk axis and closer to the chart’s rear suggest
+scenarios where more time has been taken, potentially to mitigate risk, yet these scenarios do
+not incur the highest penalties, as indicated by their cooler hues. This might suggest that taking
+more time—perhaps to ensure thoroughness or compliance—can result in a more favorable
+balance of risk and penalties, even if the cost is not minimized. Notably, the highest battery
+usage, indicated by the number 406, does not correspond with the highest penalties or risk,
+which could imply that higher battery consumption does not necessarily lead to increased
+123
+
+--- PDF PAGE 37 ---
+Annals of Operations Research
+penalties or risk in this operational context. This could be indicative of efﬁcient energy use
+where increased battery usage is not a sign of inefﬁciency or elevated risk. The color gradient,
+reﬂecting penalties, varies across the spectrum, with the gradient’s cooler end representing
+lower penalties and the warmer end representing higher penalties. The distribution of colors
+across the chart illustrates that the highest penalties are not exclusively associated with high
+costs or risks. For instance, a point with a relatively low risk of 250 shows a penalty close to the
+higher end of the spectrum. This could suggest that penalties in this context are inﬂuenced by
+factors beyond just risk and cost, and perhaps more by operational decisions or externalities
+not directly captured by the other two metrics. Overall, the 3D Pareto Front Chart is a strategic
+tool, allowing stakeholders to identify operational efﬁciencies or deﬁciencies. By examining
+the positions and colors of the points in relation to each other, stakeholders can pinpoint areas
+for potential improvement, such as reducing costs or managing risks more effectively without
+incurring high penalties. This visualization also opens questions for further analysis, such as
+the factors contributing to the highest penalties and whether these are within the control of
+the organization.
+5.4.3 Pair plot of pareto front relations
+The Fig. 11 presented appears to be a matrix of scatter plots combined with histograms, often
+referred to as a pair plot, which is a multi-variable analysis tool. This type of visualization
+enables the simultaneous observation of potential relationships between pairs of variables
+and the distribution of single variables within the same framework.
+The histograms on the diagonal of the matrix offer insights into the distribution of each
+individual variable: Cost, Time, Risk, Battery Usage, and Penalties. For instance, the his-
+togram for Time suggests a skewed distribution with most occurrences concentrated at lower
+time values, indicating that most activities occur within a shorter time frame. In contrast,
+the histogram for Battery Usage indicates a more varied distribution, with several peaks,
+which may suggest different operational modes or levels of activity. The scatter plots below
+the diagonal show the relationships between the pairs of variables. For example, the plot at
+the intersection of Cost and Risk could indicate a potential pattern or trend between these
+variables, where a cluster of points may suggest a correlation. Similarly, other scatter plots
+show different concentrations of data points that could suggest varying degrees of association
+between the variables. The matrix format allows for a comprehensive overview of how each
+variable interacts with the others, highlighting both the distribution of individual variables
+and their mutual relationships. This kind of visualization is particularly useful for identifying
+correlations, outliers, or clusters within the data, which can be pivotal for understanding the
+complex dynamics of the system from which the data was derived. It also serves as a basis
+for more detailed statistical analysis, where these visual cues can guide deeper investigations
+into causality, variance, and other statistical properties. In addition to the comprehensive
+explanation provided, the ﬁgure, a pair plot, further elucidates variable interrelationships and
+individual distributions:
+1. Histograms: The diagonal histograms illustrate the distribution of each variable. For
+instance, "Time" shows a concentration at lower values, indicating most operations are
+short. "Battery Usage" displays a multimodal distribution, hinting at diverse operational
+intensities.
+2. Scatter Plots: The off-diagonal scatter plots reveal potential correlations between vari-
+able pairs. For example, the "Cost versus Risk" scatter plot may show a clustering pattern,
+indicating a possible relationship where speciﬁc cost ranges align with certain risk levels.
+123
+
+--- PDF PAGE 38 ---
+Annals of Operations Research
+Fig. 11 A matrix of scatter plots of pareto Front Relations
+3. Overall Insights: This visualization not only identiﬁes individual variable distributions
+and pairwise relationships but also aids in detecting correlations, outliers, and clusters. It
+serves as a foundation for deeper statistical analyses, helping to unravel complex system
+dynamics and guiding targeted investigations into causality and variance.
+5.4.4 Bubble chart
+The Fig. 12 depicted provides a graphical representation of the relationship between cost
+and risk, with the additional dimension of penalties indicated by the size of the bubbles.
+Larger bubbles represent higher penalties, while smaller bubbles represent lower penalties.
+In this visualization, the distribution of bubbles across the cost-risk plane shows how these
+two variables correlate, with the variation in bubble size offering insight into the penalty
+magnitude associated with different cost-risk combinations. The placement of larger bubbles
+at various points on the chart could suggest that higher penalties are not exclusively occurring
+at high-risk or high-cost scenarios. Instead, there is a dispersion of penalties across the
+123
+
+--- PDF PAGE 39 ---
+Annals of Operations Research
+range, indicating that high penalties can occur across various levels of cost and risk. The
+concentration of bubbles in certain areas may point to more common cost-risk scenarios,
+while sparse areas may indicate less common or outlier situations. If larger bubbles are
+concentrated in a speciﬁc region, it might suggest that higher penalties are more likely in
+that particular cost and risk range. Conversely, a cluster of smaller bubbles would suggest
+that those cost and risk combinations are generally associated with lower penalties. The
+color coding of the bubbles, corresponding to different penalty values, allows for quick
+visual differentiation between varying levels of penalties. This can be useful for identifying
+patterns or trends, such as whether there is a trend toward higher penalties with increasing
+cost or risk. This bubble chart serves as a valuable tool for risk management and ﬁnancial
+planning, as it visualizes complex data in an easily interpretable format. By analyzing where
+the larger bubbles are predominantly located, one can identify which combinations of cost
+and risk have historically led to higher penalties, and potentially adjust strategies accordingly
+to mitigate these costs.
+5.5 Comparative and evolution analysis
+5.5.1 Area chart
+The Fig. 13 illustrates the ﬂuctuation of cost, risk, and battery usage over a series of indexed
+events or time periods. The layers of color represent each variable’s magnitude, stacked to
+show their cumulative effect at each index point. The cost, represented by the bottommost
+layer, forms the foundation of the chart, and exhibits signiﬁcant variation throughout the
+index, with peaks suggesting instances of high expenditure. The risk layer, while also varying,
+Fig. 12 Bubble chart of cost versus risk
+123
+
+--- PDF PAGE 40 ---
+Annals of Operations Research
+does not seem to correspond directly with the cost’s peaks and valleys, indicating that the
+relationship between cost and risk is not strictly proportional or may be inﬂuenced by other
+factors not depicted in the chart. Above both, the battery usage shows.
+spikes that considerably exceed the scale of cost and risk at certain index points. This
+implies occurrences of high battery consumption, which do not appear to be directly related
+to the cost or risk levels, suggesting that battery usage is subject to different operational
+dynamics or constraints. The area chart is a visual representation of the overall trends and
+can be useful for spotting patterns, such as whether higher costs are typically associated with
+increased risk or battery usage. However, the overlapping nature of the chart may obscure
+some of the ﬁner details of these relationships, necessitating a deeper dive into the data
+for more precise insights. By examining the variability and the relative proportion of each
+area, one can infer the volatility and impact of each variable within the operational context.
+Such an analysis might be critical for identifying inefﬁciencies, forecasting future trends,
+and allocating resources more effectively.
+5.5.2 Network graph
+Figure14depictsanetworkgraphillustratingtherelationshipbetweencostandrisk,wherethe
+sizeofeachnodeinthegraphrepresentsbatteryusage.Thisvisualrepresentationallowsforan
+intuitive understanding of how different levels of battery consumption impact the associated
+costs and risks, facilitating strategic decisions in scenarios where battery management is
+crucial. The network graph visualizes the interconnectedness of cost and risk with varying
+node sizes representing battery usage. Each node, likely corresponding to an individual data
+point or scenario, is connected, indicating potential relationships or dependencies between
+different cost and risk pairings. The size of each node is indicative of the battery usage
+associated with each pairing; larger nodes suggest higher battery usage, while smaller nodes
+indicate lower usage. For example, node 14, being the largest, suggests it is a scenario
+with substantial battery consumption, possibly an outlier if it signiﬁcantly deviates from
+the other node sizes. The thickness of the lines connecting the nodes might suggest the
+Fig. 13 Area chart of objective functions over index
+123
+
+--- PDF PAGE 41 ---
+Annals of Operations Research
+strength or frequency of the transition between different cost and risk states, or how often
+certain scenarios occur. If the lines are uniformly thin, this could indicate that transitions
+between states are not common, or the network is showing a snapshot rather than a process
+over time. The graph provides an abstract representation that could be used for analyzing
+operational or system dynamics, especially in contexts where battery usage is a critical factor.
+The spatial arrangement of nodes can reveal clusters of similar cost-risk scenarios, and the
+size of nodes within these clusters can indicate which scenarios are most energy-intensive.
+This visualization can guide strategic decisions, such as identifying which scenarios to target
+for battery usage reduction or understanding the balance between cost, risk, and energy
+consumption. By exploring the network, one can discern patterns that might inform policy
+changes or operational adjustments to enhance efﬁciency and reduce costs or risks associated
+with high battery usage.
+6 Comparative analysis and validation of optimization results
+Before delving into the detailed convergence analysis of the optimization model, it is crucial
+to understand the role of objective functions in evolutionary algorithms. In optimizing drone
+routing strategies, the genetic algorithm is precisely conﬁgured to enhance a population of
+potential solutions across multiple dimensions—cost, time, risk, and battery usage. These
+objective functions act as key metrics, assessing the effectiveness and feasibility of solutions
+Fig. 14 Network graph of cost versus risk with node size representing battery usage
+123
+
+--- PDF PAGE 42 ---
+Annals of Operations Research
+Fig. 15 Visual depiction of the convergence of objective functions over generations: a cost, b time, c risk,
+d battery usage
+generated in each iteration. Figure 15, presented next, depicts the convergence behavior of
+these objective functions, visually demonstrating how the algorithm iteratively focuses on
+the most promising strategies. It showcases the algorithm’s performance across generations,
+highlighting the evolutionary dynamics that steer the optimization process towards solution
+stabilization and reﬁnement. This introduction prepares for an in-depth discussion on the
+algorithm’s efﬁciency, as evidenced by the observed convergence trends in the subsequent
+charts.
+Figure 15 demonstrates the performance of the optimization model over 250 genera-
+tions, focusing on cost, time, risk, and battery usage. Initially, the genetic algorithm swiftly
+reduces cost, achieving a stable set of solutions by generation 37. Similarly, time stabilizes
+by generation 46, risk by generation 54, and battery usage by generation 60. This stepwise
+improvement pattern indicates that the algorithm quickly identiﬁes near-optimal solutions in
+the early generations, followed by gradual reﬁnements leading to stability. The results show-
+case the efﬁciency and convergence behavior of the algorithm, supported by a population
+of 300 individuals, with speciﬁc probabilities for crossover, mutation, and independence. To
+better demonstrate the superior performance of the proposed algorithm, a comparison was
+made with another multi-objective study, speciﬁcally Monsef et al. (2019), as shown in the
+table below which provides a comparison between their method and the current proposed
+model.
+Table 7 provides a comparison between the current proposed model (NSGA-II + BBN)
+and the method from Monsef et al. (2019), evaluating key criteria such as cost, time, risk,
+123
+
+--- PDF PAGE 43 ---
+Annals of Operations Research
+Table 7 Comparative analysis of optimization performance between the proposed NSGA-II + BBN Model
+and Monsef et al. (2019)
+Criteria
+Current Study (NSGA-II + BBN)
+Monsef et al. (2019)—NSGA-II
+Cost over Generations
+Rapid reduction in cost, stabilizing
+around generation 37 (Figure a)
+Slower reduction, stabilizes
+after 100 generations
+Time over Generations
+Time stabilizes after 46 generations,
+faster convergence (Figure b)
+Time improves slowly,
+stabilizing near 200
+generations
+Risk over Generations
+Sharp decrease in risk with stable
+convergence by 54 generations (Figure
+c)
+No risk assessment is integrated
+Battery Usage over
+Generations
+Gradual optimization with fewer
+oscillations, stabilizing by generation
+60 (Figure d)
+No Battery usage is integrated
+Overall Convergence Rate
+Faster convergence in all metrics,
+achieving stability by 50 generations
+Slower convergence, requiring
+over 100–150 generations for
+stability
+Algorithm Complexity
+NSGA-II combined with Bayesian Belief
+Network (BBN) for risk optimization
+NSGA-II without any risk
+considerations
+battery usage, and convergence rate. The proposed model demonstrates superior performance
+in all these metrics. It achieves faster cost reduction, stabilizing after 37 generations, while
+Monsef’s method requires more than 100 generations. Time stabilization occurs within 46
+generations in the proposed model, compared to around 200 generations in Monsef’s. Addi-
+tionally, risk management is a key advantage, utilizing Bayesian Belief Networks (BBN) to
+reduce risk, a factor absent in Monsef’s method. Battery usage is also optimized, stabilizing
+by generation 60, which is not considered in Monsef et al. (2019). Finally, the proposed
+model converges faster overall, achieving stability across all metrics within 50 generations,
+whereas Monsef’s approach takes signiﬁcantly longer to converge. This demonstrates the
+enhanced efﬁciency and applicability of the proposed model, particularly in real-world sce-
+narios involving risk and battery management.
+7 Conclusion
+This study introduces a drone routing optimization model with key insights supported by
+quantitative analysis, showcasing its potential for enhanced operational efﬁciency. The model
+signiﬁcantly reduced cost and time by averages of 37.3% and 10.48%, respectively, over 250
+generations. The NSGAII algorithm effectively optimized drone routing, achieving a cost
+range of 52–55 million, average time efﬁciency of 8425, and managing risk levels with
+an average of 595,108. Box plots and histograms demonstrated the model’s adept balance
+between cost-efﬁciency and risk management. The correlation heatmap highlighted inter-
+dependencies, emphasizing the importance of cost-efﬁciency and energy management in
+reducing risks and penalties. The 3D Pareto front and pairplot analyses revealed strategic
+trade-offs in drone routing optimization. Comparative analysis using area charts and network
+graphs underscored the model’s adept handling of complex routing dynamics. The drone
+route optimization map indicated strategic placement of the Depot and highlighted varying
+123
+
+--- PDF PAGE 44 ---
+Annals of Operations Research
+visit frequencies at distributors and facilities. The model’s classiﬁcation of scenarios demon-
+strated adaptability to real-world conditions, emphasizing its potential for future innovations
+in drone logistics. Future work could involve comparing the proposed model with other opti-
+mization algorithms, incorporating additional data sources, or extending the model to other
+logistics scenarios to explore further improvements and enhance the robustness of drone
+routing optimization.
+Appendix A: Parameters initialization and values assisgnment
+Parameter
+Description
+Selection Justiﬁcation
+ri
+Point1 = 3; Point2 = 2; Point3 = 5;
+Point4 = 5; Point5 = 3; Point6 = 3;
+Point7 = 2; Point8 = 4; Point9 = 4;
+Point10 = 6; Point11 = 3; Point12
+= 2
+Selected based on typical
+delivery demands observed in
+urban logistics scenarios,
+reﬂecting a mix of high and
+low demand points to ensure
+diverse test cases
+Pi
+Point1 = 129; Point2 = 118; Point3 =
+149; Point4 = 144; Point5 = 141;
+Point6 = 150; Point7 = 139; Point8
+= 127; Point9 = 121; Point10 =
+127; Point11 = 129; Point12 = 129
+Values derived from empirical
+data on population density and
+commercial activity in urban
+areas, ensuring realistic
+representation of demand
+variability
+Si
+(’Point1’, ’RPA1’) = 88; (’Point1’,
+’RPA2’) = 68; (’Point1’, ’RPA3’) =
+50; (’Point1’, ’RPA4’) = 65;
+(’Point1’, ’RPA5’) = 80; (’Point1’,
+’RPA6’) = 79; (’Point1’, ’RPA7’) =
+83; (’Point2’, ’RPA1’) = 99;
+(’Point2’, ’RPA2’) = 98; (’Point2’,
+’RPA3’) = 75; (’Point2’, ’RPA4’) =
+56; (’Point2’, ’RPA5’) = 69;
+(’Point2’, ’RPA6’) = 97; …
+Service times based on
+historical data and operational
+efﬁciency of different drone
+models, adjusted to simulate a
+realistic range of scenarios for
+model testing
+Qk
+RPA1 = 200; RPA2 = 250; RPA3 =
+150; RPA4 = 150; RPA5 = 200;
+RPA6 = 150; RPA7 = 150
+Capacity values are typical of
+current commercial drone
+models used in urban logistics,
+ensuring practical applicability
+ai
+480
+Reﬂects the average starting
+operational hours for drones in
+urban settings, based on
+industry standards
+123
+
+--- PDF PAGE 45 ---
+Annals of Operations Research
+Parameter
+Description
+Selection Justiﬁcation
+bi
+1020
+Maximum operational hours
+calculated based on battery
+life and recharge cycles,
+consistent with manufacturer
+speciﬁcations
+M
+100,000
+Set as a sufﬁciently large
+number to act as a constraint in
+optimization models, ensuring
+no practical limitations on
+computational performance
+ESi
+Point1 = 3; Point2 = 13; Point3 = 12;
+Point4 = 15; Point5 = 8; Point6 =
+12; Point7 = 14; Point8 = 11;
+Point9 = 3; Point10 = 13; Point11
+= 7; Point12 = 14
+Emergency service index based
+on criticality of each point,
+derived from historical
+emergency response data
+LSi
+Point1 = 65; Point2 = 70; Point3 =
+75; Point4 = 80; Point5 = 60;
+Point6 = 65; Point7 = 70; Point8 =
+75; Point9 = 80; Point10 = 60;
+Point11 = 65; Point12 = 70
+Service level index reﬂecting
+customer satisfaction targets,
+informed by industry
+benchmarks and best practices
+W2
+5
+Weight factor chosen to balance
+cost and efﬁciency in the
+optimization model, based on
+expert judgment
+W3
+10
+Higher weight given to critical
+constraints, reﬂecting their
+priority in the decision-making
+process
+f ix/
+k
+RPA1 = 1000; RPA2 = 1100; RPA3
+= 1200; RPA4 = 1300; RPA5 =
+1400; RPA6 = 1500; RPA7 = 1600
+Fixed costs based on the initial
+investment and maintenance
+costs associated with each
+drone model, ensuring
+comprehensive cost analysis
+C
+1.5
+Cost of one charging unit based
+on industry rates for electricity
+and infrastructure costs
+AT
+0.42
+Minimum charging allowed
+within the RPA to ensure
+sufﬁcient operational range,
+derived from technical
+speciﬁcations of drone
+batteries
+123
+
+--- PDF PAGE 46 ---
+Annals of Operations Research
+Parameter
+Description
+Selection Justiﬁcation
+C f f
+Facility1 = 4.47; Facility2 = 7.62;
+Facility3 = 4.47; Facility4 = 7.81;
+Facility5 = 7.81
+Preparation costs for facility
+locations based on
+construction and operational
+costs, reﬂecting industry
+averages
+f ixd
+Distributor1 = 250; Distributor2 =
+300; Distributor3 = 350;
+Distributor4 = 400; Distributor5 =
+450
+Cost of constructing distributor
+candidate locations based on
+empirical data from similar
+logistics projects
+DAY
+480
+Length of a working day in
+minutes, reﬂecting typical
+operational hours for logistics
+companies
+cp ji
+(’Point1’, ’Point1’) = 0.0; (’Point1’,
+’Point2’) = 2.3717082451262845;
+(’Point1’, ’Point3’) =
+2.1213203435596424; (’Point1’,
+’Point4’) = 2.7041634565979917;
+(’Point1’, ’Point5’) =
+3.0923292192132457; (’Point1’,
+’Point6’) = 3.8242646351945884;
+(’Point1’, ’Point7’) =
+5.4083269131959835; (’Point1’,
+’Point8’) = 5.7118298293979315;
+(’Point1’, ’Point9’) = 7.5; (’Point1’,
+’Point10’) = 7.721722605740251;
+…
+Battery consumption between
+nodes based on the Euclidean
+distance and drone power
+consumption rates, ensuring
+realistic energy usage
+modeling
+dxij
+(’Point1’, ’Point2’) = 15.81;
+(’Point1’, ’Point3’) = 14.14;
+(’Point1’, ’Point4’) = 18.03;
+(’Point1’, ’Point5’) = 20.62;
+(’Point1’, ’Point6’) = 25.5;
+(’Point1’, ’Point7’) = 36.06;
+(’Point1’, ’Point8’) = 38.08;
+(’Point1’, ’Point9’) = 50.0;
+(’Point1’, ’Point10’) = 51.48;
+(’Point1’, ’Point11’) = 50.0;
+(’Point1’, ’Point12’) = 55.9;
+(’Point2’, ’Point1’) = 15.81;
+(’Point2’, ’Point3’) = 25.5;
+(’Point2’, ’Point4’) = 11.18; …
+Distances between nodes
+calculated using geographical
+data, ensuring accurate routing
+and distance-based constraints
+123
+
+--- PDF PAGE 47 ---
+Annals of Operations Research
+Parameter
+Description
+Selection Justiﬁcation
+pu
+Scenario1 = 0.33; Scenario2 = 0.33;
+Scenario3 = 0.34
+Probabilities of scenarios based
+on expert analysis and
+historical data, ensuring
+diverse and realistic scenario
+testing
+Vku
+RPA1 = {’Scenario1’: 110,
+’Scenario2’: 120, ’Scenario3’: 130};
+RPA2 = {’Scenario1’: 110,
+’Scenario2’: 120, ’Scenario3’: 130};
+RPA3 = {’Scenario1’: 110,
+’Scenario2’: 120, ’Scenario3’: 130};
+RPA4 = {’Scenario1’: 110,
+’Scenario2’: 120, ’Scenario3’: 130};
+…
+Velocity of RPAs in different
+scenarios based on drone
+performance data and
+operational conditions
+capd
+Distributor1 = 845; Distributor2 =
+866; Distributor3 = 871;
+Distributor4 = 884; Distributor5 =
+838
+Capacities of distributor
+locations based on storage and
+operational limits, reﬂecting
+typical logistics hub capacities
+cap f
+Facility1 = 140; Facility2 = 150;
+Facility3 = 145; Facility4 = 143;
+Facility5 = 120
+Facility capacities derived from
+industry standards for
+operational hubs, ensuring
+practical constraints
+L0k
+RPA1 = 784; RPA2 = 849; RPA3 =
+794; RPA4 = 849; RPA5 = 847;
+RPA6 = 781; RPA7 = 854
+Initial load on RPAs when
+leaving the distributor based
+on typical payloads and drone
+capacities
+Sk
+i j
+(’RPA1’, ’Point1’, ’Point1’) = 0;
+(’RPA1’, ’Point1’, ’Point2’) = 500;
+(’RPA1’, ’Point1’, ’Point3’) = 600;
+(’RPA1’, ’Point1’, ’Point4’) = 200;
+(’RPA1’, ’Point1’, ’Point5’) = 300;
+(’RPA1’, ’Point1’, ’Point6’) = 500;
+(’RPA1’, ’Point1’, ’Point7’) = 300;
+(’RPA1’, ’Point1’, ’Point8’) = 600;
+(’RPA1’, ’Point1’, ’Point9’) = 500;
+(’RPA1’, ’Point1’, ’Point10’) = 600;
+(’RPA1’, ’Point1’, ’Point11’) = 500;
+(’RPA1’, ’Point1’, ’Point12’) = 500;
+…
+Risk of route derived from node
+i to node j with RPA k, based
+on BBN risk assessment
+methodology
+123
+
+--- PDF PAGE 48 ---
+Annals of Operations Research
+Parameter
+Description
+Selection Justiﬁcation
+siu
+Point1 = {’Scenario1’: 45,
+’Scenario2’: 36, ’Scenario3’: 37};
+Point2 = {’Scenario1’: 33,
+’Scenario2’: 34, ’Scenario3’: 37};
+Point3 = {’Scenario1’: 47,
+’Scenario2’: 41, ’Scenario3’: 31};
+Point4 = {’Scenario1’: 38,
+’Scenario2’: 44, ’Scenario3’: 36}; …
+Time to start providing service
+to demand point i in scenario
+u, based on operational
+schedules and scenario
+analysis
+Lj
+Point1 = 25; Point2 = 36; Point3 =
+30; Point4 = 35; Point5 = 28;
+Point6 = 30; Point7 = 20; Point8 =
+28; Point9 = 39; Point10 = 37;
+Point11 = 38; Point12 = 32
+Load weight remaining on the
+RPA after service to demand
+point j, derived from payload
+capacities and operational
+constraints
+Eiu
+(’Point1’, ’Scenario1’) = 23;
+(’Point1’, ’Scenario2’) = 23;
+(’Point1’, ’Scenario3’) = 23;
+(’Point2’, ’Scenario1’) = 26;
+(’Point2’, ’Scenario2’) = 26;
+(’Point2’, ’Scenario3’) = 26;
+(’Point3’, ’Scenario1’) = 20;
+(’Point3’, ’Scenario2’) = 20;
+(’Point3’, ’Scenario3’) = 20;
+(’Point4’, ’Scenario1’) = 23;
+(’Point4’, ’Scenario2’) = 23;
+(’Point4’, ’Scenario3’) = 23;
+(’Point5’, ’Scenario1’) = 26;
+(’Point5’, ’Scenario2’) = 26; …
+Time deviation from the earliest
+time allowed to provide
+service to demand point i in
+the soft time window in
+scenario u, based on
+scheduling ﬂexibility
+Liu
+(’Point1’, ’Scenario1’) = 40;
+(’Point1’, ’Scenario2’) = 40;
+(’Point1’, ’Scenario3’) = 40;
+(’Point2’, ’Scenario1’) = 45;
+(’Point2’, ’Scenario2’) = 45;
+(’Point2’, ’Scenario3’) = 45;
+(’Point3’, ’Scenario1’) = 35;
+(’Point3’, ’Scenario2’) = 35;
+(’Point3’, ’Scenario3’) = 35;
+(’Point4’, ’Scenario1’) = 40;
+(’Point4’, ’Scenario2’) = 40;
+(’Point4’, ’Scenario3’) = 40;
+(’Point5’, ’Scenario1’) = 45;
+(’Point5’, ’Scenario2’) = 45; …
+Time deviation from the latest
+time allowed to provide
+service to demand point i in
+the soft time window in
+scenario u, reﬂecting possible
+delays
+α
+0.5
+Parameter for scaling
+deviations, set to balance early
+and late service penalties
+123
+
+--- PDF PAGE 49 ---
+Annals of Operations Research
+Parameter
+Description
+Selection Justiﬁcation
+β
+0.7
+Parameter for scaling
+deviations, set to emphasize
+the importance of late service
+penalties
+FCk
+RPA1 = 700; RPA2 = 720; RPA3 =
+740; RPA4 = 760; RPA5 = 780;
+RPA6 = 800; RPA7 = 820
+Reﬂects ﬁxed costs
+(maintenance, depreciation,
+etc.). Values increase
+incrementally to represent
+differences in drone
+capabilities and usage, based
+on operational data
+ded
+Distributor1 = 89; Distributor2 = 75;
+Distributor3 = 74; Distributor4 =
+90; Distributor5 = 97
+Center demand of distributor d
+based on historical demand
+data and operational capacity
+Ai
+0.42 for all drones
+Amount of battery available on
+the RPA, based on
+manufacturer speciﬁcations
+and operational needs
+ck
+i j
+(’Point1’, ’Point1’) = 0; (’Point1’,
+’Point2’) = 7; (’Point1’, ’Point3’) =
+6; (’Point1’, ’Point4’) = 9; (’Point1’,
+’Point5’) = 4; …
+Energy consumption by a drone
+of type k to ﬂy from i to j,
+based on distance and drone
+power consumption rates
+Ck
+RPA1 = 160; RPA2 = 170; RPA3 =
+180; RPA4 = 190; RPA5 = 200;
+RPA6 = 210; RPA7 = 220
+Amortized cost of the drone
+type k, based on purchase
+price and maintenance costs
+spread over operational life
+Ck
+bat
+RPA1 = 23; RPA2 = 26; RPA3 = 29;
+RPA4 = 32; RPA5 = 35; RPA6 =
+38; RPA7 = 41
+Amortized cost of the battery of
+drone type k, reﬂecting
+replacement and maintenance
+costs
+CE
+0.1
+Cost per unit of energy, derived
+from industry rates for
+electricity
+CL
+30
+Wage of drone operators, based
+on industry standards for labor
+costs
+nk
+2
+Number of drones of type k a
+drone operator can operate,
+based on industry standards
+and operational efﬁciency
+C M
+k
+RPA1 = 100; RPA2 = 105; RPA3 =
+110; RPA4 = 115; RPA5 = 120;
+RPA6 = 125; RPA7 = 130
+Maintenance cost of a drone of
+type k, reﬂecting routine
+maintenance and repair costs
+123
+
+--- PDF PAGE 50 ---
+Annals of Operations Research
+Parameter
+Description
+Selection Justiﬁcation
+tbat
+k
+20 for all drones
+Time required to replace the
+battery of drone type k, based
+on manufacturer speciﬁcations
+and operational procedures
+li
+Point1 = 15; Point2 = 19; Point3 =
+20; Point4 = 17; Point5 = 27;
+Point6 = 33; Point7 = 30; Point8 =
+17; Point9 = 17; Point10 = 28;
+Point11 = 20; Point12 = 20
+Distance of delivery location i
+from depot, based on
+geographical data and routing
+plans
+l j
+Point1 = 17; Point2 = 12; Point3 =
+25; Point4 = 21; Point5 = 16;
+Point6 = 10; Point7 = 18; Point8 =
+24; Point9 = 24; Point10 = 24;
+Point11 = 18; Point12 = 17
+Distance of delivery location j
+from depot, reﬂecting typical
+urban logistics distances
+ti j
+(’Point1’, ’Point1’) = 0; (’Point1’,
+’Point2’) = 8; (’Point1’, ’Point3’) =
+15; (’Point1’, ’Point4’) = 8;
+(’Point1’, ’Point5’) = 13; (’Point1’,
+’Point6’) = 14; (’Point1’, ’Point7’)
+= 5; (’Point1’, ’Point8’) = 5;
+(’Point1’, ’Point9’) = 13; (’Point1’,
+’Point10’) = 13; (’Point1’,
+’Point11’) = 6; (’Point1’, ’Point12’)
+= 6; (’Point2’, ’Point1’) = 14;
+(’Point2’, ’Point2’) = 0; (’Point2’,
+’Point3’) = 6; …
+Time required for drone to
+arrive at delivery location from
+i to j, based on operational
+speeds and distances
+ei
+Point1 = 7; Point2 = 7; Point3 = 7;
+Point4 = 9; Point5 = 8; Point6 = 7;
+Point7 = 8; Point8 = 9; Point9 = 7;
+Point10 = 8; Point11 = 9; Point12
+= 9
+Earliest possible pickup time,
+based on operational schedules
+and demand patterns
+cho
+k
+90 for all drones
+Initial energy in the battery of
+drone type k, reﬂecting full
+charge capacity
+chmin
+k
+20 for all drones
+Minimum remaining energy
+required in the battery of
+drone type k, ensuring
+sufﬁcient power for return or
+emergency landing
+123
+
+--- PDF PAGE 51 ---
+Annals of Operations Research
+Parameter
+Description
+Selection Justiﬁcation
+chmax
+k
+80 for all drones
+Maximum remaining energy
+required in the battery of
+drone type k, reﬂecting battery
+capacity limits, set lower than
+full capacity to ensure
+operational safety and
+longevity
+ch j
+Point1 = 0.36; Point2 = 0.47; Point3
+= 0.25; Point4 = 0.16 Point5 =
+0.23; Point6 = 0.18; Point7 = 0.45;
+Point8 = 0.20; Point9 = 0.36;
+Point10 = 0.21; Point11 = 0.24;
+Point12 = 0.44
+Maximum permissible delay for
+point j, based on operational
+constraints and delivery
+urgency
+Mmax
+k
+RPA1 = 70; RPA2 = 80; RPA3 = 90;
+RPA4 = 100; RPA5 = 110; RPA6 =
+120; RPA7 = 130
+Maximum package weight
+carrying capacity of drone
+type k, based on manufacturer
+speciﬁcations
+Mi
+Point1 = 5; Point2 = 4; Point3 = 5;
+Point4 = 4; Point5 = 5; Point6 = 4;
+Point7 = 3; Point8 = 2; Point9 = 4;
+Point10 = 3; Point11 = 5; Point12
+= 4
+Package weight for delivery
+location i, based on typical
+delivery items in urban
+logistics
+Constraint
+Penalties
+constraint_5_penalty = 300 # Each
+demand point covered at least once
+constraint_6_penalty = 250 # In-ﬂow
+and out-ﬂow balance
+constraint_7_penalty = 200 # Drone
+utilization
+constraint_8_penalty = 150 # Avoiding
+self-routing
+:
+:
+constraint_57_penalty = 200 # Time
+Condition Waiting Feasibility
+constraint_58_penalty = 150 # gi and
+ch_j Relation
+Penalties set based on the
+severity of constraint
+violations, ensuring
+appropriate weighting in the
+optimization model to
+prioritize critical operational
+constraints
+Appendix B: Tale B1: Description of Numerical Labels in Fig. 14
+123
+
+--- PDF PAGE 52 ---
+Annals of Operations Research
+Node
+Description
+0
+Scenario with the highest battery usage, indicating substantial
+consumption
+1
+Low cost, moderate risk scenario
+2
+Moderate cost, moderate risk scenario
+3
+Low cost, low risk scenario
+4
+High cost, low risk scenario
+5
+Low cost, high risk scenario
+6
+Moderate cost, low risk scenario
+7
+Moderate cost, high risk scenario
+8
+Low cost, high battery usage scenario
+9
+High cost, high risk scenario
+10
+Low cost, moderate risk scenario
+11
+High battery usage, moderate cost scenario
+12
+Moderate battery usage, low cost scenario
+13
+High risk, low cost scenario
+14
+Scenario with the highest cost and risk
+15
+Low battery usage, high cost scenario
+16
+Moderate cost, high battery usage scenario
+17
+Low risk, low cost scenario
+18
+High risk, high battery usage scenario
+19
+Moderate risk, moderate battery usage scenario
+20
+Low battery usage, low risk scenario
+21
+High battery usage, moderate risk scenario
+22
+High cost, low battery usage scenario
+23
+Low cost, low battery usage scenario
+24
+Moderate cost, low battery usage scenario
+25
+Moderate cost, high risk scenario
+26
+Low battery usage, moderate risk scenario
+27
+Moderate battery usage, high cost scenario
+Funding No funds, grants, or other support was received.
+Declarations
+Conﬂictofinterest Armin Mahmoodi declares that he has no conﬂict of interest. Seyed Mojtaba Sajadi declares
+that he has no conﬂict of interest. Abdellatif M. Sadeq declares that he has no conﬂict of interest. Masoud
+123
+
+--- PDF PAGE 53 ---
+Annals of Operations Research
+Narenji declares that he has no conﬂict of interest. Mehdi Eshaghi declares that he has no conﬂict of interest.
+Milad Jasemi declares that he has no conﬂict of interest.
+Ethical approval This article does not contain any studies with human participants performed by any of the
+authors.
+Informed consent Informed consent was obtained from all individual participants included in the study.
+Open Access
+This article is licensed under a Creative Commons Attribution 4.0 International License, which
+permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give
+appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence,
+and indicate if changes were made. The images or other third party material in this article are included in the
+article’s Creative Commons licence, unless indicated otherwise in a credit line to the material. If material is
+not included in the article’s Creative Commons licence and your intended use is not permitted by statutory
+regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder.
+To view a copy of this licence, visit http://creativecommons.org/licenses/by/4.0/.
+References
+Allouch, A., Koubaa, A., Khalgui, M., & Abbes, T. (2019). Qualitative and quantitative risk analysis and safety
+assessment of unmanned aerial vehicles missions over the internet. Ieee Access, 7, 53392–53410.
+Arishi, A., Krishnan, K., & Arishi, M. (2022). Machine learning approach for truck-drones based last-mile
+delivery in the era of industry 4.0. Engineering Applications of Artiﬁcial Intelligence, 116, 105439.
+Balador, A., Kouba, A., Cassioli, D., Foukalas, F., Severino, R., Stepanova, D., ... & Sukuvaara, T. (2018).
+Wireless communication technologies for safe cooperative cyber physical systems. Sensors, 18(11),
+4075.
+Baubion, C. (2013). OECD risk management: Strategic crisis management. OECD Working Papers on Public
+Governance, 23, 9–21.
+Bareither, C., & Luxhøj, J. T. (2007). Uncertainty and sensitivity analysis in bayesian belief networks: Appli-
+cations to aviation safety risk assessment. International Journal of Industrial and Systems Engineering,
+2(2), 137–158.
+Bhuiyan, T. H., Roni, M., & Walker, V. (2022). RPAS deployment optimization for direct delivery with time
+windows and battery replacements. In RPAS conference, Optimization and Control (math.OC). arXiv:
+2209.04057. https://doi.org/10.48550/arXiv.2209.04057.
+Bi, Z., Guo, X., Wang, J., Qin, S., & Liu, G. (2023). Deep reinforcement learning for truck-drone delivery
+problem. Drones, 7, 445.
+Bi, Z., Guo, X., Wang, J., Qin, S., & Liu, G. (2024). Truck-Drone delivery optimization based on multi-agent
+reinforcement learning. Drones, 8, 27. https://doi.org/10.3390/drones8010027
+Chang, J., & Laliberte, J. (2023). Trajectory optimization for dynamic soaring remotely piloted aircraft with
+under-wing solar panels. Journal of Aircraft. https://doi.org/10.2514/1.C037105
+Chauhan, D. R., Unnikrishnan, A., Figliozzi, M., & Boyles, S. D. (2020). Robust maximum coverage facility
+location problem with drones considering uncertainties in battery availability and consumption. Trans-
+portation Research Record.
+Chauhan, D., Unnikrishnan, A., & Figliozzi, M. (2019). Maximum coverage capacitated facility location
+problem with range constrained RPASs. Transportation Research Part C: Emerging Technologies, 99,
+1–18. https://doi.org/10.1016/j.trc.2018.12.001
+Cheng, C., Adulyasak, Y., & Rousseau, L.-M. (2020). Drone routing with energy function: Formulation and
+exactalgorithm.TransportationResearchPartb:Methodological,139,364–387.https://doi.org/10.1016/
+j.trb.2020.06.011
+Chi, N. T. K., Phong, L. T., & Hanh, N. T. (2023). The drone delivery services: An innovative application in an
+emerging economy. The Asian Journal of Shipping and Logistics, 39(2), 39–45. https://doi.org/10.1016/
+j.ajsl.2023.01.002
+Chiang, W.-C., Li, Y., Shang, J., & Urban, T. L. (2019). Impact of drone delivery on sustainability and cost:
+Realizing the UAV potential through vehicle routing optimization. Applied Energy, 242, 1164–1175.
+https://doi.org/10.1016/j.apenergy.2019.03.117
+Choi, Y. & Schonfeld, P. M. (2017). Optimization of multi-package RPAS deliveries considering battery
+capacity. In Proceedings of the 96th annual meeting of the transportation research board, Washington,
+DC, USA (pp. 8–12). https://trid.trb.org/view/1439294
+123
+
+--- PDF PAGE 54 ---
+Annals of Operations Research
+Chouzenoux, É., & Elvira, V. (2024). Graphical inference in non-Markovian linear-Gaussian state-space
+mod1120 els. In ICASSP 2024–2024 IEEE international conference on acoustics, speech and sig-
+nal processing 1121 (ICASSP), Seoul, Republic of Korea (pp. 13141–13145). https://doi.org/10.1109/
+ICASSP48485.2024
+Chung, S. H., Sah, B., & Lee, J. (2020). Optimization for drone and drone-truck combined operations: A
+review of the state of the art and future directions. Computers & Operations Research, 123, 105004.
+https://doi.org/10.1016/j.cor.2020.105004
+Coelho, B. N., Coelho, V. N., Coelho, I. M., Ochi, L. S., Koochaksaraei, R.H., Zuidema, D., Lima, M. S.
+F., & da Costa, A. R. (2017). A multi-objective green UAV routing problem. Computers & Operations
+Research, 88, 306–315. https://doi.org/10.1016/j.cor.2017.04.011
+Das, A. K., Marks, R. J., El-Sharkawi, M., Arabshahi, P., & Gray, A. (2004, November). Optimization methods
+for minimum power bidirectional topology construction in wireless networks with sectored antennas. In
+IEEE Global Telecommunications Conference, 2004. GLOBECOM’04. (Vol. 6, pp. 3962–3968). IEEE.
+Das, B., Mukherjee, V., & Das, D. (2020). Student psychology based optimization algorithm: A new population
+based optimization algorithm for solving optimization problems. Advances in Engineering software, 146,
+102804.
+Dell’Amico, M., Montemanni, R., & Novellani, S. (2022). Exact models for the ﬂying sidekick traveling
+salesman problem. International Transactions in Operational Research, 29(3), 1360–1393. https://doi.
+org/10.1111/itor.13030
+Dorling, K., Heinrichs, J., Messier, G. G., & Magierowski, S. (2017). Vehicle routing problems for drone
+delivery. IEEE Transactions on Systems, Man, and Cybernetics: Systems, 47(1), 70–85. https://doi.org/
+10.1109/TSMC.2016.2582745
+Elvira, V., & Chouzenoux, É. (2022). Graphical inference in linear-Gaussian state-space models. IEEE Trans-
+actions on Signal Processing, 70, 4757–4771. https://doi.org/10.1109/TSP.2022.3209016
+Erkut, E., & Ingolfsson, A. (2005). Transport risk models for hazardous materials: revisited (January 1, 2004).
+Operations Research Letters 33(1), 81–89. University of Alberta School of Business Research Paper No.
+2013–180, Available at SSRN: https://ssrn.com/abstract=2274774
+Eskandaripour, H., & Boldsaikhan, E. (2023). Last-Mile drone delivery: Past, present, and future. Drones, 7,
+77. https://doi.org/10.3390/drones7020077
+Figliozzi, M. A. (2017). Lifecycle modeling and assessment of unmanned aerial vehicles (RPASs) co2e
+emissions. Transportation Research Part D: Transport and Environment, 57, 251–261. https://doi.org/
+10.1016/j.trd.2017.09.011
+Freitas, J. C., Penna, P. H. V., & Toffolo, T. A. (2022). Exact and heuristic approaches to Truck-Drone delivery
+problems. EURO Journal on Transportation and Logistics, 12, 100094.
+Gohari, A., Ahmad, A. B., Rahim, R. B. A., Supa’at, A., Abd Razak, S., & Gismalla, M. S. M. (2022).
+Involvement of surveillance drones in smart cities: A systematic review. IEEE Access, 10, 56611–56628.
+Guo, X., Bi, Z., Wang, J., Qin, S., Liu, S., & Qi, L. (2023). Reinforcement learning for disassembly system
+optimization problems: A survey. Int. J. Netw. Dyn. Intell., 2, 1–14.
+Ha, Q. M., Deville, Y., Pham, Q. D., & Hà, M. H. (2018). On the mincost traveling salesman problem with
+RPAS. Transportation Research Part C: Emerging Technologies, 86, 597–621. https://doi.org/10.1016/
+j.trc.2017.11.015
+Han, Y., Liu, L., Duan, L., & Zhang, R. (2020). Towards reliable UAV swarm communication in D2D-enhanced
+cellular networks. IEEE Transactions on Wireless Communications, 20(3), 1567–1581.
+Han, Y., Liu, H., Wang, Y., & Liu, C. (2022). A comprehensive review for typical applications based upon
+unmanned aerial vehicle platform. IEEE Journal of Selected Topics in Applied Earth Observations and
+Remote Sensing, 15, 9654–9666.
+Hashemi, L., Mahmoodi, A., Jasemi, M., Millar, R. C., & Laliberté, J. (2021). Modeling a robust multi-
+objective locating-routing problem with bounded delivery time using meta-heuristic algorithms. Smart
+and Resilient Transportation, 3(3), 283–303. https://doi.org/10.1108/SRT-08-2021-0008
+Hashemi, L., Mahmoodi, A., Jasemi, M., Millar, R. C., & Laliberté, J. (2022). Designing a locating-routing
+three-echelon supply chain network under uncertainty. International Journal of Intelligent Computing
+and Cybernetics, 15(4), 562–588. https://doi.org/10.1108/IJICC-08-2021-0163
+Hu, X., Pang, B., Dai, F., & Low, K. H. (2020). Risk assessment model for UAV cost-effective path planning
+in urban environments. IEEE Access, 8, 150162–150173.
+Janik, P., Zawistowski, M., Fellner, R., & Zawistowski, G. (2021). Unmanned aircraft systems risk assessment
+based on SORA for ﬁrst responders and disaster management. Applied Sciences, 11, 5364. https://doi.
+org/10.3390/app11125364
+Jiao, Q., Liu, Y., Zheng, Z., Sun, L., Bai, Y., Zhang, Z., Sun, L., Ren, G., Zhou, G., Chen, X., et al. (2022).
+Ground risk assessment for unmanned aircraft systems based on dynamic model. Rpass, 6, 324. https://
+doi.org/10.3390/RPASs6110324
+123
+
+--- PDF PAGE 55 ---
+Annals of Operations Research
+Jiao, X., Chen, J., Jiang, K., Cao, Z., & Yang, D. (2023). Autonomous driving risk assessment with boundary-
+based environment model. IEEE Transactions on Intelligent Vehicles, 9(1), 642–655.
+Kevorkian, C. G. (2016). UAS risk analysis using Bayesian belief networks: An application to the Virginia Tech
+ESPAARO Master Thesis. Faculty of the Virginia Polytechnic Institute and State University. pp. 24–56.
+Kishk, M. A., Bader, A., & Alouini, M. S. (2020). On the 3-D placement of airborne base stations using
+tethered UAVs. IEEE Transactions on Communications, 68(8), 5202–5215.
+Kong, F., Li, J., Jiang, B., Wang, H., & Song, H. (2023). Trajectory optimization for drone logistics delivery
+via attention-based pointer network. IEEE Transactions on Intelligent Transportation Systems, 24(4),
+4519–4531. https://doi.org/10.1109/TITS.2022.3168987
+Kumbhar, F. H., & Shin, S. Y. (2022). Novel vehicular compatibility-based ad hoc message routing scheme
+in the internet of vehicles using machine learning. IEEE Internet of Things Journal, 9(4), 2817–2828.
+https://doi.org/10.1109/JIOT.2021.3093545
+Kyriakakis, N. A., Aronis, S., Marinaki, M., & Marinakis, Y. (2023). A GRASP/VND algorithm for the energy
+minimizing drone routing problem with pickups and deliveries. Computers & Industrial Engineering,
+182, 109340.
+Li, H., Chen, J., Wang, F., & Bai, M. (2021). Ground-vehicle and unmanned-aerial-vehicle routing problems
+from two-echelon scheme perspective: A review. European Journal of Operational Research, 294(3),
+1078–1095. https://doi.org/10.1016/j.ejor.2021.02.022
+Liang, Y., & Kelemen, A. (2016). Bayesian state space models for dynamic genetic network construction
+across multiple tissues. Statistical Applications in Genetics and Molecular Biology, 15(4), 273–290.
+https://doi.org/10.1515/sagmb-2014-0055
+Liu, Y., Liu, Z., Shi, J., Wu, G., & Pedrycz, W. (2021). Two-echelon routing problem for parcel delivery by
+cooperated truck and drone. IEEE Transactions on Systems, Man, and Cybernetics: Systems, 51(12),
+7450–7465. https://doi.org/10.1109/TSMC.2020.2968839
+Liu, Z., Li, X., & Khojandi, A. (2022). The ﬂying sidekick traveling salesman problem with stochastic travel
+time: A reinforcement learning approach. Transportation Research Part e: Logistics and Transportation
+Review, 164, 102816.
+Luo, Z., Poon, M., Zhang, Z., Liu, Z., & Lim, A. (2021a). The multi-visit traveling salesman problem with
+multi-drones. Transportation Research Part c: Emerging Technologies, 128, 103172. https://doi.org/10.
+1016/j.trc.2021.103172
+Luo, Z., Poon, M., Zhang, Z., Liu, Z., & Lim, A. (2021b). The multi-visit traveling salesman problem with
+multi-RPASs. Transportation Research Part C: Emerging Technologies, 128, 103172. https://doi.org/10.
+1016/j.trc.2021.103172
+Macrina, G., Di Puglia Pugliese, L., Guerriero, F., & Laporte, G. (2020). Drone-aided routing: A literature
+review. Transportation Research Part C: Emerging Technologies, 120, 102762. https://doi.org/10.1016/
+j.trc.2020.102762
+Mahmoodi, A., & Hashemi, L. (2024). Strategic justiﬁcation of integrated resource planning tools in organi-
+zations. Business Process Management Journal. https://doi.org/10.1108/BPMJ-11-2023-0902
+Mahmoodi, A., Hashemi, L., Laliberté, J., & Millar, R. C. (2022). Secured multi-dimensional robust optimiza-
+tion model for remotely piloted aircraft system (RPAS) delivery network based on the SORA standard.
+Designs, 6, 55. https://doi.org/10.3390/designs6030055
+Mahmoodi, A., Hashemi, L., Laliberte, J., Millar, R. C., & Meyer, R. W. (2024). Revolutionizing RPAS
+logistics and reducing CO2 emissions with advanced RPAS technology for delivery systems. Cleaner
+Logistics and Supply Chain, 12, 100166. https://doi.org/10.1016/j.clscn.2024.100166
+Millar, R. C. (2015). A multifaceted investigation and intervention into the process of ﬂight clearance for UAS
+experimental ﬂight test. SAE International Journal of Aerospace, 8(2), 183–188.
+Millar, R. C., Hashemi, L., Mahmoodi, A., Meyer, R. W., & Laliberte, J. (2023). Integrating unmanned and
+manned RPAS data network based on combined Bayesian belief network and multi-objective reinforce-
+ment learning algorithm. Drone Systems and Applications., 11, 1–17. https://doi.org/10.1139/dsa-2022-
+0043
+Monsef, H., Naghashzadegan, M., Jamali, A., & Farmani, R. (2019). Comparison of evolutionary multi objec-
+tive optimization algorithms in optimum design of distribution network. Ain Shams Engineering Journal,
+10(1), 103–111. https://doi.org/10.1016/j.asej.2018.04.003
+Mulumba, T., & Diabat, A. (2024). Optimization of the RPA-assisted pickup and delivery problem. Trans-
+portation Research Part e: Logistics and Transportation Review, 181, 103377. https://doi.org/10.1016/j.
+tre.2023.103377
+Mulvey, J. M., Vanderbei, R. J., & Zenios, S. A. (1995). Robust optimization of large-scale systems. Operations
+Research, 43(2), 264–281.
+123
+
+--- PDF PAGE 56 ---
+Annals of Operations Research
+Murray, C. C., & Chu, A. G. (2015). The ﬂying sidekick traveling salesman problem: Optimization of drone-
+assisted parcel delivery. Transportation Research Part c: Emerging Technologies, 54, 86–109. https://
+doi.org/10.1016/j.trc.2015.03.005
+Nagakura, D. (2019). Computing exact score vectors for linear Gaussian state space models. Communications
+in Statistics - Simulation and Computation, 50(8), 2313–2326. https://doi.org/10.1080/03610918.2019.
+1601216
+Nguyen, K. V., Nguyen, C. H., Van Do, T., & Rotter, C. (2023). Efﬁcient multi-UAV assisted data gathering
+schemes for maximizing the operation time of wireless sensor networks in precision farming. IEEE
+Transactions on Industrial Informatics, 19(12), 11664–11674.
+Nguyen, M. A., Dang, G. T. H., Hà, M. H., & Pham, M. T. (2022). The min-cost parallel drone scheduling
+vehicle routing problem. European J. Oper. Res., 299(3), 910–930.
+Ning, C., & You, F. (2019). Optimization under uncertainty in the era of big data and deep learning: When
+machine learning meetsmathematicalprogramming.Computers& Chemical Engineering,125,434–448.
+https://doi.org/10.1016/j.compchemeng.2019.03.034
+Rabta, B., Wankmüller, C., & Reiner, G. (2018). A drone ﬂeet model for last-mile distribution in disaster relief
+operations. International Journal of Disaster Risk Reduction, 28, 107–112. https://doi.org/10.1016/j.
+ijdrr.2018.02.020
+Rojas Viloria, D., Solano-Charris, E. L., Muñoz-Villamizar, A., & Montoya-Torres, J. R. (2021). Unmanned
+aerial vehicles/drones in vehicle routing problems: A literature review. International Transactions in
+Operational Research, 28(4), 1626–1657. https://doi.org/10.1111/itor.12783
+Roweis, S., & Ghahramani, Z. (1999). A unifying review of linear Gaussian models. Neural Computation,
+11(2), 305–345. https://doi.org/10.1162/089976699300016674
+Sajid, M., Mittal, H., Pare, S., & Prasad, M. (2022). Routing and scheduling optimization for UAV assisted
+delivery system: A hybrid approach. Applied Soft Computing, 126, 109225.
+San, K. T., Lee, E. Y., Chang, Y. S. (2016) The delivery assignment solution for swarms of UAVs dealing with
+multi-dimensional chromosome representation of genetic algorithm. In 2016 IEEE 7th annual ubiquitous
+computing, electronics & mobile communication conference (UEMCON), New York, NY, USA (pp. 1–7).
+https://doi.org/10.1109/UEMCON.2016.7777839.
+Sham, R., Chong, H. X., Aw, E.C.-X., Thangal, T. B. T., & binti Abdamia, N. (2023). Switching up the
+delivery game: Understanding switching intention to retail drone delivery services. Journal of Retailing
+and Consumer Services, 75, 103478. https://doi.org/10.1016/j.jretconser.2023.103478
+Shen, Z. M., & Sun, Y. (2023). Strengthening supply chain resilience during COVID-19: A case study of
+JD.com. Journal of Operations Management, 69(3), 359–383.
+Song, B. D., Park, K., & Kim, J. (2018). Persistent UAV delivery logistics: MILP formulation and efﬁcient
+heuristic. Computers & Industrial Engineering, 120, 418–428. https://doi.org/10.1016/j.cie.2018.05.013
+JARUS Guidelines on Speciﬁc Operations Risk Assessment (SORA). (2021). Available online: http://jarus-
+rpas.org/sites/jaruspas.org/ﬁles/jar_doc_06_jarus_sora_v2.0.pdf. Accessed on 15 April 2022.
+Torabbeigi, M., Lim, G. J., & Kim, S. J. (2020). RPAS delivery scheduling optimization considering payload-
+induced battery consumption rates. Journal of Intelligent and Robotic Systems, 97, 471–487. https://doi.
+org/10.1007/s10846-019-01034-w
+Trotta, A., Felice, M. D., Montori, F., Chowdhury, K. R., & Bononi, L. (2018). Joint coverage, connectivity,
+and charging strategies for distributed UAV networks. IEEE Transactions on Robotics, 34(4), 883–900.
+https://doi.org/10.1109/TRO.2018.2839087
+Troudi, A., Addouche, S.-A., Dellagi, S., & Mhamedi, A. E. (2018). Sizing of the drone delivery ﬂeet consid-
+ering energy autonomy. Sustainability, 10, 3344. https://doi.org/10.3390/su10093344
+Vu, L., Vu, D. M., Hà, M. H., & Nguyen, V. (2022). The two-echelon routing problem with truck and RPASs.
+International Transactions in Operational Research, 29(5), 2968–2994. https://doi.org/10.48550/arXiv.
+2004.02275
+Wang, K., Yuan, B., Zhao, M., & Lu, Y. (2020). Cooperative route planning for the RPAS and truck in delivery
+services: A bi-objective optimisation approach. The Journal of the Operational Research Society, 71(10),
+1657–1674. https://doi.org/10.1080/01605682.2019.1621671
+Wang, X., Yin, S., Luo, L., & Qiao, X. (2024). Research on multi-UAV task assignment based on a multi-
+objective, improved brainstorming optimization algorithm. Applied Sciences, 14, 2365. https://doi.org/
+10.3390/app14062365
+Washingtona, A., Clothier, R. A., & Silva, J. (2017). A review of unmanned aircraft system ground risk models.
+Progress in Aerospace Sciences, 95, 24–44.
+Wei, X., Yang, H., & Huang, W. T. (2021). A genetic-algorithm-based optimization routing for FANETs.
+Frontiers in Neurorobotics, 15, 697624. https://doi.org/10.3389/fnbot.2021.697624
+123
+
+--- PDF PAGE 57 ---
+Annals of Operations Research
+Wu, G., Mao, N., Luo, Q., Xu, B., Shi, J., & Suganthan, P. N. (2022). Collaborative truck-drone routing
+for contactless parcel delivery during the epidemic. IEEE Transactions on Intelligent Transportation
+Systems, 23, 25077–25091.
+Yadav, V. & Narasimhamurthy A. (2017). A heuristics based approach for optimizing delivery schedule of
+an Unmanned Aerial Vehicle (Drone) based delivery system. In 2017 ninth international conference
+on advances in pattern recognition (ICAPR), Bangalore, India, 2017 (pp. 1–6). https://doi.org/10.1109/
+ICAPR.2017.8593145.
+Yakıcı, E., & Karatas, M. (2021). Solving a multi-objective heterogeneous sensor network location problem
+with geneticalgorithm. ComputerNetworks,192,108041.https://doi.org/10.1016/j.comnet.2021.108041
+Yang, M., Liu, G., Zhou, Z., & Wang, J. (2023). Partially observable mean ﬁeld multi-agent reinforcement
+learning based on graph attention network for UAV swarms. Drones, 7, 476.
+Yu, S., Puchinger, J., & Sun, S. (2022). Van-based robot hybrid pickup and delivery routing problem. European
+Journal of Operational Research, 298(3), 894–914. https://doi.org/10.1016/j.ejor.2021.06.009
+Zhang, X., Chen, L., Gendreau, M., & Langevin, A. (2022). Learning-based branch-and-price algorithms for
+the vehicle routing problem with time windows and two-dimensional loading constraints. INFORMS
+Journal on Computing, 34(3), 1419–1436.
+Publisher’s Note Springer Nature remains neutral with regard to jurisdictional claims in published maps and
+institutional afﬁliations.
+Authors and Aﬃliations
+Armin Mahmoodi1 · Seyed Mojtaba Sajadi2
+· Abdellatif M. Sadeq3 ·
+Masoud Narenji4 · Mehdi Eshaghi1 · Milad Jasemi5
+B Seyed Mojtaba Sajadi
+s.sajadi@aston.ac.uk
+Armin Mahmoodi
+Arminmahmoodi@cmail.carleton.ca
+Abdellatif M. Sadeq
+as1004958@qu.edu.qa
+Masoud Narenji
+masoud.narenji@gmail.com
+Mehdi Eshaghi
+mehdieshaghi@cunet.carleton.ca
+Milad Jasemi
+mjasemiz@montevallo.edu
+1
+Department of Aerospace Engineering, Carleton University, Ottawa, ON, Canada
+2
+Operations and Information Management Department, Aston Business School, Aston University,
+Birmingham B4 7ET, UK
+3
+Mechanical and Industrial Engineering Department, Qatar University, Doha, Qatar
+4
+Department of Industrial Engineering, Iran University of Science and Technology, Tehran, Iran
+5
+Stephens College of Business, University of Montevallo, Montevallo, AL, USA
+123

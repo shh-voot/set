@@ -1,0 +1,199 @@
+{
+  "candidates": {
+    "ALNS交付": {
+      "missions": 43,
+      "cargo_count": 80,
+      "unique_count": 80,
+      "missing": [],
+      "hard_late": [],
+      "energy_kwh": 95.20417606584401,
+      "completion_min": 164.8135622746015,
+      "conflicts": {
+        "uav_id": [],
+        "battery_id": []
+      }
+    },
+    "Q3复现": {
+      "missions": 43,
+      "cargo_count": 80,
+      "unique_count": 80,
+      "missing": [],
+      "hard_late": [],
+      "energy_kwh": 94.38782731317069,
+      "completion_min": 190.1539518548381,
+      "conflicts": {
+        "uav_id": [],
+        "battery_id": []
+      }
+    }
+  },
+  "claude_energy": [
+    {
+      "type": "A",
+      "official_full_range_m": 20000.0,
+      "helper_full_range_m": 30000.0,
+      "helper_dem_max_m": 0.0,
+      "existing_dem_max_m": 506.8380016939101,
+      "helper_cruise_alt_m": 50.0,
+      "required_service_alt_m": 338.5,
+      "official_cruise_speed": 12.0
+    },
+    {
+      "type": "B",
+      "official_full_range_m": 16000.0,
+      "helper_full_range_m": 30000.0,
+      "helper_dem_max_m": 0.0,
+      "existing_dem_max_m": 506.8380016939101,
+      "helper_cruise_alt_m": 50.0,
+      "required_service_alt_m": 338.5,
+      "official_cruise_speed": 15.0
+    },
+    {
+      "type": "C",
+      "official_full_range_m": 12000.0,
+      "helper_full_range_m": 30000.0,
+      "helper_dem_max_m": 0.0,
+      "existing_dem_max_m": 506.8380016939101,
+      "helper_cruise_alt_m": 50.0,
+      "required_service_alt_m": 338.5,
+      "official_cruise_speed": 15.0
+    }
+  ],
+  "cp_truncation_lateness": {
+    "synthetic": true,
+    "success": true,
+    "makespan_min": 1.0,
+    "missions": [
+      {
+        "mission_id": 1,
+        "area_id": "synthetic",
+        "uav_type": "A",
+        "cargo_ids": [
+          "synthetic"
+        ],
+        "cargo_count": 1,
+        "energy_kwh": 0.01,
+        "duration_min": 1.09,
+        "delivery_offset_min": 1.09,
+        "deadline_min": 1.0,
+        "uav_id": "UA01",
+        "battery_id": "A-BAT-01",
+        "start_min": 0.0,
+        "delivery_min": 1.09,
+        "end_min": 1.0,
+        "on_time": false,
+        "soc_after": 0.9977777777777778,
+        "charge_min": 0.23333333333333484
+      }
+    ]
+  },
+  "cp_truncation_overlap": {
+    "synthetic": true,
+    "success": true,
+    "missions": [
+      {
+        "mission_id": 1,
+        "area_id": "synthetic",
+        "uav_type": "A",
+        "cargo_ids": [
+          "1"
+        ],
+        "cargo_count": 1,
+        "energy_kwh": 0.01,
+        "duration_min": 1.09,
+        "delivery_offset_min": 0.2,
+        "deadline_min": 10.0,
+        "uav_id": "UA01",
+        "battery_id": "A-BAT-02",
+        "start_min": 1.0,
+        "delivery_min": 1.2,
+        "end_min": 2.0,
+        "on_time": true,
+        "soc_after": 0.9977777777777778,
+        "charge_min": 0.23333333333333484
+      },
+      {
+        "mission_id": 2,
+        "area_id": "synthetic",
+        "uav_type": "A",
+        "cargo_ids": [
+          "2"
+        ],
+        "cargo_count": 1,
+        "energy_kwh": 0.01,
+        "duration_min": 1.09,
+        "delivery_offset_min": 0.2,
+        "deadline_min": 10.0,
+        "uav_id": "UA01",
+        "battery_id": "A-BAT-01",
+        "start_min": 0.0,
+        "delivery_min": 0.2,
+        "end_min": 1.0,
+        "on_time": true,
+        "soc_after": 0.9977777777777778,
+        "charge_min": 0.23333333333333484
+      }
+    ],
+    "actual_uav_overlap_min": 0.09000000000000008
+  },
+  "nsga_roundtrip_duplication": {
+    "cargo_id": "S001-MED-01",
+    "type": "C",
+    "single_return_mission": {
+      "energy_kwh": 1.7847587697927314,
+      "flight_time_min": 10.490336156069079,
+      "delivery_time_min": 14.298251411367874,
+      "operation_time_min": 9.1,
+      "total_time_min": 19.590336156069082,
+      "payload_kg": 3.0,
+      "total_volume_m3": 0.012,
+      "horizontal_distance_km": 3.063407094930797,
+      "dem_max_ground_m": 228.60882780002137,
+      "cruise_altitude_m": 278.60882780002134,
+      "usable_energy_kwh": 6.4,
+      "energy_margin_kwh": 4.615241230207269,
+      "equivalent_range_km": 25.475,
+      "range_margin_km": 19.348185810138407,
+      "feasible": true
+    },
+    "nsga_single_area_route": {
+      "feasible": true,
+      "energy_kwh": 3.5539773450675076,
+      "duration_min": 38.08067231213816,
+      "delivery_offset_min": 19.590336156069082,
+      "current_load": 3
+    }
+  },
+  "q1_capacity_lower_bound": 18,
+  "additional_reproduction_comparisons": [
+    {
+      "reproduced": "reproduction\\解题-gpt\\问题2优化\\结果\\问题二_ALNS候选方案.xlsx",
+      "delivered": "解题-gpt\\问题2优化\\结果\\问题二_ALNS候选方案.xlsx",
+      "all_sheets_equal": false,
+      "different_sheets": [
+        "架次调度",
+        "逐箱时限",
+        "校验"
+      ],
+      "tolerance_different_sheets": [
+        "架次调度",
+        "逐箱时限"
+      ]
+    },
+    {
+      "reproduced": "reproduction\\结果\\问题二_增强优化版.xlsx",
+      "delivered": "解题-gpt\\结果\\问题二_增强优化版.xlsx",
+      "all_sheets_equal": false,
+      "different_sheets": [
+        "架次调度",
+        "逐箱时限",
+        "校验"
+      ],
+      "tolerance_different_sheets": [
+        "架次调度",
+        "逐箱时限",
+        "校验"
+      ]
+    }
+  ]
+}

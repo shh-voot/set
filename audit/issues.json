@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "first_revision": "ea5e0fb57065ad843b52f9e9e3ebdbe42582b0c1",
+  "latest_reviewed_revision": "e94e1cc70b6f342282eaa9e7d2b15aa84065e381",
+  "issues": [
+    {
+      "id": "AUD-01", "priority": "P0", "title": "航程公式的 3/2 次幂没有落实到代码",
+      "first_round": "原题 P048 与线性 equivalent_range_m 不一致。",
+      "latest_status": "未修复。新论文写正确指数并声称采用，但 src 公共实现未变。",
+      "evidence": ["20260925/evidence/problem_with_formulas.txt", "20260925_update/evidence/q1_mission_check.csv"],
+      "detail": "当前 Q1 为 56.515853 kWh；仅修正指数的对照为 54.181368。新论文另写 54.1754，未找到其对应计算表。",
+      "acceptance": "原题公式、公共实现、逐架次表、论文及图表使用相同定义，并能从独立样例复算。"
+    },
+    {
+      "id": "AUD-02", "priority": "P0", "title": "运输能耗子公式缺少可核验来源和标定说明",
+      "first_round": "所给 Word 只有 E=Ehor+Eup，未展开子项；代码采用 C(1-rho)d/L 及 P×eta×t。",
+      "latest_status": "未解决。新文采用 mgh/eta，而运行代码仍用原公式。",
+      "evidence": ["20260925/evidence/problem_document.xml", "20260925_update/evidence/new_papers/王文政-第一版_符号公式重排版.txt"],
+      "detail": "本评估的 Ehor=C*d/L、Eup=mgh/eta 是明示假设对照，不是补找到的官方唯一答案。",
+      "acceptance": "核对完整原始规则；若仍缺失，明确标定条件、效率含义、分段质量、单位和推导来源，再统一实现。"
+    },
+    {
+      "id": "AUD-03", "priority": "P0", "title": "返航余量被同时写入任务能耗与上限，敏感性抵消",
+      "first_round": "同一 S004 C 型任务，rho 0.1/0.2/0.3/0.4 的耗能占上限比均为 0.867287。",
+      "latest_status": "未修复，同样反例再次复现。",
+      "evidence": ["20260925/evidence/targeted_checks.json", "20260925_update/evidence/targeted_checks.json"],
+      "detail": "提高安全余量反而降低计算出的同一物理任务能耗，不能据此完成题目要求的余量敏感性分析。",
+      "acceptance": "明确标准航程标定口径；固定物理任务时验证能耗与储备策略的关系，并补完整敏感性结果。"
+    },
+    {
+      "id": "AUD-04", "priority": "P0", "title": "DEM 半像元偏移、采样最大值与题给规则不一致",
+      "first_round": "像元中心高程误差 4.496735 m；S007 航线最大高程低估 7.529427 m。",
+      "latest_status": "未修复；新论文仍把等间隔采样表述为保证最大值。",
+      "evidence": ["20260925_update/evidence/audit_summary.json", "20260925_update/evidence/q1_mission_check.csv"],
+      "detail": "运输和通信还分别构造不同轨迹。低估、高估均存在，不能统一视为保守近似。",
+      "acceptance": "明确像元边界/中心变换，遍历航段相交像元，运输与通信共用真实三阶段轨迹。"
+    },
+    {
+      "id": "AUD-05", "priority": "P1", "title": "问题一要求的最大安全载荷表与余量敏感性未补足",
+      "first_round": "缺 3 机型×15 服务区的 45 项最大安全载荷及完整敏感性计算表。",
+      "latest_status": "未补足；新增下界论述有进展，质量/容积基本下界 18 已独立核对。",
+      "evidence": ["20260925_update/evidence/q1_capacity_lower_bound.csv", "20260925_update/最新提交补充评估报告.md"],
+      "detail": "18 的容量下界不自动证明当前方案通过 DEM、能量等其他约束。最长单架次时间也不能替代累计作业时间。",
+      "acceptance": "交付 45 项能力、计算条件、余量敏感性及多目标优先关系；区分下界与物理可行性。"
+    },
+    {
+      "id": "AUD-06", "priority": "P0", "title": "问题三四个真实投送点没有可用通信链路",
+      "first_round": "S003、S004、S008、S014 在地面+30m 交接点断连。",
+      "latest_status": "未修复；中继位置未变，交叉验证仍失败。",
+      "evidence": ["20260925_update/evidence/q3_endpoint_robustness.csv", "20260925_update/evidence/q3_failed_points.csv"],
+      "detail": "即使两架中继始终在线也失败；实际代码端点使用+50m。全像元、正确中心双线性和原LOS在真实高度下均给出失败。",
+      "acceptance": "真实交接高度及全部爬升/巡航/下降阶段保持题给直连或同一中继两段同时可用，提交逐阶段证据。"
+    },
+    {
+      "id": "AUD-07", "priority": "P0", "title": "两架中继连续服务均超过单组件允许能量",
+      "first_round": "仅服务能耗 R01/R02 为 3.207248/3.155522 kWh，均大于 2.56。",
+      "latest_status": "仍超限，变为 3.172182/2.845702 kWh；不能用服务时间变短视为已修复。",
+      "evidence": ["20260925/evidence/audit_summary.json", "20260925_update/evidence/audit_summary.json"],
+      "detail": "单组件允许能量3.2×0.8=2.56，服务功率1.10kW，忽略往返时最长139.636min。",
+      "acceptance": "每个真实中继架次计入往返及服务能量，SOC不低于返航下限，且服务区间可执行。"
+    },
+    {
+      "id": "AUD-08", "priority": "P0", "title": "中继换电、组件身份与三阶段飞行没有可执行模型",
+      "first_round": "空中能量切块替代返航换电，两架重复使用 RE-01/RE-02 编号。",
+      "latest_status": "未修复。中继飞行仍按三维直线/巡航速度，组件充电未按实际SOC。",
+      "evidence": ["20260925_update/evidence/results_xlsx/问题三_中继部署方案_修复版.txt", "20260925_update/最新提交补充评估报告.md"],
+      "detail": "换组件必须关联物理位置、返航、换电、准备建链和不中断接替。能量账面分配给两块电池不足以证明可飞。",
+      "acceptance": "全局组件ID、飞行/服务/充电时间轴和SOC闭合，并与连续通信同时通过。"
+    },
+    {
+      "id": "AUD-09", "priority": "P0", "title": "问题三改机型缺少容量检查，已出现实际超载",
+      "first_round": "公共 feasible 缺质量/体积，仅列回归风险；第一轮实际交付无超限。",
+      "latest_status": "恶化：交付第1/2/4架次均超重、超容积；干净重跑仍有两条超限。",
+      "evidence": ["20260925_update/evidence/q3_mission_check.csv", "20260925_update/evidence/new_candidate_checks.csv"],
+      "detail": "第1架次S001 B型76kg/0.159m³，上限30kg/0.073m³；第2架次A型42kg，第4架次A型45kg，上限25kg。",
+      "acceptance": "改机型前后、所有候选入口均独立检查载质量/容积；全部交付及重跑任务零超限。"
+    },
+    {
+      "id": "AUD-10", "priority": "P0", "title": "问题四未继承问题三的联合任务安排",
+      "first_round": "代码读取Q2；旧独立表还混入49架次。",
+      "latest_status": "已变43架次，但仍读取Q2，且使用另一版Q2数值；未继承Q3。",
+      "evidence": ["20260925_update/evidence/q4_from_actual_q3_times.csv", "20260925_update/evidence/targeted_checks.json"],
+      "detail": "题目要求保持Q3组批、路线、运输与中继安排和通信关系，按组独立计数且资源不得跨组调配。",
+      "acceptance": "输入标明合规Q3提交和结果哈希，保持任务安排，独立核算四类资源并如实报告缺口。"
+    },
+    {
+      "id": "AUD-11", "priority": "P0", "title": "错峰方案硬时限违规，on_time字段未更新",
+      "first_round": "两组、三组各28箱硬迟到，仍全部标为按时。",
+      "latest_status": "两组23箱、三组25箱；字段仍全True。Q4扩展场景的文字边界改善，但扩展本身仍不可行。",
+      "evidence": ["20260925_update/evidence/q4_2_hard_late.csv", "20260925_update/evidence/q4_3_hard_late.csv"],
+      "detail": "S002-WAT-01和MED-01在148.606357min交付，硬截止60min；两场景均有23个运输任务超出对应原中继服务窗。",
+      "acceptance": "平移后重新检查逐箱硬时限、连续通信和所有资源；数量不超库存不能作为整体可行判据。"
+    },
+    {
+      "id": "AUD-12", "priority": "P1", "title": "代码、论文和交付工作簿没有一致的版本来源",
+      "first_round": "Q1–Q3可复现，Q4独立资源4个sheet不一致。",
+      "latest_status": "Q2交付代码/表一致，但论文写另一版；Q3/Q4有9个sheet不一致；根入口仍产旧45架次。",
+      "evidence": ["20260925_update/evidence/reproduction_status.json", "20260925_update/evidence/targeted_checks.json", "20260925_update/evidence/additions_summary.json"],
+      "detail": "Q2实际173.727403min/95.204176kWh，正文171.584004/93.853962；Q3交付99.354617kWh，重跑101.324454。",
+      "acceptance": "固定输入、代码、参数、依赖，按单一数据链生成全部结果；逐表语义比较通过后更新论文和图表。"
+    },
+    {
+      "id": "AUD-13", "priority": "P1", "title": "新增论文公式出现题意差异及无法对应的重算数字",
+      "first_round": "核心公式和引用不完整。",
+      "latest_status": "新增式(2.15)把LOS当硬前提，式(2.14)未明确系统损耗；54.1754等新数字未对应到程序。",
+      "evidence": ["20260925_update/evidence/new_papers/王文政-第一版_符号公式重排版.txt", "20260925_update/最新提交补充评估报告.md"],
+      "detail": "题给遮挡是加10dB后再按预算判断，并非遮挡即断连；公式编号和漂亮排版不能代替来源及实现映射。",
+      "acceptance": "逐式列原题/文献来源、单位、适配假设、代码位置与数值样例；修正LOS及系统损耗定义。"
+    },
+    {
+      "id": "AUD-14", "priority": "P1", "title": "ALNS候选有进展，但仅指标级复现且沿用旧物理模型",
+      "first_round": "此实验尚未提交。",
+      "latest_status": "新增候选43架次/164.813562min，主要指标复现；37/43行顺序不同，未逐表复现。",
+      "evidence": ["20260925_update/evidence/alns250.log", "20260925_update/evidence/additions_summary.json", "20260925_update/evidence/new_candidate_checks.csv"],
+      "detail": "独立检查候选80箱、容量、原模型时限和资源均通过；5.13%改善限于当前模型。同一direct_mission验证器无法发现共享模型错误。",
+      "acceptance": "保留候选身份，固定精确生成参数和环境，修正公共模型后重新验证并重算下游。"
+    },
+    {
+      "id": "AUD-15", "priority": "P0", "title": "新实验能耗工具用默认值掩盖DEM及参数接口错误",
+      "first_round": "此实验尚未提交。",
+      "latest_status": "已用真实附件确认：不存在的get_elevation异常被吞掉，高程返回0；满载航程全部默认30000m。",
+      "evidence": ["20260925_update/evidence/additions_summary.json"],
+      "detail": "S003变为巡航海拔50m，而作业点338.5m；附件A/B/C满载航程实际20000/16000/12000m。另有速度字段和功率默认值问题。",
+      "acceptance": "统一参数schema，读取失败明确报错；与正确公共模型逐参数、逐航段交叉核验，不静默降级。"
+    },
+    {
+      "id": "AUD-16", "priority": "P0", "title": "NSGA多点评价器把完整往返函数当作单航段",
+      "first_round": "此实验尚未提交。",
+      "latest_status": "单点评价已证实重复计算返程及工序；逐箱投送被统一记到最后一点。",
+      "evidence": ["20260925_update/evidence/additions_summary.json"],
+      "detail": "S001-MED-01、C型一次往返19.590336min，新路线评价38.080672min；该测试使用现有主模型隔离接口错误，不认定主模型已正确。",
+      "acceptance": "单航段接口只算单程，按实际访问顺序、剩余载荷、30m作业高度和逐点交接累加。"
+    },
+    {
+      "id": "AUD-17", "priority": "P0", "title": "CP-SAT向下截断时间，可放过迟到和资源重叠",
+      "first_round": "此实验尚未提交。",
+      "latest_status": "原函数在1.09min合成案例返回success=True，同时输出迟到；两任务真实重叠0.09min。",
+      "evidence": ["20260925_update/evidence/additions_summary.json"],
+      "detail": "int(minutes*10)缩短持续时间与配送偏移。求解器对输入离散模型的精确性不等于原连续时间可行性。",
+      "acceptance": "采用保证约束的离散化并对原精度时序复核；区分FEASIBLE和OPTIMAL；合成反例及真实任务均通过。"
+    },
+    {
+      "id": "AUD-18", "priority": "P1", "title": "NSGA-II/CP-SAT尚无完整结果可验收",
+      "first_round": "此实验尚未提交。",
+      "latest_status": "唯一帕累托汇总工作簿0行0列；未提供完整任务与逐箱结果。",
+      "evidence": ["20260925_update/最新提交补充评估报告.md"],
+      "detail": "本审查没有运行长时间完整遗传搜索；函数级反例已足以证明当前实现不能作为可靠优化成果。",
+      "acceptance": "先解决关键建模问题，再提供完整可行候选、参数、种子、求解状态、时间与独立校验输出。"
+    },
+    {
+      "id": "AUD-19", "priority": "P1", "title": "交付执行入口、路径、编号和模板仍不完整",
+      "first_round": "同事绝对Python路径，代码目录不能独立运行；内部飞机ID未映射附件；模板空白。",
+      "latest_status": "Q2–Q4数据路径部分改善，但Q1入口仍找代码/数据而失败；README仍指向旧根代码，模板未填。",
+      "evidence": ["20260925_update/evidence/delivery_q1.log", "20260925_update/evidence/root_readme_q2_retry.log", "20260925_update/最新提交补充评估报告.md"],
+      "detail": "内部UA01等能对应类型库存，不据此认定虚构飞机，但需明确映射U01–U08及模板秒单位。",
+      "acceptance": "提供单一便携入口、环境和依赖；输出完整模板、正式编号、统一单位及通信阶段证据。"
+    },
+    {
+      "id": "AUD-20", "priority": "P1", "title": "文献真实但公式、算法与性能论述尚未逐项溯源",
+      "first_round": "14份PDF可解析，但笔记存在题录/算法错配和无页码的参数、提升百分比。",
+      "latest_status": "Word7条题录及ALNS5篇来源有改善；能耗等逐式对应仍未闭环，历史笔记不能当作已落实算法。",
+      "evidence": ["20260925/工作质量与公式溯源审查报告.md", "20260925_update/最新提交补充评估报告.md"],
+      "detail": "旧80%/95%充电参数与题意不符，但当前主链使用正确充电模块；不能把旧笔记错误误计为当前全部运行错误。未推断团队主观造假。",
+      "acceptance": "每个公式/参数/性能结论补原文页码式号或推导；区分方法借鉴、当前实现与未实现计划。"
+    },
+    {
+      "id": "AUD-21", "priority": "P2", "title": "论文图表写死指标，优化范围和最优性需保留边界",
+      "first_round": "Q1图表硬编码56.5159；Q2只有单服务区候选，不能据此宣称全局最优。",
+      "latest_status": "图表仍写死；最新文档承认单点搜索与非全局最优，属于合理改善。",
+      "evidence": ["20260925_update/最新提交补充评估报告.md"],
+      "detail": "单服务区是题目允许的子集，不能因此判非法；但跨服务区路线、时间/能耗权衡和全局最优尚未证明。",
+      "acceptance": "图表从固定结果自动生成；如声称提升或最优，给出同口径基线、搜索范围和下界/证据。"
+    }
+  ]
+}

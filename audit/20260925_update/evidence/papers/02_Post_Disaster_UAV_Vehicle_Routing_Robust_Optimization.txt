@@ -1,0 +1,1525 @@
+--- PDF PAGE 1 ---
+A Robust Optimization Framework for Two-Echelon Vehicle and
+UAV Routing for Post-Disaster Humanitarian Logistics Operations
+Tasnim Ibn Faiz
+Department of Mechanical and Industrial Engineering
+Northeastern University
+Boston, MA 02115, USA
+Chrysaﬁs Vogiatzis
+Industrial and Enterprise Systems Engineering
+University of Illinois at Urbana-Champaign
+Urbana, IL 61801, USA
+Md. Noor-E-Alam∗
+Department of Mechanical and Industrial Engineering
+Northeastern University
+Boston, MA 02115, USA
+Abstract
+Providing ﬁrst aid and other supplies (e.g., epi-pens, medical supplies, dry food, water)
+during and after a disaster is always challenging. The complexity of these operations increases
+when the transportation, power, and communications networks fail, leaving people stranded
+and unable to communicate their locations and needs. The advent of emerging technologies
+like uncrewed autonomous vehicles can help humanitarian logistics providers reach otherwise
+stranded populations after transportation network failures.
+However, due to the failures in
+telecommunication infrastructure, demand for emergency aid can become uncertain. To address
+the challenges of delivering emergency aid to trapped populations with failing infrastructure
+networks, we propose a novel robust computational framework for a two-echelon vehicle routing
+problem that uses uncrewed autonomous vehicles, or drones, for the deliveries. We formulate
+the problem as a two-stage robust optimization model to handle demand uncertainty. Then, we
+propose a column-and-constraint generation approach for worst-case demand scenario generation
+for a given set of truck and drone routes. Moreover, we develop a decomposition scheme inspired
+by the column generation approach to heuristically generate drone routes for a set of demand
+scenarios.
+Finally, we combine the heuristic decomposition scheme within the column-and-
+constraint generation approach to determine robust routes for both trucks and drones, the
+time that aﬀected communities are served, and the quantities of aid materials delivered. To
+validate our proposed computational framework, we use a simulated dataset that aims to recreate
+emergency aid requests in diﬀerent areas of Puerto Rico after Hurricane Maria in 2017.
+Keywords: humanitarian logistics, two-echelon vehicle and drone routing, two-stage robust
+optimization, column generation, column-and-constraint generation, disaster management
+∗Corresponding author. Email: mnalam@neu.edu.
+1
+arXiv:2207.11879v1  [math.OC]  25 Jul 2022
+
+--- PDF PAGE 2 ---
+1
+Introduction
+In this work, we investigate a paradigm for humanitarian relief operations in the absence of stable
+transportation, communication, and power infrastructures. Providing relief to aﬀected populations
+in the form of ﬁrst aid items, blankets, water, and dry food, is diﬃcult even in the presence of a fully
+functional built environment. When the infrastructure itself is prone to failures, these operations
+become even more challenging as people may become stranded without access to telecommunica-
+tions, transportation, or power. The advent of uncrewed autonomous vehicles (UAVs) provides
+us with a reliable means of reaching populations otherwise unreachable due to the failures in the
+built environment. At the same time, we can do so with fewer risks for the ﬁrst responders. While
+UAVs are naturally suited to improving safety under these conditions, they also present us with
+new challenges, namely the inherent computational diﬃculty of such routing operations and the
+uncertainty of the location and number of demand requests to which they need to respond. To
+that end, we propose a new robust optimization framework to incorporate demand information
+uncertainty within a two-echelon vehicle routing problem to aid trapped populations using ground
+vehicles and deliver it using UAVs.
+We are primarily motivated by the situation in Puerto Rico after Hurricane Maria in 2017. The
+hurricane made landfall on September 21, and eventually left behind an island without much of
+its built environment: power, and consequently communications, were unavailable even as much
+as three weeks after the disaster hit (see Figures 1 and 2, as well as newspaper articles, e.g., [54]).
+All 78 counties in Puerto Rico had more than 75% of their cell sites out of service until September
+29, 2017. Even then, most counties had no cell phone coverage, with 100% of their cell sites being
+deactivated during and after landfall, as shown in Figure 2. It took 44 days for all counties to have
+at least some cellular coverage. On a similar note, 46 days passed until every county had at least
+half its cell sites reinstated. In addition, people were also stranded due to damaged roads, making
+it impossible to know their locations and conditions (no communication) or drive to them (no
+transportation) for days [34]. Our proposed framework would help provide assistance and valuable
+items to these trapped populations in a robust manner.
+The paper is outlined as follows. First, we provide a brief literature review in Section 2. In
+Section 3, we proceed to deﬁne our problem formally and provide our formulation, followed by our
+novel solution approach. In that same section, we describe all aspects of our robust framework,
+including the proposed column generation approach and the scenario generation subproblem. Sec-
+tion 4 provides a case study on a simulated dataset that aims to capture the demands in Puerto
+Rico after Hurricane Maria. We conclude our work in Section 5 with a summary of our ﬁndings
+and plans for future work in this area.
+2
+Literature review and contributions
+In this section, we provide a brief literature review, before we present our main contributions.
+2.1
+Review of relevant research
+We begin with the formal deﬁnition of the two-echelon vehicle routing problem (2EVRP) [11, 12, 41],
+an interesting extension of the traditional vehicle routing problem.
+Deﬁnition 1 (2EVRP). Given a graph G(V, E), where the nodeset V consists of 0 (depot), a set
+of candidate locations S, and a set of customers C (i.e., V = {0} ∪S ∪C), real values τij for the
+costs of every edge (i, j) ∈E, and real values fi for the costs of using a node i, the 2EVRP aims
+2
+
+--- PDF PAGE 3 ---
+Figure 1: Percentage of cell sites that were active and working to provide access to cell phone
+reception since landfall (September 21, 2017) and until January 4, 2018. More than 90 days after
+Hurricane Maria’s landfall, the number was still shy of 100%. More importantly, three weeks after
+landfall, that percentage was only 23.7%.
+All data was taken by the Federal Communications
+Commission (FCC) [18].
+21-Sep
+28-Sep
+5-Oct
+12-Oct
+19-Oct
+26-Oct
+2-Nov
+9-Nov
+16-Nov
+23-Nov
+30-Nov
+7-Dec
+14-Dec
+21-Dec
+28-Dec
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+Date
+% of active cell sites
+Figure 2: Number of counties (out of a total of 78 on the island of Puerto Rico) with no active cell
+site since landfall and until November 9, 2017. All data was taken by the Federal Communications
+Commission (FCC) [18].
+0
+10
+20
+30
+40
+50
+0
+10
+20
+30
+40
+50
+Days after landfall
+# Puerto Rico counties
+3
+
+--- PDF PAGE 4 ---
+Figure 3: Four related problems in the literature. The Traveling Salesperson Problem (TSP, top
+left), the Covering Traveling Salesperson Problem (Covering TSP, top right), the traditional Vehicle
+Routing Problem (VRP, bottom left), and the Two-Echelon Vehicle Routing Problem (2EVRP,
+bottom right).
+to identify: (a) the set of facilities S ⊆S to use; (b) the circuit from 0 to every node s ∈S; (c)
+the assignment of customers C to a node s ∈S; and (d) the circuits from s ∈S to every customer
+assigned to s with minimum total cost.
+We note here that the problem can be easily shown to be NP-hard, by transforming it to the
+traditional vehicle routing problem by letting only one satellite station. The 2EVRP is an extension
+of the traditional vehicle routing problem, where a set of customer locations needs to be visited
+by one of the tours that start and end at a facility. It is also very closely related to the covering
+traveling salesperson problem [13, 20, 22] and its “close-enough” variants [3, 24], where we identify
+a circuit that visits a subset of the nodes such that every other node is in close proximity to at least
+one visited node. We present the relationship and similarities between some of these two problems
+in visual form in Figure 3.
+Exact solution methods for the 2EVRP are primarily based on branch-and-cut algorithms, such
+as the one proposed in [23], which later served as a starting point for numerous follow-up studies
+[28, 39, 41]. Later, Santos et al. used column generation in the setting of 2EVRPs to propose
+both a branch-and-price approach [47] and a branch-and-cut-and-price [48] with additional valid
+4
+
+--- PDF PAGE 5 ---
+inequalities. Strong valid inequalities have also been recently proposed in [33, 40]. As expected,
+heuristic approaches have been put to the use, as is the case with the large neighborhood search
+procedures proposed in [6, 26].
+As can be seen by the setup of the 2EVRP, it oﬀers a suitable framework to model new logistics
+technologies, such as the use of uncrewed autonomous vehicles for last-mile deliveries. Due to the
+advent of UAVs, research in vehicle routing problems with the use of drones is booming, as is obvious
+by the ever increasing number of publications and scholarly activities involving UAVs in logistics.
+One of the ﬁrst attempts at mathematically modeling a coordination problem between a truck and
+a drone is made in [36], where a traditional vehicle and its “ﬂying sidekick” (a UAV/drone) satisfy
+static and deterministic demand in a geographic location; an extension to multiple “sidekicks” has
+appeared recently in [14]. Later, the traveling salesperson problem with drones and the vehicle
+routing problem with drones were introduced in [1] and [46, 53], respectively. Branch-and-cut,
+which has gained popularity in solving 2EVRPs, has also been shown to work well in practice with
+the TSP with drones [49]. Dynamic programming has also been successful in dealing with the TSP
+with drones problem, leading to faster solutions in larger instances compared to using commercial
+solvers [5].
+Interestingly, due to the nature of the logistics problems that are usually of interest, heuristics
+involving route-ﬁrst, cluster/assign-later approaches are very prominent. In [1], the authors propose
+route-ﬁrst cluster-second heuristics and derive approximation guarantees for their performance,
+while in [44], a TSP solution is transformed eventually into a solution involving drone deliveries in
+a smart, ﬂexible manner. The idea of transforming a TSP solution to a tour that involves drones is
+prominent in other recent works as well, either with the use of k-means clustering ﬁrst [9], adaptive
+insertion [29], or local searches and Greedy Randomized Adaptive Search Procedures (GRASP)
+[25]. There also exist other heuristic procedures to help solve problems where a customer can be
+visited by either a truck or a drone, as in [15].
+Moreover, math-based heuristics that are motivated by well-known combinatorial optimization
+techniques, such as branch-and-bound or column generation, are also of interest to our community.
+For example, heuristics are employed in an attempt to prune the branch-and-bound tree and speed
+up computations in [45]. A diﬀerent heuristic approach, inspired by column generation, is proposed
+and used in [17] to solve a problem with drones in a humanitarian relief setting, where part of
+the drones are tasked with providing cell phone coverage to an aﬀected area in addition to the
+drones tasked with making deliveries. This application of using drones to deliver medical aid is
+also explored in [21]: the main diﬀerence to our work is that here, we oﬀer a robust optimization
+approach to tackle the uncertainty of demand locations and demand quantities. Finally, a recent
+work dispels with the discretization of locations from where a drone can be deployed and/or received,
+and allows for drone movements in a continuous manner, that is, we are allowed to deploy and
+receive a drone on a moving truck while it is traversing an edge [35].
+Since our decision problem is stochastic in nature, we continue this literature review with
+the stochastic VRP. Uncertainty can arise in multiple aspects of the problem including demands,
+deadlines/time windows, costs/times, etc. Traditional vehicle routing problems with and without
+capacity constraints have addressed uncertainty in a number of ways. An early work in the area
+by Gendreau et al. proposed a two-stage stochastic integer programming framework, where routes
+are designed in the ﬁrst stage and during the second stage the locations with no demand are
+skipped after demand realization [19]. In [50], the authors adopt a robust optimization approach
+with scenario-based decomposition to solve a vehicle routing problem with stochastic service times.
+Probabilistic versions of the traveling salesperson problem have also been proposed over the years, as
+in the probabilistic traveling salesperson problem with deadlines [7] where customers are stochastic
+and, additionally, need to be visited before a certain time.
+An extension, where deadlines are
+5
+
+--- PDF PAGE 6 ---
+replaced by time windows, is oﬀered in [51]. A dynamic vehicle routing problem with time windows
+is proposed and then solved by column generation in [10]. Hvattum et al. consider the case when
+both customer locations and demands are only partially known in advance: that is, customers can
+call in orders with their demands and time windows. The problem is modeled as a dynamic and
+stochastic programming problem, and a multistage heuristic is proposed [27]. A similar dynamic
+problem with stochastic customers and partially available information a priori is solved in [4], with
+routes being generated continuously for the available scenarios, and a consensus methodology is
+adopted to select the best routes.
+Several works adopting two-stage stochastic and robust optimization approaches for handling
+uncertainties in VRPs can be found in the literature. In contrast, literature on exact approaches
+for solving 2EVRP with stochastic parameters is very limited. Few available works have addressed
+such problems with simulation-based [32] and metaheuristic approaches (e.g., genetic algorithms
+[52]). With our contributions in this work, we aim to ﬁll this gap in the literature.
+We ﬁnish this literature review with a brief discussion of recent works in vehicle routing problems
+in humanitarian aid and relief operations. Interested readers are referred to the excellent surveys in
+[2, 8, 30, 31]. Vehicle routing problems are, of course, a prominent aspect of humanitarian logistics
+especially in the aftermath of natural and human-made disasters (see, e.g., [16, 37, 38]). However,
+the underlying assumption of these studies is that post disaster vehicle routing and aid delivery
+happen in a fully functional transportation network, which unfortunately is less than realistic in
+many disasters. In the absence of a stable transportation network, emerging technologies (such
+as the use of UAVs) and innovative approaches (such as stochastic and robust frameworks) are
+necessary, and this is indeed the premise of our study.
+2.2
+Our contributions
+Our work focuses on addressing two critical challenges. First, from the side of humanitarian logis-
+tics, we assume that the infrastructure is unstable or unusable for ground vehicles after a disaster.
+UAVs are included in the humanitarian logistics planning operations to deliver medical items to
+trapped communities that are unreachable via ground transportation network. Secondly, since the
+telecommunication infrastructure has failed, we cannot assume that we have a priori knowledge of
+demand locations and quantities. The stochasticity in the parameters of modern routing problems
+involving UAVs has already been noted as an important future research direction [42]. Therefore,
+we propose a novel robust optimization framework, that we refer to as R-2EVRP-UAV (Robust
+2-Echelon Vehicle Routing Problem with UAVs) to tackle the unavailable information on the
+location and the quantities of demands. The framework is described in more detail in Section 3.2.
+Speciﬁcally, our contributions can be summarized as follows:
+• We investigate the 2EVRP with stochastic demands in a post-disaster setting. In this setting,
+trucks can use part of the transportation infrastructure and can carry drones that are deployed
+towards communities to deliver aid. Our motivating assumption is that aid demands at the
+communities are not known in advance (uncertain demands) prior to route determination,
+hence the need for a robust optimization framework.
+• Then, we present a decomposition framework and a heuristic approach, based on column
+generation techniques for generating UAV routes. Our decomposition approach leverages the
+problem structure and constructs small size pricing subproblems, which enables us to solve
+large-scale problems.
+6
+
+--- PDF PAGE 7 ---
+• Finally, we develop a novel decision framework (R-2EVRP-UAV). For handling demand un-
+certainty, we design a column-and-constraint generation algorithm to generate demand sce-
+narios. We then solve the decision model with an innovative computational framework that
+includes an outer level column-and-constraint generation and an inner level column genera-
+tion method. Our model formulation and solution approach for robust 2EVRP with drones
+ﬁlls the gap in the state-of-the-art robust approach for handling uncertainty in 2EVRPs.
+3
+Mathematical formulation
+3.1
+Notation
+We begin with the necessary notation for our problem. Let G(V, E) be a simple graph, representing
+the transportation network and the UAV aerial routes available. We speciﬁcally have that V =
+{0} ∪S ∪C, where 0 is the depot, S is an already identiﬁed set of candidate satellite locations,
+and C is the set of aﬀected communities. Note that there exist certain communities in C that are
+reachable from a UAV departing from satellite station s ∈S (i.e., these communities are within the
+range of satellite station s). We note these communities as Cs and, thus we have that C = S
+s∈S Cs.
+Moreover, we let E = Et ∪Ed, where Et is the set of edges that a truck can use; on the other
+hand, UAVs can use any edge in the network (hence, Ed are the edges that can only be used by a
+UAV). We can also deﬁne subsets Ed
+s, consisting of all drone edges that we can use when the truck
+is located at satellite station s, and hence we have Ed = S
+s∈S Ed
+s.
+We make the assumption that all of the trucks and drones employed are identical. We also
+assume that weather conditions are deterministic and vehicle speeds (truck and drone) are constant
+and known. Hence, for all edges in the network, we associate constant traversal times denoted by
+t for trucks and d for UAVs. Speciﬁcally, τ t
+ij deﬁned for all (i, j) ∈Et are the traversal times for
+trucks and τ d
+ij deﬁned for all (i, j) ∈Ed are the traversal times for drones.
+We use Ds to represent the drones available at a truck that has stopped at satellite station s.
+Similarly, we deﬁne a set of available routes for a drone originating from satellite station s. As those
+are exponentially many, we only use a restricted set of routes, denoted as Vs, ∀s ∈S. Note that if
+community c ∈Cs is visited during a route p ∈Vs, then we write that bp
+c = 1; 0, otherwise. We
+also let Ωrepresent all scenarios, with Ω′ being the set of scenarios included in the main problem.
+Qω
+c represents the quantity of items that community c would request under scenario ω.
+For a given UAV ℓ∈Ds and route p ∈Vs originating from satellite station s ∈S, we deﬁne
+Πd
+sp as the total route duration, tsℓ
+c as the visiting time of community c, and dωp
+sc as the delivery
+quantity to community c for every scenario ω. These quantities are all known, provided we have
+already generated the route (as will be shown in our pricing subproblem).
+Continuing with the parameters of our model, we have mt and md be the number of trucks
+available and the number of drones available per truck, respectively. F T
+c
+is the penalty cost per
+unit of time for delaying in aid delivery to community c; F R
+c is the penalty cost for failing to reach
+a community altogether; F D
+c
+is the shortage cost per unit of unmet demand. Finally, each drone
+has a ﬂying range of W d. We measure this range in “units of time”: it can then be viewed as a
+budget for how much time the UAV can spend before it needs to return to the truck at the satellite
+station. A similar modeling assumption has been followed in previous work (see, e.g., [17, 43]).
+Drones are also restricted by a maximum carry load, denoted by Lmax.
+We are now ready to proceed with the description of our framework in subsection 3.2, before
+moving to our main problem (in subsection 3.3), our pricing subproblem (in subsection 3.4), and
+our scenario generation subproblem (in subsection 3.5).
+7
+
+--- PDF PAGE 8 ---
+Figure 4: A big-picture representation of the problem we are solving. One truck, starting from
+the depot, is allowed to use the transportation network (which connects the numbered nodes, in
+blue) in order to approach the aﬀected communities (in red). Once the truck visits a node, it is
+allowed to deploy two drones (red and green) which visit a subset of the communities each, before
+returning to the truck. A yellow shaded circle with a number node (satellite station) as its center
+and dash-lined boundary represents the ﬂying range of the drones when deployed from a satellite
+station.
+depot
+1
+2
+3
+4
+3.2
+Framework
+In the problem we aim to solve, the objective is to minimize the cost of delay in reaching communities
+and the cost of failing to reach a community or fully satisfy its (uncertain) demand, while addressing
+the following questions:
+1. Starting from the depot, what is the optimal set of satellite stations for a truck to visit?
+2. For each satellite station visited, what is the optimal set of aﬀected communities for a delivery
+drone to serve?
+We present a big-picture view of our problem in Figure 4. In this example, our one truck is asked
+to visit nodes 2 and 4 (through 3), and deploy two drones at each of the nodes to visit a subset of
+the aﬀected communities before returning.
+We now present the two-stage robust decision framework that we term R-2EVRP-UAV (Robust
+2-Echelon Vehicle Routing Problem with UAVs).
+Contrary to other approaches in handling
+uncertainty (see, e.g., previous work where demands are ﬁrst queried and then satisﬁed in [17]),
+here we propose a robust optimization framework. We ﬁrst identify the worst-case demand instances
+given an uncertainty budget, and then make decisions for scheduling and routing to minimize the
+objective function. The framework is depicted for simplicity in Figure 5.
+8
+
+--- PDF PAGE 9 ---
+Figure 5: The proposed two-stage robust decision framework.
+Figure 6: The proposed column generation for solving the ﬁrst stage problem of R-2EVRP-UAV.
+In the main problem, we use a restricted set of the (exponentially many) drone routes, that we
+then supplement with new ones from our pricing subproblem.
+Drone route set for      
+R-RMP
+Solve R-RMP without 
+integrality restriction
+Negative 
+reduced 
+cost?
+Solve pricing 
+subproblem for each 
+satelite and each drone
+Yes
+No
+Solve R-RMP with 
+integrality restriction
+Add drone routes
+Stop
+Initialize drone route set
+The ﬁrst stage problem is solved using a column generation framework. In the main problem,
+namely R-RMP (Robust Restricted Main Problem), we have a restricted set of drone routes that
+9
+
+--- PDF PAGE 10 ---
+we can use, whereas in the pricing subproblem, we generate new routes to enter into our restricted
+set. We visualize this process, for convenience, in Figure 6.
+3.3
+Robust Restricted main problem
+We need the following decision variables. First, we have the ﬁrst echelon (truck) routing variable
+as xij, which is equal to 1 if arc (i, j) ∈Et is used. Second, we deﬁne a binary variable for the
+second echelon (drone/UAV) routing as zsℓ
+p , which is equal to 1 if drone ℓ∈Ds, deployed from
+satellite station s ∈S is tasked with following route p ∈Vs; 0, otherwise. As mentioned in the
+problem deﬁnition, some community c ∈C may be left without a delivery. If that happens, then
+binary variables Jc will be equal to 1.
+We also deﬁne timing variables. The elapsed time until we reach community c ∈C by some
+drone deployed from satellite station s ∈S is denoted as T d
+sc. With a slight misuse of notation, the
+elapsed time until a truck reaches a satellite station s is denoted as Ts. The length of time that a
+truck spends idle at satellite station s ∈S is ∆s.
+Finally, we need variables to keep track of the cost for failing to deliver all quantities requested.
+This missed delivery amount at community c ∈C under scenario ω is deﬁned as Rω
+c . Y is an
+artiﬁcial variable representing the total recourse cost.
+With these deﬁnitions at hand, we now
+present the main problem in (1).
+min
+X
+s∈S
+X
+c∈C
+F T
+c T d
+sc +
+X
+c∈C
+F R
+c Jc + Y
+(1a)
+s.t.
+X
+j∈V :(0,j)∈Et
+xij ≤mt,
+(1b)
+X
+j∈V :(i,j)∈Et
+xij −
+X
+j∈V :(j,i)∈Et
+xji = 0,
+∀i ∈V \ {0} ,
+(1c)
+Tj ≥Ti + ∆i + τ t
+ij −M (1 −xij) ,
+∀(i, j) ∈Et,
+(1d)
+Tj ≤Ti + ∆i + τ t
+ij + M (1 −xij) ,
+∀(i, j) ∈Et,
+(1e)
+X
+ℓ∈Ds
+X
+p∈Vs
+zsℓ
+p −md
+X
+(i,s)∈Et
+xis ≤0,
+∀s ∈S,
+(1f)
+X
+p∈Vs
+zsℓ
+p −
+X
+(i,s)∈Et
+xis ≤0,
+∀ℓ∈Ds, ∀s ∈S,
+(1g)
+X
+p∈Vs
+Πd
+spzsℓ
+p −∆s ≤0,
+∀ℓ∈Ds, ∀s ∈S,
+(1h)
+X
+s∈S
+X
+ℓ∈Ds
+X
+p∈Vs
+bp
+czsℓ
+p + Jc = 1,
+∀c ∈C,
+(1i)
+Ts +
+X
+ℓ∈Ds
+X
+p∈Vs
+tsℓ
+c zsℓ
+p −M
+
+1 −
+X
+ℓ∈Ds
+X
+p∈Vs
+bp
+czsℓ
+p
+
+≤T d
+sc,
+∀c ∈Cs, ∀s ∈S,
+(1j)
+Y ≥
+X
+c∈C
+F D
+c Rω
+c ,
+∀ω ∈Ω′,
+(1k)
+X
+s∈S
+X
+ℓ∈Ds
+X
+p∈Vs
+zsℓ
+p dωp
+sc + Rω
+c ≥Qω
+c ,
+∀ω ∈Ω′, ∀c ∈C,
+(1l)
+xij ∈{0, 1} ,
+∀(i, j) ∈Et,
+(1m)
+10
+
+--- PDF PAGE 11 ---
+zsℓ
+p ∈{0, 1} ,
+∀ℓ∈Ds, ∀p ∈Vs, ∀s ∈S,
+(1n)
+Jc ∈{0, 1} ,
+∀c ∈C,
+(1o)
+Ts ≥0,
+∀s ∈S,
+(1p)
+∆s ≥0,
+∀s ∈S,
+(1q)
+T d
+sc ≥0,
+∀c ∈Cs, ∀s ∈S,
+(1r)
+Rω
+c ≥0,
+∀c ∈C, ∀ω ∈Ω′,
+(1s)
+Y ≥0.
+(1t)
+The objective function in (1a) minimizes: (a) the total time (delay cost) to reach all communities
+by delivery drones, (b) total cost of failure to reach communities, and (c) the recourse cost of failing
+to satisfy demands at the aﬀected communities. Constraints (1b) limit the maximum number of
+trucks that can be used; ﬂow preservation for trucks is ensured by constraints (1c). Constraints
+(1d) and (1e) dictate the time it takes a truck to reach each satellite node. In constraints (1f)
+and (1g), we ensure that delivery drones are only dispatched from a satellite node if a truck has
+visited that node; furthermore, the number of delivery drones dispatched is limited by the number
+of drones carried by that truck. According to constraints (1h), the lengths of time that a truck
+has to spend at a satellite location due to ﬂights of delivery drones are bounded by the maximum
+ﬂight times of delivery routes originating from that satellite, respectively. Constraints (1i) ensure
+that every community is either visited by a delivery drone or the variable Jc takes a non-zero value.
+Constraint set (1j) deﬁnes the required times to reach every community by a delivery drone from
+each satellite. Constraints (1k) indicate that, for each scenario ω, variable Y must take at least the
+value of the cost of failing to satisfy the demand quantities at that scenario. Constraints (1l) ensure
+that, in each scenario, the demand at each aﬀected community must be satisﬁed by the delivery
+drone or the recourse variable Rω
+c takes a positive value equal to the missed delivery amount. The
+variable restrictions are given in (1m)–(1t), following the deﬁnitions provided.
+Finally, before we proceed to the pricing subproblem, we deﬁne dual variables associated with
+constraints (1f) (θs, ∀s ∈S), (1g) (φsℓ, ∀ℓ∈Ds, ∀s ∈S), (1h) (ρsℓ, ∀ℓ∈Ds, ∀s ∈S), (1i)
+(ξc, ∀c ∈C), (1j) (αsc, ∀c ∈Cs, ∀s ∈S), and (1l) (βω
+c , ∀ω ∈Ω′, ∀c ∈C). We can now discuss
+the corresponding pricing subproblem in the next subsection.
+3.4
+Pricing subproblem
+As expected, we need some newly deﬁned decision variables to formulate the subproblem. Seeing as
+in the pricing subproblem our goal is to generate routes (see Figure 6), we start with variable vsℓ
+ij ,
+which is equal to 1 if (i, j) ∈Ed
+s is used by drone ℓ∈Ds, and 0 otherwise. The time it takes drone
+ℓ∈Ds before it reaches node j ∈Cs ∪{s} (i.e., a community that is reachable from the satellite
+station s or the station itself at the end of the tour) is denoted by tsℓ
+j . The quantity transported
+on the drone ℓ∈Ds while traversing arc (i, j) ∈Ed
+s under scenario ω is qωsℓ
+ij . Finally, the amount
+of items that is actually delivered at community c ∈C from drone ℓ∈Ds under scenario ω is pωsℓ
+c
+.
+Let RCsℓbe the reduced cost for s ∈S, ℓ∈Ds. Using the dual variables obtained from (1), we
+have that:
+RCsℓ= −θs−φsℓ−
+X
+j∈Cs
+X
+(i,j)∈Eds
+vsℓ
+ij
+
+ξsj + ρsℓτ d
+ij
+
+−
+X
+j∈Cs
+αsj
+
+tsℓ
+j + M
+X
+(i,j)∈Eds
+vsℓ
+ij
+
+−
+X
+ω∈Ω′
+X
+j∈Cs
+βω
+j pωsℓ
+j
+.
+Then, the pricing subproblem for every satellite station s ∈S, and every drone ℓ∈Ds is given by
+11
+
+--- PDF PAGE 12 ---
+the mixed integer linear program in (2).
+min RCsℓ
+(2a)
+s.t.
+X
+(i,j)∈Eds
+vsℓ
+ij τ d
+ij ≤W d,
+(2b)
+X
+(i,j)∈Eds
+vsℓ
+sj ≤1,
+(2c)
+X
+(i,j)∈Eds
+vsℓ
+ij ≤1,
+∀j ∈Cs,
+(2d)
+X
+i:(i,j)∈Eds
+vsℓ
+ij −
+X
+i:(j,i)∈Eds
+vsℓ
+ji = 0,
+∀j ∈Cs,
+(2e)
+tsℓ
+j ≥tsℓ
+i + τ d
+ij −W d 
+1 −vsℓ
+ij
+
+,
+∀(i, j) ∈Ed
+s,
+(2f)
+tsℓ
+j ≤tsℓ
+i + τ d
+ij + W d 
+1 −vsℓ
+ij
+
+,
+∀(i, j) ∈Ed
+s,
+(2g)
+qωsℓ
+ij
+≤vsℓ
+ij Lmax,
+∀ω ∈Ω′, ∀(i, j) ∈Ed
+s,
+(2h)
+X
+(i,j)∈Eds
+qωsℓ
+ij
+−
+X
+(j,k)∈Eds
+qωsℓ
+jk = pωsℓ
+j
+,
+∀ω ∈Ω′, ∀j ∈Cs,
+(2i)
+X
+j∈Cs
+pωsℓ
+j
+≤Lmax,
+∀ω ∈Ω′,
+(2j)
+vsℓ
+ij ∈{0, 1} ,
+∀(i, j) ∈Ed
+s, ∀ℓ∈Ds,
+(2k)
+tsℓ
+j ≥0,
+∀j ∈Cs,
+(2l)
+qωsℓ
+ij
+≥0,
+∀ω ∈Ω′, ∀(i, j) ∈Ed
+s,
+(2m)
+pωsℓ
+j
+≥0,
+∀ω ∈Ω′, ∀j ∈Cs.
+(2n)
+The objective function in (2a) minimizes the reduced cost of a delivery drone route. That way,
+we can pick new routes to add to the main problem (R-RMP). All new routes need to respect
+the ﬂying range capabilities of a drone, and this is enforced in (2b). Constraints (2c) and (2d)
+state that a valid route is one that starts from the satellite station and visits each community
+location at most once. Constraints (2e) are traditional ﬂow preservation constraints at each of the
+community locations. Constraints (2f) and (2g) deﬁne the time that a drone can reach a community.
+Constraints (2h)–(2j) work together to ensure that the drone does not carry more load than its
+capacity Lmax and that the amount of product that a drone carries is reduced by the amount
+delivered in communities visited earlier in the route.
+We note here that the subproblem is posed for every satellite station s ∈S and every UAV
+ℓ∈Ds that originates from a truck stopped at s. This implies that the best route for the ﬁrst
+delivery drone picked from Ds would also be the best route for every other drone in Ds. To avoid
+generating the same route multiple times, and in order to identify a diverse set of candidate columns
+to enter into the restricted main problem, we design a heuristic approach by updating the list of
+communities to be visited for each subsequent pricing subproblem.
+Let Cs
+ℓbe the set of community nodes visited when solving the pricing subproblem for satellite
+12
+
+--- PDF PAGE 13 ---
+station s and drone ℓ. In mathematical terms, we have
+Cs
+ℓ=
+
+
+j ∈Cs :
+X
+(i,j)∈Eds
+vsℓ
+ij = 1
+
+
+.
+The update is quite simple: we drop all communities that are included in previously generated
+routes from Cs. Mathematically, for pricing subproblem ℓ, we update as follows:
+Cs ←Cs \
+( [
+ℓ′<ℓ
+Cℓ′
+s
+)
+,
+(3)
+after having solved all previous corresponding pricing subproblem for UAVs ℓ′ < ℓ.
+As an example, for the ﬁrst delivery drone in Ds we will consider the best route that can pass
+through any community in Cs. For the second delivery drone, though, we heuristically update Cs
+as Cs \ C1
+s, and then we further update Cs to Cs \
+ C1
+s ∪C2
+s
+
+, and so on.
+This results in obtaining solutions to the pricing subproblems faster, as well as obtaining distinct
+routes to use as columns in R-RMP, at the expense of higher route cost estimations.
+3.5
+Worst-case demand scenario generation
+In this subsection, we discuss the scenario generation subproblem, which determines the worst-case
+demand scenario for the current solution of the restricted main problem (R-RMP), the demand
+distribution, and the uncertainty budget.
+For every community c ∈C, let Qc be the average demand and let ˆQc be the maximum demand
+deviation that can be experienced in that location. The average demand can be estimated from
+census data that includes the number of people in a community, their socioeconomic information,
+their age. On the other hand, ˆQc is dictated by the origin of stochasticity in the problem. For
+example, disaster type, severity, or movement direction/progression will aﬀect the deviations we
+expect in post-disaster aid demand.
+We deﬁne yc as a binary variable that indicates whether
+a community c experiences this maximum deviation in demand. We also deﬁne Γ as the total
+uncertainty budget, as in the number of communities that can experience maximum deviations in
+demand simultaneously.
+Finally, we assume that the aﬀected area can be divided into a set of geographical regions A.
+We group the communities that fall in a region (i.e., are located within their boundary) in Ca, such
+that C = S
+a∈A
+Ca and Ca ∩Ca′ = ∅for a̸ = a′. Now, we similarly deﬁne Γa for every geographical
+region a ∈A as the uncertainty budget per geographical region. Introducing geographical regions,
+their associated boundaries, and individual uncertainty budgets Γa for them, is necessary in the
+disaster management setting, as the impact of a disaster can vary signiﬁcantly depending on the
+disaster characteristics and the location of a community. For example, depending on the direction
+and speed of movement of a hurricane, some areas may face the full-force of the devastation, while
+others may remain relatively safe.
+The uncertainty set can be written as:
+UQ =
+(
+Q ∈R|C| : ˜Qc = Qc + yc ˆQc, yc ∈{0, 1} ∀c ∈C,
+X
+c∈C
+yc ≤Γ,
+X
+c∈Ca
+yc ≤Γa, ∀a ∈A
+)
+.
+Since our problem has simple recourse, the second stage problem for determining the most violated
+scenarios can be formulated as a maximization problem. The optimal solution of the problem is
+denoted by OPT(ΓQ).
+13
+
+--- PDF PAGE 14 ---
+Letting ˜Qc = Qc + yc ˆQc and introducing Ψsℓ
+c
+= max
+ω∈Ω′
+P
+p∈Vs
+zsℓ
+p dωp
+sc (i.e., the maximum amount
+delivered at community c ∈C by a UAV ℓ∈Ds following a route p ∈Vs starting from satellite
+s ∈S over all current scenarios ω ∈Ω′), we have the following max-min problem for generating the
+worst-case scenario for the current solution:
+OPT(ΓQ) = max
+˜Q∈UQ
+min
+Rc
+X
+c∈C
+F D
+c Rc
+(4a)
+s.t.
+Rc +
+X
+s∈S
+X
+ℓ∈Ds
+Ψsℓ
+c ≥Qc + ˆQc,
+∀c ∈C,
+(4b)
+Rc ≥0,
+∀c ∈C.
+(4c)
+We observe that this bilevel formulation can be rewritten as a single maximization problem by
+dualizing the inner minimization problem. Let πc be the dual variables corresponding to constraints
+(4b). By the deﬁnition of the uncertainty set UQ we have that ˜Qc = Qc + yc ˆQc, which results in
+non-linearity due to the quantity ycπc in the dualized inner problem. Hence, we introduce δc = ycπc
+and the corresponding linearization constraints (see (5d)–(5g)) to obtain the ﬁnal mixed integer
+linear program of (5):
+max
+X
+c∈C
+
+Qcπc + δc ˆQc
+
+−
+X
+s∈S
+X
+ℓ∈Ds
+X
+c∈C
+πcΨsℓ
+c
+(5a)
+s.t.
+X
+c∈Ca
+yc ≤Γa,
+∀a ∈A,
+(5b)
+X
+c∈C
+yc ≤Γ,
+(5c)
+πc ≤F D
+c ,
+∀c ∈C,
+(5d)
+δc ≤πc,
+∀c ∈C,
+(5e)
+δc ≤F D
+c yc,
+∀c ∈C,
+(5f)
+δc ≥πc −F D
+c (1 −yc) ,
+∀c ∈C,
+(5g)
+yc ∈{0, 1} , πc ≥0, δc ≥0,
+∀c ∈C.
+(5h)
+3.6
+Algorithm
+We ﬁnish this subsection by recounting the steps on how the framework is solved. We also present
+a schematic ﬂow diagram of the algorithmic steps in Figure 7.
+Step 1
+We initialize an iteration counter (n), a lower (LB) and an upper bound (UB), and
+provide an initial scenario set (Ω′). Speciﬁcally, we set n = 1, LB = 0, UB = +∞, and Ω′ = ˆΩ,
+where ˆΩrepresents a scenario where each community has its average demand level Qc. We also
+generate an initial set of feasible routes for the delivery drones and add them to Vs, ∀s ∈S.
+Step 2
+We relax the variable integrality restrictions and solve a relaxed version of the restricted
+main problem (R-RMP from subsection 3.3) with the current set of routes Vs and the current set
+of scenarios Ω′. Solving, we obtain the duals θs, φsℓ, ξc, ρsℓ, αsc, βω
+c .
+14
+
+--- PDF PAGE 15 ---
+Figure 7: A schematic representation of the algorithm used to solve the robust 2EVRP problem
+we are tackling in our framework.
+Step 3
+We solve the pricing subproblem (from subsection 3.4) for each satellite s ∈S and each
+delivery drone ℓ∈Ds using the current scenario set Ω′ and the most recently obtained dual variable
+values. As described in subsection 3.4, we solve the subproblem for each drone in set Ds and update
+Cs as in (3) until either Cs = ∅or we have generated md routes. If ∃s, ℓsuch that RCsℓ≥0 (i.e.,
+with desired reduced cost), we add the corresponding routes to Vs in R-RMP.
+Step 4
+If RCsℓ≥0 for every s ∈S, ℓ∈Ds, then we go to Step 5. Otherwise, assuming there
+exists some ˆs, ˆℓsuch that RCˆsˆℓ< 0, we go back to Step 2 and resolve with the updated restricted
+set of routes Vs.
+Step 5
+We solve the relaxed R-RMP again, but now with the updated restricted route set Vs
+and the current scenario set Ω′. The main problem is now solved using the relax-and-ﬁx heuristic.
+First, we solve by relaxing the variables for the delivery drones (z space) and obtain the binary
+solution for the truck routes (x space). Next, we ﬁx the solutions for x and we solve with the
+integrality of z restored. The solutions to z are used to update Ψsℓ
+c as Ψsℓ
+c = max
+ω∈Ω′
+P
+p∈Vs
+zsℓ
+p dωp
+sc . The
+optimal objective function value for the restricted main problem is used as our new lower bound
+now, i.e.,
+LB =
+X
+s∈S
+X
+c∈C
+F T
+c T d
+sc +
+X
+c∈C
+F R
+c Jc + Y.
+Step 6
+We move to the second stage and solve the scenario generation subproblem. The obtained
+optimal objective function value OPT(ΓQ) is used to update the upper bound as follows:
+UB ←min
+(
+UB,
+X
+s∈S
+X
+c∈C
+F T
+c T d
+sc +
+X
+c∈C
+F R
+c Jc + OPT(ΓQ)
+)
+.
+15
+
+--- PDF PAGE 16 ---
+Step 7
+We now check our termination criterion based on the current values for our bounds.
+Speciﬁcally, we separate our discussion in two parts, depending on UB −LB.
+Step 7a
+For the current bounds, if UB −LB > ϵ, where ϵ is a user-deﬁned tolerance
+parameter, then the new demand scenario ω is added to Ω′. The corresponding demand of this
+scenario is given by Qω
+c = Qc + yc ˆQc. A new column is added for the variables Rω
+c and new rows
+are added according to constraints (1k)–(1l), and we go back to Step 2.
+Step 7b
+If UB −LB ≤ϵ, then the solutions with the current scenario set Ω′ are the ﬁnal
+robust truck and drone scheduling and routing decisions that can cover the worst-case demand
+scenario for the given demand distribution and uncertainty budget at minimum cost.
+4
+Results
+As mentioned in the Introduction, we are motivated by the humanitarian relief operations that need
+to take place in an area with numerous failures in its transportation, power, and communication
+networks. Hence, we present the applicability of our framework with a small case study based
+on generated data simulating emergency aid demand in the island of Puerto Rico after Hurricane
+Maria. In the following sections, we discuss our data generation process; we present our ﬁndings on
+computational runtime and measures of success of the operations, and perform a sensitivity analysis
+on drone parameters, i.e., the number of drones per truck and the drone ﬂying range capability.
+4.1
+Data generation
+We use the same datasets and data generation process as in [17]; that said, we introduce new
+parameters that are necessary to evaluate the robust framework. Speciﬁcally, we solve problems
+with number of communities |C| ∈{60, 80, 100, 120}. Each community represents a zip code of
+Puerto Rico. Since there are 173 zip codes in total, for each diﬀerent problem size (i.e., diﬀerent
+value of |C|) we randomly select out of those 173 zip codes. After selecting the communities that will
+have failed communications, we obtain average demand quantities Qc by normalizing the zip code
+population into a range of [2, 15] units. Finally, the maximum demand deviation that community
+c can experience, ˆQc is set at 0.5Qc, i.e., 50% of the expected demand.
+For the truck and drone details, we assume that mt = 4 (that is, 4 trucks), but we let md be
+equal to 6, 9, 10, and 14 drones per truck for the diﬀerent problem sizes (60, 80, 100, and 120
+aﬀected communities, respectively). Lmax, the maximum allowed carry load is set at 25 units; W d,
+the ﬂying range, is set at 35 miles. That said, we do investigate the eﬀect of the number of drones
+per truck in subsection 4.3.1 as well as the range W d in subsection 4.3.2. All distances that the
+drones traverse are calculated based on the corresponding endpoints geodesic distances (“as the
+crow ﬂies”). Both truck and drone velocities are deterministic and equal to 60 miles per hour.
+We note here that drone velocities are not deterministic, nor constant, and rely on the weather
+conditions among other environmental characteristics. Velocities and ranges have been identiﬁed
+as important future research avenues in the literature [42] and in our future work recommendations
+in Section 5.
+We then discuss cost selection. We have three costs associated with our operations: (a) delivery
+delay cost F T
+c
+which is set at $1/minute, (b) failure to reach a community F R
+c
+which is set at
+$10000/community, and (c) failure to fulﬁll all of the demand in a community F D
+c which is randomly
+generated in $ [10, 1000] per unit for each community. This aims to address that some items are
+very important (e.g., epi-pens) and failing to fulﬁll them will have more serious repercussions.
+We ﬁnish the data description with the uncertainty budget. We consider Γ ∈{30%, 50%, 70%}.
+For the individual geographical region uncertainty budget Γa, ∀a ∈A, we divide Puerto Rico into
+16
+
+--- PDF PAGE 17 ---
+10 mutually exclusive subregions based on the longitudinal values (from east to west) and then set
+Γa = 50% for each subregion.
+4.2
+Numerical experiments
+We implemented the framework using AMPL and CPLEX. We use a Dual Intel Xeon Processor (12
+Core, 2.3GHz Turbo) computer with 64 GB of RAM. Furthermore, for each community size (|C|)
+and budget uncertainty (Γ), we generate 5 instances at random. We present the mean and standard
+deviation of our results from all of these experiments in Table 1. We present ﬁve interesting metrics
+for the performance of our framework:
+1. CPU Time (in seconds) reveals the computational time required.
+2. # Scenarios presents the number of scenarios that are generated to identify the optimal robust
+decisions.
+3. Cost (in $) is the objective function value obtained.
+4. Unﬁlﬁlled demand (in %) keeps track of the demand that was unfulﬁlled after performing the
+robust routes.
+5. Delay (in minutes) shows the time it takes until a community is reached.
+For all the metrics, we present both the average from 5 experiments as well as the standard devia-
+tion.
+Table 1: A summary of the results from the numerical experiment for diﬀerent number of aﬀected
+communities (|C|) and uncertainty budget (Γ). For all results, we show the average and standard
+deviations from 5 diﬀerent runs.
+Instance
+CPU time (sec)
+# Scenarios
+Cost ($)
+Unfulﬁlled
+demand (%)
+Delay (min)
+|C|
+Γ (%)
+µ
+σ
+µ
+σ
+µ
+σ
+µ
+σ
+µ
+σ
+60
+30
+1131.67
+786.37
+4.33
+0.47
+11112.17
+6355.38
+5.15
+5.42
+63.33
+8.87
+50
+784.33
+515.94
+3.50
+0.50
+8919.17
+3538.31
+3.65
+3.38
+57.75
+11.50
+70
+526.50
+325.08
+3.17
+0.37
+8467.50
+5226.64
+3.30
+4.36
+60.04
+13.93
+80
+30
+2504.83
+789.42
+4.17
+0.37
+11571.50
+2545.54
+4.61
+2.01
+71.56
+7.58
+50
+1024.17
+320.07
+3.00
+0.00
+9226.17
+2982.80
+2.56
+2.53
+72.58
+8.17
+70
+1141.00
+320.88
+3.17
+0.37
+9232.00
+2412.41
+2.59
+1.89
+73.55
+9.03
+100
+30
+4050.00
+1643.08
+4.33
+0.47
+12252.00
+1320.08
+3.12
+0.75
+100.04
+11.69
+50
+1812.33
+581.74
+3.00
+0.00
+9649.67
+1739.32
+1.42
+0.91
+92.08
+9.98
+70
+1773.67
+531.38
+3.17
+0.37
+9490.00
+1838.55
+1.38
+0.98
+90.88
+8.61
+120
+30
+5417.33
+1580.40
+4.17
+0.69
+16341.50
+954.90
+3.46
+1.45
+131.52
+34.06
+50
+3712.33
+1362.32
+3.17
+0.37
+11204.83
+1934.51
+1.33
+0.98
+120.13
+19.60
+70
+3907.83
+1615.97
+3.33
+0.75
+11561.67
+2780.54
+1.43
+1.18
+120.74
+29.48
+We see that in all of our experiments, the number of scenarios required before we can identify
+the optimal robust decisions is very small, both on average and when considering the deviations.
+We also observe that problem instance size does not really play a role in the number of scenarios
+generated.
+17
+
+--- PDF PAGE 18 ---
+Figure 8: The four (geographically organized) randomly generated instances for the: (a) northwest-
+ern part, (b) northeastern part, (c) southwestern part, and (d) southeastern part of Puerto Rico.
+In addition, all three metrics (cost of operations, proportion of unfulﬁlled demand, delay in
+reaching a community) all decrease as the uncertainty budget increases. Here, average proportion
+of unfulﬁlled demand is calculated by taking the average of unfulﬁlled demand proportions in all
+considered scenarios. More speciﬁcally, we ﬁnd that an uncertainty budget of 30% results in higher
+values for all these metrics. When the uncertainty budget is 50% and 70%, the diﬀerence between
+the average values for total cost, proportion of unfulﬁlled demand, and average delay time is very
+small. This is attributed to the area uncertainty budget Γa, which is set at 50%.
+4.3
+Sensitivity analysis
+We also design experiments to investigate the eﬀect of drone parameters on the routing decisions
+and the metrics identiﬁed earlier (operational cost, proportion of unfulﬁlled demand, delay to
+community). Speciﬁcally, we want to investigate whether more drones per truck would result in
+faster, more eﬃcient operations. We also investigate whether the ﬂying range of the drones is an
+important parameter.
+To do that, we focus on |C| = 60 communities per instance and generate 5 diﬀerent instances,
+per geographical region. The ﬁrst four instances are randomly generated by selecting communi-
+ties across Puerto Rico, however with higher probability in speciﬁc areas at a time.
+The four
+instances focus on the: (a) northwestern part of the island, (b) northeastern part of the island,
+(c) southwestern part of the island, and (d) southeastern part of the island, respectively.
+The
+instances generated for this experiment are presented in Figure 8. The ﬁfth instance is constructed
+by randomly selecting locations without any geographical preference (i.e., all locations are equally
+probably selected).
+We also introduce a new attribute, i.e., disaster level to represent the disaster impact/strength,
+which in turn controls the maximum demand deviation a geographical area can experience. For
+simplicity, we only consider three levels of disaster impact. In the ﬁrst level (Level 1), commu-
+nities can experience maximum deviation that is 50% of the average demand irrespective of their
+geographical locations. In Levels 2 and 3, the geographical location of a community dictates the
+18
+
+--- PDF PAGE 19 ---
+Figure 9: Variation in average unfulﬁlled demand and average delay to reach a community as the
+number of delivery drones per truck changes.
+maximum deviation that it can experience. We use the same 10 geographical areas introduced ear-
+lier (i.e., Puerto Rico consists of 10 mutually exclusive subregions based on the longitudinal values).
+In disaster level 2, the highest demand deviation (90% of the average demand) is experienced by
+the eastern-most area, and it gradually decreases (by 10% from one area to the next) from east to
+west, with the least deviation (0% of the nominal demand) being experienced by the western-most
+area. In disaster level 3, we reverse the direction. Then, we set the area uncertainty budget Γa at
+100%, which indicates that every community in geographical area a can experience simultaneous
+demand deviation in a scenario.
+4.3.1
+Impact of number of drones per truck
+We test three cases for the number of drones per truck: md = 4, md = 6, and md = 8. The main
+result is that (as expected), as the number of drones per truck increase, all metrics improve. That
+said, it is interesting to note that the rate of improvement depends on the disaster impact level and
+the uncertainty budget.
+Speciﬁcally, in Figure 9, we observe that the rate of decrease in the average unfulﬁlled demand
+with the number of delivery drones is very similar for Levels 2 and 3. However, for disaster level
+2, a higher proportion of demand is unfulﬁlled. This is due to geography of Puerto Rico, where a
+bigger population lives in communities in the eastern areas. As a reminder, disaster level 2 results
+in higher demand deviations in these areas.
+We also observe a slight diﬀerence in the rate of decrease in unfulﬁlled demand between un-
+certainty budget of 30% and 70% in Figures 9(a) and 9(c). When the uncertainty budget is equal
+to 30%, we see a decrease in the average proportion of unfulﬁlled demand when increasing the
+19
+
+--- PDF PAGE 20 ---
+number of drones from 4 to 6. That said, adding more drones per truck only slightly reduce the
+unfulﬁlled demand. We discussed earlier that lower uncertainty budget results in higher number of
+scenarios to be generated, where each scenario is characterized by fewer communities experiencing
+demand deviation. This results in demand scenarios, where fulﬁlment is more constrained by the
+drone ﬂying range rather than by the drone load capacity. Without increasing the ﬂying range,
+additional drones only slightly improve the demand fulﬁlment.
+However, we see in Figure 9(b) that there is a reduction in the average delay in reaching
+communities as we increase the number of drones. Again, we see diﬀerent rates of decrease in
+the average delay: for disaster level 3, where communities in the western areas experience higher
+demand deviation, the rate of decrease is very small.
+This is because the communities in the
+western areas are sparsely located and farther apart. Hence, they require longer times to reach
+from nearby satellite stations. This is why increasing the number of drones does not necessarily
+result in a reduction in the average delay time. In contrast, for disaster level 2, more densely packed
+communities experience higher demand deviation and with the increase of number of drones comes
+a large reduction in the average delay to reach a community. For the case of uncertainty budget
+equal to 70%, few scenarios with communities experiencing high demand deviation are generated.
+The resulting demand scenarios are more constrained by drone load capacity than by ﬂying range.
+As the number of drones is increased from 4 to 6, the proportion of unfulﬁlled demand and the
+average delay time both decreases. The proportion of unfulﬁlled demand is close to 0% when more
+drones are added while the corresponding average delay time remains almost unchanged.
+4.3.2
+Impact of range of drones
+We also study the eﬀect of drone ﬂying range on the average proportion of unfulﬁlled demand and
+average delay time and we present our ﬁndings in Figures 10 and 11. We note that when the number
+of delivery drones carried by each truck is ﬁxed, the proportion of unfulﬁlled demand decreases as
+we increase the drone ﬂying range.
+When using 8 drones per truck, both disaster levels 2 and 3 (as seen in Figures 10(a) and 10(c))
+reveal that the proportion of unfulﬁlled demand remains higher for the 30% budget uncertainty
+cases as compared to the 70% uncertainty budget cases. This is consistent with our explanations
+and ﬁndings in Figure 9. Comparing Figures 10(b) and 10(d), we also observe that the average delay
+in reaching communities decreases with the increase in drone ﬂying range. The rate of increase
+is higher in the case of uncertainty budget of 30% and disaster level 2. We also ﬁnd that once
+the average unfulﬁlled proportion of demand reaches 0%, the average delay time remains almost
+unchanged even when the drone ﬂying range is increased. This is a similar ﬁnding to our observation
+when investigating the number of drones per truck in subsection 4.3.1.
+The diﬀerence between cases with uncertainty budget 30% and 70% in terms of the average
+proportion of unfulﬁlled demand is evident in Figure 10, where we used 8 delivery drones in each
+truck. When we change the number of drones per truck, and use 6 delivery drones instead of 8, the
+diﬀerence is made even smaller, as revealed pictorially in Figure 11.
+In Figures 11(b) and 11(d), we see that the average delay time decreases as the ﬂying range
+increases, whereas an uncertainty budget of 30% leads to larger average delays to reach communities.
+However, we also ﬁnd that the diﬀerence between average proportions of unfulﬁlled demand given
+by 30% and 70% uncertainty budgets is smaller than the case with 8 delivery drones in each truck.
+For both disaster level 2 in Figure 11(a), and disaster level 3 in Figure 11(c), as the average
+unfulﬁlled proportion of demand decreases, we observe the corresponding increase in the average
+delay in reaching communities.
+20
+
+--- PDF PAGE 21 ---
+Figure 10: Variation in average unfulﬁlled demand and average delay with delivery drone ﬂying
+range (8 delivery drones per truck).
+Figure 11: Variation in average unfulﬁlled demand and average delay with delivery drone ﬂying
+range (6 delivery drones per truck).
+21
+
+--- PDF PAGE 22 ---
+5
+Conclusions
+In this work, we study a variant of the two-echelon vehicle routing problem (2EVRP) with UAVs
+or drones with uncertain demand, a feature that is very useful in the context of humanitarian
+logistics in the aftermath of a disaster. The lack of stable infrastructure (transportation, power,
+communications) makes both reaching and identifying aﬀected communities very diﬃcult. Following
+a disaster, the demand for emergency supplies (including small medical kits, epi-pens, dry food and
+water) is uncertain in our setup. And, even if we were able to obtain exact demands, reaching
+populations is a hurdle when the transportation network is failing. Our work successfully addresses
+both these issues faced by humanitarian logistics providers.
+To handle this special case of humanitarian aid delivery problem, we propose a unique 2EVRP
+framework, where trucks (the ﬁrst echelon vehicles) carrying drones travel along the still functional
+roads of the transportation network and make intermittent stops at designated locations (satellites).
+When a truck stops at one of those designated locations, delivery drones (the second echelon
+vehicles) are dispatched for aid package deliveries in the disaster aﬀected communities.
+We develop a novel computational framework to handle the demand uncertainty in the resulting
+2EVRP. In the proposed framework, we design a two-stage robust computational approach. We
+develop a column-and-constraint-generation approach for worst case demand scenario generation
+for a given truck and drone routing decision. Moreover, we also develop a CG-based decomposition
+scheme and heuristic to generate drone routes for a set of demand scenarios eﬃciently. We combine
+the column generation scheme within a column-and-constraint-generation approach to determine
+robust decisions regarding truck and drone routes, time to visit communities, and the quantities of
+aid materials delivered in these communities.
+We validate our framework with real-world size dataset that simulates the demand for emer-
+gency aid in diﬀerent areas in Puerto Rico after a disaster. From our numerical experiments, we
+gather managerial insights into the impacts of various parameters on two of the most important
+measures of eﬃciency in post-disaster emergency aid delivery operations: the average proportion of
+unfulﬁlled demand and the average delay in reaching demand locations. Our framework and com-
+putational experiments will help humanitarian logistics providers in making decisions considering
+the geospatial impact of a disaster and the population density distribution of the disaster aﬀected
+region. Humanitarian organizations can also build upon our framework to incorporate problem
+speciﬁc characteristics, for example, prioritizing expedient aid delivery, ensuring equity, etc. into
+the decision making.
+In our 2EVRP framework, we consider only one source of uncertainty, i.e., demand for emergency
+aid at the aﬀected communities. During real-world humanitarian logistics operations, several other
+parameters are of a stochastic nature. For example, we consider the ﬂying time range and load
+carrying capacities of drones as deterministic.
+These two properties of drones are signiﬁcantly
+impacted by weather conditions during delivery operations and have been identiﬁed as important
+future work avenues in the literature (see, e.g., [42]). We plan to extend our study by incorporating
+uncertain weather conditions in terms of stochastic ﬂying range and load carrying capacity of drones
+in future work.
+References
+[1] N. Agatz, P. Bouman, and M. Schmidt, Optimization approaches for the traveling salesman
+problem with drone, Transp. Sci. 52 (2018), 965–981.
+[2] R. Banomyong, P. Varadejsatitwong, and R. Oloruntoba, A systematic review of humanitarian
+22
+
+--- PDF PAGE 23 ---
+operations, humanitarian logistics and humanitarian supply chain performance literature 2005
+to 2016, Ann. Oper. Res. 283 (2019), 71–86.
+[3] B. Behdani and J.C. Smith, An integer-programming-based approach to the close-enough trav-
+eling salesman problem, INFORMS J. Comput. 26 (2014), 415–432.
+[4] R.W. Bent and P. Van Hentenryck, Scenario-based planning for partially dynamic vehicle
+routing with stochastic customers, Oper. Res. 52 (2004), 977–987.
+[5] P. Bouman, N. Agatz, and M. Schmidt, Dynamic programming approaches for the traveling
+salesman problem with drone, Networks 72 (2018), 528–542.
+[6] U. Breunig, V. Schmid, R.F. Hartl, and T. Vidal, A large neighbourhood based heuristic for
+two-echelon routing problems, Comput. Oper. Res. 76 (2016), 208–225.
+[7] A.M. Campbell and B.W. Thomas, Probabilistic traveling salesman problem with deadlines,
+Transp. Sci. 42 (2008), 1–21.
+[8] A.M. Caunhye, X. Nie, and S. Pokharel, Optimization models in emergency logistics: A liter-
+ature review, Socio-economic planning sciences 46 (2012), 4–13.
+[9] Y.S. Chang and H.J. Lee, Optimal delivery routing with wider drone-delivery areas along a
+shorter truck-route, Expert Syst. with Appl. 104 (2018), 307–317.
+[10] Z.L. Chen and H. Xu, Dynamic column generation for dynamic vehicle routing with time
+windows, Transp. Sci. 40 (2006), 74–88.
+[11] T.G. Crainic, N. Ricciardi, and G. Storchi, Models for evaluating and planning city logistics
+systems, Transp. Sci. 43 (2009), 432–454.
+[12] R. Cuda, G. Guastaroba, and M.G. Speranza, A survey on two-echelon routing problems,
+Comput. Oper. Res. 55 (2015), 185–199.
+[13] J.R. Current and D.A. Schilling, The covering salesman problem, Transp. Sci. 23 (1989), 208–
+213.
+[14] M. Dell’Amico, R. Montemanni, and S. Novellani, Modeling the ﬂying sidekick traveling sales-
+man problem with multiple drones, Networks 78 (2021), 303–327.
+[15] L. Di Puglia Pugliese, G. Macrina, and F. Guerriero, Trucks and drones cooperation in the
+last-mile delivery process, Networks 78 (2021), 371–399.
+[16] T.I. Faiz, C. Vogiatzis, and M. Noor-E-Alam, A column generation algorithm for vehicle
+scheduling and routing problems, Comput. Indus. Eng. 130 (2019), 222–236.
+[17] T.I. Faiz,
+C. Vogiatzis,
+and M. Noor-E-Alam,
+Computational approaches for solving
+two-echelon vehicle and UAV routing problems for post-disaster humanitarian operations,
+https://arxiv.org/abs/2001.06456 (2022).
+[18] Federal Communications Commission, 2018. Hurricane Maria. Accessed: 2018-01-11.
+[19] M. Gendreau, G. Laporte, and R. S´eguin, An exact algorithm for the vehicle routing problem
+with stochastic demands and customers, Transp. Sci. 29 (1995), 143–155.
+23
+
+--- PDF PAGE 24 ---
+[20] M. Gendreau, G. Laporte, and F. Semet, The covering tour problem, Oper. Res. 45 (1997),
+568–576.
+[21] Z. Ghelichi, M. Gentili, and P.B. Mirchandani, Logistics for a ﬂeet of drones for medical item
+delivery: A case study for louisville, ky, Comput. Oper. Res. 135 (2021), 105443.
+[22] B. Golden, Z. Naji-Azimi, S. Raghavan, M. Salari, and P. Toth, The generalized covering
+salesman problem, INFORMS J. Comput. 24 (2012), 534–553.
+[23] J. Gonzalez-Feliu, G. Perboli, R. Tadei, and D. Vigo, The two-echelon capacitated vehicle
+routing problem, Tech. report, HAL, 2008.
+[24] D.J. Gulczynski, J.W. Heath, and C.C. Price, The close enough traveling salesman problem:
+A discussion of several heuristics, Perspectives Oper. Res. (2006), 271–283.
+[25] Q.M. Ha, Y. Deville, Q.D. Pham, and M.H. H˜A , On the min-cost traveling salesman problem
+with drone, Transp. Res. Part C: Emerging Technologies 86 (2018), 597–621.
+[26] V.C. Hemmelmayr, J.F. Cordeau, and T.G. Crainic, An adaptive large neighborhood search
+heuristic for two-echelon vehicle routing problems arising in city logistics, Comput. operations
+research 39 (2012), 3215–3228.
+[27] L.M. Hvattum, A. Løkketangen, and G. Laporte, Solving a dynamic and stochastic vehicle
+routing problem with a sample scenario hedging heuristic, Transp. Sci. 40 (2006), 421–438.
+[28] M. Jepsen, S. Spoorendonk, and S. Ropke, A branch-and-cut algorithm for the symmetric
+two-echelon capacitated vehicle routing problem, Transp. Sci. 47 (2013), 23–37.
+[29] P. Kitjacharoenchai, M. Ventresca, M. Moshref-Javadi, S. Lee, J.M. Tanchoco, and P.A.
+Brunese, Multiple traveling salesman problem with drones: Mathematical model and heuris-
+tic approach, Comput. Indus. Eng. 129 (2019), 14–30.
+[30] G. Kov´acs and K.M. Spens, Humanitarian logistics in disaster relief operations, Int. journal
+physical distribution logistics management (2007).
+[31] A. Leiras, I. de Brito Jr, E.Q. Peres, T.R. Bertazzo, and H.T.Y. Yoshizaki, Literature review of
+humanitarian logistics research: trends and challenges, J. Humanitarian Logist. Supply Chain
+Manage. (2014).
+[32] R. Liu, Y. Tao, Q. Hu, and X. Xie, Simulation-based optimisation approach for the stochastic
+two-echelon logistics problem, Int. J. Production Res. 55 (2017), 187–201.
+[33] T. Liu, Z. Luo, H. Qin, and A. Lim, A branch-and-cut algorithm for the two-echelon capacitated
+vehicle routing problem with grouping constraints, Eur. J. Oper. Res. 266 (2018), 487–497.
+[34] Los Angeles Times, 2017. In one Puerto Rico mountain town, a wall of mud came crashing
+down. Accessed: 2018-01-12.
+[35] A. Masone, S. Poikonen, and B.L. Golden, The multivisit drone routing problem with edge
+launches: An iterative approach with discrete and continuous improvements, Networks (2022).
+[36] C.C. Murray and A.G. Chu, The ﬂying sidekick traveling salesman problem: Optimization of
+drone-assisted parcel delivery, Transp. Res. Part C: Emerging Technologies 54 (2015), 86–109.
+24
+
+--- PDF PAGE 25 ---
+[37] L. ¨Ozdamar and O. Demir, A hierarchical clustering and routing procedure for large scale
+disaster relief logistics planning, Transp. Res. Part E: Logist. Transp. Review 48 (2012), 591–
+602.
+[38] L. ¨Ozdamar, E. Ekinci, and B. K¨u¸c¨ukyazici, Emergency logistics planning in natural disasters,
+Ann. operations research 129 (2004), 217–245.
+[39] G. Perboli and R. Tadei, New families of valid inequalities for the two-echelon vehicle routing
+problem, Electron. notes discrete mathematics 36 (2010), 639–646.
+[40] G. Perboli, R. Tadei, and E. Fadda, New valid inequalities for the two-echelon capacitated
+vehicle routing problem, Electron. notes discrete mathematics 64 (2018), 75–84.
+[41] G. Perboli, R. Tadei, and D. Vigo, The two-echelon capacitated vehicle routing problem: Models
+and math-based heuristics, Transp. Sci. 45 (2011), 364–380.
+[42] S. Poikonen and J.F. Campbell, Future directions in drone routing research, Networks 77
+(2021), 116–126.
+[43] S. Poikonen and B. Golden, The mothership and drone routing problem, INFORMS J. Comput.
+32 (2020), 249–262.
+[44] S. Poikonen and B. Golden, Multi-visit drone routing problem, Comput. Oper. Res. 113 (2020),
+104802.
+[45] S. Poikonen, B. Golden, and E.A. Wasil, A branch-and-bound approach to the traveling sales-
+man problem with a drone, INFORMS J. Comput. 31 (2019), 335–346.
+[46] S. Poikonen, X. Wang, and B. Golden, The vehicle routing problem with drones: Extended
+models and connections, Networks 70 (2017), 34–43.
+[47] F.A. Santos, A.S. da Cunha, and G.R. Mateus, Branch-and-price algorithms for the two-
+echelon capacitated vehicle routing problem, Optim. Lett. 7 (2013), 1537–1547.
+[48] F.A. Santos, G.R. Mateus, and A.S. da Cunha, A branch-and-cut-and-price algorithm for the
+two-echelon capacitated vehicle routing problem, Transp. Sci. 49 (2015), 355–368.
+[49] D. Schermer, M. Moeini, and O. Wendt, A branch-and-cut approach and alternative formula-
+tions for the traveling salesman problem with drone, Networks 76 (2020), 164–186.
+[50] I. Sungur, Y. Ren, F. Ord´o˜nez, M. Dessouky, and H. Zhong, A model and algorithm for the
+courier delivery problem with uncertainty, Transp. Sci. 44 (2010), 193–205.
+[51] S.A. Voccia, A.M. Campbell, and B.W. Thomas, The probabilistic traveling salesman problem
+with time windows, EURO J. Transp. Logist. 2 (2013), 89–107.
+[52] K. Wang, S. Lan, and Y. Zhao, A genetic-algorithm-based approach to the two-echelon capac-
+itated vehicle routing problem with stochastic demands in logistics service, J. Oper. Res. Soc.
+68 (2017), 1409–1421.
+[53] X. Wang, S. Poikonen, and B. Golden, The vehicle routing problem with drones: Several worst-
+case results, Optim. Lett. 11 (2017), 679–697.
+[54] Washington Post, 2017. Parts of Puerto Rico have been in the dark. Accessed: 2017-12-26.
+25

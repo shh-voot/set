@@ -1,0 +1,1336 @@
+--- PDF PAGE 1 ---
+Multi-Depot Multi-Trip Vehicle Routing with Total
+Completion Time Minimization
+Tiziana Calamoneri1, Federico Cor`o2, Simona Mancini3
+1Universit`a di Roma La Sapienza, Roma, Italy, calamo@di.uniroma1.it
+2Missouri University of Science and Technology, Rolla, US,
+federico.coro@mst.edu
+3University of Klagenfurt, Department of Operations, Energy, and
+Environmental Management, Universit¨atsstraße 65-67, 9020 Klagenfurt,
+Austria. simona.mancini@aau.at
+3University of Eastern Piedmont, Department of Science, Innovation and
+Technology, Via Teresa Michel 11, 15121 Alessandria, Italy. ,
+simona.mancini@uniupo.it
+Abstract
+Unmanned aerial vehicles (UAVs) are aircraft whose ﬂights can be fully
+autonomous without any provision for human intervention. One of the most
+useful and promising domains where UAVs can be employed is natural disaster
+management.
+In this paper, we focus on an emergency scenario and propose the use of a
+ﬂeet of UAVs that help rescue teams to individuate people needing help inside
+an aﬀected area. We model this situation as an original graph theoretical prob-
+lem called Multi-Depot Multi-Trip Vehicle Routing Problem with Total Comple-
+tion Times minimization (MDMT-VRP-TCT); we go through some problems
+already studied in the literature that appear somehow similar to it and highlight
+the diﬀerences, propose a mathematical formulation for our problem as a MILP,
+design a matheuristic framework to quickly solve large instances, and experi-
+mentally test its performance. Beyond the proposed application, our solution
+works in any case in which a multi-depot multi-trip vehicle routing problem
+must be solved.
+1
+Introduction
+Unmanned aerial vehicles (UAVs) are aircraft whose ﬂights can be fully autonomous
+without any provision for human intervention. UAVs were originally developed for
+military applications, but now that control technologies have improved and costs
+have decreased, their use has found a wide range of applications in many civilian
+1
+arXiv:2207.06155v1  [math.OC]  13 Jul 2022
+
+--- PDF PAGE 2 ---
+and commercial sectors, such as weather monitoring, forest ﬁre detection, traﬃc
+control, plant disease detection, cargo transport, patrolling, emergency search and
+rescue, etc. (e.g. see [GBM+16, LHZ19, SZA14, TAZJ15, VV14]). One of the most
+useful and promising domains where UAVs can be employed is natural disaster
+management. Recently, many papers have been published on this topic ([CCM22,
+EN16, ENCA17, EN19, LMU+19, ZZZ18] represents a not exhaustive list).
+In this paper, we focus on an emergency scenario due to a natural disaster (e.g.,
+an earthquake, a volcano’s eruption, a tsunami, etc.) and propose a possible use of
+a ﬂeet of UAVs to help rescue teams to individuate people needing help inside an
+aﬀected area.
+As an example, in our country, where there are relatively few cities and many
+towns and villages, right after an earthquake, typically diverse civil defence rescue
+teams rush from the vicinity to the most aﬀected area. For more than a decade, the
+civil defense can quickly put up a private broadband emergency wireless network to
+make up for the probable disruption of public communication networks. So, they can
+arrange their bases in diﬀerent places around the aﬀected area and communicate.
+We can hence assume that the UAVs initially take oﬀfrom a number of bases
+(multi-depot), where they return to substitute their batteries and leave for a new
+tour until all aﬀected sites in the disaster area have been ﬂown over. In this context,
+it is especially important to make the most of all the available UAVs: each of them
+must travel possibly many times returning to depots to substitute their batteries and
+leave for a new tour (multi-trip) and overﬂy the whole area in the shortest possible
+time. Moreover, in order to save as many lives as possible, the most important
+objective is to complete the job in the shortest possible time (min Total Completion
+time).
+Hence, we study here the Multi-Depot Multi-Trip Vehicle Routing Problem with
+Total Completion Time minimization (MDMT-VRP-TCT). The resulting optimiza-
+tion problem is original, as in the literature these three characteristics can be found
+separately, but never all together. Indeed, many problems having similarities with
+ours can be found, but they also present essential diﬀerences.
+The rest of this paper is organized as follows: the next section is devoted to
+the literature review, with a list of already studied problems that appear somehow
+similar to ours but are in fact very diﬀerent.
+In Section 3, we model MDMT-
+VRP-TCT as a MILP, then we discuss a couple of possible modiﬁcations to the
+problem deﬁnition and their consequent impact on the solution. In Section 4 we
+propose a matheuristic framework to face reasonably large instances. In Section 5,
+we experimentally compare its performance ﬁrst w.r.t. the exact model (on small
+instances) and then w.r.t.
+two heuristics present in the literature, opportunely
+modiﬁed as the problems they address are not exactly the same (in fact, are special
+cases of ours, i.e. without battery constraints and with a single depot, respectively),
+ﬁnally we perform some further analyses of the matheuristic. Section 6 concludes
+the paper with a description of some future perspectives.
+2
+
+--- PDF PAGE 3 ---
+2
+Literature Review
+Before modeling our problem, we list here a number of already studied problems
+similar to ours that, for some reason, cannot be exploited for solving our application.
+The multi-trip Vehicle Routing Problem (VRP) has been exploited to model
+some speciﬁc logistics problems. For example, nowadays the use of electric vehicles
+or small-sized vans is encouraged in order to decrease the use of heavy trucks in
+city centers, but these vehicles have a time range typically shorter than the working
+day due to, respectively, limited autonomy and capacity. Another relevant logistics
+application that can be modeled as a multi-trip, is the Container Drayage Problem,
+[BMPP21], in which vehicles must fulﬁll a set of pick-up and delivery requests,
+each one corresponding to a container.
+In the European Union, for road safety
+reasons, a truck is allowed to carry at most two containers simultaneously. Thus,
+each trip can visit at most four customers (two deliveries and two pick-ups). For this
+reason, trips are generally short and have a limited duration. Therefore, vehicles
+can perform several trips during the same working day. Both these situations are
+modeled as a Multi-Trip Vehicle Routing Problem (MTVRP, see e.g. [CAF16b]):
+the constraints are very similar to the ones imposed by the battery of UAVs but,
+beyond the similarities of constraints, the objective function to be minimized is the
+total cost, instead of the completion time.
+In the survey paper [CAF16a], four, three, and two index mathematical formu-
+lations are presented, depending on considering both the vehicle and the trip index,
+only the vehicle index, neither of the two, respectively. Regarding the exact ap-
+proaches, both branch-and-cut [Kar15] and branch-and-price [MRT13] algorithms
+have been proposed. Regarding the heuristics, two-stage algorithms (e.g., [TLG96],
+[PS03]) and meta-heuristics, (e.g., tabu search [BM98] and population-based algo-
+rithms [CAFV14]) have been also proposed.
+A problem closely related to MTVRP is the multi-period VRP. While in the
+former one the decision maker implicitly decides which customers to serve ﬁrst
+setting the order in which trips assigned to the same vehicle are executed, in the
+latter one the time-horizon is split into several disjointed periods.
+The decision
+maker assigns each customer to a period and, based on those assignments, provides a
+routing plan for each period. A survey paper [BRVN16] shows an increasing interest
+of the researchers especially since 2009 (e.g., [GGW09]): both exact approaches
+(e.g., [DCGR15]) and meta-heuristics, like Variable Large Neighborhood Search
+(e.g., [HDH09]) and Adaptive Large Neighborhood Search (e.g., [Man16]), have
+been proposed.
+The multi-depot VRP has been broadly addressed in the literature related to lo-
+gistics problems, in the last three decades. The basic version introduced in [RLB96],
+in which each vehicle is assigned to a depot, has been extended by introducing sev-
+eral additional features, among those: the possibility for vehicles to end a route
+in a diﬀerent depot with respect to the one from which it started, [Man16], the
+3
+
+--- PDF PAGE 4 ---
+collaboration among diﬀerent companies, each one owning a subset of the depots,
+[ZWH+22], the possibility of replenishment at depots during the route, [CCL07] and
+[TZK08]. An extended review of multi-depot VRP variants and methods used to
+address them can be found in [VCG+11].
+Literature about multi-depot multi-trip VRP is very limited. The ﬁrst paper
+that simultaneously addresses these two features, is [MHBD16], where the authors
+study an application in the dial-a-ride context. Most recently, paper [ZMW+20]
+introduces an extension with release dates and time windows, while [SY22] considers
+a heterogeneous ﬂeet of vehicles. All these papers minimize the total travel distance.
+Almost all works on VRP in the literature consider total travel times (or dis-
+tances) minimization, while completion time minimization, despite its practical rel-
+evance, has been considered only in relatively few papers.
+Namely, the authors
+of [AJS15] investigate completion time minimization in parcel delivery with release
+dates, while the ones of [PWG17] deal with UAV utilization for last-mile delivery. In
+[TMK15], the authors study an application concerning ambulance routing in disas-
+ter response. An application in rescue operations is addressed in [CCM22], in which
+nodes are characterized by diﬀerent levels of priority and the goal is to minimize the
+weighted completion time.
+Our problem can be naturally solved in two steps, i.e., ﬁrst ﬁnding a number of
+tours whose union covers the set of target nodes and second determining an oppor-
+tune scheduling assigning each cycle to a UAV. If we focus on the main subproblem
+of ﬁnding a number of battery constrained trips whose union covers the set of target
+nodes, in the literature we ﬁnd many well-known graph problems asking to cover
+the nodes of an edge-weighted graph with tours. A problem requiring to ﬁnd a
+bounded rooted cycle cover in which all tours pass through a single depot and have
+a bounded weight is RMCCP (Minimum Rooted Cycle Cover Problem), but it aims
+at minimizing the number of cycles. Instead, in RMMCCP (Rooted Min-Max Cycle
+Cover Problem) the optimization function is the completion time but the maximum
+number of cycles is bounded by a parameter given in input. These two problems
+have been proved to be approximable [FHK76, FS14, NR12, YL16].
+Finally, in
+[CT22] a connection between the approximability of a problem arising by a UAV
+application simpler than ours and these two problems is established.
+We conclude this literature roundup by observing that the employment of UAVs
+has grown exponentially in the last few years. The set of application ﬁelds is very
+broad and varies from civilian applications (such as logistics, surveillance, photog-
+raphy) to military ones (bomb dropping, war zone medical supply, enemy spying).
+They can be used either alone or in combination with trucks. In the former case,
+ﬂying vehicles start from the depot, visit a subset of nodes and return to the depot.
+In the second case, a ﬂeet of trucks is deployed to visit a subset of nodes; trucks are
+equipped with one or more UAVs that can start from the trucks, visit some nodes
+and return to the truck at ﬁxed rendezvous points, [MSBK22] . For a complete and
+detailed survey on this topic, we refer the reader to [MDPPGL20]. Paper [WS19]
+4
+
+--- PDF PAGE 5 ---
+addresses a speciﬁc version of the problem in which UAVs do not return to the truck
+but to speciﬁc collection points, where they can be picked up by other vehicles (or
+by the same one), and their battery can be swapped/recharged.
+3
+Problem deﬁnition and mathematical formulation
+In this section, we describe our application scenario and propose a model in terms
+of a graph problem.
+Assume to have an area of interest (e.g., the one aﬀected by a natural disaster)
+with a set I of n target nodes to monitor (e.g., all the damaged buildings). Around
+this area, there is a set D of depots from which a set U of vehicles start (e.g., the
+places where some rescue teams settle down their bases, each one with a sub-ﬂeet
+of UAVs). In general, each vehicle u is equipped with a battery corresponding to
+bu units of time (budget); when it runs down, it is necessary to substitute it with a
+charged one and, for operational reasons, this can be done only at the depot every
+UAV is uniquely associated to, ou.
+We deﬁne N = I ∪D as the set of nodes involved in the graph.
+Assuming to have the map of the aﬀected area, the traveling distance between
+each pair of nodes i, j ∈N is known, and it is referred to as tij, expressed in terms
+of ﬂying time units (assuming, for simplicity, that all UAVs have the same ﬂying
+speed).
+Each node i ∈I, has an associated service time si (e.g., the needed time to
+overﬂy it), also known.
+We call sequence any ordered set k of target nodes; the duration dk of sequence
+k is computed as the sum of all traveling distances between consecutive target nodes
+in k plus the service times of all the target nodes in k. In a sequence k, we denote
+as fk and lk the ﬁrst and the last target nodes, respectively.
+The purpose of our problem is to assign to each vehicle u ∈U an ordered set
+of sequences such that u is able to reach the ﬁrst target of any of the sequences
+assigned to it from its depot ou, serve all its target nodes, come back to ou, and
+start again. A sequence k assigned to u with the addition of the depot ou is called
+a trip and its duration, tku is given by the duration of k plus the traveling distance
+between ou and fk plus the traveling distance between ou and lk.
+A sequence k is compatible with a vehicle u if its duration is upper bounded
+by bu, that is dk ≤bu.
+A compatibility index, Φku is set to 1 if sequence k is
+compatible with vehicle u and to 0 otherwise. Of course, k can be assigned to u
+only if it is compatible with it (i.e., if Φku = 1). A sequence k is considered feasible
+if it is compatible with at least one vehicle. Only feasible sequences are considered.
+Note that this implies imposing the battery constraint. For each sequence k, we
+denote by Φk the set of all UAVs compatible with k. For each target node i ∈I, we
+denote by ˜
+Ki the set of all feasible sequences containing i. We assume that ˜
+Ki is
+not empty for all target nodes, i.e., that there is at least one feasible sequence that
+5
+
+--- PDF PAGE 6 ---
+covers it. If it is not the case, the node is too far to be covered, and – in order to
+keep the feasibility of the problem – it is removed from the set of target nodes in a
+pre-processing phase.
+A solution for our problem consists in selecting a set of sequences K whose
+union covers I and assigning them to compatible vehicles. The cumulative working
+time of a vehicle u is deﬁned as the sum of the duration of the trips assigned to
+u. We deﬁne the total completion time of a solution as the maximum over all the
+cumulative working time for the vehicles. The goal of our problem is to determine a
+solution that minimizes the total completion time. Then, we introduce the following
+decision variables:
+• Xk ∈{0, 1}, k ∈K, is a binary variable assuming value equal to 1 if sequence
+k is selected and 0 otherwise;
+• Yku ∈{0, 1}, k ∈K and u ∈U, is a binary variable assuming value equal to 1
+if sequence k is executed by vehicle u;
+• Tu is the completion time of vehicle u;
+• τ is a non-negative variable representing the total completion time.
+The mixed integer programming formulation for MDMT-VRP-TCT is the following:
+min τ
+(of)
+X
+k∈˜
+Ki
+Xk = 1
+∀i ∈I
+(C1)
+X
+u∈U
+Yku = Xk
+∀k ∈K
+(C2)
+Yku ≤Φku
+∀k ∈K
+∀u ∈U
+(C3)
+Tu =
+X
+k∈K
+tkuYku
+∀u ∈U
+(C4)
+τ ≥Tu
+∀u ∈U
+(C5)
+The objective function consists in minimizing the total completion time, as re-
+ported in (of). Constraints (C1) ensure that each target is covered by exactly one
+sequence. If a sequence is selected, it must be assigned to exactly one vehicle, cho-
+sen among those compatible with it, (constraints (C2) and (C3)). The cumulative
+working time for each vehicle is computed by means of constraints (C3). The total
+completion time must be larger than the cumulative working time of each vehicle,
+as stated inconstraints (C4).
+The model involves |K|+|K||U|binary variables and |U|+1 continuous variables.
+The number of constraints is |I|+|K|+|K||U| +2 ∗|U|.
+6
+
+--- PDF PAGE 7 ---
+The novelty of the approach consists in generating (open) sequences of nodes,
+that can be assigned to diﬀerent vehicles at diﬀerent costs, instead of generating
+complete routes including the depot. This way, the problem can be modeled as
+a multiple-choice knapsack, with knapsack-dependent items weight and maximum
+knapsack occupancy minimization.
+Such an approach is not only valid for this
+speciﬁc problem, but can be used for a wide class of multi-depot multi-trip problems,
+including those having diﬀerent objective functions, such as the classical total travel
+distance minimization, the minimization of the number of vehicles used, or the
+minimization of the total cost given by vehicles purchasing costs plus travel costs,
+as commonly in use in logistics applications.
+3.1
+A discussion on the deﬁnition of the problem
+In this subsection, we discuss a couple of possible modiﬁcations to the problem
+deﬁnition and their consequent impact on the solution.
+First, as already observed, multi-depot multi-trip vehicle routing problems have
+been studied to optimize a function other than the completion time.
+A natural
+choice is to minimize the total traveling distance; indeed, by minimizing the traveling
+distance, one expects to minimize the completion time as well. This is in general
+not true. As an example, consider the instance depicted in Figure 1(a), where the
+area of interest is a square with a unit side and we assume that the budgets of
+the two vehicles are enough to traverse 2 distance units each; the best solution for
+optimizing the completion time is shown in Figure 1(b), while the best solution for
+optimizing the total traveling distance is shown in Figure 1(c).
+(a)                                 
+(b)                         
+(c)
+Figure 1: (a) An instance of our problem; (b) a solution minimizing the completion
+time; (c) a solution minimizing the traveling distance.
+We wonder if this is a special artiﬁcial example or if, instead, it hides a more
+general behaviour. To this aim, we experimentally compare the results output by the
+exact model in the two cases in which either we exploit the objective function (of)
+or, instead, we minimize the total traveling distance. In Table 1 we show the results
+of this experiment: we run our model on 20 random instances with 20 target nodes
+whose service times are between 5 and 8 minutes, 2 depots, and a single UAV per
+7
+
+--- PDF PAGE 8 ---
+depot, with a battery capacity of 30 and 50 minutes, respectively; on the left, the
+objective is minimizing the completion time while the traveling distance is computed
+a posteriori; vice-versa, on the right, we aimed at minimizing the traveling distance
+and computed as a consequence the completion time. It is not diﬃcult to see that,
+although the two parameters are clearly not uncorrelated, there is neither a clear
+dependence.
+ct
+td
+# trips
+ct
+td
+# trips
+256,10
+351,44
+11
+267,99
+321,72
+8
+191,90
+380,01
+11
+269,99
+344,87
+9
+212,14
+423,51
+13
+304,29
+386,05
+10
+192,66
+383,70
+11
+291,92
+353,20
+10
+221,69
+371,99
+13
+277,81
+314,14
+8
+222,76
+405,43
+14
+280,55
+330,51
+8
+272,82
+457,70
+14
+330,37
+358,76
+8
+139,25
+271,77
+8
+237,47
+258,81
+6
+228,02
+421,47
+13
+312,74
+351,03
+9
+212,80
+407,27
+13
+276,77
+331,11
+8
+202,54
+346,08
+12
+260,95
+286,58
+7
+175,71
+351,40
+11
+247,19
+272,67
+7
+179,63
+359,00
+11
+237,49
+317,70
+8
+213,47
+416,99
+13
+336,48
+358,57
+8
+203,52
+395,94
+12
+275,57
+360,23
+9
+210,33
+418,91
+13
+343,80
+372,99
+8
+296,74
+436,70
+13
+332,81
+367,22
+9
+171,45
+341,01
+11
+234,17
+298,61
+8
+221,01
+431,80
+14
+285,11
+357,45
+9
+204,73
+397,40
+12
+272,90
+331,85
+8
+average
+211,46
+397,40
+12,15
+283,82
+333,70
+8,25
+Table 1: Results on instances with 20 target nodes, where the completion time (left)
+and traversed distance (right) are minimized.
+Note that the minimization of the completion time is associated with a larger
+number of trips while minimizing the total distance requires to have fewer trips in
+the solution. The reason is that, when the completion time is minimized, it is better
+to equalize the ﬂying time of each UAV, even at cost of producing a larger number of
+trips; vice-versa, if the traversed distance is minimized, the best choice is to produce
+few and maximally full trips, even at cost of making a UAV work much more (this
+is more evident when, as in this case, the budgets of the UAVs are rather diﬀerent).
+Second, we could think that the problem to handle is easier if we partition the
+area of interest into as many portions as the number of depots so that the target
+nodes falling in a certain portion are automatically assigned to the closest depot.
+We perform some experiments where we consider a symmetric situation for what
+concerns depots and vehicles (i.e., 4 depots, one UAV per depot, all with the same
+budget) in order to partition the squared area of interest into 4 equal sub-squares. In
+agreement with the intuition, the computational time is shorter (0.1 secs versus 1 sec)
+but the diﬀerence between those computational times are not practically relevant.
+On the other hand, the completion time is strongly worst (on average of about 45
+%); this can be explained because an optimal solution could require that a vehicle
+enters the sub-square assigned to a diﬀerent depot in order to completely exploit its
+budget. Moreover, since the goal of the problem is to minimize the total completion
+time, (i.e. to minimize the completion time of the drone which ﬁnishes its tasks
+8
+
+--- PDF PAGE 9 ---
+last), it is advantageous to distribute the workload to the diﬀerent drones almost
+homogeneously. Permitting drones to serve nodes located outside from their own
+area, allow to better balance the workload, and, consequently, to reduce completion
+time.
+(a) 
+(b)
+Figure 2: (a) An optimal solution on a sample instance; (b) a solution where a
+diﬀerent quadrant is exclusively assigned to each UAV.
+Figure 2 shows the behaviour of a sample instance: in Figure 2(a) (where all
+UAVs can ﬂy over every target) the trips are assigned in a balanced fashion; on the
+contrary, in Figure 2(b) (where a subarea is exclusively assigned to each UAV), the
+UAV with base at the lower-left vertex is scarcely used (only one trip is assigned to
+it); vice-versa, 4 trips are assigned to the UAV with base at the upper-left vertex,
+so lengthening the completion time; note that the UAV with base on the lower-right
+vertex overﬂies exactly the same target nodes in both the scenarios, as they are
+suﬃciently close to it and are anyway the best choice.
+4
+A model based matheuristic framework
+The main idea under the mathematical model consists in generating all possible
+feasible sequences and associating them to the set of their compatible UAVs. When
+the number of feasible trips is too large to be handled, the mathematical model
+becomes intractable. If, for instance, target nodes are very close to each other so
+that a huge number of feasible sequences are produced, or batteries are large so that
+several target nodes can be visited in a single sequence, even small instances may
+become diﬃcult to handle exactly.
+To overcome this issue, and be able to address larger instances, we derive from
+our model a heuristic approach, in which we generate only a subset of the feasible
+sequences, ˜K to be passed to the model.
+It is clear that the choice of the sequences can dramatically change the perfor-
+mance of the heuristic. Therefore, the problem of determining which sequences to
+9
+
+--- PDF PAGE 10 ---
+generate assumes crucial importance.
+In the following, after giving some operative deﬁnitions, we describe how we
+generate promising sequences to be passed to the mathematical model.
+Given a sequence, we call its extremes the ﬁrst and the last node in any order.
+For example, sequence {1,2,3,4,5} has the same extremes as sequence {5,3,4,2,1}.
+A sequence k is dominated by another one k′, if they have the same extremes and
+contain exactly the same target nodes (possibly in a diﬀerent order), but k′ has a
+lower or equal duration than k. A sequence k is strictly dominated by another one
+k′, if k is dominated by k′ and they do not have the same duration.
+Receiving in input two parameters Nc and Kmax whose value we will discuss
+later, we initially generate all the sequences containing only one target node and
+directly insert them in the set ˜K of sequences to be passed to the model.
+We
+also insert them in a temporary set of sequences Ktmp, containing sequences to be
+expanded: namely, every sequence k included in Ktmp is processed as follows.
+Nc child sequences are generated from k adding as further target node of k the
+jth nearest node to the last target node of k among those not already included in
+k, with j varying in {1, Nc}. For each child sequence kc, we apply a ﬁrst feasibility
+check: if the duration of kc is larger than the maximum autonomy of a UAV,
+Bmax = maxu∈U bu, then kc is immediately discarded. Otherwise, we determine all
+UAVs with which kc is compatible, we push them in Ktmp and in ˜K and pass the
+corresponding trips to a second feasibility check, in order to verify that the sequence
+neither is strictly dominated by nor it strictly dominates another sequence already
+belonging to ˜K. If a domination occurs, the dominated sequence is discarded from
+˜K. Observe that each new child sequence can dominate at most one of the solutions
+in ˜K. (In fact, if there would exist two solutions, k′ and k′′, sharing the same target
+nodes and extremes with k, if w.l.o.g. dk′ ≤dk′′, k′ would be strictly dominated by
+k′′ and therefore it could not belong to ˜K. )
+Once all the child sequences of a sequence k have been analyzed, k is removed
+from Ktmp. The procedure terminates either when Ktmp is empty or when a maxi-
+mum allowed number of sequences Kmax have been added to ˜K.
+After the sequence generation process is ﬁnished, the set of sequences ˜K is given
+in input to the mathematical model ((of)-(C4)) to ﬁnd the best solution obtainable
+with the subset of trips provided.
+It is worth noting that parameter Kmax plays a crucial role in the performance of
+the algorithm: a larger value of Kmax would yield a better global solution but would
+increase the computational time required by the heuristic. To obtain an eﬀective and
+eﬃcient algorithm, this parameter must be carefully tuned in order to achieve a good
+balance between solution quality and computational time. The maximum number
+of children generated by each sequence, Nc, also plays an important role. The larger
+the value of Nc the larger the number of sequences containing a speciﬁc number of
+target nodes. Note that by ﬁxing the value of Kmax, lower values of Nc allow us
+to generate sequences containing more target nodes, which could be promising; on
+10
+
+--- PDF PAGE 11 ---
+the other hand, in those sequences, nodes that are very close to each other would
+tend to be visited more frequently, while isolated targets would appear in very few
+sequences. Instead, with large values of Nc, even targets that are not very close
+to each other can be visited, but the maximum allowed number of sequences Kmax
+would be reached even only with sequences containing a small number of targets,
+and longer sequences would not be generated, with a negative eﬀect on the solution
+quality. Concluding, it is very important to carefully tune the values of parameters
+Kmax and Nc together, in order to achieve a good balance between diversity among
+sequences and sequence length.
+We would ﬁnally like to remark that this matheuristic framework can be used
+whichever is the method exploited to generate promising sequences. In particular,
+it can be combined with well-known solutions generation algorithms such as the
+Greedy randomized adaptive search (GRASP). However, we believe our method is
+more suitable for problems with a heterogeneous ﬂeet since we generate sequences of
+increasing length, among which the smaller ones are useful to employ vehicles with
+a limited budget. Conversely, GRASP is designed for problems with a homogeneous
+ﬂeet and tends to generate sequences that exploit the whole capacity/autonomy of
+the vehicle.
+5
+Computational Results
+In this section, we study the performance of our matheuristic. Namely, ﬁrst, we
+compare it with the exact model on instances that are necessarily very small and
+verify that, at least in this narrow setting, its behaviour is good.
+Secondly, we
+compare our matheuristic with two heuristics from networking literature. Also, in
+this case, we show that it outperforms the existing algorithms, paying in terms of
+computational time that, anyway, is kept at absolutely reasonable levels.
+All our experiments have been performed on a computer equipped with an In-
+tel(R) Core(TM) i5-1135G7 CPU (8 cores clocked at 2.4GHz) and 16GB RAM; our
+programs have been implemented in C++ (g++ compiler v9.4.0 with optimization
+level O3).
+The area of interest is set as a square with a side length equal to 15km × 15km,
+and the depots are positioned onto a subset of its 4 vertices. The target nodes are
+randomly positioned inside it and their number n moves from n = 10 to n = 200.
+5.1
+Comparison with the model
+Here we compare our matheuristic with the exact model when there are two depots
+and one UAV per depot, with 30 and 50 minutes of budget, respectively. We perform
+two sets of experiments, one with service times of the targets randomly chosen in
+the interval (5, 8] (Figure 3) and another one with service times randomly chosen
+in the interval (0, 3] (Figure 4); the reason is that – as we have already pointed out
+11
+
+--- PDF PAGE 12 ---
+in Section 4 discussing the tuning of Kmax and Nc – when the service times are
+long, each trip contains fewer target nodes than when the service times are short,
+so obtaining diﬀerent performance for our matheuristic as n grows up.
+Percentage improvement w.r.t. Nc = 3
+3
+4
+5
+6
+0
+0.2
+0.4
+0.6
+0.8
+% gap
+3
+4
+5
+6
+1
+2
+3
+4
+5
+6
+1
+2
+3
+4
+3
+4
+5
+6
+−2
+−1
+0
+3
+4
+5
+6
+−2
+−1
+0
+3
+4
+5
+6
+200
+300
+#trips
+3
+4
+5
+6
+0
+2,000
+4,000
+3
+4
+5
+6
+0
+1
+2
+·104
+3
+4
+5
+6
+2,000
+4,000
+3
+4
+5
+6
+2,000
+4,000
+6,000
+8,000
+3
+4
+5
+6
+6 · 10−2
+8 · 10−2
+0.1
+n = 10
+time (seconds)
+3
+4
+5
+6
+0
+1
+2
+n = 20
+3
+4
+5
+6
+0
+50
+100
+150
+n = 30
+3
+4
+5
+6
+0.5
+1
+n = 40
+3
+4
+5
+6
+1
+2
+n = 50
+Figure 3: Experimental results with service times randomly chosen in the interval
+(5, 8]. On the x axis, 3,4,5,6 represent the used values of Nc; the red lines represent
+the benchmark values achieved by the model.
+Percentage improvement w.r.t. Nc = 3
+3
+4
+5
+6
+0
+5
+% gap
+3
+4
+5
+6
+−3
+−2
+−1
+0
+·10−2
+3
+4
+5
+6
+−0.2
+−0.1
+0
+3
+4
+5
+6
+−0.2
+0
+0.2
+3
+4
+5
+6
+0
+2
+4
+6
+·10−2
+3
+4
+5
+6
+0
+1
+2
+·104
+#trips
+3
+4
+5
+6
+1
+2
+3
+·104
+3
+4
+5
+6
+2
+4
+·104
+3
+4
+5
+6
+1
+2
+3
+4
+5
+·104
+3
+4
+5
+6
+3
+4
+5
+·104
+3
+4
+5
+6
+0
+10
+20
+n = 10
+time (seconds)
+3
+4
+5
+6
+0
+5
+10
+n = 20
+3
+4
+5
+6
+0
+20
+40
+n = 30
+3
+4
+5
+6
+0
+10
+20
+30
+40
+n = 40
+3
+4
+5
+6
+20
+30
+40
+n = 50
+Figure 4: Experimental results with service times randomly chosen in the interval
+(0, 3]. On the x axis, 3,4,5,6 represent the used values of Nc; the red lines represent
+the benchmark values achieved by the model.
+In all charts, on the x axis, 3, 4, 5, and 6 represent the used values of Nc. The y
+coordinates of the dots correspond to an average computed on 20 random instances
+on the same number of nodes: every column of charts corresponds to a diﬀerent value
+12
+
+--- PDF PAGE 13 ---
+of n (increasing going from left to right). The red lines represent the benchmark
+values achieved by the model. It is worth noting that when n is small (n ≤30 in
+Figure 3 and n ≤10 in Figure 4), the model is able to produce exact results; when n
+is larger, the model terminates only in a few cases (probably when the instances are
+particularly easy to solve, e.g., if they have no clustered target nodes). Note that
+when the service times are longer (Figure 3), the model is able to handle instances
+with larger values of n, because the produced trips contain fewer nodes than in the
+case with shorter service times, and so their number is more tractable.
+The experiments perfectly conﬁrm the expectations. Indeed:
+First row. The ﬁrst three charts of Figure 3 and the ﬁrst one of Figure 4 show
+the percentage gap between the heuristically computed completion time and the
+optimum value, which is the main objective function of our problem; it is clear that
+it goes down as Nc grows up and, when Nc = 6, it is very close to 0, showing that
+our matheuristic works very well. Since there is no benchmark given by the exact
+model when n ≥40 in Figure 3 and when n ≥20 in Figure 4, the rightmost charts
+of the ﬁrst row (in blue) show the percentage gaps w.r.t. the case Nc = 3; these
+gaps are negative since clearly large values of Nc lead to better solutions. This is not
+always true in Figure 4; the reason is that every trip includes many target nodes, so
+a huge number of feasible sequences are generated, and the value of Kmax is soon
+reached and the quality of the solution degrades as Nc grows up.
+Second row. We depict here the number of trips generated to individuate the
+solution. As expected, the matheuristic dramatically decreases the number of trips,
+which is higher as the value of Nc increases but anyway reasonable.
+Just this
+reduction makes the matheuristic tractable even for large instances. Note that the
+number of trips is higher in Figure 4 than in Figure 3 because shorter service times
+imply trips with a lower number of nodes, so overall less trips. In Figure 4, it is
+evident when the value of Kmax is reached, as the function becomes horizontal.
+Third row. The running times are reported here. Clearly, the computational time
+of the model is much higher and, for what concerns the matheuristic, it grows up as
+the value of Nc increases in Figure 3, although it remains some orders of magnitude
+smaller than the time necessary for the model. Also, the computational time is
+much higher in Figure 4 than in Figure 3, but it does not continue to grow up with
+Nc because, again, when Kmax is reached, the computational time remains about
+constant.
+5.2
+Comparison with other heuristics
+We now compare the performance of our matheuristic with two benchmark heuris-
+tics known in the literature in the ﬁeld of networking. Clearly, they do not solve
+speciﬁcally our problem, which is completely new, but consider a setting that is
+suﬃciently close to ours to allow us to fairly modify them in order to let them work
+in our scenario.
+13
+
+--- PDF PAGE 14 ---
+More in detail, we consider on the one hand one of the algorithms designed
+in [KUA+14, KXL+17] (called from now on HTSP ), solving a problem similar to
+ours except that there are no battery constraints and on the other hand one of the
+heuristics from [CCM22] (called from now on HGreedy) facing also a similar scenario
+except that a single-depot model is followed and some priorities are introduced.
+The original HTSP algorithm gives as part of the input the UAVs, each one
+positioned on its own depot, and uses them as children of the root of a minimum
+spanning tree rooted at a dummy node v0; the sub-trees rooted at the UAVs are
+then transformed into trips covering all target nodes and intersecting only in the
+root using the Christoﬁdes’s approximation algorithm for TSP [Chr76]; ﬁnally, some
+operations are executed in order to equalize the weight of the diﬀerent trips. We
+modify this algorithm by imposing that the duration of each cycle is kept upper
+bounded by the budget of the UAV to which it is assigned. Then all the served
+target nodes are removed from the graph and the algorithm is iteratively re-run on
+the remaining graph until it is empty.
+Heuristic HGreedy exploits a greedy approach to compute in parallel as many
+cycles as the number of UAVs.
+The problem solved by HGreedy considers some
+priorities assigned to target nodes and the heuristic takes them into account when
+making the greedy choice. Here we do not have any priority and so simplify the
+computation: for each UAV u, at each step, the current partial cycle associated
+with it is considered and, starting from the target selected last (at the beginning,
+the depot), the next target is chosen as the closest one if it still guarantees that the
+whole cycle with the addition of this last target node can be ﬂown over by UAV
+u within time bu. The fact that the original addressed problem had a single depot
+does not change the heuristic.
+We highlight that the modiﬁcations we made to the original algorithms do not
+compromise their performance in any aspect, but are only meant to extend their
+applicability to our scenario.
+In all next charts, x coordinates represent increasing values of n, from 10 to 200;
+moreover, we label lines with ’TSP’ and ’Greedy’ to mean that they are referred
+to HTSP and HGreedy, respectively. For what concerns our matheuristic, we label
+the lines with ’Nc = i’, where i = 3, 4, 5, 6 to distinguish the used value of this
+parameter.
+14
+
+--- PDF PAGE 15 ---
+10 30 50
+75 100 125 150 175 200
+0
+1,000
+2,000
+3,000
+n
+ct
+(a)
+10 30 50
+75 100 125 150 175 200
+0
+5
+·107
+n
+µs
+MST
+Greedy
+Nc = 3
+Nc = 4
+Nc = 5
+Nc = 6
+(b)
+10 30 50
+75 100 125 150 175 200
+−2
+−1
+0
+n
+% gap
+(c)
+Figure 5: (a) completion times; (b) execution time; (c) percentage improvement
+w.r.t. Nc = 3. In these experiments, |D| = 2, |U| = 2 and service times randomly
+chosen in the interval (5, 8].
+Figure 5(a) shows the completion times computed on 20 instances on the same
+number of nodes obtained with HTSP , HGreedy and our matheuristic when Nc =
+3, 4, 5, 6 in the special case in which there are two depots, each one with one UAV.
+The matheuristic achieves the best results. Figure 5(b) shows the average running
+times and in this case, the two benchmark heuristics are faster. It is worth noting
+that, the function corresponding to the execution time of our matheuristic when
+Nc = 6 is not increasing; this can be explained because, for suﬃciently large values
+of n, the threshold bounding the maximum number of trips has been reached and
+hence the computational times do not grow up anymore. Moreover, of course for
+our matheuristic higher running times correspond to larger values of Nc but, in
+Figure 5(a) the completion times appear to be very similar; so, in Figure 5(c), we
+depict the percentage of improvement of the completion time when passing from
+Nc = 3 to the larger values of Nc. Observing that the improvement in the quality
+of the solution when Nc is larger than 3 is at most 2%, in the next charts we
+compare the benchmark heuristics HTSP and HGreedy with our matheuristic only
+with Nc = 3.
+15
+
+--- PDF PAGE 16 ---
+10 30 50
+75 100 125 150 175 200
+0
+200
+400
+600
+n
+ct
+(a)
+10 30 50
+75 100 125 150 175 200
+100
+200
+300
+n
+ct
+MST
+Greedy
+Nc = 3
+(b)
+10 30 50
+75 100 125 150 175 200
+0
+200
+400
+600
+n
+ct
+(c)
+10 30 50
+75 100 125 150 175 200
+0
+200
+400
+n
+ct
+(d)
+10 30 50
+75 100 125 150 175 200
+0
+200
+400
+n
+ct
+(e)
+10 30 50
+75 100 125 150 175 200
+0
+100
+200
+300
+n
+ct
+(f)
+Figure 6: Service times randomly chosen in the interval (5, 8); (a) |D| = 2, |U| = 9;
+(b) |D| = 2, |U| = 20; (c) |D| = 3, |U| = 9; (d) |D| = 3, |U| = 12; (e) |D| = 4,
+|U| = 12; (f) |D| = 4, |U| = 15.
+For the next experiments, we assume that the sub-ﬂeet based at each depot is
+homogeneous, although the whole ﬂeet is non-homogeneous, in agreement with the
+inspiring application, where each depot is supervised by one rescue team, that we
+suppose to own a ﬂeet of identical UAVs. The budgets are set to 50, 30, 40, and
+20 minutes for all the UAVs based at the ﬁrst, second, third, and fourth depots,
+respectively (whenever they exist), in order to guarantee that there are always some
+vehicles whose budget allow them to reach any target on the area of interest.
+In Figure 6 we compare the benchmark heuristics with our matheuristic with
+Nc = 3 varying in diﬀerent ways the values of |D| and of |U| with service times
+randomly chosen in (5, 8]; we choose not to consider when the service times are in
+(0, 3] because, as already observed, the number of generated trips soon reach the
+value of Kmax. In Figure 6(a), the experiments have been run with two depots
+positioned onto two adjacent vertices of the area of interest, the ﬁrst one is the base
+of 6 UAVs while the second one of 3 UAVs; in Figure 6(b) there are again two depots
+but they are positioned onto two opposite vertices of the area of interest, and both
+are the base of 10 UAVs. In Figure 6(c) there are three depots, and each of them
+16
+
+--- PDF PAGE 17 ---
+is the base of 3 UAVs; in Figure 6(d) there are still three depots, with 6, 4, and 2
+UAVs respectively. In Figure 6(e) there are four depots, and each of them is the
+base of 8, 4, 2, and 1 UAVs respectively; Finally, in Figure 6(f) the 4 depots are
+each the base of 3 UAVs.
+In all cases, our heuristic outperforms the benchmark ones, showing a very good
+performance.
+6
+Conclusions and Future Perspectives
+In this paper we considered a real-life situation modeled as a multi-depot multi-trip
+routing problem where we aim at minimizing the total completion time. We have
+pointed out that this situation has similarities to some logistics problems but essen-
+tially stands out for each of them, giving rise to a new mathematical formulation.
+Then we proposed a matheuristic framework to quickly ﬁnd a reasonably good
+solution, and ﬁnally, we presented some experimental results.
+Many interesting generalizations can be introduced to make our model more
+ﬂexible to be used in practise.
+First, we handled the multi-depot model assigning each UAV once and for all to a
+depot. This matches with our real-life application because it is reasonable that every
+rescue team brings its own ﬂeet of UAVs to the site it chooses as its depot and is
+the most suitable to manage it. So, we impose that the starting depot of a sequence
+must be the same as the ﬁnal depot. We could relax this condition so that, looking
+at the ordered sequences assigned to each UAV, we only require that the starting
+depot of a sequence coincides with the arrival depot of the previous sequence. This
+would introduce more ﬂexibility but, as UAVs recharge/change their batteries at
+the depot, would require to ensure that there is either a free recharge station or a
+charged battery available in the chosen depot before landing.
+Secondly, we could make the model more general, adding some variables that
+would make the model closer to the real-life application. Namely, as already pro-
+posed in [CCM22], we could introduce uncertain traveling distances and priorities
+on the target nodes. The ﬁrst one is useful when, thanks to a computing phase on
+board, a UAV realizes that there are possible survivors to save in correspondence
+of a certain target node and decides to spend more time ﬂying over the target; the
+second one makes sense if we want to ﬂy over some buildings (e.g., schools and
+hospitals) before than others.
+17
+
+--- PDF PAGE 18 ---
+References
+[AJS15]
+C. Archetti, O. Jabali, and M. G. Speranza. Multi-period vehicle
+routing problem with due dates. Computers & Operations Research,
+61:122–134, 2015.
+[BM98]
+J.C.S. Brandao and A. Mercer. The multi-trip vehicle routing prob-
+lem. Journal of the Operational research society, 49(8):799–805, 1998.
+[BMPP21]
+M. Bruglieri, S. Mancini, R. Peruzzini, and O. Pisacane. The multi-
+period multi-trip container drayage problem with release and due
+dates. Computers & Operations Research, 125, 2021.
+[BRVN16]
+K. Braekers, K. Ramaekers, and I. Van Nieuwenhuyse. The vehicle
+routing problem: State of the art classiﬁcation and review. Comput-
+ers & Industrial Engineering, 99:300–313, 2016.
+[CAF16a]
+D. Cattaruzza, N. Absi, and D. Feillet.
+Vehicle routing problems
+with multiple trips. 4OR, 14(3):223–259, 2016.
+[CAF16b]
+Diego Cattaruzza, Nabil Absi, and Dominique Feillet. Vehicle routing
+problems with multiple trips. 4OR, 14:223 – 259, 2016.
+[CAFV14]
+D. Cattaruzza, N. Absi, D. Feillet, and T. Vidal. A memetic algo-
+rithm for the multi trip vehicle routing problem. European Journal
+of Operational Research, 236(3):833–848, 2014.
+[CCL07]
+B. Crevier, J.-F. Cordeau, and G. Laporte. The multi-depot vehi-
+cle routing problem with inter-depot routes. European Journal of
+Operational Research, 176:756–773, 2007.
+[CCM22]
+Tiziana Calamoneri, Federico Cor`o, and Simona Mancini. A realistic
+model to support rescue operations after an earthquake via uavs.
+IEEE Access, 10:6109–6125, 2022.
+[Chr76]
+Nicos Christoﬁdes. Worst-case analysis of a new heuristic for the trav-
+elling salesman problem. Technical report, Carnegie-Mellon Univ.,
+1976.
+[CT22]
+Tiziana Calamoneri and Daniele Tavernelli. Modeling and Approxi-
+mating the Visit of a Set of Sites With a Fleet of UAVs. The Com-
+puter Journal, 03 2022.
+[DCGR15]
+I. Dayarian, T. G. Crainic, M. Gendreau, and W. Rei. A branch-and-
+price approach for a multi-period vehicle routing problem. Computers
+& Operations Research, 55:167–184, 2015.
+18
+
+--- PDF PAGE 19 ---
+[EN16]
+M. Erdelj and E. Natalizio. UAV-assisted disaster management: Ap-
+plications and open issues. In 2016 International Conference on Com-
+puting, Networking and Communications (ICNC), pages 1–5, Feb
+2016.
+[EN19]
+Mario Arturo Ruiz Estrada and Abrahim Ndoma. The uses of un-
+manned aerial vehicles UAVs- (or drones) in social logistic: Natural
+disasters response and humanitarian relief aid. Procedia Computer
+Science, 149:375 – 383, 2019. ICTE in Transportation and Logistics
+2018 (ICTE 2018).
+[ENCA17]
+M. Erdelj, E. Natalizio, K. R. Chowdhury, and I. F. Akyildiz. Help
+from the sky: Leveraging UAVs for disaster management.
+IEEE
+Pervasive Computing, 16(1):24–32, Jan 2017.
+[FHK76]
+G. N. Frederickson, M. S. Hecht, and C. E. Kim. Approximation
+algorithms for some routing problems. In 17th Annual Symposium
+on Foundations of Computer Science, pages 216–227, 1976.
+[FS14]
+Zachary Friggstad and Chaitanya Swamy. Approximation algorithms
+for regret-bounded vehicle routing and applications to distance-
+constrained vehicle routing. In Proceedings of the 46th Annual Sym-
+posium on Theory of Computing, pages 744–753, 2014.
+[GBM+16]
+Salvatore Di Gennaro, Enrico Battiston, Stefano Di Marco, Osvaldo
+Facini, Alessandro Matese, Marco Nocentini, Alberto Palliotti, and
+Laura Mugnai. Unmanned aerial vehicle UAV-based remote sensing
+to monitor grapevine leaf stripe disease within a vineyard aﬀected by
+esca complex. Phytopathologia Mediterranea, 55(2), 2016.
+[GGW09]
+C. Gro¨er, B. Golden, and E. Wasil.
+The consistent vehicle rout-
+ing problem.
+Manufacturing & service operations management,
+11(4):630–643, 2009.
+[HDH09]
+V.C. Hemmelmayr, K.F. Doerner, and R.F. Hartl. A variable neigh-
+borhood search heuristic for periodic routing problems.
+European
+Journal of Operational Research, 195(3):791–802, 2009.
+[Kar15]
+I. Karao˘glan.
+A branch-and-cut algorithm for the vehicle routing
+problem with multiple use of vehicles. International Journal of Lean
+Thinking, 6(1):21–46, 2015.
+[KUA+14]
+Donghyun Kim, R. N. Uma, Baraki H. Abay, Weili Wu, Wei Wang,
+and Alade O. Tokuta. Minimum latency multiple data muletrajectory
+planning in wireless sensor networks. IEEE Trans. Mob. Comput.,
+13(4):838–851, 2014.
+19
+
+--- PDF PAGE 20 ---
+[KXL+17]
+Donghyun Kim, Lirong Xue, Deying Li, Yuqing Zhu, Wei Wang,
+and Alade O. Tokuta. On theoretical trajectory planning of multiple
+drones to minimize latency in search-and-reconnaissance operations.
+IEEE Trans. Mob. Comput., 16(11):3156–3166, 2017.
+[LHZ19]
+Jian Liang, Xiaohui Huang, and Zhao Zhang.
+Approximation al-
+gorithms for distance constraint sweep coverage with base stations.
+Journal of Combinatorial Optimization, 37:1111–1125, 05 2019.
+[LMU+19]
+Chunbo Luo, Wang Miao, Hanif Ullah, Sally McClean, Gerard Parr,
+and Geyong Min. Unmanned aerial vehicles for disaster management.
+In Geological Disaster Monitoring Based on Sensor Networks, pages
+83–107. Springer Singapore, 2019.
+[Man16]
+S. Mancini.
+A real-life multi depot multi period vehicle routing
+problem with a heterogeneous ﬂeet: Formulation and adaptive large
+neighborhood search based matheuristic.
+Transportation Research
+Part C: Emerging Technologies, 70:100–112, 2016.
+[MDPPGL20] G. Macrina, L. Di Puglia Pugliese, F. Guerriero, and G. Laporte.
+Drone-aided routing: A literature review. Transportation Research
+Part C: Emerging Technologies, 120:1012762, 2020.
+[MHBD16]
+M.A. Masmoudi, M. Hosny, K. Braekers, and A. Dammak. Three
+eﬀective metaheuristics to solve the multi-depot multi-trip heteroge-
+neous dial-a-ride problem. Transportation Research Part E: Logistics
+and Transportation Review, 96:60–80, 2016.
+[MRT13]
+A. Mingozzi, R. Roberti, and P. Toth. An exact algorithm for the
+multitrip vehicle routing problem. INFORMS Journal on Computing,
+25(2):193–207, 2013.
+[MSBK22]
+M.A. Masmoudi, Mancini S., R. Baldacci, and Y.-H. Kuo. Vehicle
+routing problems with drones equipped with multi-package payload
+compartments. Transportation Research Part E: Logistics and Trans-
+portation Review, 2022.
+[NR12]
+Viswanath Nagarajan and R. Ravi. Approximation algorithms for
+distance constrained vehicle routing problems. Networks, 59:209–214,
+2012.
+[PS03]
+R.J. Petch and S. Salhi.
+A multi-phase constructive heuristic for
+the vehicle routing problem with multiple trips.
+Discrete Applied
+Mathematics, 133(1-3):69–92, 2003.
+20
+
+--- PDF PAGE 21 ---
+[PWG17]
+S. Poikonen, X. Wang, and B. Golden. The vehicle routing problem
+with drones: Extended models and connections. Networks, 70(1):34–
+43, 2017.
+[RLB96]
+J. Renaud, G. Laporte, and F. F. Boctor. A tabu search heuristic for
+the multi-depot vehicle routing problem. Computers & Operations
+Research, 23:229–235, 1996.
+[SY22]
+M.K. Sahin and H. Yaman. A branch and price algorithm for the
+heterogeneous ﬂeet multi-depot multi-trip vehicle routing problem
+with time windows. Transportation Science, 2022.
+[SZA14]
+Farid Shariﬁ, Youmin Zhang, and Amir G Aghdam. Forest ﬁre moni-
+toring and detection using a network of autonomous vehicles. In Pro-
+ceedings of International Conference on Intelligent Unmanned Sys-
+tems, volume 10, 2014.
+[TAZJ15]
+Cornelius A Thiels, Johnathon M Aho, Scott P Zietlow, and Don-
+ald H Jenkins. Use of unmanned aerial vehicles for medical product
+transport. Air Medical Journal, 34(2):104 – 108, 2015.
+[TLG96]
+´E. D Taillard, G. Laporte, and M. Gendreau. Vehicle routeing with
+multiple use of vehicles. Journal of the Operational research society,
+47(8):1065–1070, 1996.
+[TMK15]
+L. Talarico, F. Meisel, and Sorensen K. Ambulance routing for disas-
+ter response with patient groups. Computers & Operations Research,
+56:120–133, 2015.
+[TZK08]
+C.D. Tarantilis, E. E. Zachariadis, and C.T. Kiranoudis. A hybrid
+guided local search for the vehicle routing problem with intermediate
+replenishment facilities. INFORMS Journal on Computing, 20:154–
+168, 2008.
+[VCG+11]
+T. Vidal, T.G. Crainic, M. Gendreau, N. Lahrichi, and W. Rei. A
+hybrid genetic algorithm for multi depot and periodic vehicle routing
+problems. Operations Research, 60:611–624, 2011.
+[VV14]
+Kimon P. Valavanis and George J. Vachtsevanos. Handbook of Un-
+manned Aerial Vehicles.
+Springer Publishing Company, Incorpo-
+rated, 2014.
+[WS19]
+Z. Wang and J.-B. Sheu. Vehicle routing problem with drones. Trans-
+portation Research Part B: Methodological, 122:350–364, 2019.
+21
+
+--- PDF PAGE 22 ---
+[YL16]
+Wei Yu and Zhaohui Liu. Improved approximation algorithms for
+some min-max and minimum cycle cover problems. Theoretical Com-
+puter Science, 654:45 – 58, 2016.
+[ZMW+20]
+L. Zhen, C. Ma, K. Wang, L. Xiao, and W. Zhang.
+Multi-depot
+multi-trip vehicle routing problem with time windows and release
+dates. Transportation Research Part E: Logistics and Transportation
+Review, 135:101866, 2020.
+[ZWH+22]
+Q. Zhang, Z. Wang, M. Huang, Y. Yu, and F. Shu-Cherng. Hetero-
+geneous multi-depot collaborative vehicle routing problem. Trans-
+portation Research Part B: Methodological, 160:1–20, 2022.
+[ZZZ18]
+C. Zhan, Y. Zeng, and R. Zhang. Energy-eﬃcient data collection in
+UAV enabled wireless sensor network. IEEE Wireless Communica-
+tions Letters, 7(3):328–331, June 2018.
+22

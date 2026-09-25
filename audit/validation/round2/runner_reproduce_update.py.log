@@ -1,0 +1,5 @@
+{"job": "delivery_q1", "script": "\u89e3\u9898-gpt/\u4ee3\u7801/solve_problem1_18trips.py", "exit_code": 1, "seconds": 0.5619999999980791}
+{"job": "delivery_q2", "script": "\u89e3\u9898-gpt/\u4ee3\u7801/solve_problem2_lns.py", "exit_code": 0, "seconds": 20.17199999999866}
+{"job": "delivery_q3", "script": "\u89e3\u9898-gpt/\u4ee3\u7801/solve_problem3_relay.py", "exit_code": 0, "seconds": 18.0940000000046}
+{"job": "delivery_q4", "script": "\u89e3\u9898-gpt/\u4ee3\u7801/solve_problem4_fixed.py", "exit_code": 0, "seconds": 1.4369999999980791}
+{"job": "root_readme_q2", "script": "solve_problem2_lns.py", "exit_code": 1, "seconds": 21.485000000000582}

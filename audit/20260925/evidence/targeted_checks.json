@@ -1,0 +1,348 @@
+{
+  "endpoint_fail_areas": [
+    "S003",
+    "S004",
+    "S008",
+    "S014"
+  ],
+  "reserve_sensitivity": [
+    {
+      "rho": 0.1,
+      "energy_kwh": 6.244469657138534,
+      "limit_kwh": 7.2,
+      "energy_limit_ratio": 0.867287452380352,
+      "feasible": true
+    },
+    {
+      "rho": 0.2,
+      "energy_kwh": 5.550639695234253,
+      "limit_kwh": 6.4,
+      "energy_limit_ratio": 0.867287452380352,
+      "feasible": true
+    },
+    {
+      "rho": 0.3,
+      "energy_kwh": 4.85680973332997,
+      "limit_kwh": 5.6,
+      "energy_limit_ratio": 0.8672874523803519,
+      "feasible": true
+    },
+    {
+      "rho": 0.4,
+      "energy_kwh": 4.162979771425689,
+      "limit_kwh": 4.8,
+      "energy_limit_ratio": 0.8672874523803519,
+      "feasible": true
+    }
+  ],
+  "reproduction_differences": [
+    {
+      "file": "问题四_2批次_修复版.xlsx",
+      "sheet": "分组资源",
+      "reproduced_rows": 2,
+      "delivered_rows": 2,
+      "reproduced": [
+        {
+          "group": "G1",
+          "service_area_ids": "S001",
+          "population": 2100,
+          "mission_count": 5,
+          "cargo_count": 15,
+          "completion_min": 107.6769417160876,
+          "transport_energy_kwh": 7.562048201282888,
+          "A_uav": 2,
+          "A_battery": 2,
+          "A_charger": 1,
+          "B_uav": 1,
+          "B_battery": 1,
+          "B_charger": 1,
+          "C_uav": 1,
+          "C_battery": 2,
+          "C_charger": 2,
+          "relay_uav": 0,
+          "relay_ids": NaN,
+          "relay_energy_components": 0
+        },
+        {
+          "group": "G2",
+          "service_area_ids": "S002,S003,S004,S005,S006,S007,S008,S009,S010,S011,S012,S013,S014,S015",
+          "population": 1322,
+          "mission_count": 40,
+          "cargo_count": 65,
+          "completion_min": 173.6387822549022,
+          "transport_energy_kwh": 90.09055942998059,
+          "A_uav": 4,
+          "A_battery": 6,
+          "A_charger": 4,
+          "B_uav": 2,
+          "B_battery": 4,
+          "B_charger": 2,
+          "C_uav": 2,
+          "C_battery": 4,
+          "C_charger": 3,
+          "relay_uav": 2,
+          "relay_ids": "R01,R02",
+          "relay_energy_components": 4
+        }
+      ],
+      "delivered": [
+        {
+          "group": "G1",
+          "service_area_ids": "S001",
+          "population": 2100,
+          "mission_count": 4,
+          "cargo_count": 15,
+          "completion_min": 132.0721581834358,
+          "transport_energy_kwh": 8.375285829114478,
+          "A_uav": 0,
+          "A_battery": 0,
+          "A_charger": 0,
+          "B_uav": 0,
+          "B_battery": 0,
+          "B_charger": 0,
+          "C_uav": 2,
+          "C_battery": 2,
+          "C_charger": 2,
+          "relay_uav": 0,
+          "relay_ids": NaN,
+          "relay_energy_components": 0
+        },
+        {
+          "group": "G2",
+          "service_area_ids": "S002,S003,S004,S005,S006,S007,S008,S009,S010,S011,S012,S013,S014,S015",
+          "population": 1322,
+          "mission_count": 45,
+          "cargo_count": 65,
+          "completion_min": 205.6147938843214,
+          "transport_energy_kwh": 97.90737742768306,
+          "A_uav": 4,
+          "A_battery": 6,
+          "A_charger": 4,
+          "B_uav": 2,
+          "B_battery": 4,
+          "B_charger": 3,
+          "C_uav": 2,
+          "C_battery": 3,
+          "C_charger": 3,
+          "relay_uav": 2,
+          "relay_ids": "R01,R02",
+          "relay_energy_components": 4
+        }
+      ]
+    },
+    {
+      "file": "问题四_2批次_修复版.xlsx",
+      "sheet": "资源缺口",
+      "reproduced_rows": 1,
+      "delivered_rows": 1,
+      "reproduced": [
+        {
+          "A_uav": 2,
+          "B_uav": 1,
+          "C_uav": 1,
+          "A_battery": 2,
+          "B_battery": 1,
+          "C_battery": 2,
+          "relay_uav": 0,
+          "relay_energy_components": 0
+        }
+      ],
+      "delivered": [
+        {
+          "A_uav": 0,
+          "B_uav": 0,
+          "C_uav": 2,
+          "A_battery": 0,
+          "B_battery": 0,
+          "C_battery": 1,
+          "relay_uav": 0,
+          "relay_energy_components": 0
+        }
+      ]
+    },
+    {
+      "file": "问题四_3批次_修复版.xlsx",
+      "sheet": "分组资源",
+      "reproduced_rows": 3,
+      "delivered_rows": 3,
+      "reproduced": [
+        {
+          "group": "G1",
+          "service_area_ids": "S001",
+          "population": 2100,
+          "mission_count": 5,
+          "cargo_count": 15,
+          "completion_min": 107.6769417160876,
+          "transport_energy_kwh": 7.562048201282888,
+          "A_uav": 2,
+          "A_battery": 2,
+          "A_charger": 1,
+          "B_uav": 1,
+          "B_battery": 1,
+          "B_charger": 1,
+          "C_uav": 1,
+          "C_battery": 2,
+          "C_charger": 2,
+          "relay_uav": 0,
+          "relay_ids": NaN,
+          "relay_energy_components": 0
+        },
+        {
+          "group": "G2",
+          "service_area_ids": "S002,S003,S004,S005,S007,S008,S009,S010,S012,S013,S014,S015",
+          "population": 1171,
+          "mission_count": 33,
+          "cargo_count": 56,
+          "completion_min": 173.6387822549022,
+          "transport_energy_kwh": 82.0186247398732,
+          "A_uav": 4,
+          "A_battery": 6,
+          "A_charger": 4,
+          "B_uav": 2,
+          "B_battery": 4,
+          "B_charger": 2,
+          "C_uav": 2,
+          "C_battery": 4,
+          "C_charger": 3,
+          "relay_uav": 2,
+          "relay_ids": "R01,R02",
+          "relay_energy_components": 4
+        },
+        {
+          "group": "G3",
+          "service_area_ids": "S006,S011",
+          "population": 151,
+          "mission_count": 7,
+          "cargo_count": 9,
+          "completion_min": 171.884453886225,
+          "transport_energy_kwh": 8.071934690107373,
+          "A_uav": 2,
+          "A_battery": 3,
+          "A_charger": 2,
+          "B_uav": 0,
+          "B_battery": 0,
+          "B_charger": 0,
+          "C_uav": 1,
+          "C_battery": 1,
+          "C_charger": 1,
+          "relay_uav": 0,
+          "relay_ids": NaN,
+          "relay_energy_components": 0
+        }
+      ],
+      "delivered": [
+        {
+          "group": "G1",
+          "service_area_ids": "S001",
+          "population": 2100,
+          "mission_count": 4,
+          "cargo_count": 15,
+          "completion_min": 132.0721581834358,
+          "transport_energy_kwh": 8.375285829114478,
+          "A_uav": 0,
+          "A_battery": 0,
+          "A_charger": 0,
+          "B_uav": 0,
+          "B_battery": 0,
+          "B_charger": 0,
+          "C_uav": 2,
+          "C_battery": 2,
+          "C_charger": 2,
+          "relay_uav": 0,
+          "relay_ids": NaN,
+          "relay_energy_components": 0
+        },
+        {
+          "group": "G2",
+          "service_area_ids": "S002,S003,S004,S005,S007,S008,S009,S010,S012,S013,S014,S015",
+          "population": 1171,
+          "mission_count": 39,
+          "cargo_count": 56,
+          "completion_min": 205.6147938843214,
+          "transport_energy_kwh": 91.2075882433958,
+          "A_uav": 4,
+          "A_battery": 6,
+          "A_charger": 4,
+          "B_uav": 2,
+          "B_battery": 4,
+          "B_charger": 3,
+          "C_uav": 2,
+          "C_battery": 3,
+          "C_charger": 3,
+          "relay_uav": 2,
+          "relay_ids": "R01,R02",
+          "relay_energy_components": 4
+        },
+        {
+          "group": "G3",
+          "service_area_ids": "S006,S011",
+          "population": 151,
+          "mission_count": 6,
+          "cargo_count": 9,
+          "completion_min": 175.5971140574344,
+          "transport_energy_kwh": 6.699789184287249,
+          "A_uav": 1,
+          "A_battery": 1,
+          "A_charger": 1,
+          "B_uav": 2,
+          "B_battery": 2,
+          "B_charger": 2,
+          "C_uav": 1,
+          "C_battery": 1,
+          "C_charger": 1,
+          "relay_uav": 0,
+          "relay_ids": NaN,
+          "relay_energy_components": 0
+        }
+      ]
+    },
+    {
+      "file": "问题四_3批次_修复版.xlsx",
+      "sheet": "资源缺口",
+      "reproduced_rows": 1,
+      "delivered_rows": 1,
+      "reproduced": [
+        {
+          "A_uav": 4,
+          "B_uav": 1,
+          "C_uav": 2,
+          "A_battery": 5,
+          "B_battery": 1,
+          "C_battery": 3,
+          "relay_uav": 0,
+          "relay_energy_components": 0
+        }
+      ],
+      "delivered": [
+        {
+          "A_uav": 1,
+          "B_uav": 2,
+          "C_uav": 3,
+          "A_battery": 1,
+          "B_battery": 2,
+          "C_battery": 2,
+          "relay_uav": 0,
+          "relay_energy_components": 0
+        }
+      ]
+    }
+  ],
+  "q4_resource_totals_inheriting_q3": {
+    "2": {
+      "A_uav": 6,
+      "A_battery": 8,
+      "B_uav": 3,
+      "B_battery": 5,
+      "C_uav": 3,
+      "C_battery": 6
+    },
+    "3": {
+      "A_uav": 8,
+      "A_battery": 10,
+      "B_uav": 3,
+      "B_battery": 5,
+      "C_uav": 4,
+      "C_battery": 7
+    }
+  }
+}

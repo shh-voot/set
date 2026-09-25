@@ -1,0 +1,274 @@
+A	CLEANUP_REPORT.md
+A	_fmt_tmp/format.docx
+A	_fmt_tmp/format_unzip/[Content_Types].xml
+A	_fmt_tmp/format_unzip/_rels/.rels
+A	_fmt_tmp/format_unzip/docProps/app.xml
+A	_fmt_tmp/format_unzip/docProps/core.xml
+A	_fmt_tmp/format_unzip/docProps/custom.xml
+A	_fmt_tmp/format_unzip/word/_rels/document.xml.rels
+A	_fmt_tmp/format_unzip/word/document.xml
+A	_fmt_tmp/format_unzip/word/endnotes.xml
+A	_fmt_tmp/format_unzip/word/fontTable.xml
+A	_fmt_tmp/format_unzip/word/footnotes.xml
+A	_fmt_tmp/format_unzip/word/header1.xml
+A	_fmt_tmp/format_unzip/word/media/image1.png
+A	_fmt_tmp/format_unzip/word/media/image2.jpeg
+A	_fmt_tmp/format_unzip/word/media/image3.jpeg
+A	_fmt_tmp/format_unzip/word/media/image4.png
+A	_fmt_tmp/format_unzip/word/numbering.xml
+A	_fmt_tmp/format_unzip/word/settings.xml
+A	_fmt_tmp/format_unzip/word/styles.xml
+A	_fmt_tmp/format_unzip/word/theme/theme1.xml
+A	_fmt_tmp/format_unzip/word/webSettings.xml
+A	_mathmodel_README.md
+A	_problem.txt
+A	_problem_xml.txt
+A	_规范临时/规范.docx
+A	docs/q4_analysis.md
+R100	README_快速理解赛题.md	docs_archive/README_快速理解赛题.md
+R100	README_项目总览.md	docs_archive/README_项目总览.md
+R100	final_solution_audit_report.md	docs_archive/final_solution_audit_report.md
+R100	修复执行摘要.md	docs_archive/修复执行摘要.md
+R100	修复说明_20260924.md	docs_archive/修复说明_20260924.md
+R100	修复进度追踪.md	docs_archive/修复进度追踪.md
+R100	全面审查报告_修复后.md	docs_archive/全面审查报告_修复后.md
+R100	全面问题审查报告.md	docs_archive/全面问题审查报告.md
+R100	全面问题审查清单.md	docs_archive/全面问题审查清单.md
+R100	参考文献核验报告.md	docs_archive/参考文献核验报告.md
+R100	四个问题全面审查报告.md	docs_archive/四个问题全面审查报告.md
+R100	团队协作指南.md	docs_archive/团队协作指南.md
+R100	完整解决方案总结.md	docs_archive/完整解决方案总结.md
+R100	当前工作状态总结.md	docs_archive/当前工作状态总结.md
+R100	性能对比分析_我们vs参考论文.md	docs_archive/性能对比分析_我们vs参考论文.md
+R100	文献结合建模说明_修复版.md	docs_archive/文献结合建模说明_修复版.md
+R100	文献调研综述.md	docs_archive/文献调研综述.md
+R100	最终修复报告.md	docs_archive/最终修复报告.md
+R100	最终方案完整性报告.md	docs_archive/最终方案完整性报告.md
+R100	最终结果核验表.md	docs_archive/最终结果核验表.md
+A	docs_archive/目录清理计划.md
+R100	真实数据符合性验证总报告.md	docs_archive/真实数据符合性验证总报告.md
+R100	竞争对手分析_目标碾压.md	docs_archive/竞争对手分析_目标碾压.md
+R100	算法思路总结.md	docs_archive/算法思路总结.md
+R100	补充文献与快速实现方案.md	docs_archive/补充文献与快速实现方案.md
+R100	论文精读笔记_核心算法提取.md	docs_archive/论文精读笔记_核心算法提取.md
+R100	赛题摘要_核心数据.md	docs_archive/赛题摘要_核心数据.md
+R100	赛题符合性审核报告.md	docs_archive/赛题符合性审核报告.md
+R100	赛题约束详解.md	docs_archive/赛题约束详解.md
+R100	问题一_18架次不可达分析报告.md	docs_archive/问题一_18架次不可达分析报告.md
+R100	问题一_分析总结.md	docs_archive/问题一_分析总结.md
+R100	问题一_完整总结报告.md	docs_archive/问题一_完整总结报告.md
+R100	问题一_架次数分析报告.md	docs_archive/问题一_架次数分析报告.md
+R100	问题一_理论分析报告.md	docs_archive/问题一_理论分析报告.md
+R100	问题一_论文写作指南.md	docs_archive/问题一_论文写作指南.md
+R100	问题一二架次数差异分析.md	docs_archive/问题一二架次数差异分析.md
+R100	问题三_S008覆盖修复报告.md	docs_archive/问题三_S008覆盖修复报告.md
+R100	问题三_完成情况总结.md	docs_archive/问题三_完成情况总结.md
+R100	问题三_技术要点分析.md	docs_archive/问题三_技术要点分析.md
+R100	问题三_最终总结.md	docs_archive/问题三_最终总结.md
+R100	问题三_求解方案设计.md	docs_archive/问题三_求解方案设计.md
+R100	问题三_通信覆盖验证报告.md	docs_archive/问题三_通信覆盖验证报告.md
+R100	问题二_完成总结.md	docs_archive/问题二_完成总结.md
+R100	问题二_符合性验证报告.md	docs_archive/问题二_符合性验证报告.md
+R100	问题四_修复版验证报告.md	docs_archive/问题四_修复版验证报告.md
+R100	问题四_最终总结.md	docs_archive/问题四_最终总结.md
+R100	问题四_符合性审查报告.md	docs_archive/问题四_符合性审查报告.md
+R100	问题四_题目描述.md	docs_archive/问题四_题目描述.md
+A	docs_archive/问题四分析报告.md
+R100	项目实施方案.md	docs_archive/项目实施方案.md
+A	docs_to_keep.txt
+A	format_rules.txt
+A	format_template.txt
+R100	solve_problem1_correct.py	old_scripts/solve_problem1_correct.py
+R100	solve_problem1_fixed.py	old_scripts/solve_problem1_fixed.py
+R100	solve_problem1_optimized.py	old_scripts/solve_problem1_optimized.py
+R100	solve_problem1_ultra_optimized.py	old_scripts/solve_problem1_ultra_optimized.py
+R100	solve_problem2_compliant.py	old_scripts/solve_problem2_compliant.py
+R100	solve_problem2_fixed.py	old_scripts/solve_problem2_fixed.py
+R100	solve_problem3.py	old_scripts/solve_problem3.py
+A	old_scripts/问题一_18架次方案.xlsx
+A	old_scripts/问题一_18架次方案_修复版.xlsx
+A	old_scripts/问题一_多架次配送方案.xlsx
+A	old_scripts/问题一_服务区汇总.xlsx
+A	old_scripts/问题一_服务区汇总_18架次.xlsx
+A	old_scripts/问题一_货物汇总.xlsx
+A	old_scripts/问题一_超级优化方案.xlsx
+A	old_scripts/问题一_配送方案.xlsx
+A	old_scripts/问题三_中继部署.xlsx
+A	old_scripts/问题三_中继部署方案_完整版.xlsx
+A	old_scripts/问题三_中继部署方案_新.xlsx
+A	old_scripts/问题三_运输调度.xlsx
+A	old_scripts/问题三_运输调度_新.xlsx
+A	old_scripts/问题二_修复版.xlsx
+A	old_scripts/问题二_符合赛题规则方案.xlsx
+A	paper_text.txt
+A	problem.txt
+A	q1_solver.py
+A	q2_solver.py
+A	q3_solver.py
+A	q4_solver.py
+R100	解题-gpt/结果/问题一_严格约束方案.xlsx	results/q1_solution.xlsx
+R088	解题-gpt/结果/问题二_优化修复版.xlsx	results/q2_solution.xlsx
+A	results/q3_coverage.xlsx
+A	results/q3_relay.xlsx
+A	results/q3_summary.json
+A	results/q3_transport.xlsx
+A	results/q4_batch2.json
+A	results/q4_batch2.xlsx
+A	results/q4_batch3.json
+A	results/q4_batch3.xlsx
+A	wang_document.xml
+A	wang_text.txt
+A	数据验证报告.md
+M	结果/问题三_中继部署方案_修复版.xlsx
+M	结果/问题三_汇总_修复版.json
+M	结果/问题三_覆盖核验_修复版.xlsx
+M	结果/问题三_运输调度_修复版.xlsx
+M	结果/问题二_优化修复版.xlsx
+M	结果/问题二_增强优化版.xlsx
+M	结果/问题四_2批次_修复版.json
+M	结果/问题四_2批次_修复版.xlsx
+M	结果/问题四_2批次_错峰复用优化.xlsx
+M	结果/问题四_3批次_修复版.json
+M	结果/问题四_3批次_修复版.xlsx
+M	结果/问题四_3批次_错峰复用优化.xlsx
+M	结果/问题四_错峰复用汇总.json
+M	解题-gpt/README.md
+D	解题-gpt/README_总览.md
+A	解题-gpt/代码/columns.txt
+M	解题-gpt/代码/solve_problem2_lns.py
+M	解题-gpt/代码/solve_problem2_optimized.py
+M	解题-gpt/代码/solve_problem3_relay.py
+M	解题-gpt/代码/solve_problem4_fixed.py
+M	解题-gpt/代码/论文图表_终稿.py
+M	解题-gpt/可视化/论文图表/问题三_通信覆盖与中继窗口.png
+D	解题-gpt/可视化/论文图表/问题二_增强前后性能与资源峰值.png
+A	解题-gpt/可视化/论文图表/问题二_性能与资源峰值.png
+M	解题-gpt/可视化/论文图表/问题四_资源池化与错峰复用.png
+D	解题-gpt/可视化/问题一_3D点云图_论文版.png
+D	解题-gpt/可视化/问题一_小提琴图_论文版.png
+D	解题-gpt/可视化/问题一_山脊图_论文版.png
+D	解题-gpt/可视化/问题一_性能对比_论文版.png
+D	解题-gpt/可视化/问题一_无人机性能对比.png
+D	解题-gpt/可视化/问题一_服务区分布图.png
+D	解题-gpt/可视化/问题一_服务区分布图_论文版.png
+D	解题-gpt/可视化/问题一_热力图_论文版.png
+D	解题-gpt/可视化/问题一_资源利用率.png
+D	解题-gpt/可视化/问题一_资源利用率_论文版.png
+D	解题-gpt/可视化/问题一_雷达图_论文版.png
+D	解题-gpt/可视化/问题三_中继覆盖范围.png
+D	解题-gpt/可视化/问题三_通信链路拓扑.png
+D	解题-gpt/可视化/问题二_3D甘特图_论文版.png
+D	解题-gpt/可视化/问题二_充电分析_论文版.png
+D	解题-gpt/可视化/问题二_利用率分析_论文版.png
+D	解题-gpt/可视化/问题二_并行坐标图_论文版.png
+D	解题-gpt/可视化/问题二_时间对比_论文版.png
+D	解题-gpt/可视化/问题二_树状图_论文版.png
+D	解题-gpt/可视化/问题二_桑基图_论文版.png
+D	解题-gpt/可视化/问题二_流线图_论文版.png
+D	解题-gpt/可视化/问题二_甘特图_论文版.png
+D	解题-gpt/可视化/问题四_批次方案对比.png
+D	解题-gpt/可视化/问题四_资源时序图.png
+D	解题-gpt/可视化/问题四_资源需求与官方库存对比.png
+D	解题-gpt/可视化/问题四_错峰复用时间轴.png
+M	解题-gpt/性能指标与参考论文对比.md
+M	解题-gpt/步骤/问题三.md
+M	解题-gpt/步骤/问题二.md
+M	解题-gpt/步骤/问题四.md
+D	解题-gpt/结果/图表/问题一_3D点云图_论文版.png
+D	解题-gpt/结果/图表/问题一_小提琴图_论文版.png
+D	解题-gpt/结果/图表/问题一_山脊图_论文版.png
+D	解题-gpt/结果/图表/问题一_性能对比_论文版.png
+D	解题-gpt/结果/图表/问题一_无人机性能对比.png
+D	解题-gpt/结果/图表/问题一_服务区分布图.png
+D	解题-gpt/结果/图表/问题一_服务区分布图_论文版.png
+D	解题-gpt/结果/图表/问题一_热力图_论文版.png
+D	解题-gpt/结果/图表/问题一_资源利用率.png
+D	解题-gpt/结果/图表/问题一_资源利用率_论文版.png
+D	解题-gpt/结果/图表/问题一_雷达图_论文版.png
+D	解题-gpt/结果/图表/问题三_中继覆盖范围.png
+D	解题-gpt/结果/图表/问题三_通信链路拓扑.png
+D	解题-gpt/结果/图表/问题二_3D甘特图_论文版.png
+D	解题-gpt/结果/图表/问题二_充电分析_论文版.png
+D	解题-gpt/结果/图表/问题二_利用率分析_论文版.png
+D	解题-gpt/结果/图表/问题二_并行坐标图_论文版.png
+D	解题-gpt/结果/图表/问题二_时间对比_论文版.png
+D	解题-gpt/结果/图表/问题二_树状图_论文版.png
+D	解题-gpt/结果/图表/问题二_桑基图_论文版.png
+D	解题-gpt/结果/图表/问题二_流线图_论文版.png
+D	解题-gpt/结果/图表/问题二_甘特图_论文版.png
+D	解题-gpt/结果/图表/问题四_批次方案对比.png
+D	解题-gpt/结果/图表/问题四_资源时序图.png
+D	解题-gpt/结果/图表/问题四_资源需求与官方库存对比.png
+D	解题-gpt/结果/图表/问题四_错峰复用时间轴.png
+D	解题-gpt/结果/图表_论文级/问题一_官方底图直飞路径.png
+D	解题-gpt/结果/图表_论文级/问题三_官方底图中继覆盖.png
+D	解题-gpt/结果/图表_论文级/问题二_路径与调度时间窗.png
+D	解题-gpt/结果/图表_论文级/问题四_分区与资源可行性.png
+D	解题-gpt/结果/问题一_LaTeX表格.tex
+D	解题-gpt/结果/问题一_完整报告.txt
+M	解题-gpt/结果/问题三_中继部署方案_修复版.xlsx
+M	解题-gpt/结果/问题三_汇总_修复版.json
+M	解题-gpt/结果/问题三_覆盖核验_修复版.xlsx
+M	解题-gpt/结果/问题三_运输调度_修复版.xlsx
+M	解题-gpt/结果/问题二_增强优化版.xlsx
+M	解题-gpt/结果/问题四_2批次_修复版.json
+M	解题-gpt/结果/问题四_2批次_修复版.xlsx
+M	解题-gpt/结果/问题四_2批次_错峰复用优化.xlsx
+M	解题-gpt/结果/问题四_3批次_修复版.json
+M	解题-gpt/结果/问题四_3批次_修复版.xlsx
+M	解题-gpt/结果/问题四_3批次_错峰复用优化.xlsx
+M	解题-gpt/结果/问题四_错峰复用汇总.json
+A	解题-gpt/论文/create_paper_v1.js
+A	解题-gpt/论文/图片参考方案对比.md
+M	解题-gpt/论文/图表清单.md
+A	解题-gpt/论文/山区洪涝灾害下无人机运输与通信协同优化_第一版.docx
+A	解题-gpt/论文/王文政-第一版.doc
+A	解题-gpt/论文/王文政-第一版.docx
+A	解题-gpt/论文/王文政-第一版_符号公式重排版.docx
+A	解题-gpt/论文/第三章_问题一正式正文.md
+A	解题-gpt/论文/第二章第三章_符号公式重排版.md
+M	解题-gpt/论文/论文初稿.md
+A	解题-gpt/问题2优化/README.md
+A	解题-gpt/问题2优化/代码/make_chart.py
+A	解题-gpt/问题2优化/代码/optimize_alns.py
+A	解题-gpt/问题2优化/代码/run_experiments.py
+A	解题-gpt/问题2优化/代码/validate_candidate.py
+A	解题-gpt/问题2优化/优化方案设计.md
+A	解题-gpt/问题2优化/图表/问题二_ALNS基线对比.png
+A	解题-gpt/问题2优化/实验记录.md
+A	解题-gpt/问题2优化/用户旧方案审计.md
+A	解题-gpt/问题2优化/相关论文与方法依据.md
+A	解题-gpt/问题2优化/结果/候选方案官方约束核验.json
+A	解题-gpt/问题2优化/结果/多随机种子对照.csv
+A	解题-gpt/问题2优化/结果/问题二_ALNS候选方案.xlsx
+A	解题-gpt/问题2优化claude/README.md
+A	解题-gpt/问题2优化claude/requirements.txt
+A	解题-gpt/问题2优化claude/代码/cargo_columns.txt
+A	解题-gpt/问题2优化claude/代码/check_columns.py
+A	解题-gpt/问题2优化claude/代码/check_resources.py
+A	解题-gpt/问题2优化claude/代码/cpsat_scheduler.py
+A	解题-gpt/问题2优化claude/代码/debug_cpsat.py
+A	解题-gpt/问题2优化claude/代码/debug_output.txt
+A	解题-gpt/问题2优化claude/代码/debug_run.py
+A	解题-gpt/问题2优化claude/代码/energy_utils.py
+A	解题-gpt/问题2优化claude/代码/main_optimize.py
+A	解题-gpt/问题2优化claude/代码/minimal_test.py
+A	解题-gpt/问题2优化claude/代码/nsga2_optimizer.py
+A	解题-gpt/问题2优化claude/代码/output.txt
+A	解题-gpt/问题2优化claude/代码/quick_run.py
+A	解题-gpt/问题2优化claude/代码/quick_run_output.txt
+A	解题-gpt/问题2优化claude/代码/run_test.bat
+A	解题-gpt/问题2优化claude/代码/test_cpsat_simple.py
+A	解题-gpt/问题2优化claude/代码/test_framework.py
+A	解题-gpt/问题2优化claude/代码/ultra_quick_debug.txt
+A	解题-gpt/问题2优化claude/代码/ultra_quick_final.txt
+A	解题-gpt/问题2优化claude/代码/ultra_quick_output.txt
+A	解题-gpt/问题2优化claude/代码/ultra_quick_run.py
+A	解题-gpt/问题2优化claude/快速开始.md
+A	解题-gpt/问题2优化claude/总结报告.md
+A	解题-gpt/问题2优化claude/文档/优化方案说明.md
+A	解题-gpt/问题2优化claude/文档/技术实现文档.md
+A	解题-gpt/问题2优化claude/环境配置指南.md
+A	解题-gpt/问题2优化claude/结果/帕累托前沿汇总.xlsx
+A	解题-gpt/问题2优化claude/项目总览.md
+A	解题-gpt/问题2优化claude/项目清单.txt

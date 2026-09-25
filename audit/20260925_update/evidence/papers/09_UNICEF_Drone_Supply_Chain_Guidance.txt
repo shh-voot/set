@@ -1,0 +1,527 @@
+--- PDF PAGE 1 ---
+ UNICEF  GUIDANCE ON 
+ THE  USE OF  DRONES 
+ IN  SUPPLY CHAINS 
+
+--- PDF PAGE 2 ---
+© UN0259812 Jason Chute
+
+--- PDF PAGE 3 ---
+Table of contents
+1. Rationale, applicability and scope
+2. Use cases and prerequisites
+3. Drone technology considerations
+4. Drone delivery as a service
+5. Procurement of drone delivery and logistics services	
+6. Additional resources 	
+04
+05
+07
+10
+13
+15
+
+--- PDF PAGE 4 ---
+4
+1. Rationale, applicability
+and scope
+1. Rationale, applicability
+and scope
+An uncrewed aircraft system (UAS), commonly known as a drone, is a remotely piloted air­
+craft system without a pilot on board, which can be pre-programmed to perform automated 
+or autonomous flights. This innovative technology provides organizations and governments 
+with a new tool for in-country delivery of health commodities in access-constrained situ­
+ations. Drones can also help quickly collect aerial data for emergency preparedness and 
+response. 
+With the growing interest of governments, donors and humanitarian organizations in UAS, 
+there is a need to strengthen the knowledge, operational practices and support mecha­
+nisms that enable UNICEF and partners to source and procure appropriate drone logistics 
+services.
+The purpose of this guidance document is to provide UNICEF partners with a resource for 
+implementing and procuring drone logistics services for the delivery of health products, 
+emergency supplies and other commodities, either as a part of regular in-country logistics 
+and programme delivery in access-constrained environments or in emergency settings.
+The document presents the key use cases and considerations for drones, introduces differ­
+ent service models and transport modalities, and provides guidance and tools for procuring 
+drone delivery services.
+Drones can be useful tools that fill existing gaps within the national health and emergency 
+supply chains, especially in serving the most disadvantaged, remote, sparsely populated 
+or otherwise underserved communities, areas and facilities. Drones have been used in 
+geographies and contexts that have limited road and transport infrastructure, and where 
+in-country commuting, delivery and distribution is challenging, taking a disproportionate 
+amount of  time and effort. They have been used to deliver medical commodities and diag­
+nostic samples to, and from, islands; hard-to-access (seasonally or year-round) rural health 
+facilities; mountainous regions; and places affected by natural disasters. 
+UNICEF works and provides technical support to partners and governments in strength­
+ening their capacity to operate efficient supply chains. Drones can play a significant role in 
+complementing the existing transport services by responding to supply-chain bottlenecks, 
+such as access, time and speed. This guidance for drone delivery procurement and imple­
+mentation can be applicable within the scope of partner-controlled supply chains. The use 
+of drones will be context specific, based on actual needs and demands arising from the 
+in-country supply chain challenges and problems.
+Partners are advised to consult and actively work with ministries of health, central/regional 
+medical stores, regional/local health authorities, aviation regulatory authorities and other 
+stakeholders to discuss feasibility, preferences and use cases of a drone delivery service, 
+and ensure that the integration of this new transport modality improves the overall system 
+outcomes and is driven by national strategies.
+
+--- PDF PAGE 5 ---
+5
+2. Use cases and
+prerequisites
+2. Use cases and
+prerequisites
+This transformative technology has the potential to improve the way UNICEF and partners 
+operate and support governments for in-country logistics and delivery of humanitarian aid, 
+as summarized below: 
+	
+» Delivery of small cargo for health and emergency programmes. Drones can carry various 
+health commodities (vaccines, medicines, diagnostic samples, blood products, medical 
+products) and help extend the reach of the supply chain to communities and health 
+centres that are in access-constrained areas, as part of either regular programming or 
+emergency response. 
+	
+» Delivery of large cargo for emergency programmes. In emergency settings, drone plat­
+forms can be used to deliver critical humanitarian aid to places that are inaccessible 
+owing to natural disasters or other emergencies where road infrastructure is signifi­
+cantly affected. The category of large payload drones is rapidly evolving and might be 
+used for large air-drops of humanitarian aid. 
+For drones to become a cost-effective and impactful addition to the supply chain system, 
+several aspects must be considered before implementation:
+	
+»
+A thorough understanding of the local supply chain system and its bottlenecks is 
+essential for integrating drones into a context where their use contributes to supply 
+chain performance, health outcomes, and cost-effectiveness or other improvements 
+of local transportation and distribution networks. To do so, partners are encouraged 
+to conduct a demand and needs assessment. This serves to determine the specific 
+bottlenecks and helps to analyse in which scenarios drones could be used to address 
+them. Such an assessment has to consider four different elements:  
+	
+— Geography and transport networks (such as climate, topography, seasonality, ex­
+isting transport modalities, quality of the network, accessibility to health facilities, 
+density of health facilities) 
+	
+— Product demand and health indicators (such as baseline data, including facility-level 
+health and supply chain data) 
+	
+— Drone characteristics (such as range, payload, cost)
+	
+— Economic feasibility (such as cost-benefit and cost-effectiveness analysis of intro­
+duction of drone delivery, cost comparison between drone delivery and existing 
+transport solutions) 
+	
+» The use of drone technology in any country is dependent on an enabling environment, 
+such as the regulatory regime, the local skills, project management capacities, financial 
+and human resources, and the social and political acceptance of the technology. 
+	
+» Selection and procurement of the solution is an important step during the implemen­
+tation of the drone logistics programme, and the subsequent guidance in this docu­
+ment provides insights into the service models and transport modalities that currently 
+exist, the procurement procedures that are advised to be followed, and the difference 
+
+--- PDF PAGE 6 ---
+6
+2. Use cases and
+prerequisites
+between outsourcing and insourcing of drone services. The guidance also provides 
+sample Terms of Reference (see paragraph 28.2) for drone logistics services for the 
+use of Country Offices.
+Some factors help to improve the cost-effectiveness of drone delivery, such as:
+	
+» High number of flights per day
+	
+» High density of facilities within the drone’s range
+	
+» Increased value (health impact) of the commodities
+	
+» Increased range and automation of drones
+	
+» Combining different health commodities for drone delivery (therapeutic, immunization, 
+diagnostics, emergency, and other health and nutritional commodities)
+	
+» Expanding the list of use cases beyond the health supply chain, such as potential 
+cross-subsidization of drone delivery by other services, including mapping, emergency 
+response, postal service, or similar
+© UN013395 Bodele
+
+--- PDF PAGE 7 ---
+7
+3. Drone technology
+considerations
+3. Drone technology
+considerations
+The selection of drones depends on a use case, intended weight and volume of a payload, 
+distance, connectivity, weather, and other operational factors. Drones come in varied sizes 
+and configurations. There are primarily three types of drones used in supply chain delivery.
+	
+» Fixed-wing drones use a wing, like a normal aeroplane, to provide the lift, and are there­
+fore more efficient than other types of drones. They can cover longer distances, but 
+the main downside of fixed-wing drones is their inability to hover in one spot, which 
+makes launching and landing them more complicated, as they might need a runway, 
+catapult launcher or a special net to launch and recover them safely. In addition, they 
+might require more operational infrastructure.
+	
+» Vertical take-off and landing (VTOL) fixed-wing drones merge the benefits of fixed-
+wing drones with the ability to take off and land vertically, and hover in one spot. This 
+category of drones can take off and land vertically, which gives them an important 
+advantage in serving remote communities where landing a drone might be required.
+	
+» VTOL rotorcraft drones have more than two rotors; the advantage with this type of 
+drone is the simpler rotor mechanics required for flight control. However, their limited 
+endurance and speed make them less suitable for large-payload, long-distance delivery 
+flights, and they are therefore used mainly for short-trip, local supply chain delivery.
+Drones that are capable of VTOL are most often used for reverse logistics of commodities; 
+i.e., delivering commodities by landing on the grounds of a destination facility, where it 
+then picks up a package, which it returns to a main base. This design enables the drone 
+to pick up, for instance, diagnostic samples from remote health clinics and deliver them 
+to a diagnostics lab. Another advantage of VTOL drones is that they provide agwility and 
+flexibility, meaning that a distribution facility does not need a specific launch and retrieval 
+mechanism or runway, which might require higher set-up costs and might not be able to 
+serve some areas. VTOL drones, nevertheless, can also deliver without landing – in such 
+cases, a drone uses a cable to lower a payload, and after it reaches the ground, the cable 
+retracted, and the drone returns to a home base. Some VTOL drones have multiple-drop 
+functionality, delivering several packages to different locations in a single trip.
+The fixed-wing drones mostly use parachute airdrop mechanisms to deliver commodities 
+and goods without landing at a delivery site, as this would require special infrastructure at 
+each destination (runway or a catapult/retrieve system). Fixed-wing drones that are capable 
+of delivering commodities only one way can fly longer distances and can thus serve larger 
+geographical areas. However, they have the limitation of not being able to pick up packages 
+from a destination (e.g., diagnostic samples).
+All types of drone (VTOL fixed-wing, VTOL rotorcraft, or fixed-wing) differ in range (dis­
+tance, flight time) and payload capacity (volume and weight). They might also have different 
+communication technologies and different tolerances to adverse weather.
+
+--- PDF PAGE 8 ---
+8
+3. Drone technology
+considerations
+The range and payload capabilities of drones are predetermined by their size and the 
+power source they use. Most drones rely on electric engines that use lithium polymer 
+(LiPo) batteries. Some drones have combustion engines that use regular fuel. There is an 
+increasing trend toward using hydrogen fuel or other alternative sources of power that can 
+extend the flight time and operational range of drones. Gasoline-powered drones provide 
+greater range, which can lead to better cost-effectiveness; however, noise, pollution, and 
+consistent supply and quality of fuel have to be considered when choosing such a platform. 
+Battery-powered drones are more environmentally friendly; however, they have limitations 
+in terms of range. Additionally, stable electricity supply, battery-charging capabilities and 
+battery swapping at different destinations (e.g., health facility, outreach post) are important 
+considerations to ensure that drones can operate without interruption. As battery technol­
+ogy is improving, it is expected that in the future, the range gap will be closed between 
+battery-powered and gasoline-powered drones.
+An important consideration when choosing a drone platform is cold-chain capacity. Most 
+to-date drone projects use passive cooling (insulated cargo boxes that use icepacks or 
+cool water packs) to maintain vaccine temperatures (2-8 degrees Celsius) during flights. 
+Evidence shows  that passive cooling has been sufficient to maintain cold chains within 
+acceptable limits. Temperature loggers are often used to monitor the temperature inside 
+the box. Active cooling systems could also be used as a cold-chain solution and could be 
+particularly important in ultra-cold-chain scenarios.
+	
+» Maintenance and repairs: Given that the overall supply chain in resource-constrained 
+environments is challenging, it often takes an exceptionally long time to get spare parts 
+for drones from outside a country. Therefore, systems that have low-maintenance 
+requirements, a low operational footprint, and spare parts that are easily available (or 
+VTOL fixed-wing (up) and VTOL rotorcraft 
+(down) drones that are capable of reverse 
+logistics (delivery and pick-up)
+Delivery and Pick-up
+Delivery only
+Fixed-wing drone capable of one-way 
+logistics (delivery only) 
+
+--- PDF PAGE 9 ---
+9
+3. Drone technology
+considerations
+can even be sourced or produced locally) have huge advantages. Also, it is especially 
+important to ensure that there is a robust training programme for repairs and mainte­
+nance of a drone to ensure that local staff can efficiently maintain it.
+	
+» User interface: Drones vary in how difficult they are to operate, but those that have 
+built-in fail-safe features and user-friendly interfaces have advantages in ensuring that 
+local staff can quickly learn how to operate them safely and efficiently.
+	
+» Flight control and navigation: It is important that a drone has robust and redundant 
+navigation and other flight control systems (GPS, inertia measurement unit [IMU], and 
+other) to ensure that it can maintain its orientation even under frequency jamming or 
+other technical anomalies.
+	
+» Control and Command (C2) link: This is the data link between a drone and a remote 
+pilot station for the purpose of managing flight. The design, security and management 
+of the C2 link have a variety of architectures and considerations, and given limitations 
+of regular (or extended range) radio links, more platforms use cellular and satellite links. 
+The quality of the link in such situations depends heavily on cellular network coverage, 
+while satellite connections are still more expensive and usually employed as a stable 
+backup. Drones that can operate in low-connectivity environments and provide redun­
+dant C2 link solutions have an advantage.
+	
+» Durability: A drone’s ability to withstand harsh weather conditions (capable of flight 
+in rain or high wind, at high altitudes and in sub-zero temperatures, and are not 
+suscetible to dust) is an important aspect when evaluating a platform. The best practice 
+is to look at the platform’s Ingress Protection (IP) rating, as well as a provider’s flight 
+safety record, to determine the level of a drone’s durability.
+
+
+
+
+
+
+
+--- PDF PAGE 10 ---
+10
+3. Drone technology
+considerations
+4. Drone delivery as a service 
+There are two main drone delivery modalities: forward logistics and reverse logistics.
+One-way delivery (forward logistics) is often implemented by fixed-wing drones that do 
+not land at the delivery site, but instead drop a payload to a recipient (e.g., health facility 
+staff). This modality is most effective in a hub-and-spoke transport network, where several 
+different beneficiaries (health facilities, households) are served from one central fulfilment 
+centre. In such cases, the required infrastructure (a warehouse, a fulfilment centre, a launch/
+retrieval system, etc.) can either be attached to the existing hub (district hospital, subnation­
+al-level medical store or similar facility) or be a separate fulfilment and distribution centre. 
+Reverse logistics utilize VTOL fixed-wing or VTOL rotorcraft drones. This modality can 
+function in both hub-and-spoke and point-to-point transport network models. Variations 
+and extensions of those are possible because of the drones’ capacity to land and take off at 
+each destination, and the ability to use multiple-drop or winch mechanisms. For fixed-wing 
+drones to be used for reverse logistics, infrastructure must be built at each delivery point, 
+which requires substantial investment. Given that it requires less set-up infrastructure, 
+drone delivery with reverse logistics capabilities can be more easily added to an existing 
+supply chain, as just another transport modality.
+Delivery (one-way or reverse logistics)
+Pick-up (reverse logistics only)
+1.	 Medical Samples (laboratory specimens) for 
+HIV, TB and other Tests
+2.	 Medical Wastage
+3.	 Reports and other documentation
+1.	 Medicines
+2.	 Vaccines
+3.	 Micronutrients
+4.	 Lab Results
+5.	 Medical tools, 
+devices and  
+equipment
+6.	 Blood for  
+transfusion
+7.	 Larger payloads of 
+humanitarian aid or 
+health supplies
+District hospital, 
+subnational medical 
+warehouse, or 
+another inventory-
+holding facility
+Two modes of drone delivery
+Lab Sample
+processing facility
+Secondary/Tertiary 
+health facility or 
+outreach facility
+
+--- PDF PAGE 11 ---
+11
+4. Drone delivery as a service
+There are two predominant Drone-Delivery-as-a-Service (DDaaS) models that are offered 
+by private companies and service providers – the third party logistics (3PL) model and the 
+carrier model. The major difference between the two is that in the 3PL model, a service 
+provider manages multiple functions, such as procurement, warehousing, order manage­
+ment and transportation, and uses drones as a means of transport to complement the 
+transport fleet. In the carrier model, a service provider is responsible for only one function: 
+transportation. This model offers drone delivery between a hub and an end destination. 
+The two models are presented in detail in the table below.
+Some logistics companies have begun offering a hybrid model that combines 3PL and 
+carrier, in which some commodities are delivered from a company-managed warehouse, 
+while others are picked up from vendors (medical store, lab, hospital) and delivered straight 
+to an end recipient.
+3PL drone
+delivery model
+Carrier drone
+delivery model
+How does 
+it work? 
+3PL service providers offer integrated sup­
+ply-chain services that include order manage­
+ment, inventory storage and management, 
+picking and packing, contract management, 
+IT solutions, human resources, and shipping 
+and distribution, which are implemented 
+by a drone fleet. The entire logistics function 
+can be outsourced to a 3PL provider.
+In the carrier model, only the transpor­
+tation component of the supply chain is 
+handled, dealing with the point-to-point 
+delivery of commodities. Companies 
+that provide such services often lease or 
+charter their own transportation fleet – in 
+this case, drones – as well as provide all 
+related operational components, such as 
+human resources, repairs, maintenance, 
+liability coverage, or regulatory certifica­
+tions. 
+Where it is 
+currently
+in use?
+Ghana,Rwanda 
+Malawi,
+Democratic Republic of Congo
+Advantages 
+	
+» Not limited to a transportation function, 
+it can increase efficiency across multiple 
+different supply-chain elements.
+	
+» More centralized approach, enabling private 
+sector outsourcing, increasing efficiency 
+and professionalization 
+	
+» Flexible and adaptive integration into 
+the existing supply chain, without a 
+demand for extensive infrastructure 
+	
+» Less capital intensive and does not 
+require high set-up costs 
+Disadvantages 
+	
+» Establishment of a parallel distribution 
+function might add additional complexities 
+to already challenged supply chains 
+	
+» The majority of 3PL providers that offer 
+drone delivery use only a single mode of 
+transport within their service package and 
+there is a lack of integration with other 
+transport
+modalities  
+	
+» Focused only on transportation 
+	
+» Relies on the existing system and 
+infrastructure, which might be poor 
+and insufficient 
+
+--- PDF PAGE 12 ---
+12
+4. Drone delivery as a service
+The selection of a drone delivery modality (forward versus reverse logistics) and drone 
+delivery business model (3PL or carrier) will depend on actual demands and needs of the 
+health supply chain in country. Therefore, it is essential to do a thorough assessment and 
+needs analysis and collect baseline data that enable the choice of the most cost-effective 
+and impactful approach. 
+© UN013394 Khonje
+
+--- PDF PAGE 13 ---
+13
+5. Procurement of drone
+delivery and Logistics services
+5. Procurement of drone
+delivery and logistics services
+The below table outlines the key considerations, advantages and disadvantages of procur­
+ing drones as an asset (fleet), versus outsourcing the drone delivery service to a logistics 
+partner. The below considerations are applicable for both 3PL and carrier service models, 
+while 3PL may incur higher set-up costs. 
+UNICEF uses a few different transport management and contracting approaches, which 
+are also applicable for drone delivery services:
+	
+» 3PL service providers (in the case of drones: 3PL or carriers) can be contracted by a 
+Country Office to provide logistics and transportation services.
+	
+» A host government’s transport assets can be used by a Country Office, where available 
+and feasible.
+Resource elements 
+Insourcing 
+Outsourcing 
+Upfront investment 
+Medium to high 
+Low to medium* 
+Procurement of equipment 
+Needed 
+Not needed 
+Internal capacity for drone
+piloting and operations  
+Needed 
+Not needed 
+Internal capacity to manage 
+regulatory compliance 
+Needed 
+Not needed 
+Internal capacity to maintain 
+and repair drones 
+Needed 
+Not needed 
+Internal capacity to manage 
+liability and insurance aspects 
+Needed 
+Not needed
+Dedicated personnel to run the 
+operations 
+Needed 
+Not needed 
+Dedicated project management 
+staff 
+Needed 
+Needed 
+Individual insurance 
+Needed 
+Not needed 
+Risk of loss or appropriation of 
+equipment  
+Likely 
+Unlikely 
+Savings/cost-efficiency 
+Long-term 
+Short/medium-term 
+
+--- PDF PAGE 14 ---
+14
+5. Procurement of drone
+delivery and Logistics services
+» A Country Office may arrange in-country transport through another UN organization or
+non-governmental organization (NGO) where this is cost-effective and includes all
+required security measures.
+Procuring and operating organization’s own transport assets (e.g., a fleet of delivery drones) 
+will result in asset depreciation, infrastructure investments, maintenance and repairs, local 
+capacity, liability and insurance costs. Outsourcing drone delivery is the most viable way 
+of integrating drones into health supply chains.
+It is advisable to make the use of a Request for Proposal of Services (RFPS) rather than 
+an Invitation to Bid for Services (ITBS) procurement modality, to capture the complexity 
+of drone delivery services.
+When sourcing and contracting drone logistics service providers, partners can use the 
+following tools and resources:
+
+ 
+There are several international drone service providers that offer 3PL, carrier and hybrid 
+drone delivery services. The majority of these companies are originally drone manufacturers 
+and only a limited number of them have actual 3PL and in-country logistics experience.
+A market assessment, a survey of existing in-country logistics service providers, an industry 
+consultation, a Request for Expressions of Interest, or a Request for Information can be 
+considered as methods to identify whether drone delivery is a part of the existing service 
+offerings directly or possible via subcontractual service offerings. This can help identify 
+available or potential local solutions for fulfilling identified needs in drone delivery and can 
+help inform the needs of market shaping and private sector engagement
+
+--- PDF PAGE 15 ---
+15
+6. Additional Resources
+6. Additional resources
+For more information, please reach out to the Supply Division’s Supply Chain Strengthening 
+Centre, at sc.strengthening@unicef.org and please visit https://www.unicef.org/supply/
+leveraging-power-drones-reach-last-mile 
+ANNEX 1: Drone delivery decision and solution tree, and implementation and 
+planning checklist
+ANNEX 2: Sample Terms of Reference for the Request for Proposals for in-country 
+drone delivery services
+
+--- PDF PAGE 16 ---
+16
+6. Additional Resources 
+UNICEF Supply Division
+Supply Chain Strengthening Centre
+Marmorvej 51
+2100 Copenhagen
+Denmark
+Telephone: +(45) 45 33 55 00
+Email: sc.strengthening@unicef.org
+www.unicef.org
+
+www.unicef.org/supply/strengthening-
+national-supply-chains

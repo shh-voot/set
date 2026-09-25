@@ -1,0 +1,22 @@
+[
+  {
+    "script": "solve_problem1_18trips.py",
+    "exit_code": 0,
+    "seconds": 2.436999999998079
+  },
+  {
+    "script": "solve_problem2_lns.py",
+    "exit_code": 0,
+    "seconds": 21.56300000000192
+  },
+  {
+    "script": "solve_problem3_relay.py",
+    "exit_code": 0,
+    "seconds": 19.18699999999808
+  },
+  {
+    "script": "solve_problem4_fixed.py",
+    "exit_code": 0,
+    "seconds": 1.5469999999986612
+  }
+]

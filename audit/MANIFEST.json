@@ -1,0 +1,849 @@
+{
+  "schema": 1,
+  "reviewed_revisions": {
+    "20260925": "ea5e0fb57065ad843b52f9e9e3ebdbe42582b0c1",
+    "20260925_update": "e94e1cc70b6f342282eaa9e7d2b15aa84065e381"
+  },
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 96,
+      "sha256": "ce828273dbebed945f5e1507a4cb49f33af5e2e179bad20b907732feea7ad5f2"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 307,
+      "sha256": "77f8e035121b885018d32e3b1e3a691aef3961d3346ef3df24d49e16c0d209fe"
+    },
+    {
+      "path": "20260925/check_results.py",
+      "bytes": 18247,
+      "sha256": "a2a0388e750076371e8a6696d8eb8ac5609e2bca36d5812e7d0495134e7d976e"
+    },
+    {
+      "path": "20260925/evidence/audit_summary.json",
+      "bytes": 43999,
+      "sha256": "f249e9d9a6c402846f522217abbbb49c150f2a32a72800079d8a827ecfce1703"
+    },
+    {
+      "path": "20260925/evidence/geo_description.txt",
+      "bytes": 1394,
+      "sha256": "6c9d94f393a16c36d27f4b1bd00b99667cae7f1093f325cee8e9a871adac4cf1"
+    },
+    {
+      "path": "20260925/evidence/input_manifest.json",
+      "bytes": 60317,
+      "sha256": "b681236f0ef4aa8c600f903d5ff1c5e535851f5bfd127a62f9cee58695e2c8bb"
+    },
+    {
+      "path": "20260925/evidence/integrity_check.json",
+      "bytes": 100646,
+      "sha256": "2406163acd9da16571a5f3eb127037895c7cf83992571f271fc9b574e2ca10de"
+    },
+    {
+      "path": "20260925/evidence/official_xlsx/中继无人机数据.txt",
+      "bytes": 1109,
+      "sha256": "f62e75841093695f48c896dd6511dc8020449ae7fadca266cdffaa11666b8039"
+    },
+    {
+      "path": "20260925/evidence/official_xlsx/物资需求与配送时限.txt",
+      "bytes": 13314,
+      "sha256": "3d2f0e23489ec8eb56962e4c2cfeb4e9ecbb32dd6dcb957aad9c727bf1b96069"
+    },
+    {
+      "path": "20260925/evidence/official_xlsx/结果提交模板.txt",
+      "bytes": 1345,
+      "sha256": "b68e5ab0c5a22d9cb1bba8851cad39631b1befa51f5fc77e7dfa8c8bccb6ad30"
+    },
+    {
+      "path": "20260925/evidence/official_xlsx/调度中心与服务区.txt",
+      "bytes": 1668,
+      "sha256": "04cdf53ca8758a6b903ef8392e52f4470ace2e0db7b07d463061b7ecc931596e"
+    },
+    {
+      "path": "20260925/evidence/official_xlsx/运输无人机数据.txt",
+      "bytes": 1630,
+      "sha256": "376223e4d3c890e4b4e10a16671f3be45f1696e7dd0afc441492bc75ebc66857"
+    },
+    {
+      "path": "20260925/evidence/official_xlsx/通信链路参数.txt",
+      "bytes": 1028,
+      "sha256": "3c0703ec3223cb3f44f68b32f49f14abb1b9535868afb0f325c36ed6207d6b37"
+    },
+    {
+      "path": "20260925/evidence/papers/01_UAV_Medical_Delivery_Trajectory_Optimization_2025.txt",
+      "bytes": 39302,
+      "sha256": "63e1f093facb35c751242a1493e906a4cd8f7e374df759295f418e9c30ec8025"
+    },
+    {
+      "path": "20260925/evidence/papers/02_Post_Disaster_UAV_Vehicle_Routing_Robust_Optimization.txt",
+      "bytes": 68664,
+      "sha256": "0457e723760f807316dee0fb4006e6d7c9d2e13f28c763297801c4a5cb65103f"
+    },
+    {
+      "path": "20260925/evidence/papers/03_Multi_Depot_Multi_Trip_VRP_Completion_Time.txt",
+      "bytes": 54232,
+      "sha256": "d358dada8318e1cca94733913d2f1a05398a3fe8911afa78f2aa128958e4e1da"
+    },
+    {
+      "path": "20260925/evidence/papers/04_Battery_Swapping_Scheduling_Part1.txt",
+      "bytes": 45350,
+      "sha256": "33840ec733a62b1c69c07a05833f760d360b0509045d4fbaca10ed71af653707"
+    },
+    {
+      "path": "20260925/evidence/papers/05_Battery_Swapping_Scheduling_Part2.txt",
+      "bytes": 45972,
+      "sha256": "edcf52083d91bb87a9c78d870cc7c53e55cfe216fcbc4c9698b1653d5ad413d7"
+    },
+    {
+      "path": "20260925/evidence/papers/06_No_Stockout_Charging_Scheduling_2026.txt",
+      "bytes": 65653,
+      "sha256": "85960e2630e522ade242c648eb5310ecbb47786df677b9d5c81f973b2abfff1a"
+    },
+    {
+      "path": "20260925/evidence/papers/07_UAV_3D_Position_Optimization_Solar_Relay.txt",
+      "bytes": 68839,
+      "sha256": "5a632e0b160d21f80a07aa4f375c20bc18cd81f68ca53aeca0f197c87955f021"
+    },
+    {
+      "path": "20260925/evidence/papers/09_UNICEF_Drone_Supply_Chain_Guidance.txt",
+      "bytes": 25181,
+      "sha256": "3c5c28ff5320d742dcfbc8f0d86bd9c1c6a12f7b31ed95c575422485eb1a3bab"
+    },
+    {
+      "path": "20260925/evidence/papers/10_Multi_Truck_Drone_Emergency_Distribution_2026.txt",
+      "bytes": 92481,
+      "sha256": "51b4cc8de10d18059bfd66d536dfe5f2ed416c34172659bb182d05f0a0d11dde"
+    },
+    {
+      "path": "20260925/evidence/papers/11_Heterogeneous_Fleet_VRPTW_Aston.txt",
+      "bytes": 88007,
+      "sha256": "fea72220b638812047e976e353334286b5501cb4383351aafd2942ea983b9a05"
+    },
+    {
+      "path": "20260925/evidence/papers/12_PyVRP_State_of_Art_2024.txt",
+      "bytes": 56713,
+      "sha256": "8c2b9b57969fcfff7f9b9531b6be205a96083f6747243a7fd0d35440bd504e15"
+    },
+    {
+      "path": "20260925/evidence/papers/13_HGS_CVRP_2024.txt",
+      "bytes": 69140,
+      "sha256": "b82e4becfb1f2c09207cb14931a9094ff3a536a3cef72bc642a7c12390a5ba45"
+    },
+    {
+      "path": "20260925/evidence/papers/14_NSGA_II_UAV_Logistics_Springer_2025.txt",
+      "bytes": 144997,
+      "sha256": "f629fcbe1070db2b85d678cffeae9dba2f75e55fb44f954f1b7ef3a5f5254bdd"
+    },
+    {
+      "path": "20260925/evidence/papers/15_Relief_Distribution_Trucks_Drones_Incomplete_Demand.txt",
+      "bytes": 105043,
+      "sha256": "c5c8af3d97ebde50d7dbd5569697ee040f2170e7393be56c9db2e1d22712c4fb"
+    },
+    {
+      "path": "20260925/evidence/pdf_inventory.json",
+      "bytes": 60998,
+      "sha256": "05e76432e14e3a072e06d8c3488362211b661dccf30706b1ace8e1bf546c5aee"
+    },
+    {
+      "path": "20260925/evidence/problem_document.xml",
+      "bytes": 119845,
+      "sha256": "24ad348d25b97605ab496f7a7ac6687cbdcd131d471cc9d872b81da2b46e7709"
+    },
+    {
+      "path": "20260925/evidence/problem_with_formulas.txt",
+      "bytes": 20302,
+      "sha256": "397b7a8ed66f5b521ae31933792a2b4b202210e943492fb30bb1c74a5d4b9819"
+    },
+    {
+      "path": "20260925/evidence/q1_mission_check.csv",
+      "bytes": 10705,
+      "sha256": "4c3ffc27958c4f928ef8ed40242e5be4ea38750ca971686c56803889abff5949"
+    },
+    {
+      "path": "20260925/evidence/q2_cargo_check.csv",
+      "bytes": 6390,
+      "sha256": "b758c997cb7315d9da10b0044ba7745557d6f179f033ebbfea14591be8494a20"
+    },
+    {
+      "path": "20260925/evidence/q2_mission_check.csv",
+      "bytes": 23687,
+      "sha256": "47bb9dfbcb24c4fc753f726251506425bc6adc38e3f90ffc21359d9f00970a30"
+    },
+    {
+      "path": "20260925/evidence/q3_cargo_check.csv",
+      "bytes": 6401,
+      "sha256": "35d01508fbf63367b665ca241ec96194a8d71cf25b3628d4c02b6bc83cd526f8"
+    },
+    {
+      "path": "20260925/evidence/q3_communication_check.csv",
+      "bytes": 2020,
+      "sha256": "aa15c224c9ee78b922f87d44927ae62e83f109e9c9f4d132c3e2413a0fa67564"
+    },
+    {
+      "path": "20260925/evidence/q3_endpoint_robustness.csv",
+      "bytes": 2499,
+      "sha256": "0f0cf88371dac75c60367831bd251b3a3829be2a963268cefbfc8f15cd83462a"
+    },
+    {
+      "path": "20260925/evidence/q3_failed_points.csv",
+      "bytes": 981,
+      "sha256": "0210b4a3ae020798c5c1c67e2b558193a042b9d7ca4fa8227d39f6b5539320eb"
+    },
+    {
+      "path": "20260925/evidence/q3_mission_check.csv",
+      "bytes": 26719,
+      "sha256": "e183cf9fb6d6cc5ad9c6b3dd42b005be1db6102419ace806df04fa69c8ad94b2"
+    },
+    {
+      "path": "20260925/evidence/q4_2_hard_late.csv",
+      "bytes": 1307,
+      "sha256": "6b9144a547c101056373d7c0c32bb4a4b3caa43c4fddb529d89a525be75464ae"
+    },
+    {
+      "path": "20260925/evidence/q4_3_hard_late.csv",
+      "bytes": 1307,
+      "sha256": "46d0d3ae0960013ccb376aeb8e838279b896b30330dc31f6775dc6b37c61a721"
+    },
+    {
+      "path": "20260925/evidence/q4_from_actual_q3_times.csv",
+      "bytes": 437,
+      "sha256": "1b3a7a3d2e53ea5d236f13433b23ec841fd124293ce9ad9a4f63ca9064a7e440"
+    },
+    {
+      "path": "20260925/evidence/reproduce_solve_problem1_18trips.log",
+      "bytes": 496,
+      "sha256": "4b00fac846b10736c51fd465ef64462618c274b6bf9c05319dfcc669a926fd95"
+    },
+    {
+      "path": "20260925/evidence/reproduce_solve_problem2_lns.log",
+      "bytes": 541,
+      "sha256": "6111d6943724d63a0e73f3b9740f49e7847a88c91d0490a1e7226d1e08cb6b6a"
+    },
+    {
+      "path": "20260925/evidence/reproduce_solve_problem3_relay.log",
+      "bytes": 337,
+      "sha256": "9a82dadebccebc831a328ecdae5f3fde0c84f601fd30efb6e761475dcdd5e7aa"
+    },
+    {
+      "path": "20260925/evidence/reproduce_solve_problem4_fixed.log",
+      "bytes": 1525,
+      "sha256": "bfc928e8e483ef4893a1a8f26c527452d4194e37b420e3e7df1f6743609303ca"
+    },
+    {
+      "path": "20260925/evidence/reproduction_status.json",
+      "bytes": 436,
+      "sha256": "93322da849a8cdb714198ea5bae23983e023585751ac89e2c2de99452c844f10"
+    },
+    {
+      "path": "20260925/evidence/results_xlsx/问题一_18架次方案_修复版.txt",
+      "bytes": 10310,
+      "sha256": "491ed041217d8ea38ef46018f3ff1cfae6250c6365a9c48461c8186e6172f2a5"
+    },
+    {
+      "path": "20260925/evidence/results_xlsx/问题一_严格约束方案.txt",
+      "bytes": 6881,
+      "sha256": "cec021be5f80ce1c2dfb9daf1934ec3d14af52a71b7d8734b1b0cb13e1b1aab4"
+    },
+    {
+      "path": "20260925/evidence/results_xlsx/问题三_中继部署方案_修复版.txt",
+      "bytes": 2333,
+      "sha256": "b79c979aadd4d0a9c6f431724c9b2f52b07d9d59b7b7f55d66dbd24f5fb3f0b8"
+    },
+    {
+      "path": "20260925/evidence/results_xlsx/问题三_覆盖核验_修复版.txt",
+      "bytes": 714,
+      "sha256": "75cf7acf3c48deb73863141c116b9eb0ebf02fcede382971355c3d274f486ca5"
+    },
+    {
+      "path": "20260925/evidence/results_xlsx/问题三_运输调度_修复版.txt",
+      "bytes": 15665,
+      "sha256": "ff15a4dccd8f3f0784900e56722627bad3231892ca0ddb6290947ac38acacde3"
+    },
+    {
+      "path": "20260925/evidence/results_xlsx/问题二_优化修复版.txt",
+      "bytes": 20853,
+      "sha256": "442feda50b530774452bbd4401fd0743486302d64ec494807b08c699e7b3f1f5"
+    },
+    {
+      "path": "20260925/evidence/results_xlsx/问题二_增强优化版.txt",
+      "bytes": 19950,
+      "sha256": "aaa87c2fe8975283bce05694d171de50a5daaed0496be181e481a7e5b98a7e00"
+    },
+    {
+      "path": "20260925/evidence/results_xlsx/问题四_2批次_修复版.txt",
+      "bytes": 1156,
+      "sha256": "071c8ffe9de9a9e4378412d1001ef6a42ea31ac745059fe335854e2a9c2ece75"
+    },
+    {
+      "path": "20260925/evidence/results_xlsx/问题四_2批次_错峰复用优化.txt",
+      "bytes": 13001,
+      "sha256": "23534948ebb818aaad000e403414fb1a68f543228ef318411af33be8ee24fc12"
+    },
+    {
+      "path": "20260925/evidence/results_xlsx/问题四_3批次_修复版.txt",
+      "bytes": 1313,
+      "sha256": "251d24dc8a027e67f8f977fb50653c21a5cae7af469a50dec80778211d3ca28c"
+    },
+    {
+      "path": "20260925/evidence/results_xlsx/问题四_3批次_错峰复用优化.txt",
+      "bytes": 13003,
+      "sha256": "901eef955ec9cde12ea214af1102160135758039635bb1c8afe41ed9ba67867f"
+    },
+    {
+      "path": "20260925/evidence/targeted_checks.json",
+      "bytes": 9370,
+      "sha256": "fa8c34b4fb01b07ef738234ad45b071f57666fbb7cae5bfe0e5faca40653e156"
+    },
+    {
+      "path": "20260925/evidence/workbook_inventory.json",
+      "bytes": 5583,
+      "sha256": "f1009e531cef7f8854983dbf97a3142a2f698ec71b0b42d2deddea53e33d9af8"
+    },
+    {
+      "path": "20260925/extract_evidence.py",
+      "bytes": 4859,
+      "sha256": "b80268f62643217bb4e22a0678cb4fe835a8f57b435d6c60a40980557e24f5cc"
+    },
+    {
+      "path": "20260925/package_report.py",
+      "bytes": 6386,
+      "sha256": "e6419a99fab37c6af906527112e9c8fac46dfa659a47b39afab9acc853f10b8d"
+    },
+    {
+      "path": "20260925/README.md",
+      "bytes": 4517,
+      "sha256": "380fd6bcf664b41004e6fa83eadd805d833fb73428c27cad6d74313388a705cc"
+    },
+    {
+      "path": "20260925/reproduce.py",
+      "bytes": 1638,
+      "sha256": "ee357a94f5c64fa9ae156f14ffb00d4fda593ff2f361b5cc783ccd599ca6c372"
+    },
+    {
+      "path": "20260925/requirements-audit.txt",
+      "bytes": 188,
+      "sha256": "28f132e31fc3a0cdce0c02c8e2985417fa35139e785681625f96b0c124c27b98"
+    },
+    {
+      "path": "20260925/targeted_checks.py",
+      "bytes": 6576,
+      "sha256": "7e1b412432fb32f9c3c53ee94e859ea74a335968a55f3cb6a32592a3da8499d5"
+    },
+    {
+      "path": "20260925/审查明细.xlsx",
+      "bytes": 107308,
+      "sha256": "48b86be7deaf2f1630141ff550fd008e54193f26d4240c877bd735bc1a61ed2a"
+    },
+    {
+      "path": "20260925/工作质量与公式溯源审查报告.md",
+      "bytes": 32808,
+      "sha256": "a0a82522412eeb8002606a55eca1bc548b5c0d17362eab414c17f0de0755a46f"
+    },
+    {
+      "path": "20260925_update/check_additions.py",
+      "bytes": 7762,
+      "sha256": "dcfc5a821fcf7de862cf4fa6674c79d71ffece1a9df1785fc0855c02b76d7017"
+    },
+    {
+      "path": "20260925_update/check_results.py",
+      "bytes": 18589,
+      "sha256": "6cd947acfc2c9962b7230f063e2ec58e5960d55f18f55212fffe6680cdd116fe"
+    },
+    {
+      "path": "20260925_update/evidence/additions_summary.json",
+      "bytes": 5520,
+      "sha256": "14a673b70607f6cb25470097423c959495f0cd7b52b07da3e4400c7b39c5c98e"
+    },
+    {
+      "path": "20260925_update/evidence/alns250.log",
+      "bytes": 570,
+      "sha256": "3612009df8d6af266a8000afe434318b87a35836965defced3bdd3eb0bfe0134"
+    },
+    {
+      "path": "20260925_update/evidence/alns_team_validator.log",
+      "bytes": 14233,
+      "sha256": "80e9b9b1615353ad0e6e062ad00410d976dfef7012f5fc08d50fca1693c8b66a"
+    },
+    {
+      "path": "20260925_update/evidence/audit_summary.json",
+      "bytes": 41324,
+      "sha256": "22b4664441601f7666cbbb92d588a4584812b88c211397aee297708aa498f2e7"
+    },
+    {
+      "path": "20260925_update/evidence/change_counts.json",
+      "bytes": 40,
+      "sha256": "fcf80d7f4e28c93cc9930d9d2c76826a3923897f31d06956573e6042abd2688a"
+    },
+    {
+      "path": "20260925_update/evidence/delivery_q1.log",
+      "bytes": 365,
+      "sha256": "3b6dbac4af234daa5eb929e187cd74175c449a49bbcd4993a051dfb15f7208b0"
+    },
+    {
+      "path": "20260925_update/evidence/delivery_q2.log",
+      "bytes": 564,
+      "sha256": "c0ee382e03ae92898ae8c3f825597c01504adabc9ed62af618abd2b949629139"
+    },
+    {
+      "path": "20260925_update/evidence/delivery_q3.log",
+      "bytes": 337,
+      "sha256": "0207a8dee30941ac697d788069a39c581d67dd3877171c5e398fa1e1d27aca67"
+    },
+    {
+      "path": "20260925_update/evidence/delivery_q4.log",
+      "bytes": 1516,
+      "sha256": "0dce6c769ff4c60dcf2b26acaabede5cb20a4732ea1e17c761a7f459996bdf6e"
+    },
+    {
+      "path": "20260925_update/evidence/extra_run_status.json",
+      "bytes": 296,
+      "sha256": "384614850e652951036041bd3ebbdd4d3a5a005abef9af5fab5e110535c1c1a1"
+    },
+    {
+      "path": "20260925_update/evidence/geo_description.txt",
+      "bytes": 1394,
+      "sha256": "6c9d94f393a16c36d27f4b1bd00b99667cae7f1093f325cee8e9a871adac4cf1"
+    },
+    {
+      "path": "20260925_update/evidence/input_manifest.json",
+      "bytes": 69812,
+      "sha256": "a2f834a6310c2b279985e46f2e38c316f93bb7b8cafbc0037ab8157ac85ad1bc"
+    },
+    {
+      "path": "20260925_update/evidence/integrity_check.json",
+      "bytes": 146176,
+      "sha256": "e90b96e7f68d4831b2c93fabe4cf195857035f7b59a36a9e477bdb0526705f53"
+    },
+    {
+      "path": "20260925_update/evidence/new_candidate_checks.csv",
+      "bytes": 5656,
+      "sha256": "9c1abeeac883e24639d847ca4eb88c29fb5021bf0485e7f8f5eb503f705e27fc"
+    },
+    {
+      "path": "20260925_update/evidence/new_papers/山区洪涝灾害下无人机运输与通信协同优化_第一版.txt",
+      "bytes": 17700,
+      "sha256": "62bb7f3679c6d88fb54b442700f59ceee6130720bb4c4e3ce22f88c5cd2af409"
+    },
+    {
+      "path": "20260925_update/evidence/new_papers/山区洪涝灾害下无人机运输与通信协同优化_第一版.xml",
+      "bytes": 113613,
+      "sha256": "46e33e1cb317f4a776b7b307da21bcf91867a86f95e695cc759b9f6d5df2b789"
+    },
+    {
+      "path": "20260925_update/evidence/new_papers/王文政-第一版.txt",
+      "bytes": 18508,
+      "sha256": "d480563ccbfb44193105ddedef05ddcb147d9ada0d2c912f2fd7c34f3c0808e7"
+    },
+    {
+      "path": "20260925_update/evidence/new_papers/王文政-第一版.xml",
+      "bytes": 217754,
+      "sha256": "29f4d5faf53efea0f6856b94bd06fe442b80137013c06fadd944cd13aa0caf4e"
+    },
+    {
+      "path": "20260925_update/evidence/new_papers/王文政-第一版_符号公式重排版.txt",
+      "bytes": 30861,
+      "sha256": "d3c00bdbfac82eebb62bd30c178851d5f6885f471ddc5f431028f4b9fbf09821"
+    },
+    {
+      "path": "20260925_update/evidence/new_papers/王文政-第一版_符号公式重排版.xml",
+      "bytes": 207391,
+      "sha256": "6aa1a1152a898740ae6041175df84a159601553c314f5c83b2f329204f0076bf"
+    },
+    {
+      "path": "20260925_update/evidence/official_xlsx/中继无人机数据.txt",
+      "bytes": 1109,
+      "sha256": "f62e75841093695f48c896dd6511dc8020449ae7fadca266cdffaa11666b8039"
+    },
+    {
+      "path": "20260925_update/evidence/official_xlsx/物资需求与配送时限.txt",
+      "bytes": 13314,
+      "sha256": "3d2f0e23489ec8eb56962e4c2cfeb4e9ecbb32dd6dcb957aad9c727bf1b96069"
+    },
+    {
+      "path": "20260925_update/evidence/official_xlsx/结果提交模板.txt",
+      "bytes": 1345,
+      "sha256": "b68e5ab0c5a22d9cb1bba8851cad39631b1befa51f5fc77e7dfa8c8bccb6ad30"
+    },
+    {
+      "path": "20260925_update/evidence/official_xlsx/调度中心与服务区.txt",
+      "bytes": 1668,
+      "sha256": "04cdf53ca8758a6b903ef8392e52f4470ace2e0db7b07d463061b7ecc931596e"
+    },
+    {
+      "path": "20260925_update/evidence/official_xlsx/运输无人机数据.txt",
+      "bytes": 1630,
+      "sha256": "376223e4d3c890e4b4e10a16671f3be45f1696e7dd0afc441492bc75ebc66857"
+    },
+    {
+      "path": "20260925_update/evidence/official_xlsx/通信链路参数.txt",
+      "bytes": 1028,
+      "sha256": "3c0703ec3223cb3f44f68b32f49f14abb1b9535868afb0f325c36ed6207d6b37"
+    },
+    {
+      "path": "20260925_update/evidence/papers/01_UAV_Medical_Delivery_Trajectory_Optimization_2025.txt",
+      "bytes": 39302,
+      "sha256": "63e1f093facb35c751242a1493e906a4cd8f7e374df759295f418e9c30ec8025"
+    },
+    {
+      "path": "20260925_update/evidence/papers/02_Post_Disaster_UAV_Vehicle_Routing_Robust_Optimization.txt",
+      "bytes": 68664,
+      "sha256": "0457e723760f807316dee0fb4006e6d7c9d2e13f28c763297801c4a5cb65103f"
+    },
+    {
+      "path": "20260925_update/evidence/papers/03_Multi_Depot_Multi_Trip_VRP_Completion_Time.txt",
+      "bytes": 54232,
+      "sha256": "d358dada8318e1cca94733913d2f1a05398a3fe8911afa78f2aa128958e4e1da"
+    },
+    {
+      "path": "20260925_update/evidence/papers/04_Battery_Swapping_Scheduling_Part1.txt",
+      "bytes": 45350,
+      "sha256": "33840ec733a62b1c69c07a05833f760d360b0509045d4fbaca10ed71af653707"
+    },
+    {
+      "path": "20260925_update/evidence/papers/05_Battery_Swapping_Scheduling_Part2.txt",
+      "bytes": 45972,
+      "sha256": "edcf52083d91bb87a9c78d870cc7c53e55cfe216fcbc4c9698b1653d5ad413d7"
+    },
+    {
+      "path": "20260925_update/evidence/papers/06_No_Stockout_Charging_Scheduling_2026.txt",
+      "bytes": 65653,
+      "sha256": "85960e2630e522ade242c648eb5310ecbb47786df677b9d5c81f973b2abfff1a"
+    },
+    {
+      "path": "20260925_update/evidence/papers/07_UAV_3D_Position_Optimization_Solar_Relay.txt",
+      "bytes": 68839,
+      "sha256": "5a632e0b160d21f80a07aa4f375c20bc18cd81f68ca53aeca0f197c87955f021"
+    },
+    {
+      "path": "20260925_update/evidence/papers/09_UNICEF_Drone_Supply_Chain_Guidance.txt",
+      "bytes": 25181,
+      "sha256": "3c5c28ff5320d742dcfbc8f0d86bd9c1c6a12f7b31ed95c575422485eb1a3bab"
+    },
+    {
+      "path": "20260925_update/evidence/papers/10_Multi_Truck_Drone_Emergency_Distribution_2026.txt",
+      "bytes": 92481,
+      "sha256": "51b4cc8de10d18059bfd66d536dfe5f2ed416c34172659bb182d05f0a0d11dde"
+    },
+    {
+      "path": "20260925_update/evidence/papers/11_Heterogeneous_Fleet_VRPTW_Aston.txt",
+      "bytes": 88007,
+      "sha256": "fea72220b638812047e976e353334286b5501cb4383351aafd2942ea983b9a05"
+    },
+    {
+      "path": "20260925_update/evidence/papers/12_PyVRP_State_of_Art_2024.txt",
+      "bytes": 56713,
+      "sha256": "8c2b9b57969fcfff7f9b9531b6be205a96083f6747243a7fd0d35440bd504e15"
+    },
+    {
+      "path": "20260925_update/evidence/papers/13_HGS_CVRP_2024.txt",
+      "bytes": 69140,
+      "sha256": "b82e4becfb1f2c09207cb14931a9094ff3a536a3cef72bc642a7c12390a5ba45"
+    },
+    {
+      "path": "20260925_update/evidence/papers/14_NSGA_II_UAV_Logistics_Springer_2025.txt",
+      "bytes": 144997,
+      "sha256": "f629fcbe1070db2b85d678cffeae9dba2f75e55fb44f954f1b7ef3a5f5254bdd"
+    },
+    {
+      "path": "20260925_update/evidence/papers/15_Relief_Distribution_Trucks_Drones_Incomplete_Demand.txt",
+      "bytes": 105043,
+      "sha256": "c5c8af3d97ebde50d7dbd5569697ee040f2170e7393be56c9db2e1d22712c4fb"
+    },
+    {
+      "path": "20260925_update/evidence/pdf_inventory.json",
+      "bytes": 60998,
+      "sha256": "05e76432e14e3a072e06d8c3488362211b661dccf30706b1ace8e1bf546c5aee"
+    },
+    {
+      "path": "20260925_update/evidence/post_pull_manifest.json",
+      "bytes": 61405,
+      "sha256": "920939b92e32ddaf937976636fdf1b76fe321b646ab89acb352148fb620824d1"
+    },
+    {
+      "path": "20260925_update/evidence/problem_document.xml",
+      "bytes": 119845,
+      "sha256": "24ad348d25b97605ab496f7a7ac6687cbdcd131d471cc9d872b81da2b46e7709"
+    },
+    {
+      "path": "20260925_update/evidence/problem_with_formulas.txt",
+      "bytes": 20302,
+      "sha256": "397b7a8ed66f5b521ae31933792a2b4b202210e943492fb30bb1c74a5d4b9819"
+    },
+    {
+      "path": "20260925_update/evidence/q1_capacity_lower_bound.csv",
+      "bytes": 335,
+      "sha256": "a51f50602b1a21ed62eaf1b19cf2a60e012a2f3374238d7141be621e60edc5fa"
+    },
+    {
+      "path": "20260925_update/evidence/q1_mission_check.csv",
+      "bytes": 10705,
+      "sha256": "4c3ffc27958c4f928ef8ed40242e5be4ea38750ca971686c56803889abff5949"
+    },
+    {
+      "path": "20260925_update/evidence/q2_cargo_check.csv",
+      "bytes": 6407,
+      "sha256": "55ead545a3f960312b2dc9576e8957a8ab0a3abf243aca63acd24c09bcc3e881"
+    },
+    {
+      "path": "20260925_update/evidence/q2_mission_check.csv",
+      "bytes": 24346,
+      "sha256": "ccaf4f3fa77edd37be81016fb69936a8b6b7fb7e7a472e4efdd2b2f1894c887a"
+    },
+    {
+      "path": "20260925_update/evidence/q3_cargo_check.csv",
+      "bytes": 6423,
+      "sha256": "abf3aa83049929442f37a517c0eb1a6a7d4fc9d4a2ce4b0f2f4c2e544dbbce2d"
+    },
+    {
+      "path": "20260925_update/evidence/q3_communication_check.csv",
+      "bytes": 2020,
+      "sha256": "aa15c224c9ee78b922f87d44927ae62e83f109e9c9f4d132c3e2413a0fa67564"
+    },
+    {
+      "path": "20260925_update/evidence/q3_endpoint_robustness.csv",
+      "bytes": 2499,
+      "sha256": "0f0cf88371dac75c60367831bd251b3a3829be2a963268cefbfc8f15cd83462a"
+    },
+    {
+      "path": "20260925_update/evidence/q3_failed_points.csv",
+      "bytes": 981,
+      "sha256": "0210b4a3ae020798c5c1c67e2b558193a042b9d7ca4fa8227d39f6b5539320eb"
+    },
+    {
+      "path": "20260925_update/evidence/q3_mission_check.csv",
+      "bytes": 27238,
+      "sha256": "255ecdd321e5cefa2cc95aa5d70dc0ac2565c4e339f3947f72f470e4cd7de46e"
+    },
+    {
+      "path": "20260925_update/evidence/q4_2_hard_late.csv",
+      "bytes": 1080,
+      "sha256": "3fd3bdea2ec6e3ea4757a8c968f2ddecf7305c3ef37f08a7fac5e4d02d4810c6"
+    },
+    {
+      "path": "20260925_update/evidence/q4_3_hard_late.csv",
+      "bytes": 1170,
+      "sha256": "7fc4f29fc7f56d27d44feaaeb06a528bafca47ec89e70332b0b514fefcaafe11"
+    },
+    {
+      "path": "20260925_update/evidence/q4_from_actual_q3_times.csv",
+      "bytes": 436,
+      "sha256": "2f9d7ed05d48b10699f19f4d64c96dc9c421d9757727f4d5225e4bb154b1ca0a"
+    },
+    {
+      "path": "20260925_update/evidence/reproduction_status.json",
+      "bytes": 803,
+      "sha256": "68946136333289ebd0bade25bbcda4db6996608fa90ed5ecd46d4e91e2f3cea9"
+    },
+    {
+      "path": "20260925_update/evidence/results_xlsx/问题一_18架次方案_修复版.txt",
+      "bytes": 10310,
+      "sha256": "491ed041217d8ea38ef46018f3ff1cfae6250c6365a9c48461c8186e6172f2a5"
+    },
+    {
+      "path": "20260925_update/evidence/results_xlsx/问题三_中继部署方案_修复版.txt",
+      "bytes": 2331,
+      "sha256": "13c2abe302f26c9d808c7011144fd5a40c45a988e0dc83115adff656a5803ce8"
+    },
+    {
+      "path": "20260925_update/evidence/results_xlsx/问题三_覆盖核验_修复版.txt",
+      "bytes": 714,
+      "sha256": "75cf7acf3c48deb73863141c116b9eb0ebf02fcede382971355c3d274f486ca5"
+    },
+    {
+      "path": "20260925_update/evidence/results_xlsx/问题三_运输调度_修复版.txt",
+      "bytes": 17169,
+      "sha256": "787aa0bf5fb7166bdc86cb9e52646ef74b58a82ad9ce2080a328577b730e015e"
+    },
+    {
+      "path": "20260925_update/evidence/results_xlsx/问题二_增强优化版.txt",
+      "bytes": 20415,
+      "sha256": "4c7302f441f65e490ccf3c81699aed79cf2c41bb39a42867d009b6fc3d0b1b6d"
+    },
+    {
+      "path": "20260925_update/evidence/results_xlsx/问题四_2批次_修复版.txt",
+      "bytes": 1156,
+      "sha256": "859f22a9181d6d5c7b666a57dc96c907b64ca92b09fbf576370043de9cc500ee"
+    },
+    {
+      "path": "20260925_update/evidence/results_xlsx/问题四_2批次_错峰复用优化.txt",
+      "bytes": 14912,
+      "sha256": "c46fd9d462714a080c36ea6119ac2ed777d4c22dd612fad766f8723b42e8a68b"
+    },
+    {
+      "path": "20260925_update/evidence/results_xlsx/问题四_3批次_修复版.txt",
+      "bytes": 1312,
+      "sha256": "fd10ccb49b0b0cc48d68dfce8d9c2f024ed56fe5f036aa36816279a452487754"
+    },
+    {
+      "path": "20260925_update/evidence/results_xlsx/问题四_3批次_错峰复用优化.txt",
+      "bytes": 14909,
+      "sha256": "ae24797f00076a2c790953c80163d8b6f006945e5131cc71e7db48e60983b4c1"
+    },
+    {
+      "path": "20260925_update/evidence/root_readme_q2.log",
+      "bytes": 1291,
+      "sha256": "75ce5c23ad2f7fbcaf49b3ab64d82f20b1fd07e7e61b37d230d9015587e20b1d"
+    },
+    {
+      "path": "20260925_update/evidence/root_readme_q2_retry.log",
+      "bytes": 548,
+      "sha256": "05a40cadf9a187b0031bb2d59b5c8700e773ffd2b059def1b899a47020657910"
+    },
+    {
+      "path": "20260925_update/evidence/targeted_checks.json",
+      "bytes": 224393,
+      "sha256": "4b789db40f3f4f8d2ede586b742b16d83db1d59a7c86d1699449d585ecb34665"
+    },
+    {
+      "path": "20260925_update/evidence/workbook_inventory.json",
+      "bytes": 4930,
+      "sha256": "e6a7ed6147367b3aa86a98c4bd595ae7bbbf4712bb42756de2457454827a7e9f"
+    },
+    {
+      "path": "20260925_update/extract_evidence.py",
+      "bytes": 5016,
+      "sha256": "f0357c927fd8bb0a6701fa263e230292ea452b035902a8aaaee754d422ddcd1a"
+    },
+    {
+      "path": "20260925_update/package_update.py",
+      "bytes": 6263,
+      "sha256": "fea4d0702d6af0e00f7547f2a5bea933c26429c49d054fa74f72fc2a73b3292d"
+    },
+    {
+      "path": "20260925_update/prepare.py",
+      "bytes": 2175,
+      "sha256": "6de5f68dddcedb8cd923f265b36ffd2441ae95f62b43cd686af756b8d6086ad1"
+    },
+    {
+      "path": "20260925_update/pull_preflight.json",
+      "bytes": 19864,
+      "sha256": "66a0a9a7951d06188647588cd0fab1967803de6f39945b7fa72d612394bb3c4d"
+    },
+    {
+      "path": "20260925_update/README.md",
+      "bytes": 4048,
+      "sha256": "cfc3fadb7a96e2379315176978e17cfd2cf9ae4af0730e41b3356c7d92f2e0b7"
+    },
+    {
+      "path": "20260925_update/remote_changes.txt",
+      "bytes": 15213,
+      "sha256": "bc655b887825406fd4f514037d13bb3a06a35ac40425647d2e2e74b7d3c03de8"
+    },
+    {
+      "path": "20260925_update/reproduce_update.py",
+      "bytes": 2123,
+      "sha256": "2cf014c0808e952d6688ee3bf0a5783117c3460c81749535900697d5a6eaf508"
+    },
+    {
+      "path": "20260925_update/requirements-audit.txt",
+      "bytes": 264,
+      "sha256": "9b20d9ff911273f4371b97117abda8eb22222e1f2fcc937625f5ac159417f465"
+    },
+    {
+      "path": "20260925_update/run_extras.py",
+      "bytes": 1135,
+      "sha256": "246e19279d3c0d5520eaba81d8078453a1d477e629311b6455f6af3491bcf5a4"
+    },
+    {
+      "path": "20260925_update/targeted_checks.py",
+      "bytes": 6707,
+      "sha256": "14f16f922431be6be063103f012ab316057359ab123610ee346ae3c62213054a"
+    },
+    {
+      "path": "20260925_update/最新提交补充评估报告.md",
+      "bytes": 23376,
+      "sha256": "fd64ad9225e4ae68a466c4a9f8dc8e1a9ecf42f160f91ac59b5e411da50c0e95"
+    },
+    {
+      "path": "20260925_update/补充评估明细.xlsx",
+      "bytes": 125585,
+      "sha256": "d6638e9364842edb85217f3b67a9253ee3bb726b096f5e2663673edc81a92d67"
+    },
+    {
+      "path": "build_handoff.py",
+      "bytes": 3992,
+      "sha256": "6d5eeb814f307c6366bd8ab13b0a085fb0e8f0cf2a0d7afb7224894c024fefa0"
+    },
+    {
+      "path": "issues.json",
+      "bytes": 15687,
+      "sha256": "424f703fc54337755dab925181adb90fb08694e521d858ee499898329c1a9bae"
+    },
+    {
+      "path": "ISSUES.md",
+      "bytes": 18943,
+      "sha256": "2ae6cdcd61f8224e4e1f7898afc882fd67554fd2aca303e88c600a846d5f6daf"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5809,
+      "sha256": "0c7df43af2b2ec9b381a52636a81c12027f1478a06bb77d27fb431e356ae32cc"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 264,
+      "sha256": "9b20d9ff911273f4371b97117abda8eb22222e1f2fcc937625f5ac159417f465"
+    },
+    {
+      "path": "review.py",
+      "bytes": 8056,
+      "sha256": "4c216a735d8dee8747521bc3b0d9384e6d754ecb850274f11c59235b58f3dd0f"
+    },
+    {
+      "path": "validate_handoff.py",
+      "bytes": 2335,
+      "sha256": "7d8207054a436c84ea571c6d3273b4c5a046aa24028df5f60476a2e0ab7aeb1f"
+    },
+    {
+      "path": "validation/README.md",
+      "bytes": 1528,
+      "sha256": "57d071c573acead896fc4d364b245ab70baf8a861fb96b900018c3d91e7a3be0"
+    },
+    {
+      "path": "validation/round1/runner_check_results.py.log",
+      "bytes": 2157,
+      "sha256": "b34edb098ab3b0406363a3038c2a8b070c3da9bce87fbf65056172e453b84f13"
+    },
+    {
+      "path": "validation/round1/runner_reproduce.py.log",
+      "bytes": 331,
+      "sha256": "8f2a9cfb3c6522d4358e60d5a38537d2710d9a888e0a6aec021fbd5581170c29"
+    },
+    {
+      "path": "validation/round1/runner_targeted_checks.py.log",
+      "bytes": 1410,
+      "sha256": "9512ef6c7742d171771c0ecb58fbf6a7602f338f3272c48cbe4c61075e4305ad"
+    },
+    {
+      "path": "validation/round2/runner_check_additions.py.log",
+      "bytes": 3593,
+      "sha256": "a237edb0743295612c8d62f91376cd5f7c9e3e251ff180e56a155ee1a563b8bd"
+    },
+    {
+      "path": "validation/round2/runner_check_results.py.log",
+      "bytes": 2155,
+      "sha256": "8fe0bd2b4d375faa17ad2c442ea617bda77108d07218e79c12a63ba0ffb6368f"
+    },
+    {
+      "path": "validation/round2/runner_reproduce_update.py.log",
+      "bytes": 658,
+      "sha256": "2137d63c8cc99187d81b364fc27856c518104fa0d061f15e7096b0b907226be9"
+    },
+    {
+      "path": "validation/round2/runner_run_extras.py.log",
+      "bytes": 225,
+      "sha256": "30e90a16df2fd62f76f9c953ad45f1e52e52d190bcbbd73cf3c6cbf841d1d1e1"
+    },
+    {
+      "path": "validation/round2/runner_targeted_checks.py.log",
+      "bytes": 1409,
+      "sha256": "03462063e6755337f081fba8b4a5c0d7c6af26ee97feed2b161ed430d5603c80"
+    },
+    {
+      "path": "validation/run_summary.json",
+      "bytes": 2287,
+      "sha256": "d044b8f634b93eb3be3f6ea31dbf50973bf3eaacc899c2b2b5068f10d273484f"
+    }
+  ]
+}

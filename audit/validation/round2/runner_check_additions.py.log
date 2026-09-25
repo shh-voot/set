@@ -1,0 +1,131 @@
+正在加载DEM数据: 镇龙乡及周边30米DEM.mat
+  加载MATLAB格式DEM...
+  DEM尺寸: (1309, 1486)
+  高程范围: 41.7 - 1132.9 米
+  地理范围: (109.0326, 22.8612) - (109.4454, 23.2249)
+  分辨率: 0.000278 度
+{
+  "candidates": {
+    "ALNS交付": {
+      "missions": 43,
+      "cargo_count": 80,
+      "unique_count": 80,
+      "missing": [],
+      "hard_late": [],
+      "energy_kwh": 95.20417606584401,
+      "completion_min": 164.8135622746015,
+      "conflicts": {
+        "uav_id": [],
+        "battery_id": []
+      }
+    },
+    "Q3复现": {
+      "missions": 43,
+      "cargo_count": 80,
+      "unique_count": 80,
+      "missing": [],
+      "hard_late": [],
+      "energy_kwh": 94.38782731317069,
+      "completion_min": 190.1539518548381,
+      "conflicts": {
+        "uav_id": [],
+        "battery_id": []
+      }
+    }
+  },
+  "claude_energy": [
+    {
+      "type": "A",
+      "official_full_range_m": 20000.0,
+      "helper_full_range_m": 30000.0,
+      "helper_dem_max_m": 0.0,
+      "existing_dem_max_m": 506.8380016939101,
+      "helper_cruise_alt_m": 50.0,
+      "required_service_alt_m": 338.5,
+      "official_cruise_speed": 12.0
+    },
+    {
+      "type": "B",
+      "official_full_range_m": 16000.0,
+      "helper_full_range_m": 30000.0,
+      "helper_dem_max_m": 0.0,
+      "existing_dem_max_m": 506.8380016939101,
+      "helper_cruise_alt_m": 50.0,
+      "required_service_alt_m": 338.5,
+      "official_cruise_speed": 15.0
+    },
+    {
+      "type": "C",
+      "official_full_range_m": 12000.0,
+      "helper_full_range_m": 30000.0,
+      "helper_dem_max_m": 0.0,
+      "existing_dem_max_m": 506.8380016939101,
+      "helper_cruise_alt_m": 50.0,
+      "required_service_alt_m": 338.5,
+      "official_cruise_speed": 15.0
+    }
+  ],
+  "cp_late": {
+    "synthetic": true,
+    "success": true,
+    "makespan_min": 1.0,
+    "missions": [
+      {
+        "mission_id": 1,
+        "area_id": "synthetic",
+        "uav_type": "A",
+        "cargo_ids": [
+          "synthetic"
+        ],
+        "cargo_count": 1,
+        "energy_kwh": 0.01,
+        "duration_min": 1.09,
+        "delivery_offset_min": 1.09,
+        "deadline_min": 1.0,
+        "uav_id": "UA01",
+        "battery_id": "A-BAT-01",
+        "start_min": 0.0,
+        "delivery_min": 1.09,
+        "end_min": 1.0,
+        "on_time": false,
+        "soc_after": 0.9977777777777778,
+        "charge_min": 0.23333333333333484
+      }
+    ]
+  },
+  "cp_overlap_min": 0.09000000000000008,
+  "single_roundtrip_duration": 19.590336156069082,
+  "nsga_duration": 38.08067231213816,
+  "capacity_lower_bound": 18,
+  "comparisons": [
+    {
+      "reproduced": "reproduction\\解题-gpt\\问题2优化\\结果\\问题二_ALNS候选方案.xlsx",
+      "delivered": "解题-gpt\\问题2优化\\结果\\问题二_ALNS候选方案.xlsx",
+      "all_sheets_equal": false,
+      "different_sheets": [
+        "架次调度",
+        "逐箱时限",
+        "校验"
+      ],
+      "tolerance_different_sheets": [
+        "架次调度",
+        "逐箱时限"
+      ]
+    },
+    {
+      "reproduced": "reproduction\\结果\\问题二_增强优化版.xlsx",
+      "delivered": "解题-gpt\\结果\\问题二_增强优化版.xlsx",
+      "all_sheets_equal": false,
+      "different_sheets": [
+        "架次调度",
+        "逐箱时限",
+        "校验"
+      ],
+      "tolerance_different_sheets": [
+        "架次调度",
+        "逐箱时限",
+        "校验"
+      ]
+    }
+  ]
+}

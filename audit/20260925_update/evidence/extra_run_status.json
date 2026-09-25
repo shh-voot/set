@@ -1,0 +1,17 @@
+[
+  {
+    "job": "root_readme_q2_retry",
+    "exit_code": 0,
+    "seconds": 22.67199999999866
+  },
+  {
+    "job": "alns250",
+    "exit_code": 0,
+    "seconds": 19.14100000000326
+  },
+  {
+    "job": "alns_team_validator",
+    "exit_code": 0,
+    "seconds": 1.0939999999973224
+  }
+]

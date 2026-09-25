@@ -1,0 +1,3115 @@
+{
+  "prior_audit_files": 109,
+  "prior_audit_changed": [],
+  "new_tracked_files": 408,
+  "new_tracked_changed": [],
+  "before_head": "ea5e0fb57065ad843b52f9e9e3ebdbe42582b0c1",
+  "after_head": "e94e1cc70b6f342282eaa9e7d2b15aa84065e381",
+  "path_collisions": [],
+  "prior_audit": [
+    {
+      "path": "audit/20260925/check_results.py",
+      "sha256": "a2a0388e750076371e8a6696d8eb8ac5609e2bca36d5812e7d0495134e7d976e",
+      "current_sha256": "a2a0388e750076371e8a6696d8eb8ac5609e2bca36d5812e7d0495134e7d976e",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/extract_evidence.py",
+      "sha256": "b80268f62643217bb4e22a0678cb4fe835a8f57b435d6c60a40980557e24f5cc",
+      "current_sha256": "b80268f62643217bb4e22a0678cb4fe835a8f57b435d6c60a40980557e24f5cc",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/package_report.py",
+      "sha256": "e6419a99fab37c6af906527112e9c8fac46dfa659a47b39afab9acc853f10b8d",
+      "current_sha256": "e6419a99fab37c6af906527112e9c8fac46dfa659a47b39afab9acc853f10b8d",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/README.md",
+      "sha256": "5567d6594e79935edd9ec3591378fb83b2d84e16ab18324945455c6d895b5092",
+      "current_sha256": "5567d6594e79935edd9ec3591378fb83b2d84e16ab18324945455c6d895b5092",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduce.py",
+      "sha256": "ee357a94f5c64fa9ae156f14ffb00d4fda593ff2f361b5cc783ccd599ca6c372",
+      "current_sha256": "ee357a94f5c64fa9ae156f14ffb00d4fda593ff2f361b5cc783ccd599ca6c372",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/requirements-audit.txt",
+      "sha256": "28f132e31fc3a0cdce0c02c8e2985417fa35139e785681625f96b0c124c27b98",
+      "current_sha256": "28f132e31fc3a0cdce0c02c8e2985417fa35139e785681625f96b0c124c27b98",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/targeted_checks.py",
+      "sha256": "7e1b412432fb32f9c3c53ee94e859ea74a335968a55f3cb6a32592a3da8499d5",
+      "current_sha256": "7e1b412432fb32f9c3c53ee94e859ea74a335968a55f3cb6a32592a3da8499d5",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/审查明细.xlsx",
+      "sha256": "48b86be7deaf2f1630141ff550fd008e54193f26d4240c877bd735bc1a61ed2a",
+      "current_sha256": "48b86be7deaf2f1630141ff550fd008e54193f26d4240c877bd735bc1a61ed2a",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/工作质量与公式溯源审查报告.md",
+      "sha256": "39096e1339f3c22e22c679d8ba10de04dd04fcaa8a0b552934a24db63ccca424",
+      "current_sha256": "39096e1339f3c22e22c679d8ba10de04dd04fcaa8a0b552934a24db63ccca424",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/audit_summary.json",
+      "sha256": "f249e9d9a6c402846f522217abbbb49c150f2a32a72800079d8a827ecfce1703",
+      "current_sha256": "f249e9d9a6c402846f522217abbbb49c150f2a32a72800079d8a827ecfce1703",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/geo_description.txt",
+      "sha256": "6c9d94f393a16c36d27f4b1bd00b99667cae7f1093f325cee8e9a871adac4cf1",
+      "current_sha256": "6c9d94f393a16c36d27f4b1bd00b99667cae7f1093f325cee8e9a871adac4cf1",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/input_manifest.json",
+      "sha256": "b681236f0ef4aa8c600f903d5ff1c5e535851f5bfd127a62f9cee58695e2c8bb",
+      "current_sha256": "b681236f0ef4aa8c600f903d5ff1c5e535851f5bfd127a62f9cee58695e2c8bb",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/integrity_check.json",
+      "sha256": "2406163acd9da16571a5f3eb127037895c7cf83992571f271fc9b574e2ca10de",
+      "current_sha256": "2406163acd9da16571a5f3eb127037895c7cf83992571f271fc9b574e2ca10de",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/pdf_inventory.json",
+      "sha256": "05e76432e14e3a072e06d8c3488362211b661dccf30706b1ace8e1bf546c5aee",
+      "current_sha256": "05e76432e14e3a072e06d8c3488362211b661dccf30706b1ace8e1bf546c5aee",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/problem_document.xml",
+      "sha256": "24ad348d25b97605ab496f7a7ac6687cbdcd131d471cc9d872b81da2b46e7709",
+      "current_sha256": "24ad348d25b97605ab496f7a7ac6687cbdcd131d471cc9d872b81da2b46e7709",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/problem_with_formulas.txt",
+      "sha256": "397b7a8ed66f5b521ae31933792a2b4b202210e943492fb30bb1c74a5d4b9819",
+      "current_sha256": "397b7a8ed66f5b521ae31933792a2b4b202210e943492fb30bb1c74a5d4b9819",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/q1_mission_check.csv",
+      "sha256": "4c3ffc27958c4f928ef8ed40242e5be4ea38750ca971686c56803889abff5949",
+      "current_sha256": "4c3ffc27958c4f928ef8ed40242e5be4ea38750ca971686c56803889abff5949",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/q2_cargo_check.csv",
+      "sha256": "b758c997cb7315d9da10b0044ba7745557d6f179f033ebbfea14591be8494a20",
+      "current_sha256": "b758c997cb7315d9da10b0044ba7745557d6f179f033ebbfea14591be8494a20",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/q2_mission_check.csv",
+      "sha256": "47bb9dfbcb24c4fc753f726251506425bc6adc38e3f90ffc21359d9f00970a30",
+      "current_sha256": "47bb9dfbcb24c4fc753f726251506425bc6adc38e3f90ffc21359d9f00970a30",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/q3_cargo_check.csv",
+      "sha256": "35d01508fbf63367b665ca241ec96194a8d71cf25b3628d4c02b6bc83cd526f8",
+      "current_sha256": "35d01508fbf63367b665ca241ec96194a8d71cf25b3628d4c02b6bc83cd526f8",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/q3_communication_check.csv",
+      "sha256": "aa15c224c9ee78b922f87d44927ae62e83f109e9c9f4d132c3e2413a0fa67564",
+      "current_sha256": "aa15c224c9ee78b922f87d44927ae62e83f109e9c9f4d132c3e2413a0fa67564",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/q3_endpoint_robustness.csv",
+      "sha256": "0f0cf88371dac75c60367831bd251b3a3829be2a963268cefbfc8f15cd83462a",
+      "current_sha256": "0f0cf88371dac75c60367831bd251b3a3829be2a963268cefbfc8f15cd83462a",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/q3_failed_points.csv",
+      "sha256": "0210b4a3ae020798c5c1c67e2b558193a042b9d7ca4fa8227d39f6b5539320eb",
+      "current_sha256": "0210b4a3ae020798c5c1c67e2b558193a042b9d7ca4fa8227d39f6b5539320eb",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/q3_mission_check.csv",
+      "sha256": "e183cf9fb6d6cc5ad9c6b3dd42b005be1db6102419ace806df04fa69c8ad94b2",
+      "current_sha256": "e183cf9fb6d6cc5ad9c6b3dd42b005be1db6102419ace806df04fa69c8ad94b2",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/q4_2_hard_late.csv",
+      "sha256": "6b9144a547c101056373d7c0c32bb4a4b3caa43c4fddb529d89a525be75464ae",
+      "current_sha256": "6b9144a547c101056373d7c0c32bb4a4b3caa43c4fddb529d89a525be75464ae",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/q4_3_hard_late.csv",
+      "sha256": "46d0d3ae0960013ccb376aeb8e838279b896b30330dc31f6775dc6b37c61a721",
+      "current_sha256": "46d0d3ae0960013ccb376aeb8e838279b896b30330dc31f6775dc6b37c61a721",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/q4_from_actual_q3_times.csv",
+      "sha256": "1b3a7a3d2e53ea5d236f13433b23ec841fd124293ce9ad9a4f63ca9064a7e440",
+      "current_sha256": "1b3a7a3d2e53ea5d236f13433b23ec841fd124293ce9ad9a4f63ca9064a7e440",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/reproduce_solve_problem1_18trips.log",
+      "sha256": "4b00fac846b10736c51fd465ef64462618c274b6bf9c05319dfcc669a926fd95",
+      "current_sha256": "4b00fac846b10736c51fd465ef64462618c274b6bf9c05319dfcc669a926fd95",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/reproduce_solve_problem2_lns.log",
+      "sha256": "6111d6943724d63a0e73f3b9740f49e7847a88c91d0490a1e7226d1e08cb6b6a",
+      "current_sha256": "6111d6943724d63a0e73f3b9740f49e7847a88c91d0490a1e7226d1e08cb6b6a",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/reproduce_solve_problem3_relay.log",
+      "sha256": "9a82dadebccebc831a328ecdae5f3fde0c84f601fd30efb6e761475dcdd5e7aa",
+      "current_sha256": "9a82dadebccebc831a328ecdae5f3fde0c84f601fd30efb6e761475dcdd5e7aa",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/reproduce_solve_problem4_fixed.log",
+      "sha256": "bfc928e8e483ef4893a1a8f26c527452d4194e37b420e3e7df1f6743609303ca",
+      "current_sha256": "bfc928e8e483ef4893a1a8f26c527452d4194e37b420e3e7df1f6743609303ca",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/reproduction_status.json",
+      "sha256": "93322da849a8cdb714198ea5bae23983e023585751ac89e2c2de99452c844f10",
+      "current_sha256": "93322da849a8cdb714198ea5bae23983e023585751ac89e2c2de99452c844f10",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/targeted_checks.json",
+      "sha256": "fa8c34b4fb01b07ef738234ad45b071f57666fbb7cae5bfe0e5faca40653e156",
+      "current_sha256": "fa8c34b4fb01b07ef738234ad45b071f57666fbb7cae5bfe0e5faca40653e156",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/workbook_inventory.json",
+      "sha256": "f1009e531cef7f8854983dbf97a3142a2f698ec71b0b42d2deddea53e33d9af8",
+      "current_sha256": "f1009e531cef7f8854983dbf97a3142a2f698ec71b0b42d2deddea53e33d9af8",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/docx_media/image1.png",
+      "sha256": "eb2b1feaf1cf1249fbaee4bac90e540b952a9060bb9b0afe12fad9d0640b4707",
+      "current_sha256": "eb2b1feaf1cf1249fbaee4bac90e540b952a9060bb9b0afe12fad9d0640b4707",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/docx_media/image2.svg",
+      "sha256": "2fe5a53e7f2bdac1bd68e281d9ae7dfd08a611065a47f24066fc8657609b4825",
+      "current_sha256": "2fe5a53e7f2bdac1bd68e281d9ae7dfd08a611065a47f24066fc8657609b4825",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/official_xlsx/中继无人机数据.txt",
+      "sha256": "f62e75841093695f48c896dd6511dc8020449ae7fadca266cdffaa11666b8039",
+      "current_sha256": "f62e75841093695f48c896dd6511dc8020449ae7fadca266cdffaa11666b8039",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/official_xlsx/物资需求与配送时限.txt",
+      "sha256": "3d2f0e23489ec8eb56962e4c2cfeb4e9ecbb32dd6dcb957aad9c727bf1b96069",
+      "current_sha256": "3d2f0e23489ec8eb56962e4c2cfeb4e9ecbb32dd6dcb957aad9c727bf1b96069",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/official_xlsx/结果提交模板.txt",
+      "sha256": "b68e5ab0c5a22d9cb1bba8851cad39631b1befa51f5fc77e7dfa8c8bccb6ad30",
+      "current_sha256": "b68e5ab0c5a22d9cb1bba8851cad39631b1befa51f5fc77e7dfa8c8bccb6ad30",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/official_xlsx/调度中心与服务区.txt",
+      "sha256": "04cdf53ca8758a6b903ef8392e52f4470ace2e0db7b07d463061b7ecc931596e",
+      "current_sha256": "04cdf53ca8758a6b903ef8392e52f4470ace2e0db7b07d463061b7ecc931596e",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/official_xlsx/运输无人机数据.txt",
+      "sha256": "376223e4d3c890e4b4e10a16671f3be45f1696e7dd0afc441492bc75ebc66857",
+      "current_sha256": "376223e4d3c890e4b4e10a16671f3be45f1696e7dd0afc441492bc75ebc66857",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/official_xlsx/通信链路参数.txt",
+      "sha256": "3c0703ec3223cb3f44f68b32f49f14abb1b9535868afb0f325c36ed6207d6b37",
+      "current_sha256": "3c0703ec3223cb3f44f68b32f49f14abb1b9535868afb0f325c36ed6207d6b37",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/01_UAV_Medical_Delivery_Trajectory_Optimization_2025.txt",
+      "sha256": "63e1f093facb35c751242a1493e906a4cd8f7e374df759295f418e9c30ec8025",
+      "current_sha256": "63e1f093facb35c751242a1493e906a4cd8f7e374df759295f418e9c30ec8025",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/02_Post_Disaster_UAV_Vehicle_Routing_Robust_Optimization.txt",
+      "sha256": "0457e723760f807316dee0fb4006e6d7c9d2e13f28c763297801c4a5cb65103f",
+      "current_sha256": "0457e723760f807316dee0fb4006e6d7c9d2e13f28c763297801c4a5cb65103f",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/03_Multi_Depot_Multi_Trip_VRP_Completion_Time.txt",
+      "sha256": "d358dada8318e1cca94733913d2f1a05398a3fe8911afa78f2aa128958e4e1da",
+      "current_sha256": "d358dada8318e1cca94733913d2f1a05398a3fe8911afa78f2aa128958e4e1da",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/04_Battery_Swapping_Scheduling_Part1.txt",
+      "sha256": "33840ec733a62b1c69c07a05833f760d360b0509045d4fbaca10ed71af653707",
+      "current_sha256": "33840ec733a62b1c69c07a05833f760d360b0509045d4fbaca10ed71af653707",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/05_Battery_Swapping_Scheduling_Part2.txt",
+      "sha256": "edcf52083d91bb87a9c78d870cc7c53e55cfe216fcbc4c9698b1653d5ad413d7",
+      "current_sha256": "edcf52083d91bb87a9c78d870cc7c53e55cfe216fcbc4c9698b1653d5ad413d7",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/06_No_Stockout_Charging_Scheduling_2026.txt",
+      "sha256": "85960e2630e522ade242c648eb5310ecbb47786df677b9d5c81f973b2abfff1a",
+      "current_sha256": "85960e2630e522ade242c648eb5310ecbb47786df677b9d5c81f973b2abfff1a",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/07_UAV_3D_Position_Optimization_Solar_Relay.txt",
+      "sha256": "5a632e0b160d21f80a07aa4f375c20bc18cd81f68ca53aeca0f197c87955f021",
+      "current_sha256": "5a632e0b160d21f80a07aa4f375c20bc18cd81f68ca53aeca0f197c87955f021",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/09_UNICEF_Drone_Supply_Chain_Guidance.txt",
+      "sha256": "3c5c28ff5320d742dcfbc8f0d86bd9c1c6a12f7b31ed95c575422485eb1a3bab",
+      "current_sha256": "3c5c28ff5320d742dcfbc8f0d86bd9c1c6a12f7b31ed95c575422485eb1a3bab",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/10_Multi_Truck_Drone_Emergency_Distribution_2026.txt",
+      "sha256": "51b4cc8de10d18059bfd66d536dfe5f2ed416c34172659bb182d05f0a0d11dde",
+      "current_sha256": "51b4cc8de10d18059bfd66d536dfe5f2ed416c34172659bb182d05f0a0d11dde",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/11_Heterogeneous_Fleet_VRPTW_Aston.txt",
+      "sha256": "fea72220b638812047e976e353334286b5501cb4383351aafd2942ea983b9a05",
+      "current_sha256": "fea72220b638812047e976e353334286b5501cb4383351aafd2942ea983b9a05",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/12_PyVRP_State_of_Art_2024.txt",
+      "sha256": "8c2b9b57969fcfff7f9b9531b6be205a96083f6747243a7fd0d35440bd504e15",
+      "current_sha256": "8c2b9b57969fcfff7f9b9531b6be205a96083f6747243a7fd0d35440bd504e15",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/13_HGS_CVRP_2024.txt",
+      "sha256": "b82e4becfb1f2c09207cb14931a9094ff3a536a3cef72bc642a7c12390a5ba45",
+      "current_sha256": "b82e4becfb1f2c09207cb14931a9094ff3a536a3cef72bc642a7c12390a5ba45",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/14_NSGA_II_UAV_Logistics_Springer_2025.txt",
+      "sha256": "f629fcbe1070db2b85d678cffeae9dba2f75e55fb44f954f1b7ef3a5f5254bdd",
+      "current_sha256": "f629fcbe1070db2b85d678cffeae9dba2f75e55fb44f954f1b7ef3a5f5254bdd",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/papers/15_Relief_Distribution_Trucks_Drones_Incomplete_Demand.txt",
+      "sha256": "c5c8af3d97ebde50d7dbd5569697ee040f2170e7393be56c9db2e1d22712c4fb",
+      "current_sha256": "c5c8af3d97ebde50d7dbd5569697ee040f2170e7393be56c9db2e1d22712c4fb",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题一_18架次方案_修复版.txt",
+      "sha256": "491ed041217d8ea38ef46018f3ff1cfae6250c6365a9c48461c8186e6172f2a5",
+      "current_sha256": "491ed041217d8ea38ef46018f3ff1cfae6250c6365a9c48461c8186e6172f2a5",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题一_严格约束方案.txt",
+      "sha256": "cec021be5f80ce1c2dfb9daf1934ec3d14af52a71b7d8734b1b0cb13e1b1aab4",
+      "current_sha256": "cec021be5f80ce1c2dfb9daf1934ec3d14af52a71b7d8734b1b0cb13e1b1aab4",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题三_中继部署方案_修复版.txt",
+      "sha256": "b79c979aadd4d0a9c6f431724c9b2f52b07d9d59b7b7f55d66dbd24f5fb3f0b8",
+      "current_sha256": "b79c979aadd4d0a9c6f431724c9b2f52b07d9d59b7b7f55d66dbd24f5fb3f0b8",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题三_覆盖核验_修复版.txt",
+      "sha256": "75cf7acf3c48deb73863141c116b9eb0ebf02fcede382971355c3d274f486ca5",
+      "current_sha256": "75cf7acf3c48deb73863141c116b9eb0ebf02fcede382971355c3d274f486ca5",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题三_运输调度_修复版.txt",
+      "sha256": "ff15a4dccd8f3f0784900e56722627bad3231892ca0ddb6290947ac38acacde3",
+      "current_sha256": "ff15a4dccd8f3f0784900e56722627bad3231892ca0ddb6290947ac38acacde3",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题二_优化修复版.txt",
+      "sha256": "442feda50b530774452bbd4401fd0743486302d64ec494807b08c699e7b3f1f5",
+      "current_sha256": "442feda50b530774452bbd4401fd0743486302d64ec494807b08c699e7b3f1f5",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题二_增强优化版.txt",
+      "sha256": "aaa87c2fe8975283bce05694d171de50a5daaed0496be181e481a7e5b98a7e00",
+      "current_sha256": "aaa87c2fe8975283bce05694d171de50a5daaed0496be181e481a7e5b98a7e00",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题四_2批次_修复版.txt",
+      "sha256": "071c8ffe9de9a9e4378412d1001ef6a42ea31ac745059fe335854e2a9c2ece75",
+      "current_sha256": "071c8ffe9de9a9e4378412d1001ef6a42ea31ac745059fe335854e2a9c2ece75",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题四_2批次_错峰复用优化.txt",
+      "sha256": "23534948ebb818aaad000e403414fb1a68f543228ef318411af33be8ee24fc12",
+      "current_sha256": "23534948ebb818aaad000e403414fb1a68f543228ef318411af33be8ee24fc12",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题四_3批次_修复版.txt",
+      "sha256": "251d24dc8a027e67f8f977fb50653c21a5cae7af469a50dec80778211d3ca28c",
+      "current_sha256": "251d24dc8a027e67f8f977fb50653c21a5cae7af469a50dec80778211d3ca28c",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/evidence/results_xlsx/问题四_3批次_错峰复用优化.txt",
+      "sha256": "901eef955ec9cde12ea214af1102160135758039635bb1c8afe41ed9ba67867f",
+      "current_sha256": "901eef955ec9cde12ea214af1102160135758039635bb1c8afe41ed9ba67867f",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/.gitignore",
+      "sha256": "45549a9ffd9963f855d72829e978a31c05b82894b14b1d8fbdd43083b20c2d86",
+      "current_sha256": "45549a9ffd9963f855d72829e978a31c05b82894b14b1d8fbdd43083b20c2d86",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/solve_problem1_18trips.py",
+      "sha256": "25186922f8861c749b27f3cf7f68efe9b71c1b21cb2961af64353c4b5a100421",
+      "current_sha256": "25186922f8861c749b27f3cf7f68efe9b71c1b21cb2961af64353c4b5a100421",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/solve_problem2_lns.py",
+      "sha256": "22cccdc54fd387d28812f1a1005e08fdc287828f23a49557c5e63a03713fcc24",
+      "current_sha256": "22cccdc54fd387d28812f1a1005e08fdc287828f23a49557c5e63a03713fcc24",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/solve_problem2_optimized.py",
+      "sha256": "1713d2d64e2bdb2176df8aec7b427b438d19bb8e0a708c3e0f25173a3f17e67d",
+      "current_sha256": "1713d2d64e2bdb2176df8aec7b427b438d19bb8e0a708c3e0f25173a3f17e67d",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/solve_problem3_relay.py",
+      "sha256": "f4fa1d7ed92999cc2dde71ed2bdd510a79240d3e365f639f09afe372ab6c6d92",
+      "current_sha256": "f4fa1d7ed92999cc2dde71ed2bdd510a79240d3e365f639f09afe372ab6c6d92",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/solve_problem4_fixed.py",
+      "sha256": "dedcd873ca7ba9a732a8d1c209da94e80ce71a002c368699c781874688bafa6e",
+      "current_sha256": "dedcd873ca7ba9a732a8d1c209da94e80ce71a002c368699c781874688bafa6e",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/batch/batch_optimizer.py",
+      "sha256": "61e8ea0a3e8b7778207312bcb861ef44e18c7a117a1e7fd1958aa129e4db4aa8",
+      "current_sha256": "61e8ea0a3e8b7778207312bcb861ef44e18c7a117a1e7fd1958aa129e4db4aa8",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/battery/battery_manager.py",
+      "sha256": "a50bb8122183b776f25d37d6dcdb89fe443d584211c29540773b833df9875cc8",
+      "current_sha256": "a50bb8122183b776f25d37d6dcdb89fe443d584211c29540773b833df9875cc8",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/battery/charging_model_correct.py",
+      "sha256": "70b91d9b04e712da08253033ee1c60cb5b19cd304fb392305128dbefc457f3c7",
+      "current_sha256": "70b91d9b04e712da08253033ee1c60cb5b19cd304fb392305128dbefc457f3c7",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/battery/__pycache__/charging_model_correct.cpython-310.pyc",
+      "sha256": "0232a1c768bbd7c35e2d5e0ef8df4a240918a3fbdb51afbf333f1803a9bd2d20",
+      "current_sha256": "0232a1c768bbd7c35e2d5e0ef8df4a240918a3fbdb51afbf333f1803a9bd2d20",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/communication/los_model.py",
+      "sha256": "6cf3c18db108c7870106e28e9ef276660f24718ede920872c6d0e4b26c5abfff",
+      "current_sha256": "6cf3c18db108c7870106e28e9ef276660f24718ede920872c6d0e4b26c5abfff",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/communication/__pycache__/los_model.cpython-310.pyc",
+      "sha256": "5f53b57c5a575d3cdc2f2d6bcd5123fb6fef86ee7ca8a59b23117da531da5cd5",
+      "current_sha256": "5f53b57c5a575d3cdc2f2d6bcd5123fb6fef86ee7ca8a59b23117da531da5cd5",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/data/data_loader.py",
+      "sha256": "5467d079aac4aa16eb0eb558641c90b2fa6248ed6cccc8f45d4f9c282a54e39f",
+      "current_sha256": "5467d079aac4aa16eb0eb558641c90b2fa6248ed6cccc8f45d4f9c282a54e39f",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/data/__pycache__/data_loader.cpython-310.pyc",
+      "sha256": "7eabe2069ce110a2d8fabc17acfa8b9bf60f934abaf98f27407fa0c42966c925",
+      "current_sha256": "7eabe2069ce110a2d8fabc17acfa8b9bf60f934abaf98f27407fa0c42966c925",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/energy/battery_manager.py",
+      "sha256": "06aaa38e3e7816887a81b53aab7fa55f4aaa64977da3f90328aa20a6f1492419",
+      "current_sha256": "06aaa38e3e7816887a81b53aab7fa55f4aaa64977da3f90328aa20a6f1492419",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/energy/energy_model.py",
+      "sha256": "67047b841196f7ab96305421144b36cfa41bcf6483337ed3ce83f0f21c561d48",
+      "current_sha256": "67047b841196f7ab96305421144b36cfa41bcf6483337ed3ce83f0f21c561d48",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/energy/__pycache__/energy_model.cpython-310.pyc",
+      "sha256": "14e411a64dd0d90dbcd628369d451651ffcc4b7d818a5712d2a12bc2bdd7f2e9",
+      "current_sha256": "14e411a64dd0d90dbcd628369d451651ffcc4b7d818a5712d2a12bc2bdd7f2e9",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/problem1/knapsack_solver.py",
+      "sha256": "d98aa3827033aa826fa9c80fe696a990f622398d7c534e3e6ae188320b6bdef3",
+      "current_sha256": "d98aa3827033aa826fa9c80fe696a990f622398d7c534e3e6ae188320b6bdef3",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/relay/deployment_optimizer.py",
+      "sha256": "6755b5dfd6fba149fec2d743f50521778a23bd3083b0eab254df068d0a86a7a5",
+      "current_sha256": "6755b5dfd6fba149fec2d743f50521778a23bd3083b0eab254df068d0a86a7a5",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/terrain/dem_loader.py",
+      "sha256": "8f7d04872dd817fb3115998aa47de748ded1bc9ad2dd8f00e4d16a6d7999face",
+      "current_sha256": "8f7d04872dd817fb3115998aa47de748ded1bc9ad2dd8f00e4d16a6d7999face",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/src/terrain/__pycache__/dem_loader.cpython-310.pyc",
+      "sha256": "148fa76c1c509c39e5734e511493ddaf164864f1fb1edd394eed5dab5ff3145d",
+      "current_sha256": "148fa76c1c509c39e5734e511493ddaf164864f1fb1edd394eed5dab5ff3145d",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/__pycache__/solve_problem1_18trips.cpython-310.pyc",
+      "sha256": "7cd66c2f6605ee0b97ea8831edcd230775d7074d9e520438c16221cd66a9f0a7",
+      "current_sha256": "7cd66c2f6605ee0b97ea8831edcd230775d7074d9e520438c16221cd66a9f0a7",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/__pycache__/solve_problem2_optimized.cpython-310.pyc",
+      "sha256": "0a56fbcad3d5be9356cdf6be68eadc74c16649306d471848911c9840f7bca965",
+      "current_sha256": "0a56fbcad3d5be9356cdf6be68eadc74c16649306d471848911c9840f7bca965",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/数据/无人机应急物资运输基础数据/中继无人机数据.xlsx",
+      "sha256": "be52643ff29419233e6a141dca03a04160a8af551cab36d8c49b51bb836bea04",
+      "current_sha256": "be52643ff29419233e6a141dca03a04160a8af551cab36d8c49b51bb836bea04",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/数据/无人机应急物资运输基础数据/物资需求与配送时限.xlsx",
+      "sha256": "5a3346159ceddcf585859d270b8f62114b388a1f737fbe64ffde0ee1fdc8170a",
+      "current_sha256": "5a3346159ceddcf585859d270b8f62114b388a1f737fbe64ffde0ee1fdc8170a",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/数据/无人机应急物资运输基础数据/调度中心与服务区.xlsx",
+      "sha256": "541a7af1ded08c9a3ff448480332cb5f6a54902f0afa6e9bcd50c1d2b2b34e38",
+      "current_sha256": "541a7af1ded08c9a3ff448480332cb5f6a54902f0afa6e9bcd50c1d2b2b34e38",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/数据/无人机应急物资运输基础数据/运输无人机数据.xlsx",
+      "sha256": "9296a657c07e042afba6aeea7999665d9cd24e00b592fd6c269de6e338480dcb",
+      "current_sha256": "9296a657c07e042afba6aeea7999665d9cd24e00b592fd6c269de6e338480dcb",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/数据/无人机应急物资运输基础数据/通信链路参数.xlsx",
+      "sha256": "1860d153199e7ae460ba36e83b673374e640e19de91ea167f2877271001f5f81",
+      "current_sha256": "1860d153199e7ae460ba36e83b673374e640e19de91ea167f2877271001f5f81",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/数据/镇龙乡地理空间数据/镇龙乡及周边地理数据/数字高程模型数据（DEM）/镇龙乡及周边30米DEM.mat",
+      "sha256": "c68703e0cc8f94f4bd52ff6e9974b66a2dae33865f0723ad71c04b6694bf4fbf",
+      "current_sha256": "c68703e0cc8f94f4bd52ff6e9974b66a2dae33865f0723ad71c04b6694bf4fbf",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题一_18架次方案_修复版.xlsx",
+      "sha256": "da11af7293036949492e4bf387e3d9096375449bc873a0d365864bba743e267c",
+      "current_sha256": "da11af7293036949492e4bf387e3d9096375449bc873a0d365864bba743e267c",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题三_中继部署方案_修复版.xlsx",
+      "sha256": "6665df7bba8d3cdc10369e667639250874d351498352e477f156fae1a0acd2f1",
+      "current_sha256": "6665df7bba8d3cdc10369e667639250874d351498352e477f156fae1a0acd2f1",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题三_汇总_修复版.json",
+      "sha256": "623d8767663b1934818ddfbc0400ec8e1bfe165d96275f491396db29f63b2008",
+      "current_sha256": "623d8767663b1934818ddfbc0400ec8e1bfe165d96275f491396db29f63b2008",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题三_覆盖核验_修复版.xlsx",
+      "sha256": "cb4b51897681fb189d8e74177fbfe28f603976adcccc820c3c06087958625b8b",
+      "current_sha256": "cb4b51897681fb189d8e74177fbfe28f603976adcccc820c3c06087958625b8b",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题三_运输调度_修复版.xlsx",
+      "sha256": "622e13c094926781c02afe6b9448bd2aadbe2c01974a178f971bdf9d43f49cb6",
+      "current_sha256": "622e13c094926781c02afe6b9448bd2aadbe2c01974a178f971bdf9d43f49cb6",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题二_增强优化版.xlsx",
+      "sha256": "e470e919bf030f084ccb39ff21a700c29dd97bce67d59aefc4a6d80dc570a691",
+      "current_sha256": "e470e919bf030f084ccb39ff21a700c29dd97bce67d59aefc4a6d80dc570a691",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_2批次_修复版.json",
+      "sha256": "a55bef7457cdea8d29435c9ae24035f72c67779e61413695079641e02c93b502",
+      "current_sha256": "a55bef7457cdea8d29435c9ae24035f72c67779e61413695079641e02c93b502",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_2批次_修复版.xlsx",
+      "sha256": "a085e559122edf77001249ad309ad289a35b71320d309dcec5ce1edad5a03ebe",
+      "current_sha256": "a085e559122edf77001249ad309ad289a35b71320d309dcec5ce1edad5a03ebe",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_2批次_错峰复用优化.xlsx",
+      "sha256": "4e3ac8a899c1e5ab3f327c83eed8e4d3d8253290d83b8d5d12a21a3c2051d805",
+      "current_sha256": "4e3ac8a899c1e5ab3f327c83eed8e4d3d8253290d83b8d5d12a21a3c2051d805",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_3批次_修复版.json",
+      "sha256": "45f8c7624a445714b87a0d46a37678d2573d70b16e8b202cfad4e87e275a9a68",
+      "current_sha256": "45f8c7624a445714b87a0d46a37678d2573d70b16e8b202cfad4e87e275a9a68",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_3批次_修复版.xlsx",
+      "sha256": "c875136bdc29ae0025ef4075b28a7202ad3ac6b1c8a06af2ed5a8f8b4b3c6b8b",
+      "current_sha256": "c875136bdc29ae0025ef4075b28a7202ad3ac6b1c8a06af2ed5a8f8b4b3c6b8b",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_3批次_错峰复用优化.xlsx",
+      "sha256": "e92ee90c69912c3c66d9396ddea67a51ec56df219afdee60513902dba929646b",
+      "current_sha256": "e92ee90c69912c3c66d9396ddea67a51ec56df219afdee60513902dba929646b",
+      "unchanged": true
+    },
+    {
+      "path": "audit/20260925/reproduction/结果/问题四_错峰复用汇总.json",
+      "sha256": "8081a3bb8151aaa5e5cefb0492af886d01be86f260998223e54e8eff82e85c0d",
+      "current_sha256": "8081a3bb8151aaa5e5cefb0492af886d01be86f260998223e54e8eff82e85c0d",
+      "unchanged": true
+    }
+  ],
+  "tracked": [
+    {
+      "path": ".gitignore",
+      "sha256": "4138eed74e714a145a66907be11cba450baaa8c9e38b2d38357b94387df9e79a",
+      "current_sha256": "4138eed74e714a145a66907be11cba450baaa8c9e38b2d38357b94387df9e79a",
+      "unchanged": true
+    },
+    {
+      "path": "CLEANUP_REPORT.md",
+      "sha256": "08763b76237009d2462210d3d6c43314786655c750f3149e9c2848c5410561e1",
+      "current_sha256": "08763b76237009d2462210d3d6c43314786655c750f3149e9c2848c5410561e1",
+      "unchanged": true
+    },
+    {
+      "path": "README.md",
+      "sha256": "df00e84947a4bb60c0310ddbc272c35e36abc7849684b663f554594bbaedecd8",
+      "current_sha256": "df00e84947a4bb60c0310ddbc272c35e36abc7849684b663f554594bbaedecd8",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format.docx",
+      "sha256": "46d2e2a87e90608ace764203d5326d7c7e41f01a5eb79986724a6f159fd70e16",
+      "current_sha256": "46d2e2a87e90608ace764203d5326d7c7e41f01a5eb79986724a6f159fd70e16",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/[Content_Types].xml",
+      "sha256": "4a213c24df8fd39f5dbf8ea90b8b70ebd00a2a2fab264f626718f04de26de7ef",
+      "current_sha256": "4a213c24df8fd39f5dbf8ea90b8b70ebd00a2a2fab264f626718f04de26de7ef",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/_rels/.rels",
+      "sha256": "c30fe099dbcfed4ecc4ae544ccf82f432c8d3bb665e2a301df283738b196d803",
+      "current_sha256": "c30fe099dbcfed4ecc4ae544ccf82f432c8d3bb665e2a301df283738b196d803",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/docProps/app.xml",
+      "sha256": "33a2fc6059f0f1a85c623a42b99638fbaa0c7a803012ba95041f8a6ce1f4fc01",
+      "current_sha256": "33a2fc6059f0f1a85c623a42b99638fbaa0c7a803012ba95041f8a6ce1f4fc01",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/docProps/core.xml",
+      "sha256": "cf06231dba5d4bbbcd9abe0089c5d8b90f2ce4ca55f045e9867f031f722914c5",
+      "current_sha256": "cf06231dba5d4bbbcd9abe0089c5d8b90f2ce4ca55f045e9867f031f722914c5",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/docProps/custom.xml",
+      "sha256": "b20f7b62c187b2e7ba8d4f8cbabc81ec4554bd1acf3899ce94f69abbfb91af24",
+      "current_sha256": "b20f7b62c187b2e7ba8d4f8cbabc81ec4554bd1acf3899ce94f69abbfb91af24",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/_rels/document.xml.rels",
+      "sha256": "d1848bbeb5767c1ac4a004f64a55d648e074d11792b3a9dc99ef45e16b521bcd",
+      "current_sha256": "d1848bbeb5767c1ac4a004f64a55d648e074d11792b3a9dc99ef45e16b521bcd",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/document.xml",
+      "sha256": "14895534adfff047913c712869190a100e9075d249b60e3ee26afeb7f745a41d",
+      "current_sha256": "14895534adfff047913c712869190a100e9075d249b60e3ee26afeb7f745a41d",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/endnotes.xml",
+      "sha256": "9aa70dc00d0919d7a8913a63632fb068af8e6bc4ed792d9318ab4d4f16a43936",
+      "current_sha256": "9aa70dc00d0919d7a8913a63632fb068af8e6bc4ed792d9318ab4d4f16a43936",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/fontTable.xml",
+      "sha256": "2682b6ed2cfa1ca3bd4c213971464e51c65182656262b677d300ea06700f0322",
+      "current_sha256": "2682b6ed2cfa1ca3bd4c213971464e51c65182656262b677d300ea06700f0322",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/footnotes.xml",
+      "sha256": "03809bb87bdd200478555dfd74773e385f2c1fa51d3ebe44e21ad9286ab90f20",
+      "current_sha256": "03809bb87bdd200478555dfd74773e385f2c1fa51d3ebe44e21ad9286ab90f20",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/header1.xml",
+      "sha256": "5726271b2c1e1fc04a1a81c980a2e3f4bb4c731088863f46c09913ec019ca5df",
+      "current_sha256": "5726271b2c1e1fc04a1a81c980a2e3f4bb4c731088863f46c09913ec019ca5df",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/media/image1.png",
+      "sha256": "d79492c46813db71372eafe0213347b3ea156528b9d500be415b1f960df983fe",
+      "current_sha256": "d79492c46813db71372eafe0213347b3ea156528b9d500be415b1f960df983fe",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/media/image2.jpeg",
+      "sha256": "16e8f9a3b5193ed30b412b3f27dc58dc76656f5da60f76e079751f9b71e1bd4d",
+      "current_sha256": "16e8f9a3b5193ed30b412b3f27dc58dc76656f5da60f76e079751f9b71e1bd4d",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/media/image3.jpeg",
+      "sha256": "0027f3fd8dc9c6666c3ff3fb8ff60e5976e79a67d98cf1b7bcfc4306007ee8cf",
+      "current_sha256": "0027f3fd8dc9c6666c3ff3fb8ff60e5976e79a67d98cf1b7bcfc4306007ee8cf",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/media/image4.png",
+      "sha256": "fd5f2a25dec0b2f20af6625bf068b2c267323d64d4444ae8486cb0133d8b3eaa",
+      "current_sha256": "fd5f2a25dec0b2f20af6625bf068b2c267323d64d4444ae8486cb0133d8b3eaa",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/numbering.xml",
+      "sha256": "4498f3fbdc5fb195b59bdb049ec91071b75294f035765a9486650edd8900c28b",
+      "current_sha256": "4498f3fbdc5fb195b59bdb049ec91071b75294f035765a9486650edd8900c28b",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/settings.xml",
+      "sha256": "d8e9eb5c9347e30d864923d435929ceb8956ed1a03cd09e796f3f0bc4878b29d",
+      "current_sha256": "d8e9eb5c9347e30d864923d435929ceb8956ed1a03cd09e796f3f0bc4878b29d",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/styles.xml",
+      "sha256": "d49a40de9be1bb7b56e902d079cc9458f76aceececc243f61e7a3c885862b985",
+      "current_sha256": "d49a40de9be1bb7b56e902d079cc9458f76aceececc243f61e7a3c885862b985",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/theme/theme1.xml",
+      "sha256": "bf4992e3fa7832e5c68fdbc4ec5189c8e5d347fef03c5ba2522ad704bde5078f",
+      "current_sha256": "bf4992e3fa7832e5c68fdbc4ec5189c8e5d347fef03c5ba2522ad704bde5078f",
+      "unchanged": true
+    },
+    {
+      "path": "_fmt_tmp/format_unzip/word/webSettings.xml",
+      "sha256": "3346314c93078070b454a95d0485bf9721dade13d89cfaa579cc32645fa7edef",
+      "current_sha256": "3346314c93078070b454a95d0485bf9721dade13d89cfaa579cc32645fa7edef",
+      "unchanged": true
+    },
+    {
+      "path": "_mathmodel_README.md",
+      "sha256": "64b54944ec4a6a9abc87923a2fa99b8893e1306f239d997b0ad091962f9649a9",
+      "current_sha256": "64b54944ec4a6a9abc87923a2fa99b8893e1306f239d997b0ad091962f9649a9",
+      "unchanged": true
+    },
+    {
+      "path": "_problem.txt",
+      "sha256": "9d64ef1d4414cda4a6923210f77462cad538308c06f4e78af905724a1e01e30f",
+      "current_sha256": "9d64ef1d4414cda4a6923210f77462cad538308c06f4e78af905724a1e01e30f",
+      "unchanged": true
+    },
+    {
+      "path": "_problem_xml.txt",
+      "sha256": "2abc034907151075c9157d7613ec95e5842e8c6d3f4a7e2dae48a33a02bae0f8",
+      "current_sha256": "2abc034907151075c9157d7613ec95e5842e8c6d3f4a7e2dae48a33a02bae0f8",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/axes_info.py",
+      "sha256": "f8facac7bc763d1a86cd2ed94565a85bae01af66a662e73556655c65956f865c",
+      "current_sha256": "f8facac7bc763d1a86cd2ed94565a85bae01af66a662e73556655c65956f865c",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/chk_fill_half.png",
+      "sha256": "8e496c8d0372cf369539ad596edec0cdbfb5934d7e411bd5d2ad334f15fd69fe",
+      "current_sha256": "8e496c8d0372cf369539ad596edec0cdbfb5934d7e411bd5d2ad334f15fd69fe",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/chk_magenta.png",
+      "sha256": "36bcd9ed640a7f3ec760728807bee41970f303c8abbc9319a178e811aafa74b0",
+      "current_sha256": "36bcd9ed640a7f3ec760728807bee41970f303c8abbc9319a178e811aafa74b0",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/chk_magenta_half.png",
+      "sha256": "c155b288b0969e8e9ec19b95c4d071b3cdce162991b14eaa044938ae5135ea45",
+      "current_sha256": "c155b288b0969e8e9ec19b95c4d071b3cdce162991b14eaa044938ae5135ea45",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/chk_white.png",
+      "sha256": "59709059332d1e174486f5501c3d57a98d723c0e7bb42af1f21f4a9447d78e54",
+      "current_sha256": "59709059332d1e174486f5501c3d57a98d723c0e7bb42af1f21f4a9447d78e54",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/embedded_0.png",
+      "sha256": "d91a970f82d2ce052eaeb128ac4f9ca00252ac0d953c19a41edca241784f926a",
+      "current_sha256": "d91a970f82d2ce052eaeb128ac4f9ca00252ac0d953c19a41edca241784f926a",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/extract_svg.py",
+      "sha256": "0e7f7778c0ad6a0c88b683fa50bd7234dc7b3b6d9dfe07eff15bca359535ccdf",
+      "current_sha256": "0e7f7778c0ad6a0c88b683fa50bd7234dc7b3b6d9dfe07eff15bca359535ccdf",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/geom.py",
+      "sha256": "0f41a0e66256df6446613ab15ad38ce34325c81aa7d2e53a8bb271834857ade4",
+      "current_sha256": "0f41a0e66256df6446613ab15ad38ce34325c81aa7d2e53a8bb271834857ade4",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/poly_d.txt",
+      "sha256": "a5cf26b3e2f2d06351dadb58f725eb81df06c7d490dcdb5582f8942b7a5ab395",
+      "current_sha256": "a5cf26b3e2f2d06351dadb58f725eb81df06c7d490dcdb5582f8942b7a5ab395",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/poly_dark_d.txt",
+      "sha256": "1d1b0c1d377760438c39dd84101be38168d9cf1d69396f7736d8e7b0d28db259",
+      "current_sha256": "1d1b0c1d377760438c39dd84101be38168d9cf1d69396f7736d8e7b0d28db259",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/poly_geo.json",
+      "sha256": "cc62c233a6dcb28b0724d36036a7cd2d8c26c12a08417b4b632a1d8f851cbc57",
+      "current_sha256": "cc62c233a6dcb28b0724d36036a7cd2d8c26c12a08417b4b632a1d8f851cbc57",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/poly_white_d.txt",
+      "sha256": "1d1b0c1d377760438c39dd84101be38168d9cf1d69396f7736d8e7b0d28db259",
+      "current_sha256": "1d1b0c1d377760438c39dd84101be38168d9cf1d69396f7736d8e7b0d28db259",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/polys.json",
+      "sha256": "656c6105b88a0bf3c33df370020815d8a7a4f6485ef40fa1d5368c38f0ef0bf8",
+      "current_sha256": "656c6105b88a0bf3c33df370020815d8a7a4f6485ef40fa1d5368c38f0ef0bf8",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/render.py",
+      "sha256": "3b24636287e4c2089b08278e725ca57dce486a6a84005a5704a6e25068b101b9",
+      "current_sha256": "3b24636287e4c2089b08278e725ca57dce486a6a84005a5704a6e25068b101b9",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/_analysis/white_check.py",
+      "sha256": "20874a7505d44e7976b55037c3ae83decc2b92a4a49ed566675e961eea8ae747",
+      "current_sha256": "20874a7505d44e7976b55037c3ae83decc2b92a4a49ed566675e961eea8ae747",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/agg.py",
+      "sha256": "b49c41dc65197ef34ddfe3c4a316ec91fdca0575771cbee2ead6389d955d5413",
+      "current_sha256": "b49c41dc65197ef34ddfe3c4a316ec91fdca0575771cbee2ead6389d955d5413",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/all_math.py",
+      "sha256": "aea7eab986be57b8ce08f3bb20bb0402756b26b504f653b37ec0c575bdadff1f",
+      "current_sha256": "aea7eab986be57b8ce08f3bb20bb0402756b26b504f653b37ec0c575bdadff1f",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/audit1.py",
+      "sha256": "fe05d4389776269a9b6255cc8354739326d7b8ccb4e27a655f033486c5755b11",
+      "current_sha256": "fe05d4389776269a9b6255cc8354739326d7b8ccb4e27a655f033486c5755b11",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/audit2.py",
+      "sha256": "0758592e268a40c3236baa33baf68964ac3ae743a96d52a1b60925836ae7c304",
+      "current_sha256": "0758592e268a40c3236baa33baf68964ac3ae743a96d52a1b60925836ae7c304",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/audit3.py",
+      "sha256": "c2ba5c64b5188047079dcdbbda76b4b233bfcad318d75c3bc5b2f607e5ccd9ef",
+      "current_sha256": "c2ba5c64b5188047079dcdbbda76b4b233bfcad318d75c3bc5b2f607e5ccd9ef",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/chk.py",
+      "sha256": "77ebc634410cc0573171efee0a1e9a9b75437cb434e0e95294567455da1b222c",
+      "current_sha256": "77ebc634410cc0573171efee0a1e9a9b75437cb434e0e95294567455da1b222c",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/dem1.py",
+      "sha256": "8b272148f6fedcd6ccc8f099772558f08850177012d4e00c7215c27b112c9a87",
+      "current_sha256": "8b272148f6fedcd6ccc8f099772558f08850177012d4e00c7215c27b112c9a87",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/dem2.py",
+      "sha256": "25652e9b8ac8a6e99c7b97077164649c9a6c04e67e2534cbc2410cabc32239d1",
+      "current_sha256": "25652e9b8ac8a6e99c7b97077164649c9a6c04e67e2534cbc2410cabc32239d1",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/dump_eq.py",
+      "sha256": "c5e84282e286abf827abdc7d5dace5d9a9da83b5e64990fca473bd328338f728",
+      "current_sha256": "c5e84282e286abf827abdc7d5dace5d9a9da83b5e64990fca473bd328338f728",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/dump_eq2.py",
+      "sha256": "59e98bce31ee38943b036c031bc09c3e367ff22c9759f3b05a88edf640aa0ae4",
+      "current_sha256": "59e98bce31ee38943b036c031bc09c3e367ff22c9759f3b05a88edf640aa0ae4",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/dump_eq3.py",
+      "sha256": "753a9492906b59ca81c9289c0d85ad26fe3446e097f701c8521490e899575c4f",
+      "current_sha256": "753a9492906b59ca81c9289c0d85ad26fe3446e097f701c8521490e899575c4f",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/dump_geo_csv.py",
+      "sha256": "567f264740a64bf211d572a3d789a118b3f617488e6b0587f106530d053a8f9b",
+      "current_sha256": "567f264740a64bf211d572a3d789a118b3f617488e6b0587f106530d053a8f9b",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/dump_geo_pdf.py",
+      "sha256": "03b54130794c4ad470ba3bdb7dcd2c485e6be1422837e34a7c4d210134bb4d4b",
+      "current_sha256": "03b54130794c4ad470ba3bdb7dcd2c485e6be1422837e34a7c4d210134bb4d4b",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/dump_xlsx.py",
+      "sha256": "534c0d7a8a2e39ded2f1ac54d9f77074deb29af469217dede6f8c278626d422b",
+      "current_sha256": "534c0d7a8a2e39ded2f1ac54d9f77074deb29af469217dede6f8c278626d422b",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/dumptrans.py",
+      "sha256": "3a5a7c19179ec98357844b34cc086528c4fa5536ca216f457082468542f7e2ba",
+      "current_sha256": "3a5a7c19179ec98357844b34cc086528c4fa5536ca216f457082468542f7e2ba",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/eq_with_text.txt",
+      "sha256": "d4f6713629be8e8660786ec73d8c6670e59aa9de8608e685386aa827cf167311",
+      "current_sha256": "d4f6713629be8e8660786ec73d8c6670e59aa9de8608e685386aa827cf167311",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/equations_clean.txt",
+      "sha256": "4e8d9253cfa4b8ec9906ba1f078c366d148eb55c9e622818e98b97a178c6b1ba",
+      "current_sha256": "4e8d9253cfa4b8ec9906ba1f078c366d148eb55c9e622818e98b97a178c6b1ba",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/equations_tree.txt",
+      "sha256": "a80f80a7d025a7c956a1e4c139a8ba2834a9420bc19b53d7d5116d49bcbfeaac",
+      "current_sha256": "a80f80a7d025a7c956a1e4c139a8ba2834a9420bc19b53d7d5116d49bcbfeaac",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/extract.py",
+      "sha256": "8f490567f5fd13125b4315d910e636a8ec6295e2abbc5887c0173f758cf9975c",
+      "current_sha256": "8f490567f5fd13125b4315d910e636a8ec6295e2abbc5887c0173f758cf9975c",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/extract_math.py",
+      "sha256": "cc4ff22eddb0377ef76ae6cff9394199a5ee0bf3373c29135a3c7fc4e85d4268",
+      "current_sha256": "cc4ff22eddb0377ef76ae6cff9394199a5ee0bf3373c29135a3c7fc4e85d4268",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/filelist.txt",
+      "sha256": "204450d0c93fde8c0a2bd1701b494696b55c446120035312879d9bbba37e208d",
+      "current_sha256": "204450d0c93fde8c0a2bd1701b494696b55c446120035312879d9bbba37e208d",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/fl.py",
+      "sha256": "442a7a6933e7f3b51e168c6b226fe85d20943869aa315aef91ef7fb4e690ea4f",
+      "current_sha256": "442a7a6933e7f3b51e168c6b226fe85d20943869aa315aef91ef7fb4e690ea4f",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/geo2.py",
+      "sha256": "8480a8fd02bd6432c61e3173cd0445c07b7d2eb14492d63a227c4d699c89d993",
+      "current_sha256": "8480a8fd02bd6432c61e3173cd0445c07b7d2eb14492d63a227c4d699c89d993",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/geo_csv_dump.txt",
+      "sha256": "fece5fa42acc2824feabe115eadbc0808da57379f8fee79c3aee84f36182dbda",
+      "current_sha256": "fece5fa42acc2824feabe115eadbc0808da57379f8fee79c3aee84f36182dbda",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/geo_pdf_text.txt",
+      "sha256": "b3915979e32539221bbe8b246344da3ceb2094baad44f05058ee6090aad0f4dd",
+      "current_sha256": "b3915979e32539221bbe8b246344da3ceb2094baad44f05058ee6090aad0f4dd",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/inspect_zip.py",
+      "sha256": "4c43f3976ab78df701d81524ea62c80032f8065b27795d2c6059dc9bb81b1c04",
+      "current_sha256": "4c43f3976ab78df701d81524ea62c80032f8065b27795d2c6059dc9bb81b1c04",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/kw.py",
+      "sha256": "aeb81e674dbdeecef4c32d2790c17aedc9dd6331f327ba6313b2b9cc6e3d2cf9",
+      "current_sha256": "aeb81e674dbdeecef4c32d2790c17aedc9dd6331f327ba6313b2b9cc6e3d2cf9",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/map_paras.py",
+      "sha256": "de98bb91e43e83ba4ba7d738e6a18c69f51eb748fe0755a4765dc914a1ddc2be",
+      "current_sha256": "de98bb91e43e83ba4ba7d738e6a18c69f51eb748fe0755a4765dc914a1ddc2be",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/media/fig1.webp",
+      "sha256": "bc8931b0cdeb0cc02a05849b1f39b05320d4cb5c0e80cdbb14db0960633b86d8",
+      "current_sha256": "bc8931b0cdeb0cc02a05849b1f39b05320d4cb5c0e80cdbb14db0960633b86d8",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/media/fig2_embedded.png",
+      "sha256": "d91a970f82d2ce052eaeb128ac4f9ca00252ac0d953c19a41edca241784f926a",
+      "current_sha256": "d91a970f82d2ce052eaeb128ac4f9ca00252ac0d953c19a41edca241784f926a",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/media/image1.png",
+      "sha256": "eb2b1feaf1cf1249fbaee4bac90e540b952a9060bb9b0afe12fad9d0640b4707",
+      "current_sha256": "eb2b1feaf1cf1249fbaee4bac90e540b952a9060bb9b0afe12fad9d0640b4707",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/media/image2.svg",
+      "sha256": "46fce01e8e4fbb504dc0703bdd641d02d654c3b840fee38d4e664d900dcf7617",
+      "current_sha256": "46fce01e8e4fbb504dc0703bdd641d02d654c3b840fee38d4e664d900dcf7617",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/para_map.txt",
+      "sha256": "576c53270064be5035d5d89e3bb85eb86102c63922a2644370f1334f139baedd",
+      "current_sha256": "576c53270064be5035d5d89e3bb85eb86102c63922a2644370f1334f139baedd",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/problem.docx",
+      "sha256": "0a4f507b91a02a0ea4264973dd432cdcb5b8916c61c24214719665f326d57685",
+      "current_sha256": "0a4f507b91a02a0ea4264973dd432cdcb5b8916c61c24214719665f326d57685",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/problem_full.txt",
+      "sha256": "fd80be37553563c7e8a3951cb5a88263910cc28e7bb573328f05042e3009945a",
+      "current_sha256": "fd80be37553563c7e8a3951cb5a88263910cc28e7bb573328f05042e3009945a",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/problem_text.txt",
+      "sha256": "e68e0070c3b5c576c98f6d0f3f205677db927f47989ca389748caf774220793b",
+      "current_sha256": "e68e0070c3b5c576c98f6d0f3f205677db927f47989ca389748caf774220793b",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/rel.py",
+      "sha256": "3a71d951569a6a1291bd0eaf01c5d0ed31213f6ab825e715b6aad8f3c854c3e4",
+      "current_sha256": "3a71d951569a6a1291bd0eaf01c5d0ed31213f6ab825e715b6aad8f3c854c3e4",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/svg.py",
+      "sha256": "7c11d364297693a989bfd5b2ecf61cf172928b0df963b4e51dffe48cf087dae7",
+      "current_sha256": "7c11d364297693a989bfd5b2ecf61cf172928b0df963b4e51dffe48cf087dae7",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/svg10.py",
+      "sha256": "a7eb42f5b1aec0f5c189efb83b368217160de4259ce321931f749941b668d2b9",
+      "current_sha256": "a7eb42f5b1aec0f5c189efb83b368217160de4259ce321931f749941b668d2b9",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/svg2.py",
+      "sha256": "7a151753551eca7ee2085f9064484e35e8857d0b0918f17831c631f1c6c17bd6",
+      "current_sha256": "7a151753551eca7ee2085f9064484e35e8857d0b0918f17831c631f1c6c17bd6",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/svg3.py",
+      "sha256": "54592da94671074f88ffb4c939b71b4e0bfb2c0d20751eb2f3cde5329cfa913e",
+      "current_sha256": "54592da94671074f88ffb4c939b71b4e0bfb2c0d20751eb2f3cde5329cfa913e",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/svg4.py",
+      "sha256": "2ae423f8bac6ec7f28456b9e7a2e00f623cf56f262bfb98219e8bf51b0014174",
+      "current_sha256": "2ae423f8bac6ec7f28456b9e7a2e00f623cf56f262bfb98219e8bf51b0014174",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/svg5.py",
+      "sha256": "07f32a003c699d7beb74078cfb9cda93d2c3e76970ada2b2fa92376a54a20344",
+      "current_sha256": "07f32a003c699d7beb74078cfb9cda93d2c3e76970ada2b2fa92376a54a20344",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/svg6.py",
+      "sha256": "8fd43f218251f86efa451ba07c8b1c7d34c556b9d52534643735506b56dc6737",
+      "current_sha256": "8fd43f218251f86efa451ba07c8b1c7d34c556b9d52534643735506b56dc6737",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/svg7.py",
+      "sha256": "ee74da3fff196c2d3a4f0b36d7d9d0b88728963517bb09732007fba29f0411e6",
+      "current_sha256": "ee74da3fff196c2d3a4f0b36d7d9d0b88728963517bb09732007fba29f0411e6",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/svg8.py",
+      "sha256": "f1eda3171f692e2af4d44b313efb0b164f51bf4f5f34fb780a7df2e66dafedae",
+      "current_sha256": "f1eda3171f692e2af4d44b313efb0b164f51bf4f5f34fb780a7df2e66dafedae",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/svg9.py",
+      "sha256": "8cb94fa4c73efbfc0ca491e097c2ad2da40d26bb8cce51e5cc8da2d3ca1450ee",
+      "current_sha256": "8cb94fa4c73efbfc0ca491e097c2ad2da40d26bb8cce51e5cc8da2d3ca1450ee",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/svg_img.py",
+      "sha256": "0750414b18a05ff8df65aa69dfab5fba64feea9a55f7f1d29731f9909a4111a6",
+      "current_sha256": "0750414b18a05ff8df65aa69dfab5fba64feea9a55f7f1d29731f9909a4111a6",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/tpl.py",
+      "sha256": "34c03aa0cd4aa2d9528ed6fa8fad11c621f007a83bd97e0a2f66d01c64eeff88",
+      "current_sha256": "34c03aa0cd4aa2d9528ed6fa8fad11c621f007a83bd97e0a2f66d01c64eeff88",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/xlsx_dump.txt",
+      "sha256": "749d78e768cbbafc2e1207dcef46f45623c6133bdfae28433cfe7911604a7edb",
+      "current_sha256": "749d78e768cbbafc2e1207dcef46f45623c6133bdfae28433cfe7911604a7edb",
+      "unchanged": true
+    },
+    {
+      "path": "_work_docx/误导信息排查报告.md",
+      "sha256": "0583fd1d051c088e6c6867041147807aeef0077838cdfa3dee286fc489d87a20",
+      "current_sha256": "0583fd1d051c088e6c6867041147807aeef0077838cdfa3dee286fc489d87a20",
+      "unchanged": true
+    },
+    {
+      "path": "_规范临时/规范.docx",
+      "sha256": "46d2e2a87e90608ace764203d5326d7c7e41f01a5eb79986724a6f159fd70e16",
+      "current_sha256": "46d2e2a87e90608ace764203d5326d7c7e41f01a5eb79986724a6f159fd70e16",
+      "unchanged": true
+    },
+    {
+      "path": "cargo_columns.txt",
+      "sha256": "073c5635eb6626e7b8fe3d110551758a23b40fd2343ec87f406e39b902d156b7",
+      "current_sha256": "073c5635eb6626e7b8fe3d110551758a23b40fd2343ec87f406e39b902d156b7",
+      "unchanged": true
+    },
+    {
+      "path": "diagnose_communication.py",
+      "sha256": "e29ba2f275d751480468c2c020f9d9f637545eef6e7ef57efbaee1b3a34318a6",
+      "current_sha256": "e29ba2f275d751480468c2c020f9d9f637545eef6e7ef57efbaee1b3a34318a6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/q4_analysis.md",
+      "sha256": "65633ee3bf4764085c4287a18da526a3306367f6d2a81276b9eceb857049a5b5",
+      "current_sha256": "65633ee3bf4764085c4287a18da526a3306367f6d2a81276b9eceb857049a5b5",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/README_快速理解赛题.md",
+      "sha256": "c9991f1ae8ff9a94b2e5b1b3ad923c99a7c3ff8279825a1d562843fffa567fdb",
+      "current_sha256": "c9991f1ae8ff9a94b2e5b1b3ad923c99a7c3ff8279825a1d562843fffa567fdb",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/README_项目总览.md",
+      "sha256": "5e4c444e407ec1649defca5f8f7a0d6fdad226937d96e86c7e69ee4908a61d26",
+      "current_sha256": "5e4c444e407ec1649defca5f8f7a0d6fdad226937d96e86c7e69ee4908a61d26",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/final_solution_audit_report.md",
+      "sha256": "2f1125ed3890b940d13f46ee7a17690c0e837f2e11cdefb9e2c726663384e2e4",
+      "current_sha256": "2f1125ed3890b940d13f46ee7a17690c0e837f2e11cdefb9e2c726663384e2e4",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/修复执行摘要.md",
+      "sha256": "e0a5fe369d394d97b4107367ce78c5054879527d1275bccd29b1cf9c95ea0bde",
+      "current_sha256": "e0a5fe369d394d97b4107367ce78c5054879527d1275bccd29b1cf9c95ea0bde",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/修复说明_20260924.md",
+      "sha256": "3fd60a502d90110cdc84ede68fa702f8a0b514cc09450b0f8a837fe473d9d00b",
+      "current_sha256": "3fd60a502d90110cdc84ede68fa702f8a0b514cc09450b0f8a837fe473d9d00b",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/修复进度追踪.md",
+      "sha256": "072e823802ec1559db3ea5a3be23f7b0d310a807439df0d10b24c93dd26193c5",
+      "current_sha256": "072e823802ec1559db3ea5a3be23f7b0d310a807439df0d10b24c93dd26193c5",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/全面审查报告_修复后.md",
+      "sha256": "b13c391be3e5d783bbbef6f4c54f665a9fac528160ab60bded613668a15245c0",
+      "current_sha256": "b13c391be3e5d783bbbef6f4c54f665a9fac528160ab60bded613668a15245c0",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/全面问题审查报告.md",
+      "sha256": "01f568948a01f84b26e3fe9a872d2cf9026613bda89e86ced991bffaf6f66edf",
+      "current_sha256": "01f568948a01f84b26e3fe9a872d2cf9026613bda89e86ced991bffaf6f66edf",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/全面问题审查清单.md",
+      "sha256": "bc1a9ab6c6cc46a0a3a78722715d36867c041e8fc2de9c2375b165e05bc51e98",
+      "current_sha256": "bc1a9ab6c6cc46a0a3a78722715d36867c041e8fc2de9c2375b165e05bc51e98",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/参考文献核验报告.md",
+      "sha256": "527b823c8d2148789da26a45aa804576a90853e548ef289c7cdc8c199bacb027",
+      "current_sha256": "527b823c8d2148789da26a45aa804576a90853e548ef289c7cdc8c199bacb027",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/四个问题全面审查报告.md",
+      "sha256": "5cb98ba3e684c519c56c688cddf427aac24ce67afc15e4d04b260ee495f3c207",
+      "current_sha256": "5cb98ba3e684c519c56c688cddf427aac24ce67afc15e4d04b260ee495f3c207",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/团队协作指南.md",
+      "sha256": "9a8ff626136b1ac0272b0ae7a2ca79af1a15faeaead96f5186975aefebb34fe3",
+      "current_sha256": "9a8ff626136b1ac0272b0ae7a2ca79af1a15faeaead96f5186975aefebb34fe3",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/完整解决方案总结.md",
+      "sha256": "6fdbb2c113b000a5911c7e003aa9c5853e22a7434c77ea3f7980dd1dea995ee9",
+      "current_sha256": "6fdbb2c113b000a5911c7e003aa9c5853e22a7434c77ea3f7980dd1dea995ee9",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/当前工作状态总结.md",
+      "sha256": "15143207e7372fa0d925db820dfd22e576bcb93feed96d9f8489b09115fd2ab6",
+      "current_sha256": "15143207e7372fa0d925db820dfd22e576bcb93feed96d9f8489b09115fd2ab6",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/性能对比分析_我们vs参考论文.md",
+      "sha256": "7bde3397be869e9a58808a663efe32493a249ba5e7322a8fde55a13b10a2e2da",
+      "current_sha256": "7bde3397be869e9a58808a663efe32493a249ba5e7322a8fde55a13b10a2e2da",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/文献结合建模说明_修复版.md",
+      "sha256": "2e7eaa75e3b5e57d46cfb9c60eee3a365f4ae28152b92ce9b8e72d1d646ddf7f",
+      "current_sha256": "2e7eaa75e3b5e57d46cfb9c60eee3a365f4ae28152b92ce9b8e72d1d646ddf7f",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/文献调研综述.md",
+      "sha256": "8b65e3cb895e526f6aa19de8287b9cc44736dc59e24ff1bd37ae8193b3564150",
+      "current_sha256": "8b65e3cb895e526f6aa19de8287b9cc44736dc59e24ff1bd37ae8193b3564150",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/最终修复报告.md",
+      "sha256": "c1597c1857f45ff75575225a36dd7de00da0c47c74fc856c14c2bdf5db125681",
+      "current_sha256": "c1597c1857f45ff75575225a36dd7de00da0c47c74fc856c14c2bdf5db125681",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/最终方案完整性报告.md",
+      "sha256": "143358f53e2612c9845017a17099ae4297dc5e95e69d5926b712413326d1d9e5",
+      "current_sha256": "143358f53e2612c9845017a17099ae4297dc5e95e69d5926b712413326d1d9e5",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/最终结果核验表.md",
+      "sha256": "88916f14f18063684b605063ae96e3d2e6839557ab7ac058b93872b094f4169c",
+      "current_sha256": "88916f14f18063684b605063ae96e3d2e6839557ab7ac058b93872b094f4169c",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/目录清理计划.md",
+      "sha256": "534743ab7d7bc5941658b7a2b4e934a4862c58137e19e149ebffaf69dc05ef7c",
+      "current_sha256": "534743ab7d7bc5941658b7a2b4e934a4862c58137e19e149ebffaf69dc05ef7c",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/真实数据符合性验证总报告.md",
+      "sha256": "ce339b1deccdadd98d53723e3a93f7ae3cb013fab45eb8f15615187002157437",
+      "current_sha256": "ce339b1deccdadd98d53723e3a93f7ae3cb013fab45eb8f15615187002157437",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/竞争对手分析_目标碾压.md",
+      "sha256": "96c03bb1fb76b1355e2f32c11da771c6e7e562dc633a054d19fd07f0145a2004",
+      "current_sha256": "96c03bb1fb76b1355e2f32c11da771c6e7e562dc633a054d19fd07f0145a2004",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/算法思路总结.md",
+      "sha256": "a19506aa95bb7774ab07ed94a3851c6b0a24ae1004b8415d53ed59d6e7debfee",
+      "current_sha256": "a19506aa95bb7774ab07ed94a3851c6b0a24ae1004b8415d53ed59d6e7debfee",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/补充文献与快速实现方案.md",
+      "sha256": "9bef46cdb205c8aaf0e91c00f2dcb32442b7f5c8d1461f1b1bc07df1b0a78ca1",
+      "current_sha256": "9bef46cdb205c8aaf0e91c00f2dcb32442b7f5c8d1461f1b1bc07df1b0a78ca1",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/论文精读笔记_核心算法提取.md",
+      "sha256": "ad866d65c58d8dc2feb0833d2651f9f5c03347844b83844586b9dcf1962b44b7",
+      "current_sha256": "ad866d65c58d8dc2feb0833d2651f9f5c03347844b83844586b9dcf1962b44b7",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/赛题摘要_核心数据.md",
+      "sha256": "eed43e627fd3cc23eeb8b764f5b51eb371d80c1f291c20746c661560bf6d2353",
+      "current_sha256": "eed43e627fd3cc23eeb8b764f5b51eb371d80c1f291c20746c661560bf6d2353",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/赛题符合性审核报告.md",
+      "sha256": "e1b539d9171811f1c025734e1f44300e0cef9f56751e99096d4f4d0c807e5dac",
+      "current_sha256": "e1b539d9171811f1c025734e1f44300e0cef9f56751e99096d4f4d0c807e5dac",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/赛题约束详解.md",
+      "sha256": "24271240f10db76b039ec9ef153fc3ddd89ae26e0a865788975dee22ae930ce3",
+      "current_sha256": "24271240f10db76b039ec9ef153fc3ddd89ae26e0a865788975dee22ae930ce3",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题一_18架次不可达分析报告.md",
+      "sha256": "b9a2d9a5f526747b2ccf8e3c878a189eccb9dc942d1b022384b65134b90b3171",
+      "current_sha256": "b9a2d9a5f526747b2ccf8e3c878a189eccb9dc942d1b022384b65134b90b3171",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题一_分析总结.md",
+      "sha256": "67557367cc3c85854faab536b31881b7105cefdedb1a1a658d555ddcc94a2405",
+      "current_sha256": "67557367cc3c85854faab536b31881b7105cefdedb1a1a658d555ddcc94a2405",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题一_完整总结报告.md",
+      "sha256": "0a7ec9f84d23ba6e3a42d6808d8b51132038f1c4868322ecb57a07f974abc7c7",
+      "current_sha256": "0a7ec9f84d23ba6e3a42d6808d8b51132038f1c4868322ecb57a07f974abc7c7",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题一_架次数分析报告.md",
+      "sha256": "df5852a810895c5de5d0a263c732db9fd468b50222fffac8bc57c3ae68f24a6d",
+      "current_sha256": "df5852a810895c5de5d0a263c732db9fd468b50222fffac8bc57c3ae68f24a6d",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题一_理论分析报告.md",
+      "sha256": "06bf73dc7b8e7d1762ca5a06095440895b44b348be58d9721b1993940ee85e28",
+      "current_sha256": "06bf73dc7b8e7d1762ca5a06095440895b44b348be58d9721b1993940ee85e28",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题一_论文写作指南.md",
+      "sha256": "72074743759ca0814b194b450b6a36de014683da837c087304c8e3cc9828dc67",
+      "current_sha256": "72074743759ca0814b194b450b6a36de014683da837c087304c8e3cc9828dc67",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题一二架次数差异分析.md",
+      "sha256": "e1ce0544c39a4d1e666aac7ad68498eef7cbe240174f28dcbaabe726cf075319",
+      "current_sha256": "e1ce0544c39a4d1e666aac7ad68498eef7cbe240174f28dcbaabe726cf075319",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题三_S008覆盖修复报告.md",
+      "sha256": "db74ee131bd6d2e941229a3365ecae45c329e5175bba2818fd7502c2f8d13212",
+      "current_sha256": "db74ee131bd6d2e941229a3365ecae45c329e5175bba2818fd7502c2f8d13212",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题三_完成情况总结.md",
+      "sha256": "38c15e083f401a425b31885ff6c1f1ddce0576940f49d98e3230163fd63d9dab",
+      "current_sha256": "38c15e083f401a425b31885ff6c1f1ddce0576940f49d98e3230163fd63d9dab",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题三_技术要点分析.md",
+      "sha256": "94e6622caee2e7c01eaf58a3f00e25a40638f35024ef13a01fb68606f0e46797",
+      "current_sha256": "94e6622caee2e7c01eaf58a3f00e25a40638f35024ef13a01fb68606f0e46797",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题三_最终总结.md",
+      "sha256": "375fd343857a85b89353602efaab4d8905f8618359f94fe3baad8094169131a3",
+      "current_sha256": "375fd343857a85b89353602efaab4d8905f8618359f94fe3baad8094169131a3",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题三_求解方案设计.md",
+      "sha256": "06de90065b097badf6943188d69deaea8430394a71cca17dd43200c42cfcbb6b",
+      "current_sha256": "06de90065b097badf6943188d69deaea8430394a71cca17dd43200c42cfcbb6b",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题三_通信覆盖验证报告.md",
+      "sha256": "e1dee9d1ae2d78ba4355172faf921d035d3c5dac5f34c325d4592107c7f5c1d4",
+      "current_sha256": "e1dee9d1ae2d78ba4355172faf921d035d3c5dac5f34c325d4592107c7f5c1d4",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题二_完成总结.md",
+      "sha256": "b2d89cd9a0646296371d66eb96a221f56fb7e6c8a3f58536523780cc116dd4c7",
+      "current_sha256": "b2d89cd9a0646296371d66eb96a221f56fb7e6c8a3f58536523780cc116dd4c7",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题二_符合性验证报告.md",
+      "sha256": "9ce82a8c9f325bef852f940f3a19360c8af04d4386a70d9787b941d3eb620ca1",
+      "current_sha256": "9ce82a8c9f325bef852f940f3a19360c8af04d4386a70d9787b941d3eb620ca1",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题四_修复版验证报告.md",
+      "sha256": "c2be8598d6ba15a79db0909fe0f17756c41e2fbfc295597aa22b69e13c2ff0a0",
+      "current_sha256": "c2be8598d6ba15a79db0909fe0f17756c41e2fbfc295597aa22b69e13c2ff0a0",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题四_最终总结.md",
+      "sha256": "03552fe27be82c2fb7c8d1645f51ec558f25476a46646a74f1c88c0a76c8e214",
+      "current_sha256": "03552fe27be82c2fb7c8d1645f51ec558f25476a46646a74f1c88c0a76c8e214",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题四_符合性审查报告.md",
+      "sha256": "152afffd186d8649d3da9b8c0eec48eeeab184604654a634e193103dc66ad916",
+      "current_sha256": "152afffd186d8649d3da9b8c0eec48eeeab184604654a634e193103dc66ad916",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题四_题目描述.md",
+      "sha256": "c322b3b52b63f1803268a0517d675992ab55a4f50fe731f90a8cba38998a3323",
+      "current_sha256": "c322b3b52b63f1803268a0517d675992ab55a4f50fe731f90a8cba38998a3323",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/问题四分析报告.md",
+      "sha256": "65633ee3bf4764085c4287a18da526a3306367f6d2a81276b9eceb857049a5b5",
+      "current_sha256": "65633ee3bf4764085c4287a18da526a3306367f6d2a81276b9eceb857049a5b5",
+      "unchanged": true
+    },
+    {
+      "path": "docs_archive/项目实施方案.md",
+      "sha256": "4ecf9d1f2e3187596e8124f8423beec2cf57cd5fb2b7a579fbbced0389a7e67a",
+      "current_sha256": "4ecf9d1f2e3187596e8124f8423beec2cf57cd5fb2b7a579fbbced0389a7e67a",
+      "unchanged": true
+    },
+    {
+      "path": "docs_to_keep.txt",
+      "sha256": "95cf51db1ae53f8c861b1a433612d92ffa7fe724247a35c717a72d31f45e29a7",
+      "current_sha256": "95cf51db1ae53f8c861b1a433612d92ffa7fe724247a35c717a72d31f45e29a7",
+      "unchanged": true
+    },
+    {
+      "path": "enhance_problem1.py",
+      "sha256": "7a14db5e675b45cf4005756caf3cab1212fca46211b98331c4a3e2d98df45213",
+      "current_sha256": "7a14db5e675b45cf4005756caf3cab1212fca46211b98331c4a3e2d98df45213",
+      "unchanged": true
+    },
+    {
+      "path": "enhance_problem1_simple.py",
+      "sha256": "dc3d2bafb154c276e853650aca86e44fc3a225ce95fd966c430e5a515a26ddb2",
+      "current_sha256": "dc3d2bafb154c276e853650aca86e44fc3a225ce95fd966c430e5a515a26ddb2",
+      "unchanged": true
+    },
+    {
+      "path": "format_rules.txt",
+      "sha256": "99d62ed2933fac5806ca0770f4e0cdbb4f9bdeb4abb4d0a71b5dc2f6660de4f4",
+      "current_sha256": "99d62ed2933fac5806ca0770f4e0cdbb4f9bdeb4abb4d0a71b5dc2f6660de4f4",
+      "unchanged": true
+    },
+    {
+      "path": "format_template.txt",
+      "sha256": "4feb3a09c13fcc5b343bdd0dc64be77cbc81f0a28ad8741cb2f0b8776c3a0c1b",
+      "current_sha256": "4feb3a09c13fcc5b343bdd0dc64be77cbc81f0a28ad8741cb2f0b8776c3a0c1b",
+      "unchanged": true
+    },
+    {
+      "path": "main_problem1.py",
+      "sha256": "169960a53d45a2d70e84f19f4cd48ea033ddd74961b87ab67dd05357ff2df6c7",
+      "current_sha256": "169960a53d45a2d70e84f19f4cd48ea033ddd74961b87ab67dd05357ff2df6c7",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/solve_problem1_correct.py",
+      "sha256": "238e517f34aa7b462a51204955b3b7f65022e5a189c7f4aacf344d4cca731de8",
+      "current_sha256": "238e517f34aa7b462a51204955b3b7f65022e5a189c7f4aacf344d4cca731de8",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/solve_problem1_fixed.py",
+      "sha256": "dc486fb04c83745a1288d6bf36b27cefe076358ad514dc22857df854924ded18",
+      "current_sha256": "dc486fb04c83745a1288d6bf36b27cefe076358ad514dc22857df854924ded18",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/solve_problem1_optimized.py",
+      "sha256": "e07686a1c0246ac0b472c4bb3aca32060dc46b39a2a552ce5cacaae1453edf13",
+      "current_sha256": "e07686a1c0246ac0b472c4bb3aca32060dc46b39a2a552ce5cacaae1453edf13",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/solve_problem1_ultra_optimized.py",
+      "sha256": "a2fc18ce26212f2601e5c5548e59baee53fbff1f5c816ee72d77308a478a3f87",
+      "current_sha256": "a2fc18ce26212f2601e5c5548e59baee53fbff1f5c816ee72d77308a478a3f87",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/solve_problem2_compliant.py",
+      "sha256": "54ac5badc11180fe22077efe439c9ef1f21d48f555e8003d44b6b717fba64885",
+      "current_sha256": "54ac5badc11180fe22077efe439c9ef1f21d48f555e8003d44b6b717fba64885",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/solve_problem2_fixed.py",
+      "sha256": "e632062511ba91d297baf5da3d6a83065f106304e35f8cbaa3465ba6a697be79",
+      "current_sha256": "e632062511ba91d297baf5da3d6a83065f106304e35f8cbaa3465ba6a697be79",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/solve_problem3.py",
+      "sha256": "b2153fffd857d1735d17883ad2d2fcf41320210cedb43b7f1a08331c675cd63e",
+      "current_sha256": "b2153fffd857d1735d17883ad2d2fcf41320210cedb43b7f1a08331c675cd63e",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题一_18架次方案.xlsx",
+      "sha256": "6e4672f887b253ac3fe589dcbdb76068a77194e30660d2cee95b4d7db7e4d745",
+      "current_sha256": "6e4672f887b253ac3fe589dcbdb76068a77194e30660d2cee95b4d7db7e4d745",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题一_18架次方案_修复版.xlsx",
+      "sha256": "8183024987be2676d0aa997e770b5118c4f5ce06c44c57fa7523445ed6f19775",
+      "current_sha256": "8183024987be2676d0aa997e770b5118c4f5ce06c44c57fa7523445ed6f19775",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题一_多架次配送方案.xlsx",
+      "sha256": "a2706e74b9ba370bd7016c6cda0242e187a3381042143dcd91bf43f14d56835a",
+      "current_sha256": "a2706e74b9ba370bd7016c6cda0242e187a3381042143dcd91bf43f14d56835a",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题一_服务区汇总.xlsx",
+      "sha256": "d8a858ec20fc6c87d747d061a5fdeac0870f61d4e6dffe91a12d54c42747f8fb",
+      "current_sha256": "d8a858ec20fc6c87d747d061a5fdeac0870f61d4e6dffe91a12d54c42747f8fb",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题一_服务区汇总_18架次.xlsx",
+      "sha256": "7bcaccbeee344df7c6a6b4092d72d44d661456ef2252b3b6ab99af88b67a8f94",
+      "current_sha256": "7bcaccbeee344df7c6a6b4092d72d44d661456ef2252b3b6ab99af88b67a8f94",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题一_货物汇总.xlsx",
+      "sha256": "023cfe6e7c2e91e53c6402c1c2c805a9e913868e2e4b060c8f82a21e29e653b3",
+      "current_sha256": "023cfe6e7c2e91e53c6402c1c2c805a9e913868e2e4b060c8f82a21e29e653b3",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题一_超级优化方案.xlsx",
+      "sha256": "7d09fcf5914726763b7ebcd66b37f262146d0fb61dd5e31e4f2670865bd56ac9",
+      "current_sha256": "7d09fcf5914726763b7ebcd66b37f262146d0fb61dd5e31e4f2670865bd56ac9",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题一_配送方案.xlsx",
+      "sha256": "512372d0490feb5cba2d3ac609bf700e1ab0c6f1a8e856943270ea82e1730b35",
+      "current_sha256": "512372d0490feb5cba2d3ac609bf700e1ab0c6f1a8e856943270ea82e1730b35",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题三_中继部署.xlsx",
+      "sha256": "bd57c8a68ae1067dae4f31db87ef16c67375c6ad71e567ca22ad414c5717c0e0",
+      "current_sha256": "bd57c8a68ae1067dae4f31db87ef16c67375c6ad71e567ca22ad414c5717c0e0",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题三_中继部署方案_完整版.xlsx",
+      "sha256": "2ac6c1dd744bf009e6bb80f4229bc25e29d616cb74f2b0699ab4acf46b256ecc",
+      "current_sha256": "2ac6c1dd744bf009e6bb80f4229bc25e29d616cb74f2b0699ab4acf46b256ecc",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题三_中继部署方案_新.xlsx",
+      "sha256": "c247be1edcb818387426baaf4929e133f857a970ae537af083f6812edb1f6365",
+      "current_sha256": "c247be1edcb818387426baaf4929e133f857a970ae537af083f6812edb1f6365",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题三_运输调度.xlsx",
+      "sha256": "128ab19f7b5590d92cda02a45c45c8921659394a6ac36b531802de8c4765a167",
+      "current_sha256": "128ab19f7b5590d92cda02a45c45c8921659394a6ac36b531802de8c4765a167",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题三_运输调度_新.xlsx",
+      "sha256": "5291cee851e17c10f6ca7733208c2c254053aa4188172c7a7f0cef34683055ca",
+      "current_sha256": "5291cee851e17c10f6ca7733208c2c254053aa4188172c7a7f0cef34683055ca",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题二_修复版.xlsx",
+      "sha256": "e8f8f00eb57739aa5d2800cb6b7043ef9293875c3ff82147d998c7acbe8c43b2",
+      "current_sha256": "e8f8f00eb57739aa5d2800cb6b7043ef9293875c3ff82147d998c7acbe8c43b2",
+      "unchanged": true
+    },
+    {
+      "path": "old_scripts/问题二_符合赛题规则方案.xlsx",
+      "sha256": "ae2fcd3a05e841e3b7bdcb73b35b922e13f04f4262570313ab35de5ebd01ac9e",
+      "current_sha256": "ae2fcd3a05e841e3b7bdcb73b35b922e13f04f4262570313ab35de5ebd01ac9e",
+      "unchanged": true
+    },
+    {
+      "path": "output_problem1.txt",
+      "sha256": "5b14c585bd8de75b782abafee828b0f9dad741e4df81f579beabcd7eff189f86",
+      "current_sha256": "5b14c585bd8de75b782abafee828b0f9dad741e4df81f579beabcd7eff189f86",
+      "unchanged": true
+    },
+    {
+      "path": "paper_text.txt",
+      "sha256": "878468c5d5ba6a0c2f6d8733511581b84d22da0178b2cf0390a490eb61b175cd",
+      "current_sha256": "878468c5d5ba6a0c2f6d8733511581b84d22da0178b2cf0390a490eb61b175cd",
+      "unchanged": true
+    },
+    {
+      "path": "problem.txt",
+      "sha256": "9d64ef1d4414cda4a6923210f77462cad538308c06f4e78af905724a1e01e30f",
+      "current_sha256": "9d64ef1d4414cda4a6923210f77462cad538308c06f4e78af905724a1e01e30f",
+      "unchanged": true
+    },
+    {
+      "path": "problem1_output.txt",
+      "sha256": "283a1906541795d566aa315b700f3783f5384876706620e5db80d077cf8e5cac",
+      "current_sha256": "283a1906541795d566aa315b700f3783f5384876706620e5db80d077cf8e5cac",
+      "unchanged": true
+    },
+    {
+      "path": "q1_solver.py",
+      "sha256": "53906757f526687ad90f50db93c9a09c4c3275d46910396a8973df2648f6ee08",
+      "current_sha256": "53906757f526687ad90f50db93c9a09c4c3275d46910396a8973df2648f6ee08",
+      "unchanged": true
+    },
+    {
+      "path": "q2_solver.py",
+      "sha256": "1713d2d64e2bdb2176df8aec7b427b438d19bb8e0a708c3e0f25173a3f17e67d",
+      "current_sha256": "1713d2d64e2bdb2176df8aec7b427b438d19bb8e0a708c3e0f25173a3f17e67d",
+      "unchanged": true
+    },
+    {
+      "path": "q3_solver.py",
+      "sha256": "e7899132098854461b757b59431f429910e128211592537ce386ace64c445abb",
+      "current_sha256": "e7899132098854461b757b59431f429910e128211592537ce386ace64c445abb",
+      "unchanged": true
+    },
+    {
+      "path": "q4_solver.py",
+      "sha256": "5d1679366032839d5382e5b9c3dd96c2e75392e71b740fca41fa45f9b898d438",
+      "current_sha256": "5d1679366032839d5382e5b9c3dd96c2e75392e71b740fca41fa45f9b898d438",
+      "unchanged": true
+    },
+    {
+      "path": "read_data.py",
+      "sha256": "fac701c9b7c3de1fbe3180c34d486480e8ed2b33513aa690994b567ee581861a",
+      "current_sha256": "fac701c9b7c3de1fbe3180c34d486480e8ed2b33513aa690994b567ee581861a",
+      "unchanged": true
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "8481092ec7e49068728504d0501b41878f3b5eed706dd59abc4c677aed273a01",
+      "current_sha256": "8481092ec7e49068728504d0501b41878f3b5eed706dd59abc4c677aed273a01",
+      "unchanged": true
+    },
+    {
+      "path": "results/q1_solution.xlsx",
+      "sha256": "7012ec444debea9099b2fab69fa36973e7b156d28809d89130378147a0efb684",
+      "current_sha256": "7012ec444debea9099b2fab69fa36973e7b156d28809d89130378147a0efb684",
+      "unchanged": true
+    },
+    {
+      "path": "results/q2_solution.xlsx",
+      "sha256": "3251d0e36efebca9faf5bb84419dda057c6f582d6b4b3ff51a3e85ab231f6d77",
+      "current_sha256": "3251d0e36efebca9faf5bb84419dda057c6f582d6b4b3ff51a3e85ab231f6d77",
+      "unchanged": true
+    },
+    {
+      "path": "results/q3_coverage.xlsx",
+      "sha256": "38fbcd269cdb7efd0af8b40e0e3118ffcc43ff7267a7abb52bd8fe098fa52f54",
+      "current_sha256": "38fbcd269cdb7efd0af8b40e0e3118ffcc43ff7267a7abb52bd8fe098fa52f54",
+      "unchanged": true
+    },
+    {
+      "path": "results/q3_relay.xlsx",
+      "sha256": "df845872df1531f730476147679dae5eb5ffc4a49bc0407701d7fa76ca5b154e",
+      "current_sha256": "df845872df1531f730476147679dae5eb5ffc4a49bc0407701d7fa76ca5b154e",
+      "unchanged": true
+    },
+    {
+      "path": "results/q3_summary.json",
+      "sha256": "6284360cd6df4ab90f235548f6f6edc4a3252aff6301e9dcdc05ec038bd4bf55",
+      "current_sha256": "6284360cd6df4ab90f235548f6f6edc4a3252aff6301e9dcdc05ec038bd4bf55",
+      "unchanged": true
+    },
+    {
+      "path": "results/q3_transport.xlsx",
+      "sha256": "219628d0e13dbbf666a89f044ac21a890deecd82396dc62fd1f99bb8d5a11cbd",
+      "current_sha256": "219628d0e13dbbf666a89f044ac21a890deecd82396dc62fd1f99bb8d5a11cbd",
+      "unchanged": true
+    },
+    {
+      "path": "results/q4_batch2.json",
+      "sha256": "dc4e629cca6afe84c6bba7b1cf95a753748818928bf6ddebf6718a0bb0e8d174",
+      "current_sha256": "dc4e629cca6afe84c6bba7b1cf95a753748818928bf6ddebf6718a0bb0e8d174",
+      "unchanged": true
+    },
+    {
+      "path": "results/q4_batch2.xlsx",
+      "sha256": "1171dad9da3c3be1fc7dac79b5e87dd9ef2fed9d0529738d9688c81f9aa8405d",
+      "current_sha256": "1171dad9da3c3be1fc7dac79b5e87dd9ef2fed9d0529738d9688c81f9aa8405d",
+      "unchanged": true
+    },
+    {
+      "path": "results/q4_batch3.json",
+      "sha256": "1f57491513fbe927e38aa585d87c35b403b2296c529554bb71b4cdfd163c41e3",
+      "current_sha256": "1f57491513fbe927e38aa585d87c35b403b2296c529554bb71b4cdfd163c41e3",
+      "unchanged": true
+    },
+    {
+      "path": "results/q4_batch3.xlsx",
+      "sha256": "f3cd8bffc812f2b9b25adcd59247e3bf7794ed3a1e99e5d1aa250c60f86eec9d",
+      "current_sha256": "f3cd8bffc812f2b9b25adcd59247e3bf7794ed3a1e99e5d1aa250c60f86eec9d",
+      "unchanged": true
+    },
+    {
+      "path": "solve_problem1_18trips.py",
+      "sha256": "25186922f8861c749b27f3cf7f68efe9b71c1b21cb2961af64353c4b5a100421",
+      "current_sha256": "25186922f8861c749b27f3cf7f68efe9b71c1b21cb2961af64353c4b5a100421",
+      "unchanged": true
+    },
+    {
+      "path": "solve_problem2_lns.py",
+      "sha256": "22cccdc54fd387d28812f1a1005e08fdc287828f23a49557c5e63a03713fcc24",
+      "current_sha256": "22cccdc54fd387d28812f1a1005e08fdc287828f23a49557c5e63a03713fcc24",
+      "unchanged": true
+    },
+    {
+      "path": "solve_problem2_optimized.py",
+      "sha256": "1713d2d64e2bdb2176df8aec7b427b438d19bb8e0a708c3e0f25173a3f17e67d",
+      "current_sha256": "1713d2d64e2bdb2176df8aec7b427b438d19bb8e0a708c3e0f25173a3f17e67d",
+      "unchanged": true
+    },
+    {
+      "path": "solve_problem3_relay.py",
+      "sha256": "f4fa1d7ed92999cc2dde71ed2bdd510a79240d3e365f639f09afe372ab6c6d92",
+      "current_sha256": "f4fa1d7ed92999cc2dde71ed2bdd510a79240d3e365f639f09afe372ab6c6d92",
+      "unchanged": true
+    },
+    {
+      "path": "solve_problem4_fixed.py",
+      "sha256": "dedcd873ca7ba9a732a8d1c209da94e80ce71a002c368699c781874688bafa6e",
+      "current_sha256": "dedcd873ca7ba9a732a8d1c209da94e80ce71a002c368699c781874688bafa6e",
+      "unchanged": true
+    },
+    {
+      "path": "src/batch/batch_optimizer.py",
+      "sha256": "61e8ea0a3e8b7778207312bcb861ef44e18c7a117a1e7fd1958aa129e4db4aa8",
+      "current_sha256": "61e8ea0a3e8b7778207312bcb861ef44e18c7a117a1e7fd1958aa129e4db4aa8",
+      "unchanged": true
+    },
+    {
+      "path": "src/battery/battery_manager.py",
+      "sha256": "a50bb8122183b776f25d37d6dcdb89fe443d584211c29540773b833df9875cc8",
+      "current_sha256": "a50bb8122183b776f25d37d6dcdb89fe443d584211c29540773b833df9875cc8",
+      "unchanged": true
+    },
+    {
+      "path": "src/battery/charging_model_correct.py",
+      "sha256": "70b91d9b04e712da08253033ee1c60cb5b19cd304fb392305128dbefc457f3c7",
+      "current_sha256": "70b91d9b04e712da08253033ee1c60cb5b19cd304fb392305128dbefc457f3c7",
+      "unchanged": true
+    },
+    {
+      "path": "src/communication/los_model.py",
+      "sha256": "6cf3c18db108c7870106e28e9ef276660f24718ede920872c6d0e4b26c5abfff",
+      "current_sha256": "6cf3c18db108c7870106e28e9ef276660f24718ede920872c6d0e4b26c5abfff",
+      "unchanged": true
+    },
+    {
+      "path": "src/data/data_loader.py",
+      "sha256": "5467d079aac4aa16eb0eb558641c90b2fa6248ed6cccc8f45d4f9c282a54e39f",
+      "current_sha256": "5467d079aac4aa16eb0eb558641c90b2fa6248ed6cccc8f45d4f9c282a54e39f",
+      "unchanged": true
+    },
+    {
+      "path": "src/energy/battery_manager.py",
+      "sha256": "06aaa38e3e7816887a81b53aab7fa55f4aaa64977da3f90328aa20a6f1492419",
+      "current_sha256": "06aaa38e3e7816887a81b53aab7fa55f4aaa64977da3f90328aa20a6f1492419",
+      "unchanged": true
+    },
+    {
+      "path": "src/energy/energy_model.py",
+      "sha256": "67047b841196f7ab96305421144b36cfa41bcf6483337ed3ce83f0f21c561d48",
+      "current_sha256": "67047b841196f7ab96305421144b36cfa41bcf6483337ed3ce83f0f21c561d48",
+      "unchanged": true
+    },
+    {
+      "path": "src/problem1/knapsack_solver.py",
+      "sha256": "d98aa3827033aa826fa9c80fe696a990f622398d7c534e3e6ae188320b6bdef3",
+      "current_sha256": "d98aa3827033aa826fa9c80fe696a990f622398d7c534e3e6ae188320b6bdef3",
+      "unchanged": true
+    },
+    {
+      "path": "src/relay/deployment_optimizer.py",
+      "sha256": "6755b5dfd6fba149fec2d743f50521778a23bd3083b0eab254df068d0a86a7a5",
+      "current_sha256": "6755b5dfd6fba149fec2d743f50521778a23bd3083b0eab254df068d0a86a7a5",
+      "unchanged": true
+    },
+    {
+      "path": "src/terrain/dem_loader.py",
+      "sha256": "8f7d04872dd817fb3115998aa47de748ded1bc9ad2dd8f00e4d16a6d7999face",
+      "current_sha256": "8f7d04872dd817fb3115998aa47de748ded1bc9ad2dd8f00e4d16a6d7999face",
+      "unchanged": true
+    },
+    {
+      "path": "wang_document.xml",
+      "sha256": "3d5f5bf460db6e53e95bd3349b9a4791d4bc3422dfdf63355d700adb497d35a3",
+      "current_sha256": "3d5f5bf460db6e53e95bd3349b9a4791d4bc3422dfdf63355d700adb497d35a3",
+      "unchanged": true
+    },
+    {
+      "path": "wang_text.txt",
+      "sha256": "1a95c9a98270ee322f3e8fb599d46998fcd099787e743d28bc3ae10145ea259e",
+      "current_sha256": "1a95c9a98270ee322f3e8fb599d46998fcd099787e743d28bc3ae10145ea259e",
+      "unchanged": true
+    },
+    {
+      "path": "删除错误文件清单.txt",
+      "sha256": "68cd999f4b9a3adf6b5d105897bf5e95e12d0644c489ccaf0cef3c9906f87609",
+      "current_sha256": "68cd999f4b9a3adf6b5d105897bf5e95e12d0644c489ccaf0cef3c9906f87609",
+      "unchanged": true
+    },
+    {
+      "path": "可视化成果总结报告.txt",
+      "sha256": "529d1dd02bb2c87f380866951edffb1d18acbb199c69b738eda1a300a8e2bac4",
+      "current_sha256": "529d1dd02bb2c87f380866951edffb1d18acbb199c69b738eda1a300a8e2bac4",
+      "unchanged": true
+    },
+    {
+      "path": "可视化方案总体规划.txt",
+      "sha256": "86e6dca3fa28b4dd0ee01b8c50531e475f48f3770127c99f58e3eaa40b701cdd",
+      "current_sha256": "86e6dca3fa28b4dd0ee01b8c50531e475f48f3770127c99f58e3eaa40b701cdd",
+      "unchanged": true
+    },
+    {
+      "path": "山区洪涝灾害下无人机运输与通信协同优化.docx",
+      "sha256": "0a4f507b91a02a0ea4264973dd432cdcb5b8916c61c24214719665f326d57685",
+      "current_sha256": "0a4f507b91a02a0ea4264973dd432cdcb5b8916c61c24214719665f326d57685",
+      "unchanged": true
+    },
+    {
+      "path": "当前解题步骤/README.md",
+      "sha256": "41a9637534cfdaf34baa2c628bf1e4c7cc0e5a23180eb81a2cd432d78148ed9b",
+      "current_sha256": "41a9637534cfdaf34baa2c628bf1e4c7cc0e5a23180eb81a2cd432d78148ed9b",
+      "unchanged": true
+    },
+    {
+      "path": "当前解题步骤/问题一.md",
+      "sha256": "0dcb396491c056d4bfe90bf6b846d55592791c2f4c2975d0a548b8aeaf2f99b4",
+      "current_sha256": "0dcb396491c056d4bfe90bf6b846d55592791c2f4c2975d0a548b8aeaf2f99b4",
+      "unchanged": true
+    },
+    {
+      "path": "当前解题步骤/问题三.md",
+      "sha256": "ff27d483319bf34651a725a068827bcc6f6dcb2891e3d052078ef37729ceb7ba",
+      "current_sha256": "ff27d483319bf34651a725a068827bcc6f6dcb2891e3d052078ef37729ceb7ba",
+      "unchanged": true
+    },
+    {
+      "path": "当前解题步骤/问题二.md",
+      "sha256": "b90e7e2088e189043d22cedf39912ac959b7c3320d1521274969b62942c7d440",
+      "current_sha256": "b90e7e2088e189043d22cedf39912ac959b7c3320d1521274969b62942c7d440",
+      "unchanged": true
+    },
+    {
+      "path": "当前解题步骤/问题四.md",
+      "sha256": "a25422575a0901869e3656637c7af2c550daf4c8277eae97ca50e4356960b430",
+      "current_sha256": "a25422575a0901869e3656637c7af2c550daf4c8277eae97ca50e4356960b430",
+      "unchanged": true
+    },
+    {
+      "path": "总体进度报告.txt",
+      "sha256": "420c4b6f26fd23e6c542829f0593514ebdc426efbf1109bdc307862dd55f2bfe",
+      "current_sha256": "420c4b6f26fd23e6c542829f0593514ebdc426efbf1109bdc307862dd55f2bfe",
+      "unchanged": true
+    },
+    {
+      "path": "数据/无人机应急物资运输基础数据/中继无人机数据.xlsx",
+      "sha256": "be52643ff29419233e6a141dca03a04160a8af551cab36d8c49b51bb836bea04",
+      "current_sha256": "be52643ff29419233e6a141dca03a04160a8af551cab36d8c49b51bb836bea04",
+      "unchanged": true
+    },
+    {
+      "path": "数据/无人机应急物资运输基础数据/物资需求与配送时限.xlsx",
+      "sha256": "5a3346159ceddcf585859d270b8f62114b388a1f737fbe64ffde0ee1fdc8170a",
+      "current_sha256": "5a3346159ceddcf585859d270b8f62114b388a1f737fbe64ffde0ee1fdc8170a",
+      "unchanged": true
+    },
+    {
+      "path": "数据/无人机应急物资运输基础数据/调度中心与服务区.xlsx",
+      "sha256": "541a7af1ded08c9a3ff448480332cb5f6a54902f0afa6e9bcd50c1d2b2b34e38",
+      "current_sha256": "541a7af1ded08c9a3ff448480332cb5f6a54902f0afa6e9bcd50c1d2b2b34e38",
+      "unchanged": true
+    },
+    {
+      "path": "数据/无人机应急物资运输基础数据/运输无人机数据.xlsx",
+      "sha256": "9296a657c07e042afba6aeea7999665d9cd24e00b592fd6c269de6e338480dcb",
+      "current_sha256": "9296a657c07e042afba6aeea7999665d9cd24e00b592fd6c269de6e338480dcb",
+      "unchanged": true
+    },
+    {
+      "path": "数据/无人机应急物资运输基础数据/通信链路参数.xlsx",
+      "sha256": "1860d153199e7ae460ba36e83b673374e640e19de91ea167f2877271001f5f81",
+      "current_sha256": "1860d153199e7ae460ba36e83b673374e640e19de91ea167f2877271001f5f81",
+      "unchanged": true
+    },
+    {
+      "path": "数据/镇龙乡地理空间数据/镇龙乡及周边地理数据/数字高程模型数据（DEM）/镇龙乡及周边30米DEM.mat",
+      "sha256": "c68703e0cc8f94f4bd52ff6e9974b66a2dae33865f0723ad71c04b6694bf4fbf",
+      "current_sha256": "c68703e0cc8f94f4bd52ff6e9974b66a2dae33865f0723ad71c04b6694bf4fbf",
+      "unchanged": true
+    },
+    {
+      "path": "数据/镇龙乡地理空间数据/镇龙乡及周边地理数据/村镇点位/镇龙乡及周边村镇点位.csv",
+      "sha256": "e08b6b3b5283a3c9ba5f898b5b7c54badddc786c58ec415dbd1035b3ddbc9759",
+      "current_sha256": "e08b6b3b5283a3c9ba5f898b5b7c54badddc786c58ec415dbd1035b3ddbc9759",
+      "unchanged": true
+    },
+    {
+      "path": "数据/镇龙乡地理空间数据/镇龙乡及周边地理数据/村镇点位/镇龙乡及周边村镇点位.mat",
+      "sha256": "61419e92447ada38c56b7f64f04e4aada2eb1ed076ae33e95f1cbc69f3514beb",
+      "current_sha256": "61419e92447ada38c56b7f64f04e4aada2eb1ed076ae33e95f1cbc69f3514beb",
+      "unchanged": true
+    },
+    {
+      "path": "数据/镇龙乡地理空间数据/镇龙乡及周边地理数据/水体（面）/镇龙乡及周边水体.csv",
+      "sha256": "a3dd9377bfc82656e376a3a6f52ef9019ed76117b8df1841d1409a253790df81",
+      "current_sha256": "a3dd9377bfc82656e376a3a6f52ef9019ed76117b8df1841d1409a253790df81",
+      "unchanged": true
+    },
+    {
+      "path": "数据/镇龙乡地理空间数据/镇龙乡及周边地理数据/水体（面）/镇龙乡及周边水体.mat",
+      "sha256": "b79df14bdc0b22811f5c219897a66775d8879a93c4a865e455d8c43ab099b50a",
+      "current_sha256": "b79df14bdc0b22811f5c219897a66775d8879a93c4a865e455d8c43ab099b50a",
+      "unchanged": true
+    },
+    {
+      "path": "数据/镇龙乡地理空间数据/镇龙乡及周边地理数据/水系（线）/镇龙乡及周边水系.csv",
+      "sha256": "e7d26a3cdf26e845b63d8c4942b94f35fd38f71dc63b07655ca8adf15013ba2e",
+      "current_sha256": "e7d26a3cdf26e845b63d8c4942b94f35fd38f71dc63b07655ca8adf15013ba2e",
+      "unchanged": true
+    },
+    {
+      "path": "数据/镇龙乡地理空间数据/镇龙乡及周边地理数据/水系（线）/镇龙乡及周边水系.mat",
+      "sha256": "b89f4f294bf771962676009fa9044f46ef26a06613fb6f91e2c6f9ccd430f8e8",
+      "current_sha256": "b89f4f294bf771962676009fa9044f46ef26a06613fb6f91e2c6f9ccd430f8e8",
+      "unchanged": true
+    },
+    {
+      "path": "数据/镇龙乡地理空间数据/镇龙乡及周边地理数据/道路/镇龙乡及周边道路.csv",
+      "sha256": "019c720d07c023cb7ffeb25952bf6cd1ffcf4e7ffec9e1833e162108965f7ec9",
+      "current_sha256": "019c720d07c023cb7ffeb25952bf6cd1ffcf4e7ffec9e1833e162108965f7ec9",
+      "unchanged": true
+    },
+    {
+      "path": "数据/镇龙乡地理空间数据/镇龙乡及周边地理数据/道路/镇龙乡及周边道路.mat",
+      "sha256": "c868717284d8aee60157e3bc9b20e18a81b26fde3d75fc7d80317ef877af9849",
+      "current_sha256": "c868717284d8aee60157e3bc9b20e18a81b26fde3d75fc7d80317ef877af9849",
+      "unchanged": true
+    },
+    {
+      "path": "数据/镇龙乡地理空间数据/镇龙乡地理空间数据说明.pdf",
+      "sha256": "6d1522c6832a5d91a108dae0d07954845025c0dabd44af8ee78c7860d7c405e4",
+      "current_sha256": "6d1522c6832a5d91a108dae0d07954845025c0dabd44af8ee78c7860d7c405e4",
+      "unchanged": true
+    },
+    {
+      "path": "数据/镇龙乡地理空间数据/镇龙乡地理空间详情地图.html",
+      "sha256": "af1ae5cb0d3a843eb5b8a4adaea36dff6689ce2020061b1a234b71fe3a39b7ad",
+      "current_sha256": "af1ae5cb0d3a843eb5b8a4adaea36dff6689ce2020061b1a234b71fe3a39b7ad",
+      "unchanged": true
+    },
+    {
+      "path": "数据验证报告.md",
+      "sha256": "b02a2d99891304892c2184a438ec7fde2e499ba48afc26ce7ad6e21038029941",
+      "current_sha256": "b02a2d99891304892c2184a438ec7fde2e499ba48afc26ce7ad6e21038029941",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/01_UAV_Medical_Delivery_Trajectory_Optimization_2025.pdf",
+      "sha256": "2e9f6d5cf6d743079d49b6194be1d6b7dffda858b09ea8a527973fe6b05203e5",
+      "current_sha256": "2e9f6d5cf6d743079d49b6194be1d6b7dffda858b09ea8a527973fe6b05203e5",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/02_Post_Disaster_UAV_Vehicle_Routing_Robust_Optimization.pdf",
+      "sha256": "ea6bf65ccb842ea066453e3f91acf786a088ca1f8aba02e5f0e66d13ca0706d2",
+      "current_sha256": "ea6bf65ccb842ea066453e3f91acf786a088ca1f8aba02e5f0e66d13ca0706d2",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/03_Multi_Depot_Multi_Trip_VRP_Completion_Time.pdf",
+      "sha256": "6eaf846334fda9d4e4d3ae2f03dc94691005c08dfde1637e52443e7cae19f9a8",
+      "current_sha256": "6eaf846334fda9d4e4d3ae2f03dc94691005c08dfde1637e52443e7cae19f9a8",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/04_Battery_Swapping_Scheduling_Part1.pdf",
+      "sha256": "aa22cfabcb77702d660a0849c1d3e8922d58854cadb3c5f80fa75a6a7c4070e7",
+      "current_sha256": "aa22cfabcb77702d660a0849c1d3e8922d58854cadb3c5f80fa75a6a7c4070e7",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/05_Battery_Swapping_Scheduling_Part2.pdf",
+      "sha256": "0ee94263d9b56eed790e00a2a42f8a797d80a313eefbe51ab68a33738ca4e791",
+      "current_sha256": "0ee94263d9b56eed790e00a2a42f8a797d80a313eefbe51ab68a33738ca4e791",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/06_No_Stockout_Charging_Scheduling_2026.pdf",
+      "sha256": "4929f833b7a1efc0b72c2bb903584a8c1a9dee43973f42283acb11e94e2e16a1",
+      "current_sha256": "4929f833b7a1efc0b72c2bb903584a8c1a9dee43973f42283acb11e94e2e16a1",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/07_UAV_3D_Position_Optimization_Solar_Relay.pdf",
+      "sha256": "0e11a98264126c9136b4293b415832c82fcecb8dcd5f3077c478116f7fc6a4c8",
+      "current_sha256": "0e11a98264126c9136b4293b415832c82fcecb8dcd5f3077c478116f7fc6a4c8",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/09_UNICEF_Drone_Supply_Chain_Guidance.pdf",
+      "sha256": "47dbb45fac01cbea5ad85be28b82b8569a0cc507846723e5f9916acfdeda5a60",
+      "current_sha256": "47dbb45fac01cbea5ad85be28b82b8569a0cc507846723e5f9916acfdeda5a60",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/10_Multi_Truck_Drone_Emergency_Distribution_2026.pdf",
+      "sha256": "47495b449b70064a173d1cd1e1cbadf2ae61acdb5d6e16477009f70bbf3c6668",
+      "current_sha256": "47495b449b70064a173d1cd1e1cbadf2ae61acdb5d6e16477009f70bbf3c6668",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/11_Heterogeneous_Fleet_VRPTW_Aston.pdf",
+      "sha256": "c3090b0e2ecfd86490d2c31cd048d11dd099d44bc9fa3ab5398f3d6902240858",
+      "current_sha256": "c3090b0e2ecfd86490d2c31cd048d11dd099d44bc9fa3ab5398f3d6902240858",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/12_PyVRP_State_of_Art_2024.pdf",
+      "sha256": "1f8745c3e2c79c32cb2038aebcbb63337b6bfef0d0b32eb25c5369fd71fe6f9d",
+      "current_sha256": "1f8745c3e2c79c32cb2038aebcbb63337b6bfef0d0b32eb25c5369fd71fe6f9d",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/13_HGS_CVRP_2024.pdf",
+      "sha256": "eb4f2f8ef9dce6a66f35071165828208770d2f4fbb3d7e86c348ade54e6902d6",
+      "current_sha256": "eb4f2f8ef9dce6a66f35071165828208770d2f4fbb3d7e86c348ade54e6902d6",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/14_NSGA_II_UAV_Logistics_Springer_2025.pdf",
+      "sha256": "edabf4ed01acf913219db1d1d549bce4ca6b3dbcf2882ff1cd65203303c09e49",
+      "current_sha256": "edabf4ed01acf913219db1d1d549bce4ca6b3dbcf2882ff1cd65203303c09e49",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/15_Relief_Distribution_Trucks_Drones_Incomplete_Demand.pdf",
+      "sha256": "e8b2838fc5964f34c7c6af760895a16eebf75b8b01e389bf70592f25bbce79a6",
+      "current_sha256": "e8b2838fc5964f34c7c6af760895a16eebf75b8b01e389bf70592f25bbce79a6",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/文献下载完成报告.txt",
+      "sha256": "63ad6b2981868bdfb2915f13afe135e915975b0069f5448d84ecdaec9d83ab65",
+      "current_sha256": "63ad6b2981868bdfb2915f13afe135e915975b0069f5448d84ecdaec9d83ab65",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/文献索引与使用指南.md",
+      "sha256": "7e8ee8ff0f4874d235acb507a5bbb320ec716e308ba62619f5ca1fceba3688b8",
+      "current_sha256": "7e8ee8ff0f4874d235acb507a5bbb320ec716e308ba62619f5ca1fceba3688b8",
+      "unchanged": true
+    },
+    {
+      "path": "文献库/问题三_UAV中继与通信约束文献综述.md",
+      "sha256": "1387c78386debb9314bff2390ce942f936f1a1cce6b96e2de4aa337307e007d9",
+      "current_sha256": "1387c78386debb9314bff2390ce942f936f1a1cce6b96e2de4aa337307e007d9",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题一_3D点云图_论文版.png",
+      "sha256": "313d261c10cb71383d24cf92291d8a123f726e3b0c1cff6fd525ce340f90cae8",
+      "current_sha256": "313d261c10cb71383d24cf92291d8a123f726e3b0c1cff6fd525ce340f90cae8",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题一_小提琴图_论文版.png",
+      "sha256": "2a4e593ba4ad6b224ffb68c2b5f3000fe2e2a56b3093e45a1e49a4b89d6c25e1",
+      "current_sha256": "2a4e593ba4ad6b224ffb68c2b5f3000fe2e2a56b3093e45a1e49a4b89d6c25e1",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题一_山脊图_论文版.png",
+      "sha256": "d447152b144028f7dde3ffb625bec035ac288d8cb464a4069ed29001bcdf9726",
+      "current_sha256": "d447152b144028f7dde3ffb625bec035ac288d8cb464a4069ed29001bcdf9726",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题一_性能对比_论文版.png",
+      "sha256": "3bb116c8e722e827b5a7c416b2863f4d40ebe005c212537d4dad2103d71b42a9",
+      "current_sha256": "3bb116c8e722e827b5a7c416b2863f4d40ebe005c212537d4dad2103d71b42a9",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题一_无人机性能对比.png",
+      "sha256": "0c5fd3a93f419655b96cb4528fb429bb1b4477f23e0435696f9410cc95a17c06",
+      "current_sha256": "0c5fd3a93f419655b96cb4528fb429bb1b4477f23e0435696f9410cc95a17c06",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题一_服务区分布图.png",
+      "sha256": "f951b83d8a3c1576666272da0d9a21d4393a8e343e1798bf9275fceac3461e9d",
+      "current_sha256": "f951b83d8a3c1576666272da0d9a21d4393a8e343e1798bf9275fceac3461e9d",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题一_服务区分布图_论文版.png",
+      "sha256": "202d653f0105225b0cccc9a8035292de777e5224d62800dfa20dd95b50bb0b05",
+      "current_sha256": "202d653f0105225b0cccc9a8035292de777e5224d62800dfa20dd95b50bb0b05",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题一_热力图_论文版.png",
+      "sha256": "58584ce8c14a37a867a111a9ac6fbb1820848c083f7b56b75b4960d55213412b",
+      "current_sha256": "58584ce8c14a37a867a111a9ac6fbb1820848c083f7b56b75b4960d55213412b",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题一_资源利用率.png",
+      "sha256": "1331652ff07ffed96afbc3e88ee4b897e21d01e95b902793483f60847405cd8f",
+      "current_sha256": "1331652ff07ffed96afbc3e88ee4b897e21d01e95b902793483f60847405cd8f",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题一_资源利用率_论文版.png",
+      "sha256": "bab77adce2ba6e950eee74bb157cb64fa71c701b463887583d2b5105c873a9b6",
+      "current_sha256": "bab77adce2ba6e950eee74bb157cb64fa71c701b463887583d2b5105c873a9b6",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题一_雷达图_论文版.png",
+      "sha256": "3b77d798d5926c0c18fd1eadc5f714ebf636c82fea25cfbfe53be8039f190a92",
+      "current_sha256": "3b77d798d5926c0c18fd1eadc5f714ebf636c82fea25cfbfe53be8039f190a92",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题三_中继覆盖范围.png",
+      "sha256": "d29dfdaaed42ab0834f5dcac77ef9e06d9286ffa39c0a9dc5a60ad7ef54fad48",
+      "current_sha256": "d29dfdaaed42ab0834f5dcac77ef9e06d9286ffa39c0a9dc5a60ad7ef54fad48",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题三_通信链路拓扑.png",
+      "sha256": "f1f770cf8060619c73488288058118cf6f0eeff2fc1789a8ba9cac24d467eb4c",
+      "current_sha256": "f1f770cf8060619c73488288058118cf6f0eeff2fc1789a8ba9cac24d467eb4c",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题二_3D甘特图_论文版.png",
+      "sha256": "edf4781c29a25fcce29041ef9aef21fde88945fb3d70a3e83f9827f9d6966d0d",
+      "current_sha256": "edf4781c29a25fcce29041ef9aef21fde88945fb3d70a3e83f9827f9d6966d0d",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题二_充电分析_论文版.png",
+      "sha256": "11e82ef40e63e496a73e5509b6251a7affffea2733c32a6aa8b04c4e49cf8b2c",
+      "current_sha256": "11e82ef40e63e496a73e5509b6251a7affffea2733c32a6aa8b04c4e49cf8b2c",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题二_利用率分析_论文版.png",
+      "sha256": "b028203cab90fda6bee5a70238887200ff6630150f5345d0a9f52bf40c2ad143",
+      "current_sha256": "b028203cab90fda6bee5a70238887200ff6630150f5345d0a9f52bf40c2ad143",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题二_并行坐标图_论文版.png",
+      "sha256": "7568c7a940663f1b0d53eee5370225af0e3060e19aa353e9a0a60f16527957d6",
+      "current_sha256": "7568c7a940663f1b0d53eee5370225af0e3060e19aa353e9a0a60f16527957d6",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题二_时间对比_论文版.png",
+      "sha256": "ce9dfb94202ed366a7cd5ba450f7030bd45ac1661d73db182bfed82970bd0b6e",
+      "current_sha256": "ce9dfb94202ed366a7cd5ba450f7030bd45ac1661d73db182bfed82970bd0b6e",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题二_树状图_论文版.png",
+      "sha256": "dfb416b1980d1c13488fa0b72d197460a21952647b4b25019d64faaa80f804f5",
+      "current_sha256": "dfb416b1980d1c13488fa0b72d197460a21952647b4b25019d64faaa80f804f5",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题二_桑基图_论文版.png",
+      "sha256": "5af32b093307001d8e6502ae94f62c08c9b2308b8f80663f3402aa4a5b9ed139",
+      "current_sha256": "5af32b093307001d8e6502ae94f62c08c9b2308b8f80663f3402aa4a5b9ed139",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题二_流线图_论文版.png",
+      "sha256": "a42e203fce0f5a38aea09a4f2facd8c4f0522fafbbb9011aaa4cfed5204fbd53",
+      "current_sha256": "a42e203fce0f5a38aea09a4f2facd8c4f0522fafbbb9011aaa4cfed5204fbd53",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题二_甘特图_论文版.png",
+      "sha256": "ffb2c22f26ecd77d80d29b3fea58871acadebd9e1f9e2b2a3beca524a58ed608",
+      "current_sha256": "ffb2c22f26ecd77d80d29b3fea58871acadebd9e1f9e2b2a3beca524a58ed608",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题四_批次方案对比.png",
+      "sha256": "6e98d8cb8efb027cab36aeb8402b43e9b77ebde6be9bcfdc58e9a4a5cd16159c",
+      "current_sha256": "6e98d8cb8efb027cab36aeb8402b43e9b77ebde6be9bcfdc58e9a4a5cd16159c",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题四_资源时序图.png",
+      "sha256": "e1dc7624f31dc1f8125290af5c969b8653a1c7d2de3c279befddb276932e7eb6",
+      "current_sha256": "e1dc7624f31dc1f8125290af5c969b8653a1c7d2de3c279befddb276932e7eb6",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题四_资源需求与官方库存对比.png",
+      "sha256": "1ecff6767f9c815e072738e7b9bff6e157deee280c4a257c0fa09fd5191253d9",
+      "current_sha256": "1ecff6767f9c815e072738e7b9bff6e157deee280c4a257c0fa09fd5191253d9",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表/问题四_错峰复用时间轴.png",
+      "sha256": "41cdba304b97d250b28117692d0083f85e3f28afee3b82995588e955ddab0bf0",
+      "current_sha256": "41cdba304b97d250b28117692d0083f85e3f28afee3b82995588e955ddab0bf0",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表_论文级/问题一_官方底图直飞路径.png",
+      "sha256": "be449c3e0800bb0fee5f9df8537ce7d576f2f06fb8fa2d5779fb68efb5c8917f",
+      "current_sha256": "be449c3e0800bb0fee5f9df8537ce7d576f2f06fb8fa2d5779fb68efb5c8917f",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表_论文级/问题三_官方底图中继覆盖.png",
+      "sha256": "4aa15e8f6d18a23912f05f6255dec2f8187a6d94fec4c04dac5d727336506dcf",
+      "current_sha256": "4aa15e8f6d18a23912f05f6255dec2f8187a6d94fec4c04dac5d727336506dcf",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表_论文级/问题二_路径与调度时间窗.png",
+      "sha256": "aa8e750b237de3a77cd430ac010a6e5aeae925457b65904726d00a4f135efc3b",
+      "current_sha256": "aa8e750b237de3a77cd430ac010a6e5aeae925457b65904726d00a4f135efc3b",
+      "unchanged": true
+    },
+    {
+      "path": "结果/图表_论文级/问题四_分区与资源可行性.png",
+      "sha256": "d5bf54bfa73ff9b8c36355c80d246ea787d9d9d8b8974800090ca49aef5a949f",
+      "current_sha256": "d5bf54bfa73ff9b8c36355c80d246ea787d9d9d8b8974800090ca49aef5a949f",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题一_18架次方案_修复版.xlsx",
+      "sha256": "5755feb23fed389b1b451f095377fb25ff6f3ece4078674c74968baee7f871d6",
+      "current_sha256": "5755feb23fed389b1b451f095377fb25ff6f3ece4078674c74968baee7f871d6",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题一_LaTeX表格.tex",
+      "sha256": "a86b29bb424a2f2535adea8ea5cde237c0cae737208d2bd1f5a89225558f9eaf",
+      "current_sha256": "a86b29bb424a2f2535adea8ea5cde237c0cae737208d2bd1f5a89225558f9eaf",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题一_严格约束方案.xlsx",
+      "sha256": "7012ec444debea9099b2fab69fa36973e7b156d28809d89130378147a0efb684",
+      "current_sha256": "7012ec444debea9099b2fab69fa36973e7b156d28809d89130378147a0efb684",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题一_完整报告.txt",
+      "sha256": "5c9230f00e7fe5497e9c57d2c55ceed385d4a8b20f9679a6e5996c55975f8485",
+      "current_sha256": "5c9230f00e7fe5497e9c57d2c55ceed385d4a8b20f9679a6e5996c55975f8485",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题三_中继部署方案_修复版.xlsx",
+      "sha256": "65668ab952aff759962eda0d4d9e763088e45299e1fecec159c08b50e05165b6",
+      "current_sha256": "65668ab952aff759962eda0d4d9e763088e45299e1fecec159c08b50e05165b6",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题三_汇总_修复版.json",
+      "sha256": "de9625955cc32a9989be0079944928dc4dbca795dfbd5e500cf49dcdf4e718c1",
+      "current_sha256": "de9625955cc32a9989be0079944928dc4dbca795dfbd5e500cf49dcdf4e718c1",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题三_覆盖核验_修复版.xlsx",
+      "sha256": "8cf81ef1efa0c12c83b7e4af6da6c1e50350d8f48bd67373809b70ba5b644bb0",
+      "current_sha256": "8cf81ef1efa0c12c83b7e4af6da6c1e50350d8f48bd67373809b70ba5b644bb0",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题三_运输调度_修复版.xlsx",
+      "sha256": "47a153d257b14bfe69018881167f870aedc725889ac511b4c07fa81986e791bc",
+      "current_sha256": "47a153d257b14bfe69018881167f870aedc725889ac511b4c07fa81986e791bc",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题二_优化修复版.xlsx",
+      "sha256": "364c130a634a98bd6bbd41ee555d87d4a91b45cae1c184bef14dc42a4a490e23",
+      "current_sha256": "364c130a634a98bd6bbd41ee555d87d4a91b45cae1c184bef14dc42a4a490e23",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题二_增强优化版.xlsx",
+      "sha256": "59d346858da3ce61dd7d73d4104ba14864e2055ca9aeef401cba188bfb7f3e33",
+      "current_sha256": "59d346858da3ce61dd7d73d4104ba14864e2055ca9aeef401cba188bfb7f3e33",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题四_2批次_修复版.json",
+      "sha256": "a2e82253867722c5ef6d69360bc29612da41c36e2ca0a97897606c186c4998a6",
+      "current_sha256": "a2e82253867722c5ef6d69360bc29612da41c36e2ca0a97897606c186c4998a6",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题四_2批次_修复版.xlsx",
+      "sha256": "248eda6c63854912dad64662e18fb590ca29776daba54f31f961638b8439cc65",
+      "current_sha256": "248eda6c63854912dad64662e18fb590ca29776daba54f31f961638b8439cc65",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题四_2批次_错峰复用优化.xlsx",
+      "sha256": "a6ffded764ea32b8248e5fe8ff77e99d6ed4dbc242bf62ee1c2bdafd098ac41d",
+      "current_sha256": "a6ffded764ea32b8248e5fe8ff77e99d6ed4dbc242bf62ee1c2bdafd098ac41d",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题四_3批次_修复版.json",
+      "sha256": "05f0292a7b85b0e01586a04252566d4079a0f6c4c39a2c5613b375f75cd5df81",
+      "current_sha256": "05f0292a7b85b0e01586a04252566d4079a0f6c4c39a2c5613b375f75cd5df81",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题四_3批次_修复版.xlsx",
+      "sha256": "a416ed68b362a13afe718fa66b4c848b2c94072101d56f7352a8b570c8dfdd74",
+      "current_sha256": "a416ed68b362a13afe718fa66b4c848b2c94072101d56f7352a8b570c8dfdd74",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题四_3批次_错峰复用优化.xlsx",
+      "sha256": "6dc486487375a4c02d05dcba874f46162a97f60b8e8f4e3c734756bdd616f91f",
+      "current_sha256": "6dc486487375a4c02d05dcba874f46162a97f60b8e8f4e3c734756bdd616f91f",
+      "unchanged": true
+    },
+    {
+      "path": "结果/问题四_错峰复用汇总.json",
+      "sha256": "c2bc87dc21794fcff9198ad5d6e772e68e65c891be8f52264195593a61b6f222",
+      "current_sha256": "c2bc87dc21794fcff9198ad5d6e772e68e65c891be8f52264195593a61b6f222",
+      "unchanged": true
+    },
+    {
+      "path": "结果提交模板.xlsx",
+      "sha256": "16f521f29a7103c4ff7c3709ce1696bb9fffa18ce741895e45b7bc7afaf3320a",
+      "current_sha256": "16f521f29a7103c4ff7c3709ce1696bb9fffa18ce741895e45b7bc7afaf3320a",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/README.md",
+      "sha256": "89c659149202f10fc5f4a35932db3cc1da61e47d86158021dec2daed782a4d24",
+      "current_sha256": "89c659149202f10fc5f4a35932db3cc1da61e47d86158021dec2daed782a4d24",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/代码/columns.txt",
+      "sha256": "4151b2ffab5fbbae189eae99027a295dee59659c43ff7174455758f560557be7",
+      "current_sha256": "4151b2ffab5fbbae189eae99027a295dee59659c43ff7174455758f560557be7",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/代码/solve_problem1_18trips.py",
+      "sha256": "25186922f8861c749b27f3cf7f68efe9b71c1b21cb2961af64353c4b5a100421",
+      "current_sha256": "25186922f8861c749b27f3cf7f68efe9b71c1b21cb2961af64353c4b5a100421",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/代码/solve_problem2_lns.py",
+      "sha256": "d55e6dca9af5dd421992b52bb0aa34fbe95cc221ecd2bd709b5988701fd143e2",
+      "current_sha256": "d55e6dca9af5dd421992b52bb0aa34fbe95cc221ecd2bd709b5988701fd143e2",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/代码/solve_problem2_optimized.py",
+      "sha256": "744e69a76d70159abcad04fa194bcaa4f7be146faa269978383be4cfa0c97df3",
+      "current_sha256": "744e69a76d70159abcad04fa194bcaa4f7be146faa269978383be4cfa0c97df3",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/代码/solve_problem3_relay.py",
+      "sha256": "4d882972e922a43dd1c2fea0ea6b1e1bd191998879c064b02873556e9889d6f5",
+      "current_sha256": "4d882972e922a43dd1c2fea0ea6b1e1bd191998879c064b02873556e9889d6f5",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/代码/solve_problem4_fixed.py",
+      "sha256": "087d4c5685ce6d71b083f00d2b75f7421997d4913cd90f984d4c4b1fb6ec7a89",
+      "current_sha256": "087d4c5685ce6d71b083f00d2b75f7421997d4913cd90f984d4c4b1fb6ec7a89",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/代码/论文图表_终稿.py",
+      "sha256": "287cb74ae721b120aae7330cc185e6423d26b0e436348c6d8fe4cc5c6cd86a92",
+      "current_sha256": "287cb74ae721b120aae7330cc185e6423d26b0e436348c6d8fe4cc5c6cd86a92",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/代码/论文级可视化_官方地图.py",
+      "sha256": "b6a29031eb9feb87c155c996c444fd50a12c3061449797d5b049fd912c5bc49c",
+      "current_sha256": "b6a29031eb9feb87c155c996c444fd50a12c3061449797d5b049fd912c5bc49c",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/代码/问题四_当前结果可视化.py",
+      "sha256": "1823ccd01ef9e18bc3a6533511d203b5917464f6eb88529264af57c9e169a3d3",
+      "current_sha256": "1823ccd01ef9e18bc3a6533511d203b5917464f6eb88529264af57c9e169a3d3",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/可视化/论文图表/问题一_路径与约束指标.png",
+      "sha256": "495017d1eacb0bcb7b31fc99a60761fddca75ed54cf1ebe86a0b48e22babe37b",
+      "current_sha256": "495017d1eacb0bcb7b31fc99a60761fddca75ed54cf1ebe86a0b48e22babe37b",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/可视化/论文图表/问题三_通信覆盖与中继窗口.png",
+      "sha256": "4bbf33788ce9c2338f0b93dc8303e562a9cd53f5d14cab917e05bb7efea130fa",
+      "current_sha256": "4bbf33788ce9c2338f0b93dc8303e562a9cd53f5d14cab917e05bb7efea130fa",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/可视化/论文图表/问题二_性能与资源峰值.png",
+      "sha256": "f1ba54e975530a44278e88507ff0f990a8c79c51f8d7ed08994da7e8bdba07d4",
+      "current_sha256": "f1ba54e975530a44278e88507ff0f990a8c79c51f8d7ed08994da7e8bdba07d4",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/可视化/论文图表/问题四_资源池化与错峰复用.png",
+      "sha256": "9f6bbdfd405fafd2c1f2d08c591b5bc1bb44805c0bac6fec6bc038ff70a6967e",
+      "current_sha256": "9f6bbdfd405fafd2c1f2d08c591b5bc1bb44805c0bac6fec6bc038ff70a6967e",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/性能指标与参考论文对比.md",
+      "sha256": "ae747376f8bb405f093e9b7a6d5f73672e20f7fd85c28ef17b1725e3d2840344",
+      "current_sha256": "ae747376f8bb405f093e9b7a6d5f73672e20f7fd85c28ef17b1725e3d2840344",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/步骤/README.md",
+      "sha256": "41a9637534cfdaf34baa2c628bf1e4c7cc0e5a23180eb81a2cd432d78148ed9b",
+      "current_sha256": "41a9637534cfdaf34baa2c628bf1e4c7cc0e5a23180eb81a2cd432d78148ed9b",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/步骤/问题一.md",
+      "sha256": "0dcb396491c056d4bfe90bf6b846d55592791c2f4c2975d0a548b8aeaf2f99b4",
+      "current_sha256": "0dcb396491c056d4bfe90bf6b846d55592791c2f4c2975d0a548b8aeaf2f99b4",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/步骤/问题三.md",
+      "sha256": "3d2444e3c97a30dea86de37b75be1c2ba9f2ba852085d4d85d7b0586e2f4a84d",
+      "current_sha256": "3d2444e3c97a30dea86de37b75be1c2ba9f2ba852085d4d85d7b0586e2f4a84d",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/步骤/问题二.md",
+      "sha256": "58fa536435953823c1449efda2108346e46b7790c2a18323f16365145f109bd4",
+      "current_sha256": "58fa536435953823c1449efda2108346e46b7790c2a18323f16365145f109bd4",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/步骤/问题四.md",
+      "sha256": "461b6c8eaf8c5a45d1f6cce5022bac58a59d5c9da7f012e394be1d75e3bab492",
+      "current_sha256": "461b6c8eaf8c5a45d1f6cce5022bac58a59d5c9da7f012e394be1d75e3bab492",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题一_18架次方案_修复版.xlsx",
+      "sha256": "5755feb23fed389b1b451f095377fb25ff6f3ece4078674c74968baee7f871d6",
+      "current_sha256": "5755feb23fed389b1b451f095377fb25ff6f3ece4078674c74968baee7f871d6",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题三_中继部署方案_修复版.xlsx",
+      "sha256": "850a23b5a15366a5883dd3ea495b630d44b677ec5fe613eb287cc15b6371f1bf",
+      "current_sha256": "850a23b5a15366a5883dd3ea495b630d44b677ec5fe613eb287cc15b6371f1bf",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题三_汇总_修复版.json",
+      "sha256": "c3a7cd5f574589873e8d61432ed966bbce0b0eccf262b9c619b6093ed767bd15",
+      "current_sha256": "c3a7cd5f574589873e8d61432ed966bbce0b0eccf262b9c619b6093ed767bd15",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题三_覆盖核验_修复版.xlsx",
+      "sha256": "25c89b0428049b32387f6cd0f9d44bdeda3cd0d33531dd422a1e859e1fe06983",
+      "current_sha256": "25c89b0428049b32387f6cd0f9d44bdeda3cd0d33531dd422a1e859e1fe06983",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题三_运输调度_修复版.xlsx",
+      "sha256": "5f9b4ac460fd2dd7aa088e417794cc0fcf8b4685c01106bdb181827f6ad2c580",
+      "current_sha256": "5f9b4ac460fd2dd7aa088e417794cc0fcf8b4685c01106bdb181827f6ad2c580",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题二_增强优化版.xlsx",
+      "sha256": "98d7d6f3bc88668d417aa1e071f5c6580c50ad4b31cfbf864172dbd4e95407fb",
+      "current_sha256": "98d7d6f3bc88668d417aa1e071f5c6580c50ad4b31cfbf864172dbd4e95407fb",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题四_2批次_修复版.json",
+      "sha256": "ac6d506616ee26c77dd4c3084216df2631509ded5f51dddd98eb5c4afef2b527",
+      "current_sha256": "ac6d506616ee26c77dd4c3084216df2631509ded5f51dddd98eb5c4afef2b527",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题四_2批次_修复版.xlsx",
+      "sha256": "6e8aea241680c0ed6d113b87b30515c06923178b0c6a4f6b2130f0d6a609b749",
+      "current_sha256": "6e8aea241680c0ed6d113b87b30515c06923178b0c6a4f6b2130f0d6a609b749",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题四_2批次_错峰复用优化.xlsx",
+      "sha256": "7d3b0488001387d43c76ff3b65b83c5e00cbb026e9f34d8ae77206b787269fd2",
+      "current_sha256": "7d3b0488001387d43c76ff3b65b83c5e00cbb026e9f34d8ae77206b787269fd2",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题四_3批次_修复版.json",
+      "sha256": "b5093c6f659c49adab8f5c77697a4a652056910a8e37f258124529b229d03085",
+      "current_sha256": "b5093c6f659c49adab8f5c77697a4a652056910a8e37f258124529b229d03085",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题四_3批次_修复版.xlsx",
+      "sha256": "940ac88679ea546835c3f760f8dfc271c242e8258c47f2064d78a9cef89e6a18",
+      "current_sha256": "940ac88679ea546835c3f760f8dfc271c242e8258c47f2064d78a9cef89e6a18",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题四_3批次_错峰复用优化.xlsx",
+      "sha256": "9d69b852316cd546ecbb1350231f451e87c525f12dd7faa5c6513695c115f84a",
+      "current_sha256": "9d69b852316cd546ecbb1350231f451e87c525f12dd7faa5c6513695c115f84a",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/结果/问题四_错峰复用汇总.json",
+      "sha256": "adc67160bc1fed0933cc596b023baa04a24d8d137a4ec574f6c258d74e721ce0",
+      "current_sha256": "adc67160bc1fed0933cc596b023baa04a24d8d137a4ec574f6c258d74e721ce0",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/AI使用说明.md",
+      "sha256": "2506bb1231342fc55edf75443916aafbb9b225282a2d2bd4e2c368f8552f0ee1",
+      "current_sha256": "2506bb1231342fc55edf75443916aafbb9b225282a2d2bd4e2c368f8552f0ee1",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/create_paper_v1.js",
+      "sha256": "40ee7685837aee30150abd004669d75b6ee5fb8c80919ae01009711bf22208b7",
+      "current_sha256": "40ee7685837aee30150abd004669d75b6ee5fb8c80919ae01009711bf22208b7",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/优秀论文风格学习记录.md",
+      "sha256": "c95d5e77a8ef2261016766978e4670ff5434adfb56bd2aada40ac37025ee089c",
+      "current_sha256": "c95d5e77a8ef2261016766978e4670ff5434adfb56bd2aada40ac37025ee089c",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/参考文献清单.md",
+      "sha256": "0ceb5942d224311e4e158285481e2bdc9c5e967b2660fb094df310f22971addf",
+      "current_sha256": "0ceb5942d224311e4e158285481e2bdc9c5e967b2660fb094df310f22971addf",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/图片参考方案对比.md",
+      "sha256": "436e9d888a3c923212a9b48dc80ae7e8c31f8ec9eccde54dd072e8c30c8f9a3f",
+      "current_sha256": "436e9d888a3c923212a9b48dc80ae7e8c31f8ec9eccde54dd072e8c30c8f9a3f",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/图表清单.md",
+      "sha256": "2d838e55b796090380ea95110f97e6cd47361b714b72e3a6ee971a93c7b4b822",
+      "current_sha256": "2d838e55b796090380ea95110f97e6cd47361b714b72e3a6ee971a93c7b4b822",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/山区洪涝灾害下无人机运输与通信协同优化_第一版.docx",
+      "sha256": "ab24e9bcf1de1394e487142c6f1675be6cca6b6b7cf95c14850462363105735f",
+      "current_sha256": "ab24e9bcf1de1394e487142c6f1675be6cca6b6b7cf95c14850462363105735f",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/格式要求摘要.md",
+      "sha256": "5270f43f73abe9999c863550578313d6cea9d2f7a72e1c42251d3a937e5901c2",
+      "current_sha256": "5270f43f73abe9999c863550578313d6cea9d2f7a72e1c42251d3a937e5901c2",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/王文政-第一版.doc",
+      "sha256": "3bde09fe9413c92565e2baa81c2ea916b09cbd12956698cec49a3ebf8ca80fd3",
+      "current_sha256": "3bde09fe9413c92565e2baa81c2ea916b09cbd12956698cec49a3ebf8ca80fd3",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/王文政-第一版.docx",
+      "sha256": "7b52664aab86bed233874977690d15ad0004cd4eda303edb3179ab4236d98ffd",
+      "current_sha256": "7b52664aab86bed233874977690d15ad0004cd4eda303edb3179ab4236d98ffd",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/王文政-第一版_符号公式重排版.docx",
+      "sha256": "55d672052065d4ad4a9ca4d2464fa9d4e8f50278ee025aac4db318ac0a03921d",
+      "current_sha256": "55d672052065d4ad4a9ca4d2464fa9d4e8f50278ee025aac4db318ac0a03921d",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/第三章_问题一正式正文.md",
+      "sha256": "84efde3fcf48b3ec06c71a1f8e8178c403aa9e0827a0a8576eaf801f16ac50a5",
+      "current_sha256": "84efde3fcf48b3ec06c71a1f8e8178c403aa9e0827a0a8576eaf801f16ac50a5",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/第二章第三章_符号公式重排版.md",
+      "sha256": "4507176dee60b0e01d556ae6c97e1c82827b3b5e567e6795faaacc3c05c2088d",
+      "current_sha256": "4507176dee60b0e01d556ae6c97e1c82827b3b5e567e6795faaacc3c05c2088d",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/论文/论文初稿.md",
+      "sha256": "fba9a49315fbe0f383d18219d2d0d76ca4d77dbe9636217b1966ad4f37a3e525",
+      "current_sha256": "fba9a49315fbe0f383d18219d2d0d76ca4d77dbe9636217b1966ad4f37a3e525",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/README.md",
+      "sha256": "196c35790e90d789f5dbcdd613d73b3ebef794c474e896468e409cc98b2346ca",
+      "current_sha256": "196c35790e90d789f5dbcdd613d73b3ebef794c474e896468e409cc98b2346ca",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/代码/make_chart.py",
+      "sha256": "ee25cadd0ef040d213bb39ae03eafeb2f50b674b639cbd26da45f91318b581b9",
+      "current_sha256": "ee25cadd0ef040d213bb39ae03eafeb2f50b674b639cbd26da45f91318b581b9",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/代码/optimize_alns.py",
+      "sha256": "ee6823d23cb23f66c22288c166b0172e11c76e212b2b90f6ee92184b0658f2e9",
+      "current_sha256": "ee6823d23cb23f66c22288c166b0172e11c76e212b2b90f6ee92184b0658f2e9",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/代码/run_experiments.py",
+      "sha256": "ba82df14b371f2ce40ddf5861e8029eae603f060c39252d792ef70407d3b3751",
+      "current_sha256": "ba82df14b371f2ce40ddf5861e8029eae603f060c39252d792ef70407d3b3751",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/代码/validate_candidate.py",
+      "sha256": "6b6578370db3b4a6357fc9229c23e4fe5d9e84f589f20cf90063317d9ed99cb1",
+      "current_sha256": "6b6578370db3b4a6357fc9229c23e4fe5d9e84f589f20cf90063317d9ed99cb1",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/优化方案设计.md",
+      "sha256": "0bd8b34886f1dd77a3b142106c62c362f6eadba9070cfd7f9af1d918bc501b53",
+      "current_sha256": "0bd8b34886f1dd77a3b142106c62c362f6eadba9070cfd7f9af1d918bc501b53",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/图表/问题二_ALNS基线对比.png",
+      "sha256": "5a32a2b3299fbc35fe7c6919ac59e2780db267d8bcc9801d86a9c0b9f8fe1017",
+      "current_sha256": "5a32a2b3299fbc35fe7c6919ac59e2780db267d8bcc9801d86a9c0b9f8fe1017",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/实验记录.md",
+      "sha256": "f08c7391323ad7885f5380f343b780757fa6dfa1b0a5ff28fc38fe9390e8b2ac",
+      "current_sha256": "f08c7391323ad7885f5380f343b780757fa6dfa1b0a5ff28fc38fe9390e8b2ac",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/用户旧方案审计.md",
+      "sha256": "d7cbac16e2a8ee6835e2863ff0b122feab19371705e825ee077e6988cec5dcd1",
+      "current_sha256": "d7cbac16e2a8ee6835e2863ff0b122feab19371705e825ee077e6988cec5dcd1",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/相关论文与方法依据.md",
+      "sha256": "c305df18e786e93448db1329f4e50317a1657a085cd79c9299f32606ce5b4ade",
+      "current_sha256": "c305df18e786e93448db1329f4e50317a1657a085cd79c9299f32606ce5b4ade",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/结果/候选方案官方约束核验.json",
+      "sha256": "84751a04db67341bb3f6bd2c949def2367734b243b9081ea80b613ea2c645995",
+      "current_sha256": "84751a04db67341bb3f6bd2c949def2367734b243b9081ea80b613ea2c645995",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/结果/多随机种子对照.csv",
+      "sha256": "7c72c4d6247c63c05d45a819a07b705dc9792febca98883ee0328acc90071e27",
+      "current_sha256": "7c72c4d6247c63c05d45a819a07b705dc9792febca98883ee0328acc90071e27",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化/结果/问题二_ALNS候选方案.xlsx",
+      "sha256": "eee5f29ba062faeb020f35b578f75052d3301e7ef8066dceeda815014ad27690",
+      "current_sha256": "eee5f29ba062faeb020f35b578f75052d3301e7ef8066dceeda815014ad27690",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/README.md",
+      "sha256": "5849086d109270f801cd3a39d00faf734236f447bb88180a1f84aff10121e90a",
+      "current_sha256": "5849086d109270f801cd3a39d00faf734236f447bb88180a1f84aff10121e90a",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/requirements.txt",
+      "sha256": "0cd8d4debea03cd2de6adf9e04a9ed950c6160f43402a3f86e10b55b1ed0ff5c",
+      "current_sha256": "0cd8d4debea03cd2de6adf9e04a9ed950c6160f43402a3f86e10b55b1ed0ff5c",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/cargo_columns.txt",
+      "sha256": "d67efe9552f33bc13eb0c945b68a710a88ff33463401f3c25e02a8ebb5663cb0",
+      "current_sha256": "d67efe9552f33bc13eb0c945b68a710a88ff33463401f3c25e02a8ebb5663cb0",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/check_columns.py",
+      "sha256": "9b0dad5fd0647fa51628a49330749835cbcda00c483c24e7e6f624fb6bc831fb",
+      "current_sha256": "9b0dad5fd0647fa51628a49330749835cbcda00c483c24e7e6f624fb6bc831fb",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/check_resources.py",
+      "sha256": "64ed5d533dad4e9e90101b00dff3e4280980a2a557f7aebabe13c1eae52e1094",
+      "current_sha256": "64ed5d533dad4e9e90101b00dff3e4280980a2a557f7aebabe13c1eae52e1094",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/cpsat_scheduler.py",
+      "sha256": "08095fada7fc66eb8f3ebb0d87d980bbaaa9e3f6d6f434370d7fc6a1e2d91ddc",
+      "current_sha256": "08095fada7fc66eb8f3ebb0d87d980bbaaa9e3f6d6f434370d7fc6a1e2d91ddc",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/debug_cpsat.py",
+      "sha256": "0f23c239cfd3b19e2d881d763d65c0b1308e204bd1d2e9bbce47c19b07250d1b",
+      "current_sha256": "0f23c239cfd3b19e2d881d763d65c0b1308e204bd1d2e9bbce47c19b07250d1b",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/debug_output.txt",
+      "sha256": "76de584ab29109a6f42c9f30f75cb965fa49000932dbedaed5852bea691d59ad",
+      "current_sha256": "76de584ab29109a6f42c9f30f75cb965fa49000932dbedaed5852bea691d59ad",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/debug_run.py",
+      "sha256": "7fc9b2a6d2d45b03ba56573dfcfeaebc38e6614b591068701d37bdbd1844a75d",
+      "current_sha256": "7fc9b2a6d2d45b03ba56573dfcfeaebc38e6614b591068701d37bdbd1844a75d",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/energy_utils.py",
+      "sha256": "584e833a7edf3439ae1e408230ea56e192db0ec5a33fade6d6572b4599d4773d",
+      "current_sha256": "584e833a7edf3439ae1e408230ea56e192db0ec5a33fade6d6572b4599d4773d",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/main_optimize.py",
+      "sha256": "5755d1d16c6760556a9c78242051a3115f2b0baa3c938029f51d0a1f86d98c81",
+      "current_sha256": "5755d1d16c6760556a9c78242051a3115f2b0baa3c938029f51d0a1f86d98c81",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/minimal_test.py",
+      "sha256": "46f4e623656fe4f639bafe3cb4bdcb02737a9642fb6ddeb8ebdd8c45658b9436",
+      "current_sha256": "46f4e623656fe4f639bafe3cb4bdcb02737a9642fb6ddeb8ebdd8c45658b9436",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/nsga2_optimizer.py",
+      "sha256": "83cd29b673c0be0aa55d5d22b939531ba0947c63bbbe94469fd95a35998c6c68",
+      "current_sha256": "83cd29b673c0be0aa55d5d22b939531ba0947c63bbbe94469fd95a35998c6c68",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/output.txt",
+      "sha256": "a6dc7c85d31e5b2b60909024f9996b0b6a2cd055ffad3e0c91c82af8a99d7ee3",
+      "current_sha256": "a6dc7c85d31e5b2b60909024f9996b0b6a2cd055ffad3e0c91c82af8a99d7ee3",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/quick_run.py",
+      "sha256": "aeef9469ce1a032bb117ab10a52a7b860fbfb76530ef8d08d81b781f7bb2f125",
+      "current_sha256": "aeef9469ce1a032bb117ab10a52a7b860fbfb76530ef8d08d81b781f7bb2f125",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/quick_run_output.txt",
+      "sha256": "c81ef307c367f3aef08a23a9de70e54821cdc0d8e6ec10be44a746f815863ddf",
+      "current_sha256": "c81ef307c367f3aef08a23a9de70e54821cdc0d8e6ec10be44a746f815863ddf",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/run_test.bat",
+      "sha256": "e8457a2593ff4df8d689b64b94cc45c0e0740339eec9c1a2699e7230bd79ccbe",
+      "current_sha256": "e8457a2593ff4df8d689b64b94cc45c0e0740339eec9c1a2699e7230bd79ccbe",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/test_cpsat_simple.py",
+      "sha256": "18bca89777f8ce411cfb7eaf71d5a15bd09b68d41be62caad725044e36243fa4",
+      "current_sha256": "18bca89777f8ce411cfb7eaf71d5a15bd09b68d41be62caad725044e36243fa4",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/test_framework.py",
+      "sha256": "28ac1d5b2425495357769c042ac0f299bc1d9ad0e44909bed7a1f173060a56d1",
+      "current_sha256": "28ac1d5b2425495357769c042ac0f299bc1d9ad0e44909bed7a1f173060a56d1",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/ultra_quick_debug.txt",
+      "sha256": "067c5b7cbf136c33e53a1a58ceccd7246e8f5097eb94bfa68b4c3ce261b6f204",
+      "current_sha256": "067c5b7cbf136c33e53a1a58ceccd7246e8f5097eb94bfa68b4c3ce261b6f204",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/ultra_quick_final.txt",
+      "sha256": "b150b4868dd1e65aa47305da0a23d2eae025cb6cd4c8a55a4eb00fea2718b091",
+      "current_sha256": "b150b4868dd1e65aa47305da0a23d2eae025cb6cd4c8a55a4eb00fea2718b091",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/ultra_quick_output.txt",
+      "sha256": "f9fd47f75cb7c902db1915c87d616e71a1aa8221152528225add5d6767bf9187",
+      "current_sha256": "f9fd47f75cb7c902db1915c87d616e71a1aa8221152528225add5d6767bf9187",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/代码/ultra_quick_run.py",
+      "sha256": "7fc72270f0378eb0303fbb8b4501b7bf63317652ec4adad5c5a010f1768c6af6",
+      "current_sha256": "7fc72270f0378eb0303fbb8b4501b7bf63317652ec4adad5c5a010f1768c6af6",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/快速开始.md",
+      "sha256": "bece4f3c7ab06da1c4f4e76744bf770ee7ab01228f4131a15b7aee2af1bfa88d",
+      "current_sha256": "bece4f3c7ab06da1c4f4e76744bf770ee7ab01228f4131a15b7aee2af1bfa88d",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/总结报告.md",
+      "sha256": "e0165cad5772b3473ee619e9abb2a511a2720b4711d5f7129a1d426260cc1168",
+      "current_sha256": "e0165cad5772b3473ee619e9abb2a511a2720b4711d5f7129a1d426260cc1168",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/文档/优化方案说明.md",
+      "sha256": "0172670a2a4f04a60b04e65493a739f6bb1835a0116a2ac6ee30bb4337e368b5",
+      "current_sha256": "0172670a2a4f04a60b04e65493a739f6bb1835a0116a2ac6ee30bb4337e368b5",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/文档/技术实现文档.md",
+      "sha256": "20232bc4c1731d9728d95710cd01509109ec72a516ae8c48823e43f5908d45a6",
+      "current_sha256": "20232bc4c1731d9728d95710cd01509109ec72a516ae8c48823e43f5908d45a6",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/环境配置指南.md",
+      "sha256": "cccb6af8399ae2282b779f491911e5082735a91cb1008a0725ceb6e14a73943e",
+      "current_sha256": "cccb6af8399ae2282b779f491911e5082735a91cb1008a0725ceb6e14a73943e",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/结果/帕累托前沿汇总.xlsx",
+      "sha256": "713738df4af62a3d118ea115e05d0043c6eb8e567ceff1faba3da7fcbd59b628",
+      "current_sha256": "713738df4af62a3d118ea115e05d0043c6eb8e567ceff1faba3da7fcbd59b628",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/项目总览.md",
+      "sha256": "ff974c0a9ef61ef01b106e33d6a9ab5935f4ff9e1841519cb153b7dca767b8b7",
+      "current_sha256": "ff974c0a9ef61ef01b106e33d6a9ab5935f4ff9e1841519cb153b7dca767b8b7",
+      "unchanged": true
+    },
+    {
+      "path": "解题-gpt/问题2优化claude/项目清单.txt",
+      "sha256": "95bdc7fec00df9b6c458b898ce3764c60a114ba7df6b2254c09413acb27dc0c3",
+      "current_sha256": "95bdc7fec00df9b6c458b898ce3764c60a114ba7df6b2254c09413acb27dc0c3",
+      "unchanged": true
+    },
+    {
+      "path": "论文级可视化_官方地图.py",
+      "sha256": "b6a29031eb9feb87c155c996c444fd50a12c3061449797d5b049fd912c5bc49c",
+      "current_sha256": "b6a29031eb9feb87c155c996c444fd50a12c3061449797d5b049fd912c5bc49c",
+      "unchanged": true
+    },
+    {
+      "path": "问题一_成果清单.txt",
+      "sha256": "12205b5d21550e66e8ad99a2bf1895abc63fcec729fdf1a7a5196b79647edc87",
+      "current_sha256": "12205b5d21550e66e8ad99a2bf1895abc63fcec729fdf1a7a5196b79647edc87",
+      "unchanged": true
+    },
+    {
+      "path": "问题一_最终交付总结.txt",
+      "sha256": "beb89f4777848312b33a36f62d8dbcb99b5ea5d9db826b3c1b3bdc821538eebb",
+      "current_sha256": "beb89f4777848312b33a36f62d8dbcb99b5ea5d9db826b3c1b3bdc821538eebb",
+      "unchanged": true
+    },
+    {
+      "path": "问题一_目录树.txt",
+      "sha256": "d0812617ebbb72415fb9bfd8664e85db18492f97cee4265561e165698cf2fc1c",
+      "current_sha256": "d0812617ebbb72415fb9bfd8664e85db18492f97cee4265561e165698cf2fc1c",
+      "unchanged": true
+    },
+    {
+      "path": "问题一_论文级可视化.py",
+      "sha256": "b7bee83d8c5136dbe095a7e0e601bef7106957d2b164088e7224f1348cc64ec2",
+      "current_sha256": "b7bee83d8c5136dbe095a7e0e601bef7106957d2b164088e7224f1348cc64ec2",
+      "unchanged": true
+    },
+    {
+      "path": "问题一_高级可视化.py",
+      "sha256": "bdc0f54d5366b720483f16db4cab077233f219292bfd553fc6ac19e43cae5f6b",
+      "current_sha256": "bdc0f54d5366b720483f16db4cab077233f219292bfd553fc6ac19e43cae5f6b",
+      "unchanged": true
+    },
+    {
+      "path": "问题三_可视化.py",
+      "sha256": "12f3cb15b170f603cecec3765ea3c6ad2bfcba203aff68a410b06638479877e5",
+      "current_sha256": "12f3cb15b170f603cecec3765ea3c6ad2bfcba203aff68a410b06638479877e5",
+      "unchanged": true
+    },
+    {
+      "path": "问题三_完整可视化.py",
+      "sha256": "b0b035d2899621646489dd4b3263c82e69fa1992a53cd8a740a8c8aefb5d07d7",
+      "current_sha256": "b0b035d2899621646489dd4b3263c82e69fa1992a53cd8a740a8c8aefb5d07d7",
+      "unchanged": true
+    },
+    {
+      "path": "问题三_题目描述.txt",
+      "sha256": "9d6ca1617808dfd6d3bdc81c3e150066b990117a678315b4d68fe2f2b10078ea",
+      "current_sha256": "9d6ca1617808dfd6d3bdc81c3e150066b990117a678315b4d68fe2f2b10078ea",
+      "unchanged": true
+    },
+    {
+      "path": "问题二_论文级可视化.py",
+      "sha256": "174f13e0c22333b91cbe238ee0d85dc2d68d2c1f3cf1576e5ea39a23e076f11d",
+      "current_sha256": "174f13e0c22333b91cbe238ee0d85dc2d68d2c1f3cf1576e5ea39a23e076f11d",
+      "unchanged": true
+    },
+    {
+      "path": "问题二_高级可视化.py",
+      "sha256": "a0b5c2dfb6b7232dce7693bf26ba75cdc91588937f5bf742b73f427bb4d9a7d4",
+      "current_sha256": "a0b5c2dfb6b7232dce7693bf26ba75cdc91588937f5bf742b73f427bb4d9a7d4",
+      "unchanged": true
+    },
+    {
+      "path": "问题四_完整可视化.py",
+      "sha256": "c331c4473a6050732b3eb78a2c8a855761e875b6831d6bcd2c3d577edf0e888c",
+      "current_sha256": "c331c4473a6050732b3eb78a2c8a855761e875b6831d6bcd2c3d577edf0e888c",
+      "unchanged": true
+    },
+    {
+      "path": "问题四_当前结果可视化.py",
+      "sha256": "1823ccd01ef9e18bc3a6533511d203b5917464f6eb88529264af57c9e169a3d3",
+      "current_sha256": "1823ccd01ef9e18bc3a6533511d203b5917464f6eb88529264af57c9e169a3d3",
+      "unchanged": true
+    }
+  ]
+}

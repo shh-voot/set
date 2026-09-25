@@ -1,0 +1,1683 @@
+--- PDF PAGE 1 ---
+1
+Scalable No-Stockout Charging Scheduling for
+Battery Swapping Under Time-of-Use Prices
+Eunbin Cho, Junki Cho, Hakjin Lee, Jaehoon Sim, and Junghoon Seo
+Abstract—A battery-swapping station must provide every
+arriving vehicle with a charged battery while minimizing the
+time-of-use cost of recharging returned units. Coordinating
+heterogeneous compatibility, vehicle-specific return times, and
+finite charger capacity requires service-aware recharge decisions
+across the planning horizon. We formulate a per-battery mixed-
+integer linear program that captures these operational features
+under a hard no-stockout constraint and derive a provably
+equivalent reduced form with fewer explicit binary variables. In
+the synthetic scaling study, a price-guided battery-path heuristic
+returned a full-service schedule for every instance; regime-level
+median solve times ranged from 0.24 to 8.0 seconds. Its median
+cost premiums were 7–8% over certified reference costs at the
+Small and Medium scales, and its certified ex post optimality-gap
+upper bounds were 9–12% at the Large and xlarge scales. For
+each operational baseline, the certified reference schedules reduced
+charging-energy cost by 50–60% on instances that the baseline
+fully served and for which a certified reference was available. In
+a 30-day replay of 1,002 swaps recorded at a commercial station,
+the reduced-model and heuristic rolling controllers served every
+swap and reduced charging-energy cost by approximately 50%
+relative to immediate charging.
+Index Terms—Battery swapping, column generation, electric
+vehicles and electric mobility, energy management methods,
+optimization and control.
+I. INTRODUCTION
+A
+S transportation electrifies, charging is a major oper-
+ating cost for commercial electric-vehicle (EV) fleets.
+Connected commercial and autonomous-mobility fleets can
+communicate planned vehicle arrivals and expected battery-
+return times through their fleet-management systems. Battery
+swapping rapidly returns a vehicle to service and separates its
+operating time from battery charging: the station exchanges a
+depleted battery for a charged one and recharges the returned
+unit later [1], [2]. Under time-of-use (TOU) pricing, this
+separation creates opportunities to shift recharging to low-
+price periods [3], [4]. The scheduling challenge is to capture
+these savings while preserving a charged battery for every
+scheduled arrival.
+The recharge schedule determines both a swap station’s cost
+and its reliability, and the literature offers two complementary
+perspectives. Cost-oriented models schedule recharging against
+time-varying prices using per-slot ready-battery counts [3], [5],
+procure low-price energy for arbitrage [4], modulate charging
+Eunbin Cho is with the School of Industrial and Systems Engineer-
+ing, Georgia Institute of Technology, Atlanta, GA 30332 USA (e-mail:
+michelle98756@gmail.com). This work was performed while Eunbin Cho was
+an intern at PIT IN. Junki Cho, Hakjin Lee, Jaehoon Sim, and Junghoon Seo are
+with PIT IN Corp., Anyang, Gyeonggi-do 14088, Republic of Korea (e-mail:
+hj@pitin-ev.com; jk@pitin-ev.com; simjeh@pitin-ev.com; sjh@pitin-ev.com).
+Corresponding author: Junghoon Seo (e-mail: sjh@pitin-ev.com).
+power [6], or learn schedules with average-service targets or
+service penalties [7], [8]. Availability-oriented models size
+inventory and coordinate holding and recharging decisions
+to meet uncertain demand [1], [2], [9], representing service
+through replenishment policies or risk measures over inter-
+changeable battery pools [10], [11].
+Each recharge jointly determines charging cost and the
+time at which a physical battery becomes ready for its next
+service. A unified finite-horizon formulation must therefore
+represent battery identity, event-specific compatibility and
+return times, finite charger capacity, a hard per-event no-
+stockout constraint, and certifiable TOU-cost minimization.
+The formulation developed here integrates these elements by
+making each service decision create a recharge job and linking
+that job to a specific battery, compatible charger, and start time
+across the horizon.
+This paper formulates the problem as a program over
+individual batteries, determining cost and service jointly. The
+per-battery representation preserves physical identity through
+event-specific return times, compatibility, and repeated reuse.
+A hard constraint enforces no-stockout service for every event
+in the deterministic planning input. At each decision epoch,
+the station re-optimizes using the arrivals and expected return
+times communicated by the fleet-management system.
+The exact program has two mixed-integer linear program-
+ming (MILP) forms. Model F provides a direct transcription of
+the station dynamics, and Model R preserves its optimum with
+fewer explicit binary variables (Section IV). Model R extends
+exact certification to larger station-scale instances, while a
+column-generation-based price-guided battery-path heuristic
+(P-BPD) returns full-service schedules across the evaluated
+range (Section V). The experiments quantify solution quality,
+service, and computational scaling (Section VI).
+The contributions of this paper are as follows:
+• An exact per-battery model and its reduction. A single
+exact program unifies TOU cost minimization with a
+hard per-event no-stockout requirement, and an equivalent
+reduction concentrates the binary decisions in service
+assignments and charging starts.
+• Certified scaling and fast battery-path scheduling.
+Model R extends exact certification beyond the direct
+formulation’s range, and P-BPD constructs feasible large-
+scale schedules with certified ex post optimality-gap
+bounds.
+• Commercial-station replay and demand scaling. A 30-
+day station replay and a demand-scaling study quantify
+service, savings, and the computational crossover between
+Model R and P-BPD.
+arXiv:2607.23922v1  [cs.CE]  27 Jul 2026
+
+--- PDF PAGE 2 ---
+2
+II. RELATED WORK
+This problem connects three research areas: inventory control
+under service-level requirements, charge scheduling under TOU
+prices, and column generation for computational scalability.
+The proposed framework integrates their respective strengths—
+availability guarantees, a price-aware objective, and path-based
+solution machinery.
+a) Battery inventory control under a service level:
+For a swap station, charged-battery availability preserves
+the rapid service that motivates swapping. This availability
+problem corresponds to the lost-sales service level of classical
+inventory theory [12] and is studied in transportation and
+energy operations research. The literature develops along two
+axes. On the planning axis, Schneider et al. [1] optimize joint
+battery purchasing and charging under demand uncertainty,
+and Sun et al. [9] extend this approach to a price-aware fluid
+model. On the operational axis, Widrick et al. [2] derive
+monotone optimal charge-discharge policies via a Markov
+decision process, while Mao et al. [13] obtain structural
+charging and replenishment policies under demand, supply,
+and price uncertainty. Heterogeneous compatibility extends this
+service requirement to individual physical batteries; the per-
+battery formulation supplies this event-level granularity while
+guaranteeing a ready compatible battery for every arrival.
+b) Charge scheduling under time-of-use prices: Charging
+cost is driven by TOU prices, which fall in the off-peak
+hours. Single-station cost minimization has been modeled
+through methods ranging from mixed-integer programs [3],
+[4] to a constrained Markov decision process [14]. Zeng et
+al. [5] extend the problem to multiple stations coupled through
+a distribution network, modeling charging bays as explicit
+finite states. Subsequent work incorporates demand uncertainty
+and forecasts [15], [16], controls charging power [6], and
+solves online through rolling-horizon dispatch [17], predictive
+control [18], [19], or reinforcement learning [7], [8], [11],
+[20], [21], [22], [23]. Representative cost-focused formulations
+express service through aggregate ready counts [3], [5], soft
+penalties [7], [8], or chance constraints [10]. The present
+work adds physical-battery compatibility and a hard event-level
+service guarantee to a certifiable finite-horizon cost model.
+c) Column generation and battery-path decomposition:
+Column generation supports fast online re-solving by build-
+ing a schedule from a compact, growing set of candidate
+columns [24], [25]. The technique underlies vehicle and transit
+scheduling with finite charging capacity [26], [27] and TOU
+machine scheduling [28], [29], which shares the price-indexed
+temporal structure of the present cost subproblem. In the present
+setting, service decisions create the recharge jobs endogenously,
+and each job defines a battery’s path from recharge to its
+next service. Related path columns support electric-vehicle
+service-network design [30], [31], while per-battery Lagrangian
+decomposition supports fleet charging [32]. P-BPD specializes
+battery-path decomposition to single-station TOU recharge and
+benchmarks its schedules against certified reference solutions
+and dual-bound optimality-gap guarantees.
+(a)
+Station
+arriving EV
+returned
+(depleted)
+chargers
+(scarce)
+ready stock
+(full)
+no-
+stockout
+departs
+(full)
+the dispatched battery is returned depleted after the trip
+(b)
+hour
+KRW/kWh
+83
+140
+271
+0
+8
+15
+21
+24
+off-peak
+mid
+peak
+3.3×
+charging deferred to low-price hours
+Fig. 1. (a) Station operation and (b) the time-of-use tariff. Glyphs: solid =
+full, bolt = charging, outline = depleted.
+III. SYSTEM MODEL AND PROBLEM DEFINITION
+A. Station operation
+A battery-swap station serves a commercial electric-vehicle
+fleet whose productive time depends on vehicle availability. A
+brief exchange replaces a depleted battery with a fully charged
+one, returning the vehicle to service while charging proceeds
+separately.
+The basic unit of this operation is the event, a single customer
+swap. At an event, a vehicle arrives, receives a full battery,
+and departs. The battery returns depleted when the trip ends;
+the trip duration determines this return epoch. The time spent
+away from the station is the trip-specific return delay. The
+station then recharges the returned battery for its next issue
+(Fig. 1(a)).
+The operation involves events, batteries, and chargers linked
+by two compatibility relations. Each event draws from its
+demand pool, the batteries matching the vehicle’s model and
+capacity. Each battery also belongs to a compatibility class that
+identifies its compatible chargers. Thus, every service pairs
+an event with a battery from its demand pool and routes the
+returned battery to a charger of the same class.
+Recharging capacity consists of a finite set of chargers, each
+reserved by one battery for its full planned recharge. Each
+recharge has a station-selected charge start and a corresponding
+charge finish. At each re-plan, its integer reserved duration is a
+deterministic input indexed by the event, battery, and charger,
+and ec gives the scheduled energy drawn in each occupied slot.
+The objective therefore gives the exact cost for these planning
+inputs. When the reserved duration is a charge-to-full upper
+bound, an early finish preserves schedule feasibility and makes
+the computed energy cost an upper planning estimate.
+At any moment, a battery present at the station is in one
+of three states: ready (full and available to serve), waiting
+(returned but not yet charging), or charging. An event’s full
+stock is the ready subset of its demand pool. The station
+
+--- PDF PAGE 3 ---
+3
+charger
+recharge (τkbc)
+ak
+rk=ak+ℓk
+rk+τkbc
+epoch
+dispatch
+return
+ℓk
+each epoch:
+1⃝recognize returns
+2⃝serve
+3⃝start charges
+Fig. 2. Within-epoch ordering for an immediate-start example (s = rk): the
+battery is full at ak, returns depleted at rk = ak + ℓk, and recharges over
+τkbc slots. Glyphs as in Fig. 1.
+purchases electricity under a time-of-use tariff, with lower off-
+peak prices. The station reduces cost by scheduling returned
+batteries in lower-price hours (Fig. 1(b)). The no-stockout rule
+sets the service-aware timing of these recharges so that every
+arriving vehicle receives a battery from full stock. A rolling
+schedule implements this coordination.
+In the connected-fleet setting, the fleet-management system
+supplies planned arrivals and expected return epochs over the
+look-ahead horizon to each re-plan. The re-plan assigns each
+event a battery and schedules the recharge associated with
+each in-horizon return on a compatible charger. It minimizes
+TOU charging cost subject to the no-stockout rule and charger
+capacity. The controller executes actions as they become due
+and refreshes the schedule at the next event using updated fleet
+information.
+B. Sets and parameters
+Let Tmax ∈Z++ denote the finite horizon length. Time is
+split into state epochs T E = {0, 1, . . . , Tmax} and operation
+slots T S = {0, 1, . . . , Tmax −1}. Slot t is the interval [t, t+1).
+Epoch t is the instant at the start of slot t, so an event time in
+T S names the epoch beginning that slot. At epoch t, battery
+returns and charging completions are recognized first. Swap
+events are then served from the pre-service full inventory, after
+which charging jobs selected at epoch t start and occupy slot
+t.
+Let B, C, and K be the finite sets of physical batteries,
+chargers, and customer swap events. Each event k ∈K has an
+arrival epoch ak ∈T S and a return delay ℓk ∈Z++. Its return
+epoch is rk = ak + ℓk, which may lie beyond the horizon. Let
+λt ∈R+ denote the electricity price in slot t, and let ec ∈R++
+be the scheduled energy charger c uses in one occupied slot.
+Each battery b has a horizon-initial ready indicator A0
+b ∈
+{0, 1}, a demand pool poolb, and a compatibility class classb.
+The canonical formulation initializes ready batteries through
+A0
+b; the source-job augmentation in Section V-F brings in-
+trip, waiting, and charging batteries into rolling re-plans. Each
+event k requires demand pool poolk, and each charger c has
+compatibility class classc. Define
+Bk = {b ∈B : poolb = poolk},
+(1)
+Cb = {c ∈C : classc = classb}.
+(2)
+If event k issues physical battery b and selects charger c,
+the returned battery’s charging duration is τkbc ∈Z++. The
+feasible assignment and in-horizon return-job sets are
+Y = {(k, b) : k ∈K, b ∈Bk},
+(3)
+J = {(k, b) ∈Y : rk ≤Tmax}.
+(4)
+For (k, b) ∈J and c ∈Cb, the feasible charging-start set is
+Skbc = {s ∈T S : rk ≤s, s + τkbc ≤Tmax}.
+(5)
+All summations over empty sets are interpreted as zero. For
+every event k with rk ≤Tmax, we assume the existence of a
+compatible pair b ∈Bk and c ∈Cb with Skbc̸ = ∅; equivalently,
+every modeled return precedes Tmax and admits an in-horizon
+charging start.
+IV. EXACT FORMULATION AND REDUCTION
+This section presents two equivalent exact models for the
+offline no-stockout charge-scheduling problem: the direct five-
+family form F (Section IV-B) and its reduction R (Section IV-C).
+Both models build on the finite-horizon, slot-indexed charging
+structure of prior battery-swapping scheduling [3] by explicitly
+tracking service assignments and states for each physical
+battery.
+A. Decision variables and accounting functions
+Model F uses five binary variable families: service assign-
+ment ykb, charging start σkbcs, availability Abt, waiting state
+Wbt, and charger occupancy xkbct. Table I summarizes the
+formulation. Six derived quantities record issues, charging,
+completions, cumulative flows, and presence. At every fea-
+sible point, the constraints make Dbt(y), Gbt(x), and I+
+bt(y)
+binary indicators; Γbu(σ), ρbt(y), and ςbt(σ) retain their count
+interpretations.
+The battery cycle begins with an issue, as recorded by the
+same-epoch service count
+Dbt(y) =
+X
+k∈K:ak=t, (k,b)∈Y
+ykb,
+b ∈B, t ∈T E,
+(6)
+with Db,Tmax(y) = 0 following from ak ∈T S. In every feasible
+solution, the serve row and binary availability imply Dbt ∈
+{0, 1}. After its return, a scheduled battery occupies a charger.
+Its charging-occupancy count is
+Gbt(x) =
+
+
+
+
+
+X
+(k,b)∈J
+X
+c∈Cb
+xkbct,
+t ∈T S,
+0,
+t = Tmax.
+(7)
+The constraints imply Gbt(x) ∈{0, 1} at every feasible point.
+For t ∈T S, it indicates that battery b occupies a charger in
+slot t, and Gb,Tmax = 0 by definition. Each recharge finishes
+τkbc slots after its start. The charging completions of battery b
+at epoch u are
+Γbu(σ) =
+X
+(k,b)∈J
+X
+c∈Cb
+X
+s∈Skbc:s+τkbc=u
+σkbcs.
+(8)
+
+--- PDF PAGE 4 ---
+4
+TABLE I
+SUMMARY OF NOTATION.
+Symbol
+Description
+Sets and indices
+T E
+epochs {0, . . . , Tmax}
+T S
+slots {0, . . . , Tmax −1}
+B, b
+batteries
+C, c
+chargers
+K, k
+swap events
+Bk
+batteries compatible with k
+Cb
+chargers compatible with b
+Y
+feasible assignments (k, b)
+J
+in-horizon return jobs
+Skbc
+feasible start slots, (k, b) on c
+Parameters
+Tmax
+horizon length (slots)
+ak
+arrival epoch of k
+ℓk
+return delay of k
+rk
+return epoch of k (= ak + ℓk)
+λt
+price in slot t
+ec
+energy c draws per slot
+τkbc
+charging duration, (k, b) on c
+A0
+b
+1 if b is ready at the initial epoch
+poolb, poolk
+demand pool of b / k
+classb, classc
+compatibility class of b / c
+Decision variables (binary)
+ykb
+= 1 if k served by b
+Abt
+= 1 if b full and ready before epoch t’s service
+Wbt
+= 1 if b present, non-full, off charger
+σkbcs
+= 1 if job (k, b) starts on c at slot s
+xkbct
+= 1 if job (k, b) occupies c in slot t
+Derived quantities
+Dbt(y)
+same-epoch service count, b
+Gbt(x)
+charging-occupancy count, b
+Γbu(σ)
+charging completions of b at epoch u
+ρbt(y)
+cumulative in-horizon returns of b
+ςbt(σ)
+cumulative charging starts of b
+I+
+bt(y)
+net post-service presence count of b
+Two running totals track the cycle over the planning horizon.
+The cumulative in-horizon returns and cumulative charging
+starts are
+ρbt(y) =
+X
+(k,b)∈Y:rk≤t
+ykb,
+(9)
+ςbt(σ) =
+X
+(k,b)∈J
+X
+c∈Cb
+X
+s∈Skbc:s≤t
+σkbcs.
+(10)
+The post-service station-side presence is obtained by netting
+issues against initial stock and returns:
+I+
+bt(y) = A0
+b + ρbt(y) −
+X
+k∈K:(k,b)∈Y, ak≤t
+ykb.
+(11)
+At every feasible point, I+
+bt(y) is integer-valued and satisfies
+0 ≤I+
+bt(y) ≤1; it is therefore the post-service station-presence
+indicator for battery b at epoch t.
+B. The full five-family model F
+Figure 3 states the no-stockout scheduling problem as a
+mixed-integer linear program. Because it retains all five binary
+families, this formulation is termed the full model F. Its rows
+are organized into functional groups, each corresponding to an
+operational requirement in Section III-A.
+The service rows (12b)–(12c) encode the no-stockout rule.
+The assignment row (12b) assigns exactly one battery from
+the event’s demand pool Bk, ensuring compatible service for
+every arrival. The serve row (12c), Dbt(y) ≤Abt, requires
+that battery to be full and ready before the event epoch. Thus,
+every issue draws from pre-service full stock, and the two rows
+jointly provide the formal no-stockout guarantee throughout
+the planning horizon.
+The availability rows (12d)–(12e) track each battery’s ready
+state over the planning horizon. The initialization (12d) fixes
+each battery’s full state at the beginning of the planning
+horizon. The dynamics (12e) then advance this state according
+to Ab,t+1 = Abt −Dbt(y) + Γb,t+1(σ), removing each issued
+battery and crediting each recharge completion. The completion
+is credited at the next epoch, consistent with the timing in
+Section III-A.
+The job rows (12f) and (12h) construct each recharge from
+the service that creates it. The start row (12f), P
+c
+P
+s σkbcs =
+ykb, requires exactly one charging start for every assigned
+service whose return lies in the modeled horizon. The duration
+row (12h), xkbct = P
+s≤t<s+τkbc σkbcs, expands that start into
+the resulting occupancy and reserves the charger for τkbc slots,
+the prescribed charge-to-full upper bound from Section III-A.
+The charger row (12i) assigns at most one battery to each
+charger in each slot, with compatibility incorporated through
+Cb. The accounting identity below also enforces Gbt(x) ≤
+I+
+bt(y) ≤1, limiting each battery to one charger at a time. Finite
+charger capacity couples recharge decisions across the horizon
+by allocating each low-price slot among waiting batteries. The
+start-to-occupancy expansion in (12h) and the slotwise capacity
+constraint (12i) follow a standard time-indexed construction
+for scheduling under TOU prices [29], with ykb endogenously
+activating each charging job.
+The accounting rows (12g) and (12j) express physical
+conservation. The waiting flag is Wbt = ρbt(y) −ςbt(σ). The
+partition row states that Abt −Dbt(y), Wbt, and Gbt(x) are
+battery b’s mutually exclusive station-side states after service:
+ready, waiting, and charging. Their sum is I+
+bt(y). Per-battery
+indexing preserves each physical unit’s identity and enforces
+conservation at the unit level. The displayed rows imply
+0 ≤I+
+bt(y) ≤1 and Gbt(x) ≤1, making separate presence
+and battery-capacity constraints redundant.
+The integrality row (12k) declares the assignment, charging-
+start, availability, waiting, and occupancy variables binary,
+thereby encoding discrete operating states. In particular, inte-
+grality of A and W enforces the indivisibility of each physical
+unit. Section IV-C establishes the implied integrality of A, W,
+and x; Model R therefore declares only y and σ binary.
+The objective (12a) minimizes the TOU charging cost,
+P
+t
+P
+c λtec
+P xkbct, by pricing every reserved charger-slot.
+A feasible point of (12) represents a complete operating plan
+over the planning horizon, and the optimum is the least-cost
+plan satisfying the no-stockout requirement.
+C. The reduced model R
+Model F exposes all five state and decision families in a
+direct exact transcription. Model R concentrates the independent
+
+--- PDF PAGE 5 ---
+5
+min
+y,A,W,σ,x
+X
+t∈T S
+X
+c∈C
+λtec
+X
+(k,b)∈J :c∈Cb
+xkbct
+(12a)
+s.t.
+X
+b∈Bk
+ykb = 1,
+∀k ∈K,
+(12b)
+Dbt(y) ≤Abt,
+∀b ∈B, t ∈T S,
+(12c)
+Ab0 = A0
+b,
+∀b ∈B,
+(12d)
+Ab,t+1 = Abt −Dbt(y) + Γb,t+1(σ),
+∀b ∈B, t ∈T S,
+(12e)
+X
+c∈Cb
+X
+s∈Skbc
+σkbcs = ykb,
+∀(k, b) ∈J ,
+(12f)
+Wbt = ρbt(y) −ςbt(σ),
+∀b ∈B, t ∈T E,
+(12g)
+xkbct =
+X
+s∈Skbc:s≤t<s+τkbc
+σkbcs,
+∀(k, b) ∈J , c ∈Cb, t ∈T S,
+(12h)
+X
+(k,b)∈J :c∈Cb
+xkbct ≤1,
+∀c ∈C, t ∈T S,
+(12i)
+Abt −Dbt(y) + Wbt + Gbt(x) = I+
+bt(y),
+∀b ∈B, t ∈T E,
+(12j)
+ykb ∈{0, 1},
+∀(k, b) ∈Y,
+(12k)
+Abt, Wbt ∈{0, 1},
+∀b ∈B, t ∈T E,
+σkbcs ∈{0, 1},
+∀(k, b) ∈J , c ∈Cb, s ∈Skbc,
+xkbct ∈{0, 1},
+∀(k, b) ∈J , c ∈Cb, t ∈T S.
+Fig. 3. Full five-family MILP (model F).
+min
+y,A,σ
+X
+(k,b)∈J
+X
+c∈Cb
+X
+s∈Skbc
+ec
+ s+τkbc−1
+X
+t=s
+λt
+
+σkbcs
+(13)
+s.t.
+(12b)–(12f) and (12i) with x = ˆx(σ),
+ykb, σkbcs ∈{0, 1} and Abt ∈[0, 1] for their respective indices.
+Fig. 4. Reduced model R.
+binary decisions in the assignment y and charging start σ,
+because (y, σ) determines the occupancy x, waiting flag W,
+and availability A. It substitutes out x and W and relaxes A to
+[0, 1], leaving (y, σ) explicitly binary. Proposition 1 establishes
+that this reduction preserves both the feasible projection and
+objective values.
+Model R is obtained from F in three steps. First, the duration
+and waiting rows define ˆxkbct(σ) and ˆWbt(y, σ). Let ˆGbt(σ)
+denote Gbt after substituting ˆx. This substitution leaves the
+charger row in (y, A, σ) and rewrites the objective so that each
+start carries the cost of its τkbc reserved slots. Second, the
+algebraically implied partition row is omitted. Third, Abt is
+relaxed to [0, 1], while the remaining structure preserves its
+integrality. Figure 4 states the result.
+Derivation. Fix b and define the pre-service and through-
+service counts and the cumulative completions by
+n−
+bt(y) =
+X
+(k,b)∈Y:ak<t
+ykb,
+nbt(y) =
+X
+(k,b)∈Y:ak≤t
+ykb,
+Hbt(σ) =
+t
+X
+u=1
+Γbu(σ),
+(14)
+where Hb0 = 0 by the empty-sum convention. Then Dbt =
+nbt −n−
+bt, and telescoping the availability dynamics gives
+Abt = A0
+b +Hbt −n−
+bt. Counting starts not yet completed gives
+ˆGbt = ςbt −Hbt. Both identities are algebraic consequences of
+the model equalities and therefore hold over their continuous
+relaxations.
+For binary (y, σ), each ˆxkbct is a nonnegative integer. It
+is bounded by the corresponding job’s total number of starts,
+which is at most one, and is therefore binary. Release feasibility
+and the start row give 0 ≤ςbt ≤ρbt, so ˆWbt = ρbt −ςbt ≥0.
+Moreover, the serve row gives nbt ≤A0
+b+Hbt, while return and
+completion events satisfy ρbt ≤nbt and Hbt ≤ςbt. Therefore,
+ˆWbt ≤A0
+b ≤1, and ˆW is binary. The closed form for A is
+integer-valued, so Abt ∈[0, 1] makes A binary.
+Finally,
+Abt −Dbt + ˆWbt + ˆGbt = A0
+b + ρbt −nbt = I+
+bt.
+(15)
+Thus, the dropped partition row is an identity. Because ℓk > 0,
+every return counted by ρbt has a corresponding service
+counted by nbt. Therefore, I+
+bt ≤A0
+b ≤1. The nonnegative
+decomposition in (15) gives I+
+bt ≥0 and ˆGbt ≤1. The
+omitted presence and battery-capacity inequalities are therefore
+redundant. Substituting ˆx into F’s objective and exchanging its
+finite sums yields (13).
+Proposition 1 (Equivalence of the reduced model): Under
+the finite-horizon assumptions above, F and R have the same
+feasible projection onto (y, σ). Every feasible (y, A, σ) of R
+has Abt, ˆxkbct, ˆWbt ∈{0, 1}. Its extension (y, A, ˆW, σ, ˆx) is
+feasible for F with the same objective value. Consequently,
+whenever the models are feasible, they attain the same optimal
+value.
+Proof: The derivation proves integrality of the recon-
+structed families and all omitted identities and inequalities.
+Hence, restricting any F-feasible point to (y, A, σ) satisfies
+R. Conversely, extending an R-feasible point by x = ˆx(σ)
+and W = ˆW(y, σ) satisfies every row of F. The finite-sum
+
+--- PDF PAGE 6 ---
+6
+rearrangement above preserves the objective in both directions.
+The two maps preserve (y, σ) and the objective values, which
+proves the projection statement. For nonempty feasible sets,
+this correspondence also establishes equality of the attained
+minima.
+Model R reduces the explicit binary dimension from mF =
+|y| + |σ| + |x| + |W| + |A| to mR = |y| + |σ|. Specifically,
+|x| = |T S| P
+(k,b)∈J |Cb|, |σ| = P
+(k,b)∈J
+P
+c∈Cb |Skbc| ≤|x|,
+and |A| = |W| = |B| |T E|. Model R removes x and W
+and makes A continuous. Section VI quantifies the resulting
+computational effect.
+V. PRICE-GUIDED BATTERY-PATH DECOMPOSITION
+The exact formulations couple battery assignments with
+charger and start-time decisions across the full time grid. A path-
+based formulation compresses each battery’s temporal decisions
+into a single column while retaining service coverage and
+charger-capacity coupling in the master problem, supporting
+repeated solution as the fleet grows.
+P-BPD operates over complete battery paths that compactly
+encode the exact model’s time-indexed charging decisions. Each
+path comprises a feasible service sequence and its associated
+charging blocks. A set-partition master selects one path
+per battery, and a dynamic-programming pricing subproblem
+generates improving paths with negative reduced cost. P-BPD
+is a Dantzig–Wolfe/column-generation reformulation in which
+one column represents a complete feasible history of a single
+physical battery [24].
+A. Battery paths and path attributes
+For a battery b, let Vb = {k ∈K : (k, b) ∈Y} be the set of
+events that battery b can serve. In the canonical path model,
+a nonempty path begins with a battery satisfying A0
+b = 1; a
+battery with A0
+b = 0 takes the empty path. Each nonempty path
+records an ordered event sequence and its in-horizon charging
+decisions:
+p =
+ (k1, . . . , km), ((ci, si))i∈Ip
+
+,
+Ip = {i : 1 ≤i < m} ∪{m : rkm ≤Tmax}.
+(16)
+where ki ∈Vb and ak1 < · · · < akm. The recorded charger
+and integer start slot satisfy
+ci ∈Cb,
+si ∈T S,
+rki ≤si,
+i ∈Ip,
+si + τkibci ≤
+(
+aki+1,
+i < m,
+Tmax,
+i = m.
+(17)
+The empty path is available to every battery. For every served
+event whose return lies in the modeled horizon, the path retains
+the corresponding recharge, including the terminal recharge
+following its final service. This terminal block preserves charger
+occupancy and cost accounting through the horizon boundary.
+Let Pb be the set of feasible paths for battery b. Path indices
+are local to b. For each p ∈Pb, define
+δbpk =
+(
+1,
+if path p serves event k,
+0,
+otherwise,
+(18)
+qbpct =
+(
+1,
+if path p occupies charger c in slot t,
+0,
+otherwise.
+(19)
+The path cost is
+Cbp =
+X
+c∈C
+X
+t∈T S
+λtecqbpct.
+(20)
+Complete battery histories have also been used as columns in
+EV service-network design with charging and battery reuse [30].
+P-BPD specializes this column concept to exogenous swap-
+event coverage at a single station.
+B. Path master problem
+Introduce a binary variable zbp that equals one if battery b
+follows path p. The path master problem is
+min
+z
+X
+b∈B
+X
+p∈Pb
+Cbpzbp
+(21a)
+s.t.
+X
+b∈B
+X
+p∈Pb
+δbpkzbp = 1,
+∀k ∈K,
+(21b)
+X
+p∈Pb
+zbp = 1,
+∀b ∈B,
+(21c)
+X
+b∈B
+X
+p∈Pb
+qbpctzbp ≤1,
+∀c ∈C, t ∈T S,
+(21d)
+zbp ∈{0, 1},
+∀b ∈B, p ∈Pb.
+(21e)
+Constraint (21b) covers every customer event exactly once.
+Constraint (21c) selects one physical history for each battery,
+and constraint (21d) enforces charger capacity at slot resolution.
+Customer-cover and charger-capacity coupling remains in the
+master, while all single-battery temporal feasibility conditions
+are embedded in the columns. Per-battery decomposition has
+also been used for large-scale fleet charging through Lagrangian
+relaxation [32]. P-BPD keeps event coverage and charger-slot
+capacity in the master while embedding single-battery temporal
+feasibility in each column.
+C. Restricted master and artificial columns
+The number of feasible paths is exponential in the worst
+case, so P-BPD works with generated subsets bPb ⊂Pb. The
+initial pool contains empty paths, singleton paths, and battery
+paths extracted from greedy feasible schedules. To initialize
+the restricted LP, artificial variables uk ≥0 replace the cover
+rows with P
+b,p∈b
+Pb δbpkzbp +uk = 1 and add M P
+k uk to the
+objective for a fixed large penalty M. Final-solution acceptance
+requires uk = 0 for every event.
+At each column-generation iteration, the linear relaxation
+of the restricted master is solved. Let αk, βb ∈R be the
+dual multipliers for the customer-cover and one-path equalities.
+The multiplier of the charger-capacity inequality is written as
+−µct ≤0, where µct ≥0. The reduced cost of a candidate
+path p for battery b is
+¯cbp = Cbp −
+X
+k∈K
+αkδbpk +
+X
+c∈C
+X
+t∈T S
+µctqbpct −βb.
+(22)
+A path with negative reduced cost is added to the restricted
+master.
+
+--- PDF PAGE 7 ---
+7
+D. Dynamic-programming pricing
+For each battery b, pricing seeks a least-reduced-cost
+path over the predecessor neighborhood Nb(·) defined below.
+Because βb is constant across battery b’s paths, it suffices to
+minimize
+eCbp = Cbp −
+X
+k∈K
+αkδbpk +
+X
+c∈C
+X
+t∈T S
+µctqbpct.
+(23)
+Define the dual-adjusted charging-slot cost
+wct = λtec + µct.
+(24)
+If battery b serves event i and then event j, the cheapest feasible
+charge between them has cost
+ϕb
+ij = min
+c∈Cb
+min
+s∈T S:ri≤s, s+τibc≤aj
+s+τibc−1
+X
+t=s
+wct,
+(25)
+where the minimum of an empty set is defined as +∞. For
+fixed (i, b, c), a prefix sum provides the cost of each candidate
+block in constant time. A sweep over integer starts maintains
+the least-cost block for successive deadlines. For each candidate
+terminal event j, let ϕb
+j† be the same minimum with deadline
+Tmax when rj ≤Tmax, and let ϕb
+j† = 0 otherwise. This is the
+adjusted cost of the required final recharge when its return lies
+in the horizon.
+Sort events lexicographically by (ak, k) and define the
+feasible predecessor set
+Eb(j) = {i ∈Vb : ai < aj, ϕb
+ij < +∞}.
+(26)
+Exhaustive pricing uses Nb(j) = Eb(j). Band-limited pricing
+uses the L elements of Eb(j) with the largest (ai, i). When
+|Eb(j)| < L, band-limited pricing uses all elements. Let Fb(j)
+be the minimum dual-adjusted value of a nonempty path
+ending at j, excluding a terminal charge. Under the convention
+min ∅= +∞, the recursion is
+Fb(j) = −αj + min
+
+0, min
+i∈Nb(j)
+ Fb(i) + ϕb
+ij
+
+.
+(27)
+The zero option starts a new path at j. Induction in strict arrival
+order proves that, with exhaustive neighborhoods, Fb(j) equals
+the minimum adjusted cost among all admissible nonempty
+paths ending at j, before its terminal recharge. Hence, the
+least reduced cost over both nonempty and empty paths is
+min{minj∈Vb[Fb(j) + ϕb
+j†], 0} −βb, where minj∈∅Fb(j) =
++∞. When this minimum is below the negative reduced-cost
+tolerance, the algorithm reconstructs the minimizing event
+sequence and stored argmin charging blocks, including any
+required terminal block, and inserts the resulting path into the
+restricted master.
+E. Computational heuristics and implementation
+The reported P-BPD implementation combines three speed-
+oriented devices. Band-limited pricing retains the L most recent
+feasible elements in each predecessor neighborhood. Cost-only
+transitions store the exact values ϕb
+ij and ϕb
+j† with their argmins,
+reconstructing chargers and starts for each returned path;
+separability across charging blocks makes this representation
+lossless. Greedy schedules with randomized tie-breaking seed
+the initial column pool. Exhaustive pricing continued through
+convergence supplies the full path master’s LP certificate. The
+experiments use fixed band and iteration budgets and assess
+the resulting integer schedules against the certified reference
+solutions and dual-bound optimality-gap guarantees described
+in Section VI.
+F. Online controllers
+Model R and P-BPD serve as window solvers in a rolling-
+horizon controller. At each decision epoch, they optimize a
+finite look-ahead horizon and commit the actions due before the
+next re-planning event. A source-job augmentation represents
+the carry-in state. An in-trip or waiting battery contributes
+an exogenous job with a fixed release epoch and a decision-
+dependent compatible charging block, while an ongoing charge
+contributes fixed remaining occupancy and completion. In the
+path graph, these states become source-to-first-event arcs with
+the same cost, occupancy, and ready-time data. Batteries ready
+at the re-plan epoch have A0
+b = 1. The augmentation adds
+identical fixed or source-job terms to F and R, and Proposition 1
+continues to apply to their endogenous (y, σ) block. Each
+window model assigns a high penalty to an artificial no-service
+option, prioritizing service in the restricted solve; the controller
+records any selected no-service option as a committed stockout.
+VI. EXPERIMENTS
+The experiments quantify the trade-offs among charging
+cost, service, and computation time on synthetic instances
+and in a recorded-demand replay under the deployed station
+configuration. Models F and R share the same optimum, and
+each run that reaches the stated relative MIP gap certifies its
+incumbent. P-BPD solution quality is evaluated against certified
+references or available exact-solver dual bounds.
+Every experiment is a simulation on the synthetic instances
+of Section VI-C1 or the recorded-demand instances of Sec-
+tion VI-D1; rolling experiments use a 24-hour look-ahead
+horizon. All runs price slots with KEPCO’s low-voltage, option-
+II summer TOU tariff—off-, mid-, and peak rates [33] of 83.1,
+140.0, and 270.8 KRW/kWh over the bands of Fig. 1(b)—
+so cost differences between methods reflect scheduling alone.
+A slot at calendar origin h0 and duration ∆hours is priced
+at hour h(t) = (h0 + t∆) mod 24, which reduces to 24t/T
+for the midnight-origin synthetic instances. All solves use
+HiGHS 1.14.0 [34] on an Apple M1 (8 cores, 8 GB RAM,
+macOS 14.0), single-threaded unless otherwise noted.
+A. Compared methods
+Five methods are compared: the exact formulation F, its
+equivalent reduction R (Section IV), P-BPD (Section V), and
+two baselines. ASAP charges each returned battery at the
+earliest free compatible slot; the TOU baseline chooses the
+cheapest feasible slot under a per-pool deadline that keeps the
+pool’s running ready count nonnegative. Both baselines order
+jobs by return epoch and use the lowest-indexed compatible
+battery to determine each recharge duration. When no feasible
+start remains, the affected swap is counted as unserved, so
+
+--- PDF PAGE 8 ---
+8
+the reported service rate directly quantifies charger-capacity
+conflicts.
+Solver configuration. F and R are solved single-threaded by
+HiGHS 1.14.0 through SciPy 1.17.1’s milp at relative MIP
+gap 10−4, with a wall-clock budget of 600 s at B ≤18 and for
+R at B=36, and 1800 s otherwise. An F or R run is recorded
+as certified when it reaches the target gap within its wall-clock
+budget. P-BPD uses predecessor-band size L = 5, initializes
+the restricted master with empty paths, singleton paths, and
+paths extracted from 8 greedy schedules, performs at most 10
+restricted-LP pricing iterations, and adds paths below reduced-
+cost tolerance −10−7. It then solves the restricted integer
+master at relative gap 10−4 offline or 10−2 in rolling re-plans.
+The solver gap certifies F and R over their full formulations;
+for P-BPD, it certifies optimization over the current restricted
+column set. The comparisons below assess P-BPD’s full-model
+quality against certified references or exact-solver dual bounds.
+B. Evaluation metrics and protocol
+A controller’s service is summarized at two resolutions. Let
+⊮[·] denote the indicator. The day reliability Rday is the fraction
+of evaluated days served with no stockout,
+Rday = 1
+N
+N
+X
+d=1
+⊮[day d served with no stockout] ,
+(28)
+where N ∈Z++ is the number of evaluated days. A day
+contributes to Rday precisely when the assignment and service
+conditions (12b)–(12c) hold for every committed step, so Rday
+measures complete daily service. The swap service rate S is
+the fraction of individual swaps served from full stock,
+S = 1
+K
+K
+X
+k=1
+⊮[swap k served from full stock] ,
+(29)
+with K ∈Z++ the number of unique committed swaps over
+the evaluation interval. Each day contributes equally to Rday,
+whereas each swap contributes weight 1/K to S. A feasible
+static-horizon plan serves every represented event, and a rolling
+controller attains Rday = S = 1 when every committed service
+succeeds. Because replayed swaps are temporally dependent
+within and across days, the two empirical measures report
+service at complementary day and event resolutions.
+The reported cost is the energy component of the bill. Under
+the station’s low-voltage tariff, the 2,390 KRW/kW demand
+charge is levied on contracted power, which the installed
+chargers fix identically for every method; the comparisons
+therefore isolate the schedule-dependent energy component.
+A common terminal-recharge convention charges every return
+represented in the instance, including the final return of each
+battery path, giving every method the same terminal-inventory
+treatment at Tmax. On instances with positive denominators, the
+cost premium is (cost−reference)/reference and the reduction
+against a baseline is (baseline −cost)/baseline. Solve time is
+the wall-clock time of one solve: a finite-horizon certification
+in the synthetic scaling study and one window re-plan online.
+A synthetic instance spans one simulated day, while the
+formulation accepts any finite horizon. The reduction, ablation,
+TABLE II
+SYNTHETIC INSTANCE REGIMES.
+Regime
+B
+C
+K
+T
+classes
+ℓ
+need
+Small
+18
+5
+50
+72
+3
+1–5
+2.5–8.0
+Medium
+36
+8
+110
+120
+4
+1–6
+2.5–8.0
+Large
+54
+12
+165
+120
+4
+1–6
+2.5–8.0
+xlarge
+72
+16
+220
+120
+4
+1–6
+2.5–8.0
+Small, and Medium studies use 30 seeds per regime (cases
+0–29); Section VI-C3 specifies the five-seed design for the
+Large and xlarge regimes.
+C. Synthetic experiments
+1) Synthetic instance generation: A regime fixes a sta-
+tion size. Table II lists the four scale-study regimes (B =
+18, 36, 54, 72). An additional B=8 regime supports the reduc-
+tion comparison and ablation, with its configuration given in
+Section VI-C2.
+Station structure. The B = |B| batteries and C = |C|
+chargers are each shuffled and assigned cyclically to the
+regime’s compatibility classes, with the assignment ensuring
+that every class has at least one charger. A battery recharges
+only on a charger of its class. In these instances, each class
+corresponds to a single demand pool. Charger c has speed
+sc ∼U(1.15, 2.40) and draws energy ec = 0.8 + 0.55 sc per
+slot. Battery b has duration factor fb ∼U(0.85, 1.20), and all
+batteries start full.
+Events. Each event k draws a charging need νk
+∼
+U(νmin, νmax) (abstract units) and an integer return delay
+ℓk ∼U{ℓmin, ℓmax} from the ranges in Table II. Its battery
+returns ℓk slots after issue and then recharges on a compatible
+charger c in τkbc = max(1, ⌈νkfb/sc⌉) slots, with incompatible
+pairings barred. The models receive the arrivals, return delays,
+pools, and τ; the charging need νk is represented through
+τ. The per-battery load K/B (K = |K|) is near 3 in every
+tabulated regime (2.78 at B=18) and 2.25 in the additional
+B=8 regime.
+Feasibility by construction. Arrival epochs are generated
+jointly with a witness schedule: at each generator step, an
+available battery is assigned an event no earlier than its ready
+epoch and, on return, is placed on the compatible charger
+with the earliest feasible finish. The generator retains events
+whose assignment and recharge finish within the horizon.
+The witness fixes the event times and remains separate from
+the evaluated solver inputs. Every retained synthetic instance
+therefore admits at least one feasible no-stockout schedule,
+allowing the experiments to quantify each method’s ability to
+recover full service on known-feasible instances.
+2) The reduction’s certified speedup: The certified objective
+values of F and R agree to numerical tolerance on every certified
+paired run, as established by Proposition 1. The ratios of
+median F to median R certification times are 3.1, 5.6, and 7.2
+at B = 8, 18, and 36, respectively (Fig. 5). The B=8 setting
+(C=3, K=18, T=36, 2 classes, ℓ1–4, need 2.5–7.0) is the
+additional regime used for the reduction study and ablation.
+
+--- PDF PAGE 9 ---
+9
+F
+R
+0.0
+0.6
+1.2
+1.8
+certification time (s)
+F/R
+3.1×
+B=8
+F
+R
+0
+20
+40
+60
+F/R
+5.6×
+B=18
+F
+R
+0
+300
+600
+900
+F/R
+7.2×
+B=36
+Fig. 5. Per-instance certification times for F and R (n=30 at B=8, 18, and
+36). Horizontal lines mark medians; panel labels give the F-to-R ratio of
+medians.
+3) Solve time, cost, and service across scale: The Small
+(B=18) and Medium (B=36) regimes use 30 seeds each; the
+Large (B=54) and xlarge (B=72) regimes use 5 seeds each.
+On the 30-seed regimes (Fig. 6), F and R obtain a 10−4
+relative MIP certificate on every seed, and P-BPD returns a
+feasible full-service schedule on every seed, with median solve
+times of 0.24–1.4 s and median premiums of 7% (Small) and
+8% (Medium) over the certified reference. Service metrics
+therefore distinguish the two operational baselines on these
+known-feasible instances.
+Both baselines solve in under 0.05 s. For each baseline, the
+certified reference reduces cost by 50–60% on fully served
+instances with an available certified reference, corresponding
+to ASAP and TOU premiums of 131–152% and 100–111%,
+respectively. In the Small regime, ASAP attains 80% day
+reliability and 99.9% swap service, while TOU attains 60%
+and 99.1%, respectively.
+The two larger regimes characterize exact-certification scal-
+ability. Model size reaches approximately 0.5, 1.5, and 3.5
+million binaries at Medium, Large, and xlarge, respectively.
+At both Large and xlarge, F reaches the time budget without
+certification on all 5 seeds, while R certifies 4 of 5 and 1 of 5
+seeds, respectively. P-BPD returns a schedule on every seed
+in both regimes, with median times of 4.9 and 8.0 s. Each
+plotted premium uses a certified reference when available; for
+the remaining instances, a positive exact-solver dual bound L
+and P-BPD cost H establish 0 < L ≤OPT ≤H and hence
+(H −OPT)/OPT ≤(H −L)/L. These certificates yield ex
+post optimality-gap upper bounds of 9.2–10.9% at Large and
+9.0–11.9% at xlarge.
+4) Ablation of the P-BPD heuristic: Each of P-BPD’s three
+computational devices (Section V-E) is removed one at a time
+and compared with the full method on 90 instances (30 seeds
+at each of B=8, 18, and 36) under the real summer tariff
+(Table III).
+Each device contributes a distinct computational benefit.
+Cost-only transitions reduce median time from 0.39 to 0.24 s at
+unchanged cost, and band-limited pricing reduces the observed
+maximum from 14.2 to 5.9 s while preserving the median.
+Greedy warm starts increase the plan-return count from 87
+to 89 of 90 and reduce cost by approximately 1%, with a
+median-time change from 0.16 to 0.24 s.
+TABLE III
+LEAVE-ONE-OUT ABLATION OF P-BPD’S THREE DEVICES ON 90
+INSTANCES UNDER THE REAL SUMMER TARIFF. RUNTIME SUMMARIES
+COVER ALL RUNS; ∆COST IS THE MEDIAN PAIRED PERCENTAGE CHANGE
+OVER INSTANCES FOR WHICH BOTH THE VARIANT AND FULL METHOD
+RETURN PLANS. THE FULL METHOD IS THE REFERENCE.
+Median
+Max
+Plans found
+∆cost
+Variant
+time (s)
+time (s)
+(/90)
+(%)
+Full method
+0.24
+5.9
+89
+—
+−cost-only transition
+0.39
+7.7
+89
+≈0
+−band-limited pricing
+0.24
+14.2
+89
+≈0
+−greedy warm starts
+0.16
+2.2
+87
++1.0
+D. Recorded-demand replay and deployment-oriented scaling
+This section replaces the synthetic generator with the de-
+ployed station’s configuration and recorded demand, replaying
+each method at the recorded operating point and tracing its
+performance as the station scales. Operation is event-triggered
+under the connected-fleet setting of Section III-A: at each
+swap arrival or charge completion, the controller re-solves a
+24-hour sliding window from the current planned arrival and
+return schedule and executes actions due before the next event.
+The replay study (Section VI-D2) supplies the recorded June
+sequence at the station’s real size as this schedule; the station-
+scaling study (Section VI-D3) samples demand from the same
+log at scale factors f. Model R and P-BPD operate on the
+same demand stream and initial station configuration under a
+common controller protocol.
+1) Station configuration and recorded demand: The station
+configuration is a commercial battery-swap service for electric
+taxis in Anyang, Gyeonggi Province, South Korea. Four
+customer pools (84.0, 64.0, 72.0, 77.4 kWh) span three
+compatibility classes, the 72.0 and 77.4 kWh pools sharing one,
+and six chargers serve them: 100/50/100 kW for the 84.0 kWh
+class, one 50 kW for the 64.0 kWh class, and two 50 kW
+for the shared class, the second a dual-generation bay serving
+both pools. Each charger draws 0.2P kWh in each occupied
+12-min slot at rated power P kW, and a fixed buffer of 7/10/2/6
+full spares backs the pools. A capacity-κ battery on a power-
+P charger recharges in ⌈κ · 0.58 · 60 ηP /(12P)⌉slots, with
+charging-overhead factors η50=1.270 and η100=1.604 and 0.58
+the assumed summer return depth of discharge.
+Each active vehicle holds one battery in circulation, so B is
+the shelf buffer plus one battery per active, distinct-in-window
+vehicle in each pool. The warm-up interval generates the carry-
+in state at the start of reporting, and the trailing look-ahead
+interval is excluded from the reported metrics.
+The replay uses every completed swap recorded at the
+station during June 2026 (June 1–30) in the four deployed
+customer pools: 1,002 swaps by 37 vehicles over 30 full
+days, a mean of 33.4 per day, split 609/215/128/50 across
+the 84/77.4/64/72 kWh pools. Each record gives the swap’s
+start and end times in Korea Standard Time, the vehicle, and
+the battery capacity taken; personal fields are dropped, and
+each vehicle is relabeled with an anonymous identifier. Each
+record is one event, and the dispatched battery returns depleted
+at that vehicle’s next recorded swap, which sets its return delay;
+a vehicle’s last swap in the horizon has no in-window return.
+
+--- PDF PAGE 10 ---
+10
+Small Medium Large
+xlarge
+F
+R
+P-BPD
+ASAP
+TOU
+30
+588
+1806
+1823
+5
+82
+587
+1801
+0.24
+1
+5
+8
+<.01
+0.01
+0.03
+0.05
+<.01
+0.01
+0.03
+0.05
+(a)  solve time (s)
+Small Medium Large
+xlarge
+0
+0
+×
+×
+0
+0
+0
+0
+7
+8
+10
+9
+143
+131
+152
+141
+108
+100
+111
+105
+(b)  cost above optimum (%)
+Small Medium Large
+xlarge
+100
+100
+×
+×
+100
+100
+100
+100
+100
+100
+100
+100
+80
+93
+100
+100
+60
+80
+100
+100
+(c)  days fully served (%)
+Fig. 6. Method comparison under the real summer tariff: (a) median solve time, (b) median cost comparison, and (c) percent of days fully served, by method
+(rows) and station size (columns; n=30 seeds at Small and Medium, n=5 at Large and xlarge). Panel (b) reports premiums over certified reference costs when
+available and, for P-BPD on the remaining instances, certified upper bounds on its relative optimality gap. Baseline cost cells use fully served instances with an
+available certified reference. Hatching marks exact solves stopped at the time budget; their times are right-censored. × denotes unavailable comparisons.
+The recorded-demand replay evaluates reliability directly on
+observed demand, complementing the known-feasible synthetic
+instances.
+2) Rolling-horizon admissibility on real demand: The sta-
+tion’s recorded June 2026 swap log (Section VI-D1) is replayed
+as a continuous multi-day stream under the connected-fleet
+schedule assumption. R and P-BPD follow the same recorded
+demand and controller protocol and use a relative solver gap of
+10−2 for their respective integer models. At each re-plan, the
+next 24 hours of realized arrivals and returns are supplied as
+planning input, isolating rolling-scheduler performance under
+perfect information. Across 1,118 R windows and 1,064 P-BPD
+windows, both controllers return plans within the 120 s budget,
+and fallback usage is zero. Implementation tests validate the
+rolling state transition against an independently coded window
+engine and enumerated small instances against a brute-force
+oracle. The reported interval spans the 30 full June days, with
+cost compared per day.
+The station’s real size is comparable to the Large and
+xlarge rungs of the synthetic scaling study (Section VI-C3). Its
+observed operating intensity is approximately 33 swaps per day
+across 62 batteries, K/B ≈0.5, or one-sixth of the synthetic
+K/B ≈3. The replay evaluates reduced-model re-plan latency
+at this asset scale under observed operating intensity.
+On real demand, the reduced-model re-plan fits the per-
+window compute budget: over the 30 days, R returns each
+window in a mean of 3.2 s (95th percentile 7.9 s, maximum
+19.6 s), and every committed swap is served. P-BPD returns
+every window in under 2.2 s. Thus, both controllers remain
+within the 120 s budget on every window, and all 30 reported
+days have no stockout. Over the same recorded-demand stream,
+the aggregate committed costs of R and P-BPD agree within
+0.12%. Both reduce cost by approximately 50% relative to
+ASAP and by 1.3% relative to the TOU baseline.
+3) The reduced-model-to-heuristic crossover at scale: The
+station-scaling study examines the observed computational
+crossover on days sampled from the June log. The resam-
+pling unit is the car-day, one vehicle’s complete recorded
+swap sequence on one June date: car-days are drawn with
+500
+1000
+1500
+2000
+0
+30
+60
+90
+(a)
+R (exact)
+P-BPD
+stopped day
+1.0
+1.5
+2.0
+2.5
+station scale f
+0
+20
+40
+60
+window time (s)
+(b)
+median (filled)
+mean (open)
+worst-window time (s)
+Fig. 7. Re-plan times relative to the 60 s operational target (dashed; exceedance
+region shaded in (a)): (a) per-day maximum times, with an axis break at 100 s
+and per-rung median lines; (b) per-day medians and means for completed days.
+Crosses mark days ending at the screen’s first stopping event (a solve above
+D or a right-censored solve); their recorded maxima and the R trace for f≥2
+are lower bounds.
+replacement from the full June set of their battery pool,
+and every drawn arrival time receives independent uniform
+jitter of ±12 minutes before slotting. For each pool p, an
+instance-day draws round(f Mp) car-days, where Mp is the
+pool’s car-day count on the busiest June day (18/5/1/8 for
+the 84.0/64.0/72.0/77.4 kWh pools; 32 car-days, approxi-
+mately 40 swaps). An instance comprises a sampled warm-up
+day, reported day, and look-ahead day at a common factor
+f
+∈{1.0, 1.5, 2.0, 2.5}; each rung is evaluated on three
+
+--- PDF PAGE 11 ---
+11
+independently sampled instances. Chargers scale as round(6f)
+by cycling the real type tuple, and spares as round(f · buffer)
+per pool. Each sampled car-day represents a distinct syn-
+thetic vehicle carrying one battery, and vehicles do not recur
+across days. The resulting roster-scaled populations contain
+121/184/242/300 batteries across the rungs and represent roster
+scaling, distinct from whole-station replication.
+R and P-BPD follow the same sampled demand streams,
+initial configurations, and re-planning protocol at the opera-
+tional gap 10−2, with fallback disabled. Solves use a nominal
+1800 s limit; because wall-clock termination is recorded when
+the solver returns, recorded times can exceed the nominal limit,
+and unfinished solves are right-censored. For a reported day
+with K swaps, D = 86400 s/K defines a nominal per-swap
+compute target. Because controllers also re-plan at charge
+completions, D serves as a normalized stress-screen threshold
+rather than a full serial-throughput budget. The screen applies
+D uniformly to every observed window and stops at the first
+solve above D or the first right-censored solve. It includes
+warm-up windows, and all four recorded stopping events occur
+during warm-up.
+P-BPD satisfies the deadline-D screen on all 12 sampled
+days, with a maximum window time of 84.8 s. R’s pass counts
+are 3 of 3, 3 of 3, 2 of 3, and 0 of 3 across f = 1.0, 1.5, 2.0,
+and 2.5, respectively. At f=2.5, two days are right-censored at
+the nominal limit, and the third completes a 983 s solve against
+D = 847 s. Relative to the 60 s operational target, R achieves
+full-rung coverage at f=1.0 (maximum window 38 s), while
+P-BPD meets the target on 11 of 12 days. Window models
+grow from approximately 105 to 1.4 × 106 solver variables
+across the rungs.
+Tail windows determine the screen outcomes. Among
+windows observed before each stopping point, pooled median
+solve times remain between 0.8 and 5.8 s at every rung, while
+the day-maximum window on all 8 completed R days occurs
+before the morning demand peak, when the uncommitted
+demand set and window model are largest. R windows above
+100 s number 0 of 272 solved windows at f=1.0, 25 of 365 at
+f=1.5, and 39 of 279 at f=2.0; the recorded maximum grows
+from 38 to 447 to 1912 s, with the last value right-censored at
+the nominal 1800 s limit. Across the scale range, D changes
+from approximately 2160 to 850 s. At f=1.5, approximately
+eight windows per sampled day exceed 100 s and therefore lie
+above the 60 s target.
+VII. CONCLUSION
+This paper formulated no-stockout, TOU-aware charging
+as an exact per-battery MILP and proved its equivalence
+to Model R, which concentrates binary decisions in service
+assignments and charging starts. In the paired reduction study,
+Model R lowered median exact-certification time by factors
+of 3.1–7.2. In the synthetic scaling study, P-BPD returned a
+full-service schedule for every instance; regime-level median
+solve times ranged from 0.24 to 8.0 s, with 7–8% median
+cost premiums over certified reference costs at the Small
+and Medium scales and 9–12% certified ex post optimality-
+gap upper bounds at the Large and xlarge scales. In the 30-
+day perfect-information station replay, both rolling controllers
+served all 1,002 recorded swaps while reducing charging-energy
+cost by approximately 50% relative to immediate charging and
+by 1.3% relative to the TOU baseline. Together, the exact
+reduction and price-guided path heuristic provide a scalable
+scheduling framework that enforces event-level service in every
+accepted schedule at physical-battery resolution.
+REFERENCES
+[1] F. Schneider, U. W. Thonemann, and D. Klabjan, “Optimization of
+battery charging and purchasing at electric vehicle battery swap stations,”
+Transportation Science, vol. 52, no. 5, pp. 1211–1234, 2018.
+[2] R. S. Widrick, S. G. Nurre, and M. J. Robbins, “Optimal policies for the
+management of an electric vehicle battery swap station,” Transportation
+Science, vol. 52, no. 1, pp. 59–79, 2018.
+[3] X. Tan, G. Qu, B. Sun, N. Li, and D. H. K. Tsang, “Optimal scheduling
+of battery charging station serving electric vehicles based on battery
+swapping,” IEEE Transactions on Smart Grid, vol. 10, no. 2, pp. 1372–
+1384, 2019.
+[4] M. R. Sarker, H. Pandˇzi´c, and M. A. Ortega-Vazquez, “Optimal operation
+and services scheduling for an electric vehicle battery swapping station,”
+IEEE Transactions on Power Systems, vol. 30, no. 2, pp. 901–910, 2015.
+[5] R. Zeng, J. Liu, Y. Li, K. Y. Lee, S. Hu, and Y. Cao, “Joint optimal
+charging scheduling for multiple EV battery swapping stations involving
+the finite-state modeling of charging bay,” IEEE Transactions on
+Transportation Electrification, vol. 11, no. 4, pp. 8784–8796, 2025.
+[6] D. Deng, C. Xiang, C. Gu, B. Yu, H. Chen, X. Wu, and R. Gao,
+“Harmonizing time-of-use pricing and rigid driver schedule in battery
+swapping service,” IEEE Transactions on Intelligent Transportation
+Systems, vol. 27, no. 3, pp. 3605–3618, 2026.
+[7] H. Chen, C. Gu, D. Wan, B. Yu, and C. Xiang, “Time-of-use pricing aware
+battery swapping station charging scheduling via deep reinforcement
+learning,” in International Conference on Algorithms and Architectures
+for Parallel Processing.
+Springer, 2024, pp. 122–141.
+[8] X. Li, F. Ming, J. Hu, Z. Xu, K. Liu, F. Gao, and X. Guan, “A constrained
+deep reinforcement learning approach for charging scheduling of a battery
+swapping station,” IEEE Transactions on Intelligent Transportation
+Systems, vol. 26, no. 11, pp. 20 549–20 561, 2025.
+[9] B. Sun, X. Sun, D. H. K. Tsang, and W. Whitt, “Optimal battery
+purchasing and charging strategy at electric vehicle battery swap stations,”
+European Journal of Operational Research, vol. 279, no. 2, pp. 524–539,
+2019.
+[10] R. Han, W. Fu, and J. Qin, “Risk-aware multi-stage stochastic opti-
+mization for battery swapping station scheduling with quality of service
+assurance,” IEEE Transactions on Intelligent Transportation Systems,
+vol. 26, no. 10, pp. 16 676–16 687, 2025.
+[11] A. A. Shalaby, H. Abdeltawab, and Y. A.-R. I. Mohamed, “Model-free
+dynamic operations management for EV battery swapping stations: A
+deep reinforcement learning approach,” IEEE Transactions on Intelligent
+Transportation Systems, vol. 24, no. 8, pp. 8371–8385, 2023.
+[12] P. H. Zipkin, Foundations of Inventory Management.
+Boston, MA:
+McGraw-Hill, 2000.
+[13] S. Mao, Y. Wang, Q. Guan, and Y. Xu, “Structural charging and
+replenishment policies for battery swapping charging system operation
+under uncertainty,” IEEE Transactions on Intelligent Transportation
+Systems, vol. 24, no. 12, pp. 14 598–14 609, 2023.
+[14] H. Ko, S. Pack, and V. C. M. Leung, “An optimal battery charging
+algorithm in electric vehicle-assisted battery swapping environments,”
+IEEE Transactions on Intelligent Transportation Systems, vol. 23, no. 5,
+pp. 3985–3994, 2022.
+[15] D. S. Nayak and S. Misra, “An operational scheduling framework for
+electric vehicle battery swapping station under demand uncertainty,”
+Energy, vol. 290, p. 130219, 2024.
+[16] B. Pl´a, P. Bares, A. Aronis, and A. Perin, “Demand-adapting charging
+strategy for battery-swapping stations,” Batteries, vol. 11, no. 7, p. 251,
+2025.
+[17] A. A. Shalaby, M. F. Shaaban, M. Mokhtar, H. H. Zeineldin, and
+E. F. El-Saadany, “A dynamic optimal battery swapping mechanism
+for electric vehicles using an lstm-based rolling horizon approach,” IEEE
+Transactions on Intelligent Transportation Systems, vol. 23, no. 9, pp.
+15 218–15 232, 2022.
+[18] M. Casini, A. Vicino, and G. G. Zanvettor, “A receding horizon approach
+to peak power minimization for EV charging stations in the presence
+of uncertainty,” International Journal of Electrical Power & Energy
+Systems, vol. 126, p. 106567, 2021.
+
+--- PDF PAGE 12 ---
+12
+[19] R. Li, Z. Chen, Z. Zhang, R. Guo, Z. Sun, J. Yao, and J. Ma, “Degradation-
+aware model predictive control for battery swapping stations under energy
+arbitrage,” arXiv preprint arXiv:2510.07902, 2025.
+[20] Y. Park, S. Zu, C. Xie, H. Lee, T. Cheong, Q.-C. Lu, and M. Xu, “Smart
+battery swapping control for an electric motorcycle fleet with peak time
+based on deep reinforcement learning,” IEEE Transactions on Intelligent
+Transportation Systems, vol. 25, no. 12, pp. 20 175–20 189, 2024.
+[21] Z. Huang, J. Wang, X. Fan, R. Yue, C. Xiang, and S. Gao, “Economical
+electric vehicle charging scheduling via deep imitation learning,” IEEE
+Transactions on Intelligent Transportation Systems, vol. 25, no. 11, pp.
+18 196–18 210, 2024.
+[22] J. Jin, S. Mao, and Y. Xu, “Optimal priority rule-enhanced deep
+reinforcement learning for charging scheduling in an electric vehicle
+battery swapping station,” IEEE Transactions on Smart Grid, vol. 14,
+no. 6, pp. 4581–4593, 2023.
+[23] D. Renga, F. Spoturno, and M. Meo, “Reinforcement learning for charging
+scheduling in a renewable powered battery swapping station,” IEEE
+Transactions on Vehicular Technology, vol. 73, no. 10, pp. 14 382–14 398,
+2024.
+[24] C. Barnhart, E. L. Johnson, G. L. Nemhauser, M. W. P. Savelsbergh, and
+P. H. Vance, “Branch-and-price: Column generation for solving huge
+integer programs,” Operations Research, vol. 46, no. 3, pp. 316–329,
+1998.
+[25] G. Desaulniers, J. Desrosiers, and M. M. Solomon, Eds., Column
+Generation.
+New York: Springer, 2005.
+[26] A. Parmentier, R. Martinelli, and T. Vidal, “Electric vehicle fleets:
+Scalable route and recharge scheduling through column generation,”
+Transportation Science, vol. 57, no. 3, pp. 631–646, 2023.
+[27] M. H. de Vos, R. N. van Lieshout, and T. Dollevoet, “Electric
+vehicle scheduling in public transit with capacitated charging stations,”
+Transportation Science, vol. 58, no. 2, pp. 279–294, 2024.
+[28] J.-Y. Ding, S. Song, R. Zhang, R. Chiong, and C. Wu, “Parallel
+machine scheduling under time-of-use electricity prices: New models
+and optimization approaches,” IEEE Transactions on Automation Science
+and Engineering, vol. 13, no. 2, pp. 1138–1154, 2016.
+[29] Z. Tian and L. Zheng, “Single machine parallel-batch scheduling
+under time-of-use electricity prices: New formulations and optimisation
+approaches,” European Journal of Operational Research, vol. 312, no. 2,
+pp. 512–524, 2024.
+[30] X. Diao and M. Qiu, “Electric vehicle service network design with
+integrated charging and battery reuse,” Transportation Research Part C:
+Emerging Technologies, vol. 182, p. 105434, 2026.
+[31] ——, “Service network design for electric vehicles with combined battery
+swapping and recharging,” Transportation Research Part E: Logistics
+and Transportation Review, vol. 208, p. 104668, 2026.
+[32] S. Fotedar, J. Wu, B. Kulcs´ar, and R. J¨ornsten, “The large-scale charging
+scheduling problem for fleet batteries: Lagrangian decomposition with
+time-block reformulations,” 2025, arXiv preprint arXiv:2505.07047.
+[33] Korea Electric Power Corporation, “Electricity tariff table,” KEPCO ON,
+[Online]. Available: https://online.kepco.co.kr/PRM004D00, accessed:
+Jul. 16, 2026.
+[34] Q. Huangfu and J. J. Hall, “Parallelizing the dual revised simplex method,”
+Mathematical Programming Computation, vol. 10, no. 1, pp. 119–142,
+2018.

@@ -1,0 +1,4 @@
+{"script": "solve_problem1_18trips.py", "exit_code": 0, "seconds": 2.2189999999973224}
+{"script": "solve_problem2_lns.py", "exit_code": 0, "seconds": 19.70300000000134}
+{"script": "solve_problem3_relay.py", "exit_code": 0, "seconds": 18.125}
+{"script": "solve_problem4_fixed.py", "exit_code": 0, "seconds": 1.4530000000013388}

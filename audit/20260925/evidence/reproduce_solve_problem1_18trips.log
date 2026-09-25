@@ -1,0 +1,7 @@
+正在加载DEM数据: 镇龙乡及周边30米DEM.mat
+  加载MATLAB格式DEM...
+  DEM尺寸: (1309, 1486)
+  高程范围: 41.7 - 1132.9 米
+  地理范围: (109.0326, 22.8612) - (109.4454, 23.2249)
+  分辨率: 0.000278 度
+{"output": "E:\\workspace-e\\set\\audit\\20260925\\reproduction\\\u7ed3\u679c\\\u95ee\u9898\u4e00_18\u67b6\u6b21\u65b9\u6848_\u4fee\u590d\u7248.xlsx", "trips": 18, "cargo_count": 80, "unique_cargo_count": 80, "all_feasible": true, "energy_kwh": 56.51585305255592}

@@ -1,0 +1,3068 @@
+--- PDF PAGE 1 ---
+The relief distribution problem with trucks and drones under
+incomplete demand information
+Aaron Neugebauera,b, Alena Ottoc∗, Marie Schmidta
+a University of Würzburg, Institute of Computer Science, Germany,
+b Image Processing Department, Fraunhofer Institute for Industrial Mathematics ITWM, Germany,
+c Technical University of Munich, Chair of Advanced Analytics in Manufacturing Management, Germany
+Abstract
+Disaster relief operations often take place under uncertainty regarding the extent of
+damage across locations. In this paper, we study the delivery of relief aid in the aftermath of
+disasters when delivery vehicles are assisted by surveillance drones and the demand for relief
+supplies is initially unknown. We introduce a stylized problem that arises in many emergency
+supply delivery settings – the relief distribution problem (RDP). In RDP, emergency vehicles,
+referred to as trucks, must distribute relief supplies on a network, starting from the depot
+to potential delivery locations, whose demand is initially unknown. The trucks are assisted
+by surveillance drones, which cannot deliver relief supplies, but scout delivery locations
+to see whether relief supplies are needed or not. The objective is to visit all location by
+any vehicle, deliver supplies to all damaged ones, and minimizing the completion time of
+the relief operation. We study two natural policies for the online problem RDP which we
+evaluate in two ways: the competitive ratio quantifies the performance in comparison to an
+optimal solution obtained under full information on damages, the drone-impact is the ratio
+of the algorithm’s performance to the best outcome achievable without drones. Through
+theoretical analysis and computational experiments, we characterize the operational trade-
+offs between these policies and derive insights for the effective deployment of drones in
+disaster response.
+Keywords: Disaster Relief, Drones, Online Policies, Competitive Ratio Analysis, Drone-Impact
+Ratio Analysis, Minmax Multiple Traveling Salesman Problem
+1
+Introduction
+Disaster events are becoming more frequent and severe, especially due to global warming [28, 27,
+18]. In 2024 alone, 393 natural hazard-related disasters occurred, resulting in economic losses
+of USD 241.95 billion, 16,753 fatalities, and affecting 167.2 million people [11]. Rapid and
+effective disaster response is therefore increasingly important. A central task in the aftermath
+of disasters is the distribution of emergency supplies, such as food and water, medication,
+∗Corresponding author, email: alena.otto@tum.de
+1
+arXiv:2603.23135v1  [math.OC]  24 Mar 2026
+
+--- PDF PAGE 2 ---
+blood, and other health care services, or other critical materials like, e.g., fuel or electric power
+generators to affected locations.
+However, relief operations often take place under uncertainty regarding the extent of damage
+across locations, implying that the corresponding demand for relief supplies is also initially
+unknown, as this information is revealed only gradually as the situation unfolds. A key source
+of information is remote sensing imagery collected by satellites and drones, which enables rapid
+and automated assessment of disaster impacts – such as building damage from floodings – via
+AI-assisted image analysis [36, 23].
+A photograph by Jessica Lea/DFID distributed under a CC BY 2.0
+license
+Figure 1:
+Drone surveillance during earth-
+quake in Nepal, 2015
+Drones are frequently utilized for the collection of
+images, due to their ability to deliver high-resolution
+images, operate in cloudy conditions, and their quick
+deployment capabilities [19]. In surveillance missions,
+drones typically carry lightweight sensors, allowing
+them to cover large geographic areas due to low energy
+consumption. By rapidly collecting situational infor-
+mation, surveillance drones can significantly improve
+operational decision-making during disaster response
+[15, 38].
+Figure 1 pictures the surveillance drone
+deployed in relief operations after the 7.8-magnitude
+earthquake in Nepal in 2015, which killed over 8000 people and injured thousands more [22].
+In this paper, we study the delivery of relief aid in the aftermath of disasters when delivery
+vehicles are assisted by surveillance drones.
+We introduce a stylized problem that arises in
+many emergency supply delivery settings – the relief distribution problem (RDP). In RDP (see
+Figure 2), kt ∈N emergency vehicles, referred to as trucks, must distribute relief supplies
+starting from the depot v0 to a nonempty set C of potential delivery locations – villages – and
+return to the depot v0 via a road network, represented as an undirected graph. We exclude
+trivial instances by assuming that all nodes in C are at nonzero distances from v0. The trucks
+are assisted by kd ∈N surveillance drones, which travel α > 0 times faster than trucks. If the
+villages remained intact, they do not require relief aid. If they experienced some destruction,
+then they require relief aid. Only a truck can deliver relief aid, the drones cannot do it because
+of capacity restrictions. We call villages that experienced destruction and require relief aid as
+2
+
+--- PDF PAGE 3 ---
+𝑣0
+1
+4
+1
+3
+5
+7
+4
+4
+𝑣1
+𝑣4
+𝑣5
+𝑣2
+𝑣3
+6
+𝑣0
+𝑣1
+𝑣4
+𝑣5
+𝑣2
+𝑣3
+−
+Intact location
+−
+Damaged location
+5
+7
+3
+5
+2
+ൗ
+1 2
+2
+3
+Edge, traversed by the
+       truck in time 𝑐
+Edge, traversed by the
+      drone in time 𝑐𝑑
+−
+Edge with truck travel
+       time 𝑐
+𝑐
+𝑐𝑑
+𝑐
+1
+2
+1
+Figure 2: Example of an RDP∗instance (full-information counterpart)
+Note. Left figure: An instance with α = 2, i.e., the drone is two times faster than the truck; damaged nodes
+D = {v1, v2, v3}, 1 truck, and 1 drone.
+Right figure: An optimal solution for this instance with makespan 17: the truck travels (v0, v1, v3, v2, v1, v0), the
+drone travels (v0, v1, v3, v5, v4, v1, v0).
+damaged and denote them as set D ⊆C. Crucially, set D is initially unknown. The status of
+each village – damaged or not – is revealed only after it is visited by either a truck or a drone.
+The objective is to visit all locations in C, deliver supplies to all damaged villages in D using
+trucks, and minimize the completion time of the relief operation, defined as the time when the
+last vehicle returns to the depot. The RDP is an online problem, meaning that information is
+only partially available and arrives dynamically [cf. 3].
+We evaluate online algorithms for RDP along two key dimensions: performance and the
+impact of drones. A performance gap measure should provide information on the deviation
+of the algorithm’s result from what can be achieved by any other, including the best possible
+algorithm. In the absence of distributional information on the uncertain parameters, competitive
+ratio emerges as the most widespread and well-formalized measure for algorithm’s performance
+[3, 16]. Competitive ratio σ(ALG) of online algorithm Alg is the worst-case ratio of the online
+algorithm’s cost to the cost of an optimal offline algorithm, where all data are known a priori:
+σ(ALG) = sup
+I∈I
+Alg(I)
+OPT(I∗),
+3
+
+--- PDF PAGE 4 ---
+where I is an RDP instance from the set of all possible instances I, I∗is the respective instance
+with full information, Alg(I) is the result of Alg on I, and OPT(I∗) is the optimal objective
+value of I∗. The algorithm’s competitive ratio provides information that simulations cannot: it
+offers a guaranteed performance bound across all possible scenarios. When delivery times in a
+disaster relief operation are long, the competitive ratio indicates the extent to which delays are
+caused by the disaster itself versus algorithmic limitations. For example, if the competitive ratio
+equals one, no algorithm can improve the outcome, and any extended delivery duration reflects
+the inherent difficulty of the instance rather than shortcomings of the algorithm.
+Similarly, the impact of using drones in an online RDP algorithm Alg is measured by the
+worst-case (¯ω) or best-case (ω) drone-impact ratio, i.e., the ratio of the algorithm’s performance
+to the best outcome achievable without drones. In the absence of drones, the problem reduces
+to the multiple Traveling Salesmen Problem with minmax objective (MultiTSP) with kt trucks
+visiting all nodes in C [cf. 9, 17]. We introduce this problem formally later and denote its
+optimal objective value by TSPkt,0(C(I)). Then we can define the best-case and the worst-
+case drone-impact ratio as, respectively:
+¯ω(ALG) = sup
+I∈I
+Alg(I)
+TSPkt,0(C(I)),
+ω(ALG) = inf
+I∈I
+Alg(I)
+TSPkt,0(C(I)).
+Our main finding is that an online policy Alg that is optimal in terms of competitive
+ratio may not be regretless, even if the drones are fast (α > 1); that is, it may achieve
+substantially worse performance compared with truck-only solutions (¯ω(ALG) > 1). This result
+is somewhat counterintuitive: although drones provide additional surveillance capabilities, their
+introduction can actually significantly increase the completion time of relief operations in some
+cases. In realistic instances, we observe makespans that are up to 100% larger after introducing
+surveillance drones. This phenomenon arises from the dynamic arrival of information, which
+creates a nontrivial trade-off between exploration and delivery efficiency.
+Motivated by this observation, we study two natural policies for RDP: Optimistic, which
+achieves the best possible competitive ratio, and Regretless, which is regretless and achieves
+the best possible drone-impact ratios ¯ω and ω. Through theoretical analysis and computational
+experiments, we characterize the operational trade-offs between these policies and derive insights
+for the effective deployment of drones in disaster response.
+4
+
+--- PDF PAGE 5 ---
+RDP differs from classical online routing problems in several important ways (see Section 2).
+First, it is semi-online and involves exploration. Semi-online means that some information –
+in RDP, the set of potential locations – is known a priori. Exploration means that routing
+decisions influence the timing at which new information is revealed. Second, the problem in-
+volves heterogeneous vehicles whose operations have to be synchronized: drones that perform
+surveillance-only tasks and vehicles that perform deliveries; the information collected by surveil-
+lance drones becomes immediately available for trucks, who may change their routes.
+Our contributions are threefold:
+• To the best of our knowledge, we are the first to formulate RDP.
+• We design two policies: Optimistic, which achieves the best possible competitive ratio in
+a range of practice-relevant settings, and Regretless, which achieves the best possible
+drone-impact ratios ¯ω and ω. We systematically analyze these policies with respect to
+the competitive ratio and drone-impact ratios as a function of the drone speed α, the
+number of trucks kt, and the number of drones kd.
+• Through extensive computational experiments – including simulated mountain and coastal
+environments, which are most prominent in disaster relief operations – we show that
+theoretically derived bounds closely approximate the observed performance of the policies.
+We benchmark these policies and derive managerial insights for the effective deployment
+of surveillance drones in relief logistics.
+We proceed with a literature review (Section 2) and the formal problem statement (Sec-
+tion 3).
+Section 4 summarizes the main results of this article: the competitive ratio and
+drone-impact ratio results for Optimistic and Regretless. This section can be read inde-
+pendently of the technical details of the proofs of Section 5. Section 6 reports computational
+experiments and we conclude with a discussion and future research directions in Section 7.
+2
+Literature review
+Research on drone operations and humanitarian logistics, particularly the distribution of emer-
+gency supplies following disasters, has expanded significantly in recent years [e.g., 1, 12, 28, 33].
+5
+
+--- PDF PAGE 6 ---
+Article
+Application
+Source of dynamism
+# drones
+# trucks
+Analysis†
+CR
+DI
+[13]
+communication
+failure
+location of the failed
+drone
+2 (failed, recovery)
+–
+✓
+–
+[14]
+search
+location of the target
+1
+–
+✓
+–
+[20]
+location
+of
+charging stations
+energy requests
+multiple
+✓
+–
+[21]††
+online deliveries
+requests
+2 (independent, truck-carried)
+1
+✓
+–
+[26]
+online deliveries
+requests
+multiple
+1†††
+✓
+–
+[34]
+relief deliveries
+arc damage
+1
+1
+✓
+–
+this study
+relief deliveries
+relief demand
+multiple
+multiple
+✓
+✓
+† CR - competitive ratio analysis, DI - theoretical analysis of the drone’s impact: worst-case and best-case bounds
+on the ratio to truck-only solution.
+†† - precise classification is unclear due to inconsistencies in the paper.
+††† - the truck travels on the line.
+Table 1: Studies on competitive ratio analysis for drone routing applications
+Among these applications, the delivery of emergency supplies in disrupted environments has
+emerged as one of important operational uses [e.g., 15, 38].
+RDP is an online routing problem. Seminal works by Ascheuer et al. [5] and Ausiello et al.
+[6] initiated the competitive ratio analysis of online routing problems in which information about
+requests (nodes to be visited) arrives dynamically over time. Unlike in RDP, the locations of
+requests in these models are not known a priori. Since then, routing problems with dynamically
+arriving service requests have been studied in a variety of settings [e.g., 7, 24, 25].
+RDP
+differs from classical online routing models, because it is semi-online, involves exploration, and
+heterogeneous vehicles. To the best of our knowledge, only Bampis et al. [8] consider an online
+routing problem with known request locations, but they do not consider exploration. A related
+line of work studies the online exploration problem, where vehicles explore a graph by visiting
+its nodes. In these models, however, only the source node is initially known; nodes and edges
+are revealed upon visitation, and limited information about outgoing edges (e.g., outdegree)
+becomes available when a node is reached [10, 30]. More recently, online problems have also been
+studied in the presence of advice and within the framework of learning-augmented algorithms,
+which incorporate predictions together with measures of prediction error [4, 37]. Within this
+perspective, RDP can be viewed as a variant of the graph exploration problem with surveillance
+drones and trucks, in which the underlying graph structure is perfectly predicted a priori, while
+only the status of nodes (damaged or not) must be discovered through exploration. To the best
+of our knowledge, such a variant has not been studied in the literature.
+Overall, the literature applying competitive ratio analysis to drone-assisted routing problems
+is still nascent (see Table 1).
+The settings studied thus differ substantially from ours and
+6
+
+--- PDF PAGE 7 ---
+typically involve at most a single truck. While some works consider trucks for delivery operations
+[21, 26, 34], only Otto et al. [34] incorporates the exploration of network damage. This study,
+which is closest to our setting, examines emergency supply delivery under uncertainty about
+road conditions, where vehicles learn the status of roads only upon traversing them.
+Beyond competitive ratio analysis, a few studies compare truck-only delivery systems with
+integrated truck-and-drone systems, often analyzing the potential efficiency improvements ob-
+tained through drone assistance [2, 35]. However, these comparisons are typically conducted in
+deterministic settings where all customer locations are known in advance.
+To conclude, to the best of our knowledge, this study is the first to analyze RDP – an online
+routing problem with given delivery locations, exploration, and heterogeneous vehicles – and
+one of the few papers that apply competitive-ratio analysis to routing problems with drones.
+3
+The relief distribution problem (RDP)
+Before we state RDP in Section 3.2, we formulate it full-information counterpart in Section 3.1,
+which we mark with ∗as RDP∗. Section 3.3 discusses assumptions.
+3.1
+Relief distribution problem under full information
+We consider a setting with kt ∈N trucks and kd ∈N drones. The street network is described
+as an undirected graph G = (V, E, c), where V is the set of nodes, E ⊆{{i, j}|i, j ∈V }
+defines the set of edges, and c are edge labels. Nodes V = {v0} ∪C consists of a depot node
+v0, where both trucks and drones start and need to return after completing their tours, and
+of a nonempty set of potentially damaged nodes C, which have to be visited by either of the
+vehicles (truck or drone) at least once. The subset D ⊆C refers to damaged nodes. All nodes
+in D have to be visited by a truck.
+We assume that G is connected but not necessarily complete. Edge labels describe distances
+with c(i, j) > 0, ∀{i, j} ∈E that fulfill the triangle inequality, i.e., the graph is metric. If
+{i, j} /∈E, we set c(i, j) to the distance along a shortest path between i and j. Observe that the
+nonempty set C and positive distances between distinct locations guarantee that denominators
+in the competitive or drone-impact ratios are nonzero. We assume homogeneous trucks and
+homogeneous drones and normalize the truck speed to be 1 and the drone speed to be α > 0, i.e.,
+7
+
+--- PDF PAGE 8 ---
+c(i, j) is the travel time needed for the truck to traverse {i, j} ∈E, and by cd(i, j) = 1
+α · c(i, j)
+we denote the drone flight time for this edge.
+Denote by a tour (or path) a sequence of adjacent edges, which can be specified, alterna-
+tively, by the sequence of vertices defining these edges. In this papers we sometimes abbreviate
+the tour notation by omitting nodes from the defining sequence. To reconstruct a tour (i.e., an
+actual path in the network) from this abbreviated representation, take any shortest path between
+vertices that succeed each other in the defining sequence. We use c(t) or c(i1, i2, . . . , ik) to
+denote the length of tour t = (i1, i2, . . . , ik).
+The objective of the relief distribution problem under full information RDP∗is to find truck
+tours {st
+i : i = 1, . . . , kt} and drone tours in {sd
+j : j = 1, . . . , kd} in G to minimize the
+makespan, i.e., the duration of the longest tour, such that: (i) All tours start and end at the
+depot v0; (ii) Each node in C is visited either by a truck or by a drone; (iii) each damaged node
+d ∈D is visited by a truck. Note that we do not require every vehicle to depart from the depot.
+We call an instance of RDP∗as I∗= (kt, kd, α, G, D) and denote its optimal objective value
+as OPT(I∗). Especially when graph G of I∗is not complete, vehicles may visit a node several
+times, cf. the example in Figure 2. For kd = 0 and kt = 1, RDP∗corresponds to a traveling
+salesman problem (TSP). NP hardness of our problems follows by reduction from this problem.
+3.2
+Relief distribution problem under uncertain damage
+Immediately after a disaster, the information on which nodes from the set C are damaged may
+not be available. We study this setting in the relief distribution problem (RDP). An instance
+I = (kt, kd, α, G, D) of RDP contains the same data as its full information counterpart –
+instance I∗– but the status of the nodes in set C (i.e., whether they pertain to the set of
+damaged nodes D or not) is not known in the beginning and is only discovered when a vehicle
+has arrived at the respective node.
+In problems under incomplete information, such as RDP, one does not speak of solutions, but
+of policies. A policy specifies the actions of trucks and drones in each information state – i.e.,
+‘moving to node vi from the current location along an edge in graph G’ or ‘waiting’ – based
+only on information available initially and the damage status of the visited nodes.
+Luckily,
+because our analysis focuses on best-possible as well as particular given policies, we avoid a
+full specification of the state and action spaces, which would lead to introducing unnecessary
+8
+
+--- PDF PAGE 9 ---
+cumbersome notation.
+Each algorithm Alg we study is a policy that always yields a feasible solution for the
+full-information counterpart I∗and the objective value is evaluated as defined in Section 3.1.
+3.3
+Discussion of assumptions
+RDP represents a stylized problem that summarizes common characteristics of many relief
+distribution settings.
+We make several assumptions and omit the following details, whose
+analysis we defer to future research:
+Immediate information transmission. We assume that damage is recognized instantly when
+a node is visited by any vehicle, and information is transmitted instantly.
+Immediate unloading and relief distribution. We do not consider service times in the nodes,
+i.e., relief aid is distributed instantly when the node is visited by a truck.
+Unlimited truck capacity. In line with the literature [21, 26, 34], we assume that trucks
+have sufficient capacity. This assumption is particularly relevant for emergency supplies such as
+medication, first-aid and hygiene kits, and electric power generators.
+Constant truck-to-drone travel time ratio α. In line with the literature [2, 35], we assume
+that drone travel times are proportional to truck travel times, i.e., c(i, j) = α·cd(i, j), ∀i, j ∈V .
+While in practice truck speeds depend on road conditions, and drones may travel more directly
+but are affected by wind, this abstraction facilitates tractable analysis. To apply our worst- and
+best-case results, practitioners may calibrate α to the corresponding expected worst (best) ratio
+c(i,j)
+cd(i,j) over all relevant node pairs in G for the operational setting under consideration.
+Sufficient energy. We assume that drone and truck tour lengths are not constrained by
+energy limitations. This assumption is not overly restrictive: for instance, lightweight drones,
+such as those developed by Quantum Systems, can achieve flight ranges of up to 100 km [29],
+with further improvements expected as the technology matures.
+4
+Overview of main results
+Before formally introducing Optimistic and Regretless in Section 5.2, this section provides
+intuition for these policies and an overview of our main results.
+Policy Optimistic treats trucks and drones as co-equal vehicles. Initial tours are con-
+9
+
+--- PDF PAGE 10 ---
+𝑣0
+𝑣1
+𝑣4
+𝑣5
+𝑣2
+𝑣3
+5
+7
+3
+5
+2
+ൗ
+1 2
+2
+3
+1
+2
+1
+(a) Optimistic
+𝑣1
+𝑣0
+𝑣4
+𝑣5
+𝑣2
+𝑣3
+5
+3
+5
+2
+ൗ
+1 2
+2
+4
+4
+3
+1
+2
+1
+(b) Regretless
+Figure 3: Optimistic and Regretless for the example in Figure 2
+structed for all vehicles so that every node in C is visited and the depot is reached again in
+minimum time. After that, trucks visit the damaged nodes identified by the drones.
+In contrast, Regretless treats drones as purely supporting vehicles. It first constructs
+truck tours that visit all nodes in C, ignoring the presence of drones.
+When trucks start
+executing these tours, drones inspect the nodes toward the end of the tours, allowing trucks to
+skip nodes whose status has been revealed as not damaged.
+Figure 3 illustrates the two policies on the example from Figure 2 for kt = kd = 1 and
+α = 2.
+Under Optimistic, the truck first travels (v0, v1, v2, v1, v0) and the drone travels
+(v0, v1, v3, v5, v4, v1, v0). After both vehicles return to the depot at time 9, the truck visits
+the remaining damaged nodes – i.e., those not yet visited by the truck – via (v0, v1, v3, v1, v0),
+resulting in a makespan of 21. Under Regretless, first, the tour (v0, v1, v2, v4, v5, v3, v1, v0)
+is partitioned in a truck segment (v0, v1, v2) and a drone segment (v4, v5, v3, v1, v0).
+Both
+vehicles traverse their segments - the drone in reverse order. At time 4, the truck reaches the
+last node of its segment, v2, while the drone is en route between v5 and v4. At this point, the
+truck is reassigned to cover the unexplored node v4 and the damaged node v3 before returning
+to the depot via a shortest path (v2, v4, v3, v1, v0), while the drone completes its route. The
+resulting makespan is 18.
+10
+
+--- PDF PAGE 11 ---
+Measure
+Any deterministic online policy Alg
+Optimistic
+Regretless
+Drone-impact ratio
+(best-case ω)
+≥
+1
+1+α⌈kd
+kt ⌉
+≤
+1
+1+α kd
+kt
+≤
+1
+1+α kd
+kt
+for some α, kt, kd
+(worst-case ¯ω)
+≥1
+≥min{1 + 1
+α, 1+α
+1+ε }
+= 1
+≤min{2, 1 + 1
+α
+l
+kt
+kd
+m
+}
+Competitive ratio σ
+≥min{2, 1 + α⌈kd
+kt ⌉} for
+1
+α ∈N
+= min{2, 1 + α⌈kd
+kt ⌉}
+≤1 + α⌈kd
+kt ⌉
+≥2 −
+1
+2α for α ∈N
+= 1 + α⌈kd
+kt ⌉for some α, kt, kd
+≥min{2α, 2
+α}
+Table 2: Overview of main results
+Table 2 summarizes our main results on the competitive and drone-impact ratios of Optimistic
+and Regretless. Both policies fully exploit the potential of drone technology, since they
+achieve the best-case drone-impact ratio ω of
+1
+1+α⌈kd
+kt ⌉, which is the best possible for any online
+algorithm Alg (proven for integer-valued ratios ⌈kd
+kt ⌉). This formula highlights that the achiev-
+able benefit from using drones increases with both the drone speed α and the ratio of available
+drones to trucks kd
+kt . However, the policies exhibit markedly different relative performance with
+respect to the remaining ratios.
+Regretless achieves the best possible worst-case drone-impact ratio ¯ω of 1, meaning that
+using drones under this policy never worsens the makespan of relief supply deliveries compared
+to truck-only operations. In other words, under Regretless, we never regret using drones.
+However, this comes at a cost in terms of performance: the competitive ratio σ, which compares
+the policy’s result to the optimal solution under full information, can be substantially higher for
+Regretless than for Optimistic when drones are fast (α > 1), e.g., at least 50% higher if
+α = 2 and at least 100% higher if α = 3. One mechanism leading to performance loss is the
+following. Since Regretless has trucks traverse the same tours as in truck-only operations
+– only skipping nodes identified as undamaged by the drones – this policy is vulnerable when
+damages are concentrated along a few truck routes, preventing effective node skipping.
+In contrast, Optimistic achieves low competitive ratios σ of min{2, 1+α⌈kd
+kt ⌉}, which are
+the best possible if the truck speed is an integer multiple of the drone speed, meaning that no
+deterministic online policy can outperform it in this setting. However, under Optimistic, the
+use of drones can sometimes increase the makespan of relief delivery compared to truck-only
+operations, even when drones are fast (α > 1). When drones and trucks have the same speed,
+we can construct examples where the makespan doubles relative to a truck-only solution.
+11
+
+--- PDF PAGE 12 ---
+Our theoretical bounds and tightness results also hold for metric and planar graphs, as all
+constructed examples are based on such graphs (a graph is called planar if it can be drawn on
+the plane so that its edges intersect only at their endpoints). This is particularly relevant in
+practice, since distances in street networks (graphs) are metric (i.e., they satisfy the triangle
+inequality), and these networks are often planar or nearly planar.
+5
+Drone-impact and competitive ratio analysis
+After introducing some notation and basic lemmata that will be used throughout our analysis
+(Section 5.1), we formally define Optimistic and Regretless policies (Section 5.2), present
+best-case (Section 5.3) and worst-case (Section 5.4) drone-impact ratio analysis as well as
+competitive ratio analysis results (Section 5.5). In our analysis, we proceed as follows. First,
+we derive bounds on the ratios – upper bounds for ¯ω(ALG) and σ(ALG), and a lower bound
+for ω(ALG). We then present extreme instances – worst-case for ¯ω(ALG) and σ(ALG), and
+best-case for ω(ALG) – that establish the tightness of these bounds.
+5.1
+Notation and basics
+First, we introduce a related problem – the multiple Traveling Salesmen Problem with minmax
+objective (MultiTSP) – which is essential for bounding the optimal objective value of RDP∗
+and for analyzing policies in the subsequent sections. After discussing some basic relations, we
+define the TruckOnly policy. This simple policy provides the baseline for the drone-impact
+ratios. Finally, we define specific graphs used in our extreme examples below.
+We state MultiTSP as follows:
+Definition 1 (TSPm,n(W), S∗
+m,n(W)). Given graph G = (V, E, c) with a designated depot
+v0, C = V \ {v0}, positive edge labels c, a drone speed α, nonnegative integers m and n with
+m + n ≥1, and a node set W ⊆C, MultiTSP is to find a set of m + n tours S∗= St ∪Sd
+in G that start and end at the depot and visit all nodes in W, such that, if each tour in
+St = {st
+i : i = 1, . . . , m} is performed by a truck and each tour in Sd = {sd
+j : j = 1, . . . , n}
+is performed by a drone the overall makespan of these tours is minimized.
+We denote the
+respective optimal makespan as TSPm,n(W) and an optimal solution as S∗
+m,n(W).
+12
+
+--- PDF PAGE 13 ---
+Note that in the notation introduced in Definition 1 and in the remainder of the paper,
+we simplify notation by omitting explicit dependence on the underlying instance or graph – by
+writing, e.g., W instead of W(G) or W(I) whenever the context is clear.
+Lemma 1 summarizes some basic relations for TSPm,n(W):
+Lemma 1. The following relations hold for all graphs G = (V, E, c) with V = C ∪{v0}, all
+drone speeds α > 0, all sets W ⊆C and all m, n ≥0, m + n ≥1.
+[Non-deterioration w.r.t. less nodes]
+TSPm,n(W ′) ≤TSPm,n(W)
+∀W ′ ⊆W
+(1)
+[Non-deterioration w.r.t. more vehicles]
+TSPm′,n(W) ≤TSPm,n(W)
+∀m′ ≥m
+(2)
+TSPm,n′(W) ≤TSPm,n(W)
+∀n′ ≥n
+(3)
+[Reallocation of tours to trucks or drones]
+TSPm′,0(W) ≤
+ m
+m′
+
++ α
+ n
+m′
+
+TSPm,n(W)
+∀m′ ≥1
+(4)
+TSP0,n′(W) ≤
+ n
+n′
+
++ 1
+α
+m
+n′
+
+TSPm,n(W)
+∀n′ ≥1
+(5)
+Proof. See Online Appendix A.1.
+The next lemma provides a lower bound on the optimal objective value of RDP∗.
+Lemma 2. For any RDP∗instance I∗we have
+OPT(I) ≥max{TSPkt,kd(C), TSPkt,0(D)}
+Proof. See Online Appendix A.1.
+Based on the definition of the MultiTSP we can now state the TruckOnly policy with
+makespan TSPkt,0(C) as: Given an instance I = (kt, kd, α, G, D) with C = V \ {v0} of RDP
+solve MultiTSP using kt trucks and no drones and serve the obtained tours by the truck.
+13
+
+--- PDF PAGE 14 ---
+𝑣0
+𝑣1
+𝑣3
+𝑣2
+1
+1
+1
+(a) ˜G(3, 1)
+𝑣0
+𝑣1
+𝑣3
+𝑣2
+1
+1
+1
+𝛼
+𝑓1
+𝑓2
+𝑓3
+𝛼
+𝛼
+(b) ˜G(3, 3, 1, α)
+Figure 4: Examples of star graphs
+To conclude this section, we now define several specific graphs used in our examples along
+with several basic relations on these graphs summarized in Lemmata 3 and 4.
+Definition 2 ( ˜G(n, d)). We define ˜G(n, d) with n ∈N and d ∈R>0 as a star graph, i.e., an
+undirected graph with node set W ∪{v0}, |W| = n, and edges E = {{v0, v}: v ∈W} with
+c(v0, vi) = d for all v ∈D.
+Definition 3 ( ˜G(n1, n2, d1, d2)). We define ˜G(n1, n2, d1, d2) with n1, n2 ∈N and d1, d2 ∈R>0,
+as a star graph with node set W = W1 ∪W2 ∪{v0}, where |W1| = n1 and |W2| = n2, and
+edge set E = {{v0, v}: v ∈W1 ∪W2}, with c(v0, v) = d1 ∀v ∈W1, c(v0, v) = d2 ∀v ∈W2.
+Figure 4 illustrates graphs ˜G(3, 1) and ˜G(3, 3, 1, α).
+Lemma 3. For graphs ˜G(n, d) with the set of non-depot nodes W and ˜G(n1, n2, d1, d2) with
+the sets of non-depot nodes W1 (for level-1 nodes) and W2 (for level-2 nodes), kt ≥1 trucks,
+kd ≥1 drones, and drone speed α > 0, the following relations hold
+[Truck-only and drone-only makespan]
+TSP1,0(W ′) = 2d|W ′|
+∀W ′ ⊆W
+(6)
+TSP0,1(W ′) = 2
+αd|W ′|
+∀W ′ ⊆W
+(7)
+TSPkt,0(W) = 2d
+ n
+kt
+
+(8)
+TSP0,kd(W) = 2
+αd
+ n
+kd
+
+(9)
+TSP1,0(W ′
+1 ∪W ′
+2) = 2d1|W ′
+1| + 2d2|W ′
+2|
+∀W ′
+1 ⊆W1, W ′
+2 ⊆W2
+(10)
+TSP0,1(W ′
+1 ∪W ′
+2) = 2
+αd1|W ′
+1| + 2
+αd2|W ′
+2|
+∀W ′
+1 ⊆W1, W ′
+2 ⊆W2
+(11)
+14
+
+--- PDF PAGE 15 ---
+Proof. See Online Appendix A.1.
+Lemma 4. For graph ˜G(n1, n2, 1, α) with the sets of non-depot nodes W1 (for level-1 nodes)
+and W2 (for level-2 nodes), if there is f ∈N such that n1 = fkt and n2 = fkd we have
+TSPkt,kd(W1 ∪W2) = 2f
+(12)
+Proof. We prove relation (12) in two steps.
+First, observe that a feasible solution, where
+each truck travels over f nodes in W1 and each drone travels over f nodes in W2 has the
+makespan of 2f. Consider for example with kt = kd = 3, f = 1 and nodes W1 and W2 as
+depicted in Figure 4b: In a feasible solution with the makespan of 2f = 2, drones perform tours
+(v0, fi, v0), i ∈{1, 2, 3} and trucks perform tours (v0, vj, v0), j ∈{1, 2, 3}.
+Second, we prove that the lower bound on TSPkt,kd(W1 ∪W2) is 2f. For this, denote
+nodes W t
+1 ⊆W1 and W t
+2 ⊆W2 as the nodes visited by truck tours in some feasible solution of
+the respective MultiTSP. Observe that, by the triangle inequality, it suffices to consider tours
+that visit each node in W ′
+1 ∪W ′
+2, n′ = |W ′
+1| + |W ′
+2|, exacly once while solving MultiTSP. Recall
+that the maximum over some numbers cannot be lower than the average of these numbers.
+Therefore, we bound TSPkt,kd(W1 ∪W2) by the average length of the vehicle tours; using (10)
+and (11), we receive:
+TSPkt,kd(W1 ∪W2) ≥max
+
+
+
+2|W t
+1| + 2α|W t
+2|
+kt
+,
+2
+α
+ fkt −|W t
+1|
+ + 2
+αα
+
+fkd −|W t
+2|
+
+kd
+
+
+.
+Prove by contradiction. Assume that TSPkt,kd(W1 ∪W2) < 2f. For this, the average lengths
+of the truck and drone tours of the respective optimal solution should be less than 2f:
+2|W t
+1| + 2α|W t
+2|
+kt
+< 2f
+(13)
+2
+α
+ fkt −|W t
+1|
+ + 2
+αα
+
+fkd −|W t
+2|
+
+kd
+< 2f
+(14)
+Multiply (13) by kt and (14) by αkd and add both inequalities, we receive:
+2fkt + 2αfkd > 2|W t
+1| + 2α|W t
+2| + 2
+
+fkt −|W t
+1|
+
++ 2α
+
+fkd −|W t
+2|
+
+= 2fkt + 2αfkd
+15
+
+--- PDF PAGE 16 ---
+We conclude that the bound TSPkt,kd(W1 ∪W2) ≥2f is proven by contradiction. Together
+with the feasible solution of makespan 2f provided above, TSPkt,kd(W1 ∪W2) = 2f.
+5.2
+RDP policies: OPTIMISTIC and REGRETLESS
+This section introduces the two policies central to our analysis: Optimistic and Regretless.
+Lemmata 5, 6 and 7 establish upper bounds on the policies’ results. We analyze both policies
+as deterministic policies.
+In Optimistic, vehicles first follow the routes of S∗
+kt,kd(C) and return to the depot. Let
+Dd ⊆D be the set of damaged nodes not visited by the truck tours St in this stage. In the
+second stage, trucks traverse tours S∗
+kt,0(Dd). That is, the makespan of Optimistic is
+Optimistic(I) = TSPkt,kd(C) + TSPkt,0(Dd).
+(15)
+Regretless consists of initial plan and one replanning event for each truck:
+• [First stage: Initial plan.] Compute S∗
+kt,0(C) = {s∗
+i : i ∈{1, . . . , kt}} with makespan
+TSPkt,0(C). Assign one truck to each tour in S∗
+kt,0(C) and distribute the drones as evenly
+as possible, so that each tour receives either
+l
+kd
+kt
+m
+or
+j
+kd
+kt
+k
+drones.
+Now split each tour s∗
+i = (v(0) = v0, v(1), v(2), . . . , v(ni) = v0) into up to ki segments,
+which will determine the tours of the vehicles assigned to s∗
+i built in a makespan minimizing
+way; the truck is assigned the segment adjacent to the depot and the drones serve the
+remaining segments. Here, ni denotes the number of non-depot nodes in tour s∗
+i and ki
+denotes the total number of vehicles assigned to s∗
+i . Specifically, we partition the tour
+in up to ki segments ∆l
+i := (v(jl), . . . , v(jl+1−1)) and complete the segments to tours
+t1
+i := (v0, v(1), . . . , v(j2−1), v0), tl
+i := (v0, v(jl+1−1), . . . , v(jl), v0) for l = 2, . . . , ki −1, and
+tki
+i
+:= (v0, v(ni), . . . , v(jki), v0), such that the makespan of serving tour t1
+i by truck and
+the other tours by drones, i.e., max{c(t1
+i ), maxl=2,...,ki
+c(tl
+i)
+α }, is minimum.
+• [Second stage: Replanning]. For each i, replanning occurs when the truck reaches the
+last node v(j1) of its segment. Let Dd
+i denote the set of damaged nodes in s∗
+i not yet
+visited by the truck, and Cd
+i the set of nodes in s∗
+i not yet visited by any vehicle. Starting
+from v(j1) truck i then follows a minimum-length tour that visits all nodes in Dd
+i ∪Cd
+i
+16
+
+--- PDF PAGE 17 ---
+and returns to the depot. The drones complete their tours.
+Lemma 5. For any RDP instance I, it holds
+Optimistic(I) ≤TSPkt,kd(C) + TSPkt,0(D).
+(16)
+Proof. Immediate, for (15) and (1).
+Lemma 6. For any RDP instance I, it holds
+Regretless(I) ≤TSPkt,0(C).
+(17)
+Proof. Immediate from the definition of Regretless.
+Lemma 7. For any RDP instance I and any online deterministic policy, it holds that
+Alg(I) ≥max{TSPkt,kd(C), TSPkt,0(D)}.
+(18)
+Proof. Follows from Lemma 2.
+5.3
+Best-case drone-impact ratio analysis
+Sections 5.3.1 and 5.3.2 establish the following lower and upper bounds on the best-case drone-
+impact ratios:
+1
+1 + α
+l
+kd
+kt
+m ≤ω(Optimistic) ≤
+1
+1 + α kd
+kt
+(19)
+1
+1 + α
+l
+kd
+kt
+m ≤ω(Regretless) ≤
+1
+1 + α kd
+kt
+for kd
+kt ∈Z+
+0
+(20)
+If the number of drones is a multiple of the number of trucks, i.e., kd
+kt ∈Z+
+0 , the best-case
+drone-impact ratios are tight:
+ω(Optimistic) = ω(Regretless) =
+1
+1 + α
+l
+kd
+kt
+m
+(21)
+17
+
+--- PDF PAGE 18 ---
+5.3.1
+Lower bounds on ω(ALG)
+Lemma 8 establishes a lower bound for all deterministic online policies Alg.
+Lemma 8. For any α > 0, kt ∈N, kd ∈N, and any deterministic online policy Alg we have
+ω(Alg) ≥
+1
+1+α
+l
+kd
+kt
+m.
+Proof. Using Lemma 1 we obtain
+ω(Alg) ≥inf
+I
+TSPkt,kd(C(I))
+TSPkt,0(C(I)) ≥inf
+I
+TSPkt,kd(C(I))
+(1 + α
+l
+kd
+kt
+m
+)TSPkt,kd(C(I))
+≥
+1
+1 + α
+l
+kd
+kt
+m.
+(22)
+5.3.2
+Upper bounds on ω(OPTIMISTIC) and ω(REGRETLESS)
+Lemma 9. For any α > 0, kt ∈N, kd ∈N, we have ω(Optimistic) ≤
+1
+1+α kd
+kt
+.
+Proof. Consider an instance I with no damaged nodes (D = ∅), in which the depot node v0
+and nodes C form a graph ˜G((kt)2 , kdkt, 1, α), i.e., a graph with (kt)2 level-1 nodes and kdkt
+level-2 nodes. From (12), TSPkt,kd(C) = 2kt.
+We receive makespan of an optimal truck-only solution by evenly distributing the nodes
+among trucks and using (10) (to recheck this argument, recall that the maximum over some
+numbers cannot be larger than the average over these numbers and compute the average tour
+length over the trucks): TSPkt,0(C) = 2kt + 2αkd.
+From these expressions for TSPkt,kd(C) and TSPkt,0(C), it follows:
+ω(Optimistic) ≤Optimistic(I)
+TSPkt,0(C)
+= TSPkt,kd(C)
+TSPkt,0(C) =
+1
+1 + α kd
+kt
+(23)
+Lemma 10. If kd
+kt ∈Z+
+0 , for any α > 0, we have ω(Regretless) ≤
+1
+1+α kd
+kt
+.
+Proof. See Online Appendix A.1.
+18
+
+--- PDF PAGE 19 ---
+5.4
+Worst-case drone-impact ratio analysis
+Observe that for any online policy Alg, ¯ω(Alg) ≥1, since it takes at least TSPkt,0(C) to
+visit the damaged nodes for instances with all nodes damaged (D = C).
+Sections 5.4.1 and 5.4.2 establish lower and upper bounds on the worst-case drone-impact
+ratios. Since ¯ω(Regretless) = 1 (Lemma 12), no online policy can achieve a better worst-
+case drone-impact ratio, and under Regretless the use of drones never degrades performance
+of emergency deliveries relative to truck-only operations.
+For Optimistic we show that min{1 + 1
+α, 1+α
+1+ϵ } ≤¯ω(Optimistic) ≤min{2, 1
+α
+l
+kt
+kd
+m
++ 1}
+for an arbitrarily small ε > 0. The bound is tight for fast drones (α > 1), if there are not too
+many trucks, e.g., kt ≤kd. For α = 1, the bound is nearly tight for all kt and kd, in the sense
+that the worst-case instance I in Lemma 13 yields ratios Optimistic(I)
+TSPkt,0(C)
+arbitrarily close to the
+theoretical bound of 2.
+5.4.1
+Upper bounds on ¯ω(OPTIMISTIC) and ¯ω(REGRETLESS)
+Lemma 11. For any α > 0, kt ∈N, kd ∈N, we have ¯ω(Optimistic) ≤min{2, 1
+α
+l
+kt
+kd
+m
++ 1}.
+Proof. On the one hand, from the definition of Optimistic, (1), and (2), it follows
+¯ω(Optimistic) = sup
+I
+Optimistic(I)
+TSPkt,0(C)
+= TSPkt,kd(C) + TSPkt,0(Dd)
+TSPkt,0(C)
+≤
+≤TSPkt,0(C) + TSPkt,0(C)
+TSPkt,0(C)
+= 2.
+On the other hand, from the definition of Optimistic, (1), (2), and (5), it follows
+¯ω(Optimistic) = sup
+I
+Optimistic(I)
+TSPkt,0(C)
+= TSPkt,kd(C) + TSPkt,0(Dd)
+TSPkt,0(C)
+≤
+≤TSP0,kd(C) + TSPkt,0(C)
+TSPkt,0(C)
+≤
+1
+α
+l
+kt
+kd
+m
+TSPkt,0(C) + TSPkt,0(C)
+TSPkt,0(C)
+=
+= 1
+α
+ kt
+kd
+
++ 1.
+Lemma 12. For any α > 0, kt ∈N, kd ∈N, we have ¯ω(Regretless) ≤1.
+19
+
+--- PDF PAGE 20 ---
+Proof. Immediately follows from Lemma 6.
+5.4.2
+Lower bounds on ¯ω(OPTIMISTIC) and ¯ω(REGRETLESS)
+Lemma 13. For any α > 0, kt ∈N, kd ∈N, there is an instance I with Optimistic(I)
+TSPkt,0(C)
+=
+min{1 + 1
+α, 1+α
+1+ϵ }.
+Proof. See Online Appendix A.2.
+Lemma 14. For any α > 0, kt ∈N, kd ∈N, we have ¯ω(Regretless) = 1.
+Proof. For instances I with D = C (all nodes are damaged), Regretless(I)
+TSPkt,0(C)
+= 1. Lemma (6)
+completes the proof.
+5.5
+Competitive ratio analysis
+Section 5.5.1 provides upper bounds on the competitive ratios, while Sections 5.5.2, 5.5.3, and
+5.5.4 establish lower bounds for Optimistic, Regretless, and any deterministic online policy
+Alg, respectively.
+Lemmata 15 and 17-20, establish the following tight competitive ratios for Optimistic:
+σ(Optimistic) = min{2, 1 +
+&
+kd
+kt
+'
+α}
+(24)
+No online deterministic policy can achieve a better competitive ratio than Optimistic, if
+trucks and drones have the same speed or if the truck speed is an integer multiple of the drone
+speed (Lemma 24). Moreover, if the drone speed is an integer multiple of the truck speed, the
+competitive-ratio lower bound for any deterministic policy is 2 −2
+α; for increasing drone speed,
+this bound approaches the competitive ratio of Optimistic.
+For Regretless we are able to establish tightness of the competitive ratio σ(Regretless)
+= 1 +
+l
+kd
+kt
+m
+α, if α = 1 and kt ≥α
+l
+kd
+kt
+m
+(Lemma 21) or if 1
+α is integer and kt ≥
+l
+kd
+kt
+m
++ b −1
+(Lemma 22). For α ∈N and kt ≥
+l
+αkd
+kt
+m
+, we prove a slightly weaker result σ(Regretless) ≥
+1 +
+l
+αkd
+kt
+m
+(Lemma 23).
+5.5.1
+Upper bounds on σ(OPTIMISTIC) and σ(REGRETLESS)
+Lemma 15. For any α > 0, kt ∈N, kd ∈N, we have σ(Optimistic) ≤min{2, 1 +
+l
+kd
+kt
+m
+α}.
+20
+
+--- PDF PAGE 21 ---
+Proof. See Online Appendix A.2.
+Lemma 16. For any α > 0, kt ∈N, kd ∈N, we have σ(Regretless) ≤1 +
+l
+kd
+kt
+m
+α.
+Proof. See Online Appendix A.2.
+5.5.2
+Lower bounds on σ(OPTIMISTIC)
+In this section, Lemmata 17-20 construct worst-case instances for all possible values of α, kt,
+and kd, and illustrate that the bounds from Lemma 15 are tight. The ratios of Lemma 15 are
+min{2, 1 +
+l
+kd
+kt
+m
+α}. The cases consider α
+l
+kd
+kt
+m
+< 1 (Lemma 20); and α < 1 and α
+l
+kd
+kt
+m
+≥1
+(Lemma 19). The cases of α
+l
+kd
+kt
+m
+≥1 and α = 1 as well α
+l
+kd
+kt
+m
+≥1 and α > 1 are covered by
+Lemmata 17 and 18, respectively.
+Lemma 17. For α = 1, kd, kt ∈N, there is an instance I with Optimistic(I)
+OPT(I∗)
+= 2.
+Proof. Consider an instance with one damaged node, in which the depot node v0 and nodes C
+form a graph ˜G(kt + kd, 1). In Optimistic, each vehicle first performs round tours from the
+depot (v0, v, v0), v ∈C with the makespan of 2. Observe that notwithstanding which nodes
+Optimistic decides to be visited by the trucks, there is an instance in which the damaged
+node is visited by the drone. For this instance, Optimistic(I) = 4 as a truck has to revisit
+the damaged node in the second stage.
+Observe that OPT(I∗) = 2, because a truck visit the damaged node, and Optimistic(I)
+OPT(I∗)
+= 2.
+Figure 4a illustrates such an instance with kt = 1 and kd = 2. Regardless of which nodes
+v ∈{v1, v2, v3} are visited initially by the drones in Optimistic, the oracle can always select
+an instance with the damage placed at one of these nodes.
+Lemma 18. For α̸ = 1, kd, kt ∈N, there is an instance I with Optimistic(I)
+OPT(I∗)
+= min{2, 1 + α}.
+Proof. See Online Appendix A.2.
+Lemma 19. For any α < 1, kt, kd such that α
+l
+kd
+kt
+m
+≥1, there exists and instance I with
+Optimistic(I)
+OPT(I∗)
+= 2.
+Proof. See Online Appendix A.2.
+21
+
+--- PDF PAGE 22 ---
+Lemma 20. For any α > 0 and kt, kd ∈N with α
+l
+kd
+kt
+m
+< 1, there exists an instance I with
+Optimistic(I)
+OPT(I∗)
+= 1 +
+l
+kd
+kt
+m
+α.
+Proof. See Online Appendix A.2.
+5.5.3
+Lower bounds on σ(REGRETLESS)
+Lemma 21. For α = 1, kd ∈N and kt ≥α
+l
+kd
+kt
+m
+there exists an instance I with Regretless(I)
+OPT(I∗)
+=
+1 + α
+l
+kd
+kt
+m
+.
+Proof. Consider an instance I with depot node v0 and nodes C forming a star graph ˜G(kt +
+kd, 1). Observe that if up to kt nodes are damaged, using (12) we have OPT(I∗) = 2.
+In the first phase of Regretless, truck tours that visit all nodes are built. Each of these
+tours contains either 1 + α
+j
+kd
+kt
+k
+or 1 + α
+l
+kd
+kt
+m
+non-depot nodes, and there is at least one
+tour with exactly 1 + α
+l
+kd
+kt
+m
+non-depot nodes and makespan TSPkt,0(C) = 2(1 + α
+l
+kd
+kt
+m
+).
+Consider an instance I, in which all but the first non-depot node initially assigned to one such
+truck (and its supporting drones) are damaged.
+Then, Regretless = 2(1 +
+l
+kd
+kt
+m
+), and
+Regretless(I)
+OPT(I∗)
+= 1 + α
+l
+kd
+kt
+m
+.
+Lemma 22. For any α = 1
+b, b ∈N, kt, kd ∈N with kt ≥
+l
+kd
+kt
+m
++ b −1, there exists an instance
+I with Regretless(I)
+OPT(I∗)
+= 1 + α
+l
+kd
+kt
+m
+.
+Proof. See Online Appendix A.2.
+Lemma 23. For any α ∈N, kt, kd ∈N with kt ≥
+l
+αkd
+kt
+m
+, there exists an instance I with
+Regretless(I)
+OPT(I∗)
+= 1 +
+l
+αkd
+kt
+m
+.
+Proof. See Online Appendix A.2.
+5.5.4
+Lower bounds on the competitive ratio for any online policy ALG
+Lemma 24. Consider kt, kd ∈N and α > 0 with 1
+α ∈N, i.e., the truck speed is an integer
+multiple of the drone speed.
+For any online policy Alg, there is an instance I such that
+ALG(I)
+OPT(I∗) ≥min{2, 1 +
+l
+kd
+kt
+m
+α}.
+22
+
+--- PDF PAGE 23 ---
+Proof. Let b := 1
+α. Consider an instance I with |D| ≤ktb and the depot node v0 and non-depot
+nodes C forming a star graph ˜G(kd + bkt, 1). Let us first look at the full information situation.
+If |D| ≤ktb, each drone visits one non-depot node and each truck visits b non-depot nodes in
+an optimal solution, resulting in a makespan of OPT(I∗) = max{2b, 2b} = 2b.
+Let Alg be an online policy with a competitive σ(ALG) < 2. In the constructed instance,
+denote the total number of non-depot nodes visited by drones in Alg as n′. Observe that
+n′ ≤kd. Note that if a drone visits more than one non-depot node, its tour duration would be
+≥2 2
+α = 2 · 2b, leading to a competitive ratio of at least 2.
+Assume that min{n′, bkt} of the nodes visited by drones are damaged. That means that
+these need to be visited by trucks as well. Consider two cases:
+If n′ ≤bkt, this means that in Alg all nodes are visited by trucks: trucks visit nodes
+(kd + bkt −n′) and revisit min{n′, bkt} damaged nodes originally visited by the drones. Since
+kt trucks visit kd + bkt nodes, there is at least one truck that visits
+l
+kd+bkt
+kt
+m
+= b +
+l
+kd
+kt
+m
+nodes.
+From (6), Alg(I) ≥2(b +
+l
+kd
+kt
+m
+) and ALG(I)
+OPT(I∗) ≥1 +
+l
+kd
+kt
+m
+α.
+If n′ > bkt, this means that the trucks visit in total 2bkt nodes in Alg, leading to a
+makespan of 4b and a competitive ratio of ALG(I)
+OPT(I∗) ≥2.
+Lemma 25. Consider kt, kd ∈N and α ∈N, i.e., the drone speed is an integer multiple of the
+truck speed. For any policy Alg there is an instance I such that ALG(I)
+OPT(I∗) ≥2 −1
+2α.
+Proof. See Online Appendix A.2.
+Lemma 24 and Lemma 25 only apply to integer drone speed α (or α with 1
+α, respectively),
+because the graph constructions in the respective examples are only possible in these cases. Note
+that we can, however, also analyze the Optimistic policy on the there-constructed graphs if α
+does not take the value that the construction was meant to, obtaining (slightly) weaker bounds.
+Lemma 26 relies on a similar idea: on the instance constructed there (in dependence of kt
+and kd) we can prove a tight bound if α = 1, but it also provides bounds for other values of α.
+Lemma 26. Consider kt, kd ∈N and α > 0. For any policy Alg there is an instance I with
+kt trucks, kd drones, and drone speed α such that ALG(I)
+OPT(I∗) ≥min{ 2
+α, 2α}.
+Proof. See Online Appendix A.2.
+23
+
+--- PDF PAGE 24 ---
+6
+Experimental evaluation
+This section reports the observed performance of the Optimistic and Regretless based
+on extensive computational experiments. We first describe benchmark instances in Section 6.1.
+Section 6.2 presents the observed competitive ratios results and Section 6.3 outlines the observed
+drone-impact ratios. We emphasize the scale of these experiments. The evaluated online policies
+Optimistic and Regretless, as well as the benchmark policies, require solving the strongly
+NP-hard problem MultiTSP repeatedly: once for the initial plan and after each replanning.
+6.1
+Benchmark instances
+We generate five classes of benchmark graphs: Random, 1-Center, 2-Center, Coastal, and
+Mountain. The Random class consists of complete graphs generated by sampling node locations
+uniformly from the unit square and setting the first generated node as the depot. 1-Center and
+2-Center graphs are generated following the approach of [2]. 1-Center graphs have one central
+node, which serves as the depot, whereas 2-Center graphs have two central nodes and the
+depot is placed at one of them. These three classes of graphs are Euclidean, with edge weights
+given by Euclidean distances. Coastal and Mountain classes consist of metric planar graphs
+designed to resemble transportation networks in coastal and mountainous regions, respectively.
+In Coastal graphs, villages are concentrated near a coastline, with inland villages typically aligned
+perpendicular to it. In Mountain graphs, villages are primarily located in valleys, with fewer
+villages at higher elevations. Online Appendix B provides details on the graph generation process.
+For each graph, the set of damaged nodes is generated according to a damage probability δ,
+i.e., each node is damaged with probability δ.
+Based on these classes of graphs, we construct four sets of benchmark instances. RAN-
+DOM comprises 80 Random graphs, with 20 graphs generated for each instance size of n ∈
+13, 15, 18, 21 nodes. For each graph, we randomly independently construct five sets of dam-
+aged nodes with damage probabilities δ ∈{0.1, 0.3, 0.5, 0.7, 0.9}. We consider drone speeds of
+α ∈{0.25, 0.5, 1.0, 2.0, 4.0} and the use of one truck and one drone, i.e., kt = kd = 1. Instance
+set BASE contains 20 Random graphs (and corresponding sets of damaged nodes) with 18
+nodes and damage probability of 0.3. We consider drone speeds of α ∈{0.25, 0.5, 1.0, 2.0, 4.0}
+and the use of one truck and one drone, i.e., kt = kd = 1.
+VAR consists of instances of
+24
+
+--- PDF PAGE 25 ---
+BASE and similarly generated instances of other graph classes. For each graph class, 20 graphs
+with n = 18 nodes and damage probability δ = 0.3 are generated, thereby the Coastal and
+Mountain graphs have 36 edges. We consider drone speeds of α ∈{0.25, 0.5, 1.0, 2.0, 4.0} and
+the use of one truck and one drone, i.e., kt = kd = 1. LARGE contains the instances from
+RANDOM and VAR. Finally, for the computational experiments with more than two vehicles,
+where solution times are considerably higher than for the case of one truck and one drone, we
+use instance set SMALL that contains the 13-node graphs (and corresponding sets of damaged
+nodes) from RANDOM. We consider drone speeds of α ∈{0.5, 1.0, 2.0} and up to four vehicles,
+i.e., (kt, kd) ∈{(1, 1), (1, 2), (1, 3), (2, 1), (2, 2), (3, 1)}.
+All benchmark graphs used for testing and respective generators are provided in [31, 32].
+The computational experiments were executed on a Ryzen 1700x with 8GB of RAM on Void
+Linux 6.12.50 and the implementational details of the tested online policies are explained in
+Online Appendix C.
+6.2
+Competitive Ratio Analysis
+This section investigates the performance of Optimistic and Regretless focusing on whether
+the actually observed competitive ratios are close to the lower and upper bounds proven in Sec-
+tion 5. Section 6.2.1 reports results for kt = 1 truck and kd = 1 drone on the LARGE dataset.
+Section 6.2.2 investigates the case of kt = 1 truck and kd = 1 drone in more detail on BASE,
+analyzing the effects of damage probability, graph class, and instance size using a one-factor-
+at-a-time experimental design. Comparisons with alternative online policies are presented in
+Section 6.2.3, and Section 6.2.4 concludes with results for multiple trucks and drones.
+We denote the worst observed competitive ratio as ˆσ and the the median observed compet-
+itive ratio as σmed.
+6.2.1
+Competitive ratio for one Truck and Drone
+In Figure 5, red lines indicate the upper and lower bounds for the competitive ratios established
+in Section 5. The lower and upper bounds of the boxes indicate the 25% and 75% quartile of
+the input data. The line within a box gives the median value. The upper whiskers terminate
+at the largest value smaller than the 75% quantile plus 1.5 times the interquartile range. The
+lower whiskers are drawn analogously. Further outliers are drawn as a circle.
+25
+
+--- PDF PAGE 26 ---
+0.25
+1
+2
+4
+1
+1.5
+2
+2.5
+3
+3.5
+4
+4.5
+0.5
+α
+Competitive Ratio
+Optimistic
+0.25
+1
+2
+4
+1
+1.5
+2
+2.5
+3
+3.5
+4
+4.5
+0.5
+α
+Regretless
+Figure 5: Observed competitive ratios ˆσ for Optimistic and Regretless on LARGE
+Note. The red line indicates analytical competitive ratios σ from Section 5.
+For Optimistic for all drone speeds α we observe a wide range of competitive ratios,
+spanning (almost) the whole range between 1 (optimal performance) and the red line (worst-
+case performance). Regretless performs favorably for slow drones (α ≤1), where both ˆσ
+and σmed are consistently lower for Regretless than for Optimistic. In contrast, for fast
+drones (α > 1), Optimistic becomes advantageous: ˆσ(Regretless) increases rapidly with
+α and exceeds 2 – which is the competitive ratio of Optimistic –already starting from α = 2.
+6.2.2
+Sensitivity analysis for one truck and one drone
+Table 3 examines the effects of damage probabilities, graph classes, and instance sizes in detail
+in a one-factor-at-a-time design around the BASE dataset (highlighted in grey).
+Lower damage probabilities appear to increase ˆσ and σmed in case of fast drones ( from α > 1
+for Optimistic and from α ≥1 for Regretless). This is especially interesting, remembering
+that the worst-case instance constructed in Lemma 18 for Optimistic had one damaged
+node. Regretless achieves higher ratios for small damage percentages and, as expected,
+Regretless outperforms Optimistic for large damage probabilities. Indeed, the truck’s tour
+in an RDP∗solution closes in on a TSP tour favoring Regretless over Optimistic.
+Both Regretless and Optimistic appear robust with respect to different graph classes
+and instance sizes, as no significant performance differences are observed across these settings.
+26
+
+--- PDF PAGE 27 ---
+6.2.3
+Comparison to benchmark policies
+Table 4 contrasts the performance of Optimistic and Regretless to alternative intuitive
+online policies: 1.) TruckOnly where only trucks visit the nodes, 2.) the Explore-First-
+Help-Second policy (EFHS), where the drones visit all nodes in the first step and, as soon as
+all drones have returned to the depot, the trucks visit the damaged nodes, and 3.) a variant
+of EFHS called Explore-First-Help-ASAP (EFHA), where the drones start exploring and the
+trucks follow immediately after a damaged node is discovered by a drone.
+For slow drones, Regretless outperforms the alternative policies, with TruckOnly
+following at a small margin. As expected, EFHS and EFHA perform poorly in this setting.
+This picture changes with increasing drone speed.
+For α ∈{2, 4}, TruckOnly takes
+significantly longer than the remaining drone-based policies, and EFHA becomes the best
+policy both with respect to the worst observed and median competitive ratios. Note, however,
+that the competitive ratio of EFHS and EFHA may exceed 2 for α ≥1 – which is the
+competitive ratio for Optimistic in this case (see Lemma 27).
+Lemma 27. For α ∈N and kt = kd = 1, there are instances I and I′, such that EFHS(I)
+OPT(I∗) ≥
+2 + 1
+2α and EFHA(I)
+OPT(I∗) ≥2 + 1
+2α.
+Proof. Consider instances I and I′, in which the depot node v0 and nodes C form a star graph
+˜G(α + 1, 1) and assume that one node is damaged. The optimal RDP∗solution with makespan
+2 sends the truck to visit the damaged node and the drone to visit all other nodes. In contrast,
+under EFHS and EFHA, the damaged node is discovered only when the drone reaches it, at
+time 2α+1
+α . Even if the truck is dispatched immediately (EFHA), the resulting makespan is at
+least 2α+1
+α
++ 2, yielding the competitive ratio of σ(EFHA) ≥2 + 1
+2α.
+27
+
+--- PDF PAGE 28 ---
+α = 0.25
+α = 0.5
+α = 1
+α = 2
+α = 4
+Optimistic
+Regretless
+Optimistic
+Regretless
+Optimistic
+Regretless
+Optimistic
+Regretless
+Optimistic
+Regretless
+Damage
+Percentage
+Influence of damage probability
+0.1
+1.22 (1.00)⋆
+1.14 (1.03)
+1.34⋆(1.20)
+1.23 (1.09)
+1.80 (1.19)⋆
+1.51 (1.13)
+1.93 (1.31)
+2.18 (1.72)
+1.97 (1.46)
+4.12 (2.87)
+0.3
+1.18⋆(1.07)
+1.09⋆(1.04)
+1.40 (1.17)⋆
+1.19 (1.08)
+1.82 (1.46)
+1.38 (1.18)
+1.80 (1.53)
+1.95 (1.24)
+1.43 (1.31)
+2.27 (1.26)
+0.5
+1.21 (1.08)
+1.12 (1.03)
+1.42 (1.28)
+1.19 (1.13)
+1.90 (1.53)
+1.43 (1.17)
+1.81 (1.52)
+1.70 (1.26)
+1.56 (1.30)
+1.74 (1.27)
+0.7
+1.24 (1.14)
+1.14 (1.02)
+1.40 (1.26)
+1.20 (1.06)
+1.80 (1.44)
+1.24 (1.12)
+1.51 (1.36)
+1.28 (1.08)
+1.28⋆(1.23)
+1.27 (1.13)
+0.9
+1.23 (1.13)
+1.14 (1.00)⋆
+1.44 (1.23)
+1.14⋆(1.04)⋆
+1.55⋆(1.38)
+1.20⋆(1.04)⋆
+1.45⋆(1.28)⋆
+1.20⋆(1.04)⋆
+1.29 (1.20)⋆
+1.20⋆(1.04)⋆
+Graph class
+Influence of graph class
+Random
+1.18⋆(1.07)
+1.09⋆(1.04)⋆
+1.40 (1.17)
+1.19⋆(1.08)⋆
+1.82 (1.46)
+1.38⋆(1.18)
+1.80⋆(1.53)
+1.95⋆(1.24)⋆
+1.43⋆(1.31)
+2.27⋆(1.26)⋆
+1-Center
+1.20 (1.11)
+1.14 (1.06)
+1.43 (1.11)
+1.34 (1.10)
+1.71⋆(1.28)⋆
+1.64 (1.21)
+1.88 (1.37)⋆
+2.66 (1.63)
+1.75 (1.28)⋆
+3.31 (1.87)
+2-Center
+1.18⋆(1.01)
+1.23 (1.07)
+1.19⋆(1.05)⋆
+1.36 (1.10)
+1.91 (1.62)
+1.40 (1.18)
+1.80⋆(1.52)
+2.22 (1.40)
+1.48 (1.31)
+3.52 (1.41)
+Coastal
+1.22 (1.09)
+1.16 (1.05)
+1.41 (1.21)
+1.27 (1.12)
+1.90 (1.53)
+1.50 (1.20)
+1.80⋆(1.53)
+2.06 (1.31)
+1.81 (1.32)
+4.09 (1.46)
+Mountain
+1.18⋆(1.00)⋆
+1.14 (1.06)
+1.42 (1.22)
+1.22 (1.08)⋆
+1.78 (1.48)
+1.44 (1.17)⋆
+1.85 (1.54)
+2.06 (1.31)
+1.59 (1.34)
+2.37 (1.35)
+Number Nodes
+Influence of Number of Nodes in the Graph
+13
+1.19 (1.00)⋆
+1.15 (1.01)⋆
+1.41 (1.12)⋆
+1.32 (1.02)⋆
+1.88 (1.51)
+1.38 (1.11)⋆
+1.80 (1.61)
+1.84 (1.24)
+1.67 (1.34)
+2.74 (1.36)
+15
+1.24 (1.00)⋆
+1.07⋆(1.01)⋆
+1.46 (1.18)
+1.14⋆(1.06)
+1.95 (1.55)
+1.37⋆(1.16)
+1.92 (1.52)
+1.92 (1.22)⋆
+1.83 (1.36)
+2.25 (1.34)
+18
+1.18⋆(1.07)
+1.09 (1.04)
+1.40⋆(1.17)
+1.19 (1.08)
+1.82 (1.46)⋆
+1.38 (1.18)
+1.80 (1.53)
+1.95 (1.24)
+1.43⋆(1.31)⋆
+2.27 (1.26)
+21
+1.19 (1.08)
+1.14 (1.04)
+1.40⋆(1.24)
+1.22 (1.12)
+1.66⋆(1.50)
+1.49 (1.20)
+1.74⋆(1.39)⋆
+1.51⋆(1.23)
+1.86 (1.32)
+2.08⋆(1.24)⋆
+The BASE dataset is highlighted in gray. For each entry, the first (second) value gives the worst observed (median) competitive ratios ˆσ(σmed) .
+For each α, the largest (smallest) entries are marked in bold (with ⋆).
+Table 3: Worst-observed and median competitive ratios for Optimistic and Regretless on LARGE
+Policy
+α = 0.25
+α = 0.5
+α = 1
+α = 2
+α = 4
+Optimistic
+1.24 (1.06)
+1.46 (1.17)
+1.95 (1.49)
+1.92 (1.52)
+1.86 (1.32)
+Regretless
+1.15⋆(1.03)⋆
+1.32⋆(1.07)⋆
+1.49⋆(1.16)⋆
+1.95 (1.23)
+2.74 (1.27)
+EFHA
+4.82 (4.37)
+2.85 (2.46)
+1.98 (1.60)
+1.76⋆(1.22)⋆
+1.77⋆(1.09)⋆
+EFHS
+5.44 (4.95)
+3.40 (3.11)
+2.60 (2.28)
+2.16 (1.72)
+1.96 (1.36)
+TruckOnly
+1.19 (1.06)
+1.35 (1.17)
+1.69 (1.37)
+2.70 (1.47)
+4.58 (1.47)
+For each entry, the first (second) value gives the worst observed (median) competitive ratios ˆσ(σmed).
+For each α, the largest (smallest) entries are marked in bold (with ⋆).
+Table 4: Comparison of Optimistic and Regretless to alternative policies on LARGE
+28
+
+--- PDF PAGE 29 ---
+6.2.4
+Multiple Vehicles
+As shown in Figure 6, Regretless outperforms Optimistic for small values of α across
+all examined settings. However, for α = 2, even in this relatively small instance set, some
+instances exhibit a competitive ratio for Regretless exceeding 2, which is the competitive
+ratio for Optimistic. Overall, the worst-observed competitive ratios in Figure 6 lie further
+from the theoretical worst-case bounds, which may reflect the limited size of the tested instance
+set rather than inherent algorithmic behavior.
+6.3
+Drone-Impact Ratio Analysis
+Figure 7 reports the results on the observed drone-impact ratio for LARGE instances with
+kt = kd = 1.
+For Optimistic, we observe for all α solutions with a drone-impact ratio
+exceeding 1. Regretless outperforms Optimistic both in terms of the worst-observed and,
+for α ≤2, median drone-impact ratio. In contrast, with respect to the best observed drone-
+impact ratio, Optimistic outperforms Regretless for all values of α. Overall, the analytical
+ratios derived in Section 5 closely predict the observed performance. In particular, the worst
+observed drone-impact ratios for both policies (except for α = 1 in Optimistic), as well as
+the best observed ratios for Optimistic, align with the theoretical bounds.
+7
+Conclusions and future research directions
+Timely relief after disasters is of crucial importance. Surveillance drones can support relief op-
+erations by providing information on the actual demand for relief supplies at potential demand
+locations. However, the efficient operation of a fleet of relief distribution trucks and surveillance
+drones under uncertainty remains challenging: In this paper we are able to show some general
+lower bounds on both the competitive ratio and drone-impact ratios, which demonstrates the-
+oretical limitations on the performance of any deterministic online policy. Our results highlight
+a fundamental trade-off: an online policy that is optimal with respect to the competitive ratio
+need not be regretless, even when drones are fast. In particular, the use of drones may lead
+to substantially worse performance compared to truck-only operations. This counterintuitive
+phenomenon arises from a nontrivial trade-off between exploration and delivery efficiency.
+29
+
+--- PDF PAGE 30 ---
+1
+1.2
+1.4
+1.6
+1.8
+2
+2.2
+Optimistic
+α = 0.5
+1
+1.2
+1.4
+1.6
+1.8
+2
+2.2
+α = 1
+1
+1.2
+1.4
+1.6
+1.8
+2
+2.2
+α = 2
+(1, 3)
+(1, 2)
+(1, 1)
+(2, 2)
+(3, 3)
+(2, 1)
+(3, 1)
+1
+1.2
+1.4
+1.6
+1.8
+2
+2.2
+Regretless
+(1, 3)
+(1, 2)
+(1, 1)
+(2, 2)
+(3, 3)
+(2, 1)
+(3, 1)
+1
+1.2
+1.4
+1.6
+1.8
+2
+2.2
+Number of Trucks and Drones (kt, kd)
+(1, 3)
+(1, 2)
+(1, 1)
+(2, 2)
+(3, 3)
+(2, 1)
+(3, 1)
+1
+1.2
+1.4
+1.6
+1.8
+2
+2.2
+Competitive Ratio
+Figure 6: Competitive ratios ˆσ for Optimistic and Regretless for several trucks and drones on SMALL
+Note.
+The red line indicates analytical competitive ratios σ from Section 5.
+The red line for α = 2 for
+Regretless depicts value 3 and is not visible in the figure.
+0.25
+1
+2
+4
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+0.5
+α
+Drone-Impact Ratio
+Optimistic
+0.25
+1
+2
+4
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+0.5
+α
+Regretless
+Figure 7: Observed drone-impact ratios for Optimistic and Regretless on LARGE
+Note. The red lines indicates analytical drone-impact ratios ¯ω and ω from Section 5.
+30
+
+--- PDF PAGE 31 ---
+Motivated by this observation, we study two natural policies for RDP: Optimistic, which
+achieves the best possible competitive ratio, and Regretless, which is regretless and achieves
+the best possible drone-impact ratios ¯ω and ω. On the positive side, we can upper-bound the
+worst-case performance of both investigated policies Optimistic and Regretless. Our ex-
+tensive computational experiments – including on instances that mimic mountain and coastal
+regions, which are common in disaster relief operations – show that the theoretically derived
+bounds closely approximate the observed performance of the policies and, thus, provide invalu-
+able insights for disaster relief managers. Based on theoretical results and supported by the
+experimental evaluation, we conclude that Regretless performs better when drones are slow
+in comparison to trucks, and Optimistic when drones are faster than trucks. Several directions
+for future research remain. First, improved bounds on the examined ratios may be attainable
+in a few settings where the current bounds are not tight. Overall, it remains an open question
+whether an online policy can simultaneously achieve best possible values for all three ratios:
+the competitive ratio and the two drone-impact ratios. Second, alternative policies merit fur-
+ther investigation, especially those based on immediate reoptimization, such as EFHA, which
+performs well in our experiments with fast drones. In addition, other objective functions should
+be considered, such as a nomadic variant in which the makespan is defined by the completion
+time of the last delivery rather than the return of the final vehicle to the depot.
+More broadly, solving RDP, as a first stylized model for drone-supported disaster relief dis-
+tribution, is but a first step towards understanding the full complexity of the real-world relief
+distribution operations under uncertainty. Future work could extend the model to incorporate de-
+mand quantities and vehicle capacities, travel range limits, fairness considerations, and multiple
+sources of uncertainty, including road damages and stochastic travel times. Another promising
+direction is the integration of imperfect probabilistic information on damages into the decision
+process. Such extensions may ultimately support the development of more comprehensive and
+practically relevant planning approaches for disaster relief operations under uncertainty.
+References
+[1] B. Adsanver, B. Balcik, V. Bélanger, and M.-È. Rancourt. Operations Research Approaches
+for Improving Coordination, Cooperation, and Collaboration in Humanitarian Felief C hains:
+A Framework and Literature Review. European Journal of Operational Research, 319(2):
+384–398, 2024.
+31
+
+--- PDF PAGE 32 ---
+[2] N. Agatz, P. Bouman, and M. Schmidt. Optimization Approaches for the Traveling Salesman
+Problem with Drone. Transportation Science, 52(4):965–981, 2018.
+[3] S. Albers. Online Algorithms: a Survey. Mathematical Programming, Series B, 97:3–26,
+2003.
+[4] A. Antoniadis, H. Broersma, and Y. Meng.
+Incorporating Predictions in Online Graph
+Coloring A lgorithms. Discrete Applied Mathematics, 379:434–445, 2026.
+[5] N. Ascheuer, S. O. Krumke, and J. Rambau. Online Dial-a-Ride Problems: Minimizing the
+Completion T ime. In STACS 2000, pages 639–650, 2000.
+[6] G. Ausiello, E. Feuerstein, S. Leonardi, L. Stougie, and M. Talamo. Algorithms for the
+On-Line Travelling Salesman. Algorithmica, 29:560–581, 2001.
+[7] G. Ausiello, V. Bonifaci, and L. Laura.
+The online Prize-Collecting Traveling Salesman
+Problem. Information Processing Letters, 107(6):199–204, 2008.
+[8] E. Bampis, B. Escoffier, N. Hahn, and M. Xefteris. Online TSP with Known Locations. In
+Algorithms and Data Structures, pages 65–78, 2023.
+[9] T. Bektas. The Multiple Traveling Salesman Problem: an Overview of Formulations and
+Solution Procedures. Omega, 34:209–219, 2006.
+[10] A. Birx, Y. Disser, A. V. Hopp, and C. Karousatou.
+An Improved Lower Bound for
+Competitive Graph E xploration. Theoretical Computer Science, 868:65–86, 2021.
+[11] Centre for Research on the Epidemiology of Disasters (CRED). 2024 Disasters in Numbers.
+Technical report, CRED: Brussels, Belgium, 2025.
+[12] S. H. Chung, B. Sah, and J. Lee. Optimization for Drone and Drone-Truck Combined O
+perations: A Review of the State of the Art and Future D irections. Computers & Operations
+Research, 123, 2020.
+[13] J. Coleman, D. Krizanc, E. Kranakis, and O. Morales-Ponce. Optimal Delivery with a
+Faulty Drone. In Canadian Conference on Computational Geometry (CCCG2025), pages
+315–321, 2025.
+[14] S. de Berg, N. van Beusekom, M. van Mulken, K. Verbeek, and J. Wulms. Competitive
+Searching over Terrains. In LATIN 2024: Theoretical Informatics, pages 254–269, 2024.
+[15] R. Emad Alfaris, Z. Vafakhah, and M. Jalayer. Application of Drones in Humanitarian Re-
+lief: A Review of State of Art and Recent Advances and Recommendations. Transportation
+Research Record, 2678(7):689–705, 2024.
+[16] A. Fiat and G. J. Woeginger. Online Algorithms: The State of the Art. Springer, 1998.
+[17] P. M. França, M. Gendreau, G. Laporte, and F. M. Müller. The m-Traveling Salesman
+Problem with Minmax Objective. Transportation Science, 29(3):267–275, 1995.
+[18] H. Gao, C. Xu, S. Wu, T. Li, and Y. Huang.
+Has the Unpredictability of Geological
+Disasters been I ncreased by Global Warming? npj Natural Hazards, 2(1):55, 2025.
+32
+
+--- PDF PAGE 33 ---
+[19] A. Gebrehiwot, L. Hashemi-Beni, G. Thompson, P. Kordjamshidi, and T. E. Langan. Deep
+Convolutional Neural Network for Flood Extent M apping Using Unmanned Aerial Vehicles
+Data. Sensors, 19(7):1486, 2019.
+[20] A. M. Gharaibeh, O. S. Badarneh, M. K. Alshawaqfeh, and F. S. Almehmadi. Online
+Charger-Placement Algorithm for Sustainable Energy - Harvesting Wireless Sensor Networks.
+IEEE Open Journal of the Communications Society, 6:3502–3512, 2025.
+[21] M. Gou and H. Yu. Online Delivery Problem for Hybrid Truck-Drone System with Inde-
+pendent and Truck-Carried Drones. Sustainability, 15(2):1584, 2023.
+[22] gov.uk.
+Nepal
+earthquake
+April
+2015.
+Gov.uk,
+Retrieved
+on
+14.03.26
+at
+https://www.gov.uk/government/topical-events/nepal-earthquake-april-2015, 2026.
+[23] D. Hatić, V. Polushko, M. Rauhut, and H. Hagen. Post-Disaster Building Damage Assess-
+ment: Multi- Class Object Detection vs. Object Localization and C lassification. Remote
+Sensing, 17(24):3957, 2025.
+[24] P. Jaillet and M. R. Wagner. Online Routing Problems: Value of Advanced Information
+as Improved Competitive Ratios. Transportation Science, 40(2):200–210, 2006.
+[25] P. Jaillet and M. R. Wagner. Generalized Online Routing: New Competitive Ratios, R
+esource Augmentation, and Asymptotic Analyses.
+Operations Research, 56(3):745–757,
+2008.
+[26] S. Jana, G. F. Italiano, M. J. Kashyop, A. L. Konstantinidis, E. Kosinas, and P. S. Mandal.
+Online Drone Scheduling for Last-Mile Delivery. In Structural Information and Communica-
+tion Complexity, pages 488–493, 2024.
+[27] S. Kumar, U. Chatterjee, A. David Raj, and K. Sooryamol. Global Warming and Climate
+Crisis/Extreme Events. In Climate crisis: Adaptive Approaches and Sustainability, pages
+3–18. Springer, 2024.
+[28] T. Kundu, J.-B. Sheu, and H.-T. Kuo. Emergency Logistics Management - Review and
+Propositions for Future Research. Transportation Research Part E: Logistics and
+Trans-
+portation Review, 164:102789, 2022.
+[29] F. Magdolna.
+Die 5 besten Langstreckendrohnen (The 5 best long-distance drones) .
+Flyeye, September 12:last access on 21.03.26, 2025.
+[30] N. Megow, K. Mehlhorn, and P. Schweitzer. Online Graph exploration: New Results on
+Old and New A lgorithms. Theoretical Computer Science, 463:62–72, 2012.
+[31] A. Neugebauer.
+Gengraph:
+A Graph Generation Library.
+https://gitlab2.informatik.
+uni-wuerzburg.de/aan99ru/gengraph, 2026.
+[32] A.
+Neugebauer.
+Distribution
+of
+Relief:
+Implementa-
+tion
+and
+Evaluation.
+https://gitlab2.informatik.uni-wuerzburg.de/
+transport-and-routing-or-relief-supplies-under-uncertainty-in-disaster-areas/
+drone-assissted-relief-distribution, 2026.
+33
+
+--- PDF PAGE 34 ---
+[33] A. Otto, N. Agatz, J. Campbell, B. Golden, and E. Pesch. Optimization approaches for
+civil applications of unmanned aerial vehicles (UAVs) or aerial drones: A Survey. Networks,
+72(4):411–458, 2018.
+[34] A. Otto, B. Golden, C. Lorenz, Y. Luo, E. Pesch, and L. A. Rocha. On Delivery Policies
+for a Truck-and-Drone Tandem in D isaster Relief. IISE Transactions, 57(10):1198–1214,
+2025.
+[35] S. Poikonen, X. Wang, and B. Golden. The Vehicle Routing Problem with Drones: Ex-
+tended M odels and Connections. Networks, 70(1):34–43, 2017.
+[36] V. Polushko, D. Hatic, R. Rösch, T. M ärz, M. Rauhut, and A. Weinmann.
+Remote
+Sensing Imagery for Flood Detection: Exploration of Augmentation Strategies. arXiv preprint
+arXiv:2504.20203, 2025.
+[37] Y. Shin, C. Lee, G. Lee, and H.-C. An. Improved Learning-Augmented Algorithms and
+(Tight) Lower Bounds for Multi-Option Ski Rental Problem. ACM Transactions on Algo-
+rithms, 22(1):1–30, 2025.
+[38] E. Yucesoy, B. Balcik, and E. Coban. The Role of Drones in Disaster Response: A Literature
+Review of Operations Research Applications.
+International Transactions in Operational
+Research, 32(2):545–589, 2025.
+34
+
+--- PDF PAGE 35 ---
+Appendix
+A
+Proofs omitted in main text
+A.1
+Proofs on basic technical results
+Lemma 1. The following relations hold for all graphs G = (V, E, c) with V = C ∪{v0}, all
+drone speeds α > 0, all sets W ⊆C and all m, n ≥0, m + n ≥1.
+[Non-deterioration w.r.t. less nodes]
+TSPm,n(W ′) ≤TSPm,n(W)
+∀W ′ ⊆W
+(1)
+[Non-deterioration w.r.t. more vehicles]
+TSPm′,n(W) ≤TSPm,n(W)
+∀m′ ≥m
+(2)
+TSPm,n′(W) ≤TSPm,n(W)
+∀n′ ≥n
+(3)
+[Reallocation of tours to trucks or drones]
+TSPm′,0(W) ≤
+ m
+m′
+
++ α
+ n
+m′
+
+TSPm,n(W)
+∀m′ ≥1
+(4)
+TSP0,n′(W) ≤
+ n
+n′
+
++ 1
+α
+m
+n′
+
+TSPm,n(W)
+∀n′ ≥1
+(5)
+Proof. Relations (2)-(3) are straightforward, since, ceteris paribus, increasing the number of
+vehicles cannot worsen the makespan objective. In (4) and (5), we evenly reallocate the optimal
+tours of TSPm,n(W) to m′ ≥1 trucks or n′ ≥1 drones, respectively.
+Lemma 2. For any RDP∗instance I∗we have
+OPT(I) ≥max{TSPkt,kd(C), TSPkt,0(D)}
+Proof. This follows directly from the fact that each node needs to be visited by at least one
+vehicle, and that each damaged node needs to be visited by a truck.
+Lemma 3. For graphs ˜G(n, d) with the set of non-depot nodes W and ˜G(n1, n2, d1, d2) with
+the sets of non-depot nodes W1 (for level-1 nodes) and W2 (for level-2 nodes), kt ≥1 trucks,
+kd ≥1 drones, and drone speed α > 0, the following relations hold
+i
+
+--- PDF PAGE 36 ---
+[Truck-only and drone-only makespan]
+TSP1,0(W ′) = 2d|W ′|
+∀W ′ ⊆W
+(6)
+TSP0,1(W ′) = 2
+αd|W ′|
+∀W ′ ⊆W
+(7)
+TSPkt,0(W) = 2d
+ n
+kt
+
+(8)
+TSP0,kd(W) = 2
+αd
+ n
+kd
+
+(9)
+TSP1,0(W ′
+1 ∪W ′
+2) = 2d1|W ′
+1| + 2d2|W ′
+2|
+∀W ′
+1 ⊆W1, W ′
+2 ⊆W2
+(10)
+TSP0,1(W ′
+1 ∪W ′
+2) = 2
+αd1|W ′
+1| + 2
+αd2|W ′
+2|
+∀W ′
+1 ⊆W1, W ′
+2 ⊆W2
+(11)
+Proof. Relations (6) and (7) follow immediately from the definition.
+In (8), the minimum
+makespan is received by distributing nodes among truck as evenly as possible, in this case –
+by the pigeonhole principle – at least one truck travels over
+ n
+kt
+ nondepot nodes. A similar
+argument holds for (9).
+Recall that transitions between non-depot nodes must pass through the depot. Moreover,
+by the triangle inequality, it suffices to consider tours that visit each node in W ′
+1 ∪W ′
+2, n′ =
+|W ′
+1| + |W ′
+2|, exacly once while solving MultiTSP. To prove (10) and (11), consider the to-
+tal length of any such tour over nodes of W ′
+1 ∪W ′
+2: c(v0, vi1, v0, vi2, v0, . . . , v0, vn′, v0) =
+P
+v∈W ′
+1∪W ′
+2 c(v0, v, v0) = 2d1|W ′
+1| + 2d2|W ′
+2|. The resulting expression is independent of the
+visiting order of nodes, which completes the proof.
+Lemma 10. If kd
+kt ∈Z+
+0 , for any α > 0, we have ω(Regretless) ≤
+1
+1+α kd
+kt
+.
+Proof. Consider the same example as in Lemma 9 with TSPkt,0(C) = 2kt + 2αkd.
+Consider the case of α̸ = 1, as the case of α = 1 is straightforward because the nodes in
+W1 and W2 are indistinguishable. In Regretless, each truck i receives kd
+kt drones to assist in
+its tour s∗
+i consisting of kt nodes in W1 and kd nodes in W2. For each tour s∗
+i , its partitioning
+into segments is equivalent to solving MultiTSP over graph ˜G(kt, kd, 1, α) formed by the nodes
+of s∗
+i with 1 truck and kd
+kt drones. By (12) and f = kt, the resulting makespan is 2f = 2kt and,
+by the pigeonhole principle given α̸ = 1, the unique optimal solution is to assign all kt level-1
+nodes to the truck and equally distribute nd level-2 nodes among the drones of this truck. At
+time θ = 2kt −1, when the truck arrives to the last node of its segment, all the nodes in the
+drone segments have just been explored by the drones; so that the truck and the drones directly
+return to the depot resulting in Regretless(I) = 2kt.
+It follows ω(Regretless) ≤Regretless(I)
+TSPkt,0(C)
+=
+1
+1+α kd
+kt
+.
+ii
+
+--- PDF PAGE 37 ---
+A.2
+Additional proofs for bounds on drone-impact ratio and com-
+petitive ratio
+Lemma 13. For any α > 0, kt ∈N, kd ∈N, there is an instance I with Optimistic(I)
+TSPkt,0(C)
+=
+min{1 + 1
+α, 1+α
+1+ϵ }.
+Proof. For α > 1, we have min{1 + 1
+α, 1+α
+1+ϵ } = 1 + 1
+α.
+Consider an instance I with all
+nodes damaged (D = C) and the depot node v0 together with nodes C forming a star graph
+˜G(min{kt, kd}, 1). From (8), TSPkt,0(C) = 2. Optimistic performs only drone tours in the
+first step, with makespan (using (9)) of 2
+α. Since all these nodes turn damaged, trucks have to
+revisit these nodes resulting in the makespan of 2 for this second step of Optimistic. Hence,
+Optimistic(I) = 2
+α + 2 and Optimistic(I)
+TSPkt,0(C)
+= 1 + 1
+α.
+For α ≤1 we have min{1+ 1
+α, 1+α
+1+ϵ } = 1+α
+1+ϵ . Consider an instance I with all nodes damaged
+(D = C). The set of non-depot nodes C = P ∪F consists of proximate nodes P and far-away
+nodes F with |P| = kt and |F| = min{kt, kd}. For each p ∈P we determine one (distinct)
+neighbor node f(p) ∈F. Our edge set is E = {(v0, c) : c ∈C} ∪{(p, f(p)) : ∀p ∈P} with
+c(v0, p) = 1 ∀p ∈P, c(v0, f) = α ∀f ∈F, c(p, f) = α −1 + ε ∀p ∈P.
+Then, TSPkt,0(C) = 2 + 2ϵ, as each truck visits one far-away node and, if available, its
+neighbor proximate node.
+In the first step of Optimistic, each vehicle visits at most one node with the makespan of
+TSPkt,kd(C) = 2. Since all these nodes are damaged and at least min{kt, kd} nodes have not
+been visited by trucks, trucks have to revisit these nodes, resulting in the makespan of 2α for this
+second step of Optimistic. Hence, Optimistic(I) = 2 + 2α and Optimistic(I)
+TSPkt,0(C)
+= 1+α
+1+ϵ .
+Lemma 15. For any α > 0, kt ∈N, kd ∈N, we have σ(Optimistic) ≤min{2, 1 +
+l
+kd
+kt
+m
+α}.
+Proof. On the one hand, from Lemma 2 and Lemma 5, it follows that
+σ(Optimistic) = sup
+I
+Optimistic(I)
+OPT(I)
+≤
+TSPkt,kd(C) + TSPkt,0(D)
+max{TSPkt,kd(C), TSPkt,0(D)} ≤2.
+On the other hand, from Lemmata 2 and 5 and from (1), (4), it follows
+σ(Optimistic) = sup
+I
+Optimistic(I)
+OPT(I)
+≤
+TSPkt,kd(C) + TSPkt,0(Dd)
+max{TSPkt,kd(C), TSPkt,0(D)} ≤
+≤
+TSPkt,kd(C) + α
+l
+kd
+kt
+m
+TSP0,kd(Dd)
+max{TSPkt,kd(C), TSPkt,0(D)}
+≤
+TSPkt,kd(C) + α
+l
+kd
+kt
+m
+TSP0,kd(C)
+TSPkt,kd(C)
+≤
+≤1 + α
+&
+kd
+kt
+'
+.
+iii
+
+--- PDF PAGE 38 ---
+𝑣0
+𝑝1
+1
+𝑚1
+𝑝1
+2
+𝑓1
+𝑣0
+𝑝1
+1
+𝑚1
+𝑝1
+2
+𝑓1
+(a) Case of one slow truck and two fast drones (α > 1)
+𝑣0
+𝑣1
+𝑣4
+𝑣3
+𝑣5
+𝑣2
+𝑣0
+𝑣1
+𝑣4
+𝑣3
+𝑣5
+𝑣2
+(b) Case of one truck, two drones, and α = 1
+3
+Figure 8: Worst case instances and initial tours of Optimistic
+Lemma 16. For any α > 0, kt ∈N, kd ∈N, we have σ(Regretless) ≤1 +
+l
+kd
+kt
+m
+α.
+Proof. From Lemmata 2 and 6 and from (4), it follows
+σ(Regretless) = sup
+I
+Regretless(I)
+OPT(I)
+≤
+TSPkt,0(C)
+max{TSPkt,kd(C), TSPkt,0(D)} ≤
+≤
+
+1 + α
+l
+kd
+kt
+m
+TSPkt,kd(C)
+TSPkt,kd(C)
+≤1 + α
+&
+kd
+kt
+'
+.
+Lemma 18. For α̸ = 1, kd, kt ∈N, there is an instance I with Optimistic(I)
+OPT(I∗)
+= min{2, 1 + α}.
+Proof. In the following, we distinguish between fast and slow vehicles: fast refers to drones
+when α > 1 and to trucks when α < 1, while slow refers to the other vehicle type.
+Let
+kfast, kslow ∈{kt, kd} denote the number of fast and slow vehicles, respectively, and set kmin =
+min{kfast, kslow}. Consider an instance I defined on a graph G = (V, E, c), where set C = P ∪
+M ∪F is partitioned into kslow +kmin proximate nodes P, kmin medium-distance nodes M, and
+kfast−kmin far-distance nodes F. The edge set consists of edges EC = {{v0, v} : v ∈C}, which
+connect the nodes to the depot and 2|M| additional edges connect each node in M to exactly
+two (pairwise distinct) nodes in P, i.e., EPM = {{m, p1
+m}, {m, p2
+m} : m ∈M} with pi
+m ∈P
+and pi
+m̸ = pi′
+m′ if i̸ = i′ or m̸ = m′. For a given T > 0, for the proximate nodes p ∈P we define
+the edge labels c(v0, p) such that proximate nodes are located equidistantly from the depot, and
+that the makespan of a tour of a slow vehicle to any of these nodes equals T: cslow(v0, p, v0) = T,
+∀p ∈P. Analogously, the edge labels for the far-distance nodes are chosen such that these
+nodes are located equidistantly at the largest distance from the depot, such that the makespan
+of a tour of a fast vehicle to any of these nodes equals T: cfast(v0, f, v0) = T, ∀f ∈F. The
+edge labels c(v0, m) := a and c(m, pm
+i ) := b for all m ∈M and pm
+i ∈P are chosen such that
+cslow(v0, m, v0) > T and cfast(v0, p1
+m, m, v0) = cfast(v0, p2
+i , m, v0) = T.
+The set of damaged nodes consists of one proximate node: D ∈P, |D| = 1.
+Figure 8a illustrates an example of two fast drones (α > 1) and one truck. The constructed
+instance has |C| = 4 nodes besides the depot: a far-distance node f1, a medium-distance node
+iv
+
+--- PDF PAGE 39 ---
+m1 and the associated proximate nodes p1
+1 and p2
+1. The figure also depict the tours of the truck
+and the drones in thefirst-step solution of Optimistic.
+In an optimal MultiTSP solution on the instance (k, kt, α, G), |F| fast vehicles visit exactly
+one node in F and return to the depot, the remaining kfast −|F| fast vehicles perform a
+tour of type (v0, p1
+i , mi, v0), visiting a node in M and its associated proximate node in P
+before returning to the depot. Each slow vehicle visits exactly one node in P and returns to
+the depot. Since the set of damaged nodes consists of exactly one proximate node, we have
+OPT(I) = TSPkt,kd(C) = T.
+In Optimistic we complete the sketched MultiTSP solution in the first step in time
+TSPkt,kd(C) = T, and if the drone visited the damaged node, the second step of Optimistic
+takes at least ct(v0, v, v0) time units, which equals T if trucks are slow and αT if trucks are
+fast. Hence Optimistic(I)
+OPT(I∗)
+= min{2, 1 + α}.
+Lemma 19. For any α < 1, kt, kd such that α
+l
+kd
+kt
+m
+≥1, there exists and instance I with
+Optimistic(I)
+OPT(I∗)
+= 2.
+Proof. Observe that the lemma requires
+l
+kd
+kt
+m
+≥1
+α. Consider an instance, in which the depot
+node v0 and nodes C form a star graph ˜G(kd +
+l
+1
+α
+m
+kt, 1).
+We first argue that on this graph, TSPkt,kd(C) = 2
+l
+1
+α
+m
+: this is attained if each drone visits
+one non-depot node and each truck visits
+l
+1
+α
+m
+non-depot nodes. Indeed, if a drone would visit
+two nodes or more, its tour duration would be at least 4
+α > 2(1+α)
+α
+= 2( 1
+α + 1) > 2
+l
+1
+α
+m
+.
+Regardless of which nodes are visited by drones in Optimistic, we can always construct
+an instance, in which n′ = min{kd,
+l
+1
+α
+m
+kt} of these nodes are damaged. Consequently, in
+Optimistic, these nodes must be revisited by the kt trucks.
+If n′ =
+l
+1
+α
+m
+kt, then each truck visits
+l
+1
+α
+m
+non-depot nodes in the second step of Optimistic.
+If n′ = kd, then there is at least one truck that visits
+l
+kd
+kt
+m
+≥1
+α non-depot nodes, which we
+round up since this number is integer. Hence, there is a truck that visits at least
+l
+1
+α
+m
+non-depot
+nodes and the second step of Optimistic takes at least 2
+l
+1
+α
+m
+.
+Under the full information, OPT(I∗) = TSPkt,kd(C) = 2
+l
+1
+α
+m
+, with all n′ damaged nodes
+visited by kt trucks. Hence, Optimistic(I)
+OPT(I∗)
+= 2 follows.
+Lemma 20. For any α > 0 and kt, kd ∈N with α
+l
+kd
+kt
+m
+< 1, there exists an instance I with
+Optimistic(I)
+OPT(I∗)
+= 1 +
+l
+kd
+kt
+m
+α.
+Proof. Given α
+l
+kd
+kt
+m
+< 1, follows α < 1. Consider an instance, in which the depot node v0 and
+nodes C form a graph ˜G(kd +
+j
+1
+α
+k
+kt, 1).
+v
+
+--- PDF PAGE 40 ---
+We first argue that on this graph, TSPkt,kd = 2
+α: this is attained if each drone visits one
+node, and each truck visits
+j
+1
+α
+k
+nodes. By (6) and (7), any solution where a truck visits more
+than
+j
+1
+α
+k
+nodes or any drone visits more than one node, has a larger makespan.
+Now assume that n′ = min{
+j
+1
+α
+k
+kt, kd} nodes that have been visited by a drone in
+Optimistic are damaged. Then these nodes have to be revisited by the trucks with at least
+one truck visiting
+l
+n′
+kt
+m
+nodes in the second step. The makespan of this step is 2
+l
+n′
+kt
+m
+and
+Optimistic(I) = 2
+α + 2
+l
+n′
+kt
+m
+for this instance I.
+In the optimal RDP∗solution, the n′ are served by the truck tours, and OPT(I∗) =
+TSPkt,kd(I∗) = 2
+α.
+Finally, observe that n′ = kd, since
+α ·
+&
+kd
+kt
+'
+< 1 ⇒
+&
+kd
+kt
+'
+< 1
+α ⇒
+&
+kd
+kt
+'
+≤
+ 1
+α
+
+⇒kd
+kt ≤
+ 1
+α
+
+⇒kd ≤
+ 1
+α
+
+kt
+We obtain Optimistic(I)
+OPT(I∗)
+= 1 +
+l
+kd
+kt
+m
+α.
+Figure 8b illustrates I for kt = 1, kd = 2, and α = 1
+3.
+Lemma 22. For any α = 1
+b, b ∈N, kt, kd ∈N with kt ≥
+l
+kd
+kt
+m
++ b −1, there exists an instance
+I with Regretless(I)
+OPT(I∗)
+= 1 + α
+l
+kd
+kt
+m
+.
+Proof. Consider an instance I with depot node v0 and nodes C forming a star graph ˜G(bkt +
+kd, 1). Observe that if the number of damaged nodes |D| ≤bkt, then OPT(I∗) = TSPkt,kd(C) =
+2b. Indeed, each truck visits at most b non-depot nodes and each drones visits at most 1 non-
+depot node in solutions with the same or better objective value; given the total number of
+nodes, these relations hold exactly and the makespan follows from (6)-(7).
+In the first phase of Regretless, truck tours that visit all nodes with the makespan
+TSPkt,0(C) = 2(b +
+l
+kd
+kt
+m
+) are built. There is at least one tour with exactly (b +
+l
+kd
+kt
+m
+) non-
+depot nodes. Consider an instance I, in which all but the first non-depot node initially assigned
+to one such truck (and its supporting drones) are damaged. This is possible if
+l
+kd
+kt
+m
++b−1 ≤kt.
+Then, Regretless = 2(b +
+l
+kd
+kt
+m
+), and Regretless(I)
+OPT(I∗)
+= 1 + α
+l
+kd
+kt
+m
+.
+Lemma 23. For any α ∈N, kt, kd ∈N with kt ≥
+l
+αkd
+kt
+m
+, there exists an instance I with
+Regretless(I)
+OPT(I∗)
+= 1 +
+l
+αkd
+kt
+m
+.
+Proof. Consider an instance I with depot node v0 and nodes C forming a star graph ˜G(kt +
+αkd, 1). Observe that if the number of damaged nodes |D| ≤kt, then OPT(I∗) = TSPkt,kd(C) =
+2. Indeed, each truck visits at most 1 non-depot node and each drones visits at most α non-
+depot nodes in solutions with the same or better objective value; given the total number of
+nodes, these relations hold exactly and the makespan follows from (6)-(7).
+vi
+
+--- PDF PAGE 41 ---
+In the first phase of Regretless, truck tours that visit all nodes with the makespan
+TSPkt,0(C) = 2(1 +
+l
+αkd
+kt
+m
+) are built. There is at least one tour with exactly (1 +
+l
+αkd
+kt
+m
+) non-
+depot nodes. Consider an instance I, in which all but the first non-depot node initially assigned
+to one such truck (and its supporting drones) are damaged. This is possible if 1+
+l
+αkd
+kt
+m
+−1 ≤kt.
+Then, Regretless = 2(1 +
+l
+αkd
+kt
+m
+) and Regretless(I)
+OPT(I∗)
+= 1 +
+l
+αkd
+kt
+m
+.
+Lemma 25. Consider kt, kd ∈N and α ∈N, i.e., the drone speed is an integer multiple of the
+truck speed. For any policy Alg there is an instance I such that ALG(I)
+OPT(I∗) ≥2 −1
+2α.
+Proof. Consider an instance I with |D| ≤kt and the depot v0 together with non-depot nodes
+C forming a star graph ˜G(αkd + kt, 1). The optimal RDP∗solution has a makespan of 2: the
+trucks visit the damaged nodes and the drones visit the remaining αkd nodes, both vehicles’
+tours would need exactly time 2.
+Consider a deterministic online policy Alg. Consider the situation at time θ := 2(α−1)+1
+α
+.
+At this point in time, each drone has visited at most α nodes – and if it has visited α nodes,
+it has just arrived at the last one of these. Each truck has visited either 0 or 1 nodes – denote
+the respective set of trucks by T0 and T1.
+We denote by C∗the set nodes that are either not yet visited at time θ, or where a drone
+has arrived at time θ. Note that |C∗| ≥kd + |T0|.
+Note that since the distance between any two nodes in C∗is two and the distance between
+any node in C to the depot is one, any truck in set |T0| has distance ≥1 to all or all but one
+node in C∗. Thus, there are at least kd nodes to which all trucks in T0 have a distance of ≥1.
+Assume that one of them is damaged.
+Then it takes each truck in T0 time ≥1 to reach it, and for each truck in T1, the time to
+get there is ≥2 −(θ −1).
+Thus, when taking a truck from T0, the makespan is θ + 2 as the truck has to return to the
+depot afterwards, for a truck from set T1 it is θ + 2 −(θ −1) + 1 = 4.
+This shows that the competitive ratio is
+Alg(I)
+OPT(I∗) ≥2+θ
+2
+=
+2+ 2(α−1)+1
+α
+2
+= 2 −1
+2α.
+Lemma 26. Consider kt, kd ∈N and α > 0. For any policy Alg there is an instance I with
+kt trucks, kd drones, and drone speed α such that ALG(I)
+OPT(I∗) ≥min{ 2
+α, 2α}.
+Proof. Note that if α ≥2 or α ≤1
+2, σ ≥1 and there is nothing to show. For all other cases,
+consider an instance I with |D| ≤kt and with the depot v0 and non-depot nodes C forming a
+star graph ˜G(kt + kd, 1).
+1. If α ∈[1, 2], we have min{ 2
+α, 2α} = 2
+α. The full-information optimum has a makespan of
+2, because we can visit each damaged node with a truck and use the remaining vehicles
+to visit the other nodes (in time 2
+α ≤2) to obtain a solution with this makespan.
+Now assume that we have a policy with competitive ratio <
+2
+α. Note that in such a
+policy, no vehicle can visit more than one node, because that would lead to a makespan
+vii
+
+--- PDF PAGE 42 ---
+of at least 4
+α and thus a competitive ratio of
+4
+α
+2 = 2
+α. Thus, each vehicle visits exactly
+one node. Now assume that one of the nodes visited by drone is damaged (and none of
+the other nodes is). So one of the trucks has to visit the ’drone node’ as well, we have
+kt + kd + 1 visits in total to be executed with kt + kd vehicles, thus one vehicle executes
+two visits. Proven by contradiction.
+2. If α ∈(1
+2, 1], we have min{ 2
+α, 2α} = 2α. The full-information optimum has a makespan
+of 2
+α, because we can visit each damaged node with a truck and use the remaining vehicles
+to visit the other nodes to obtain a solution with this makespan. Optimality of this solution
+can be seen because any solution where a vehicle visits two nodes has makespan ≥4 ≥2
+α.
+Assume that there is an online deterministic policy that achieves a competitive ratio < 2α.
+This means that the makespan of this policy is < 2α 2
+α = 4. Note that in such a policy,
+no vehicle can visit more than one node, because that would lead to a makespan of at
+least 4. Thus, each vehicle visits exactly one node. Now assume that one of the nodes
+visited by drone is damaged (and none of the other nodes is). So one of the trucks has
+to visit the ’drone node’ as well, we have kt + kd + 1 visits in total to be executed with
+kt + kd vehicles, thus one vehicle visits at least two nodes. Proven by contradiction.
+B
+Benchmark graphs
+We generate different benchmark graphs to evaluate our approaches experimentally. The Ran-
+dom graph class is already sufficiently described in Section 6.1. Here we give a more detailed
+description of the remaining graph classes.
+For the 1-Center and the 2-Center instances, we follow the approach described in [2]. For
+the 1-center instances, we locate the depot at (0, 0) and sample potential demand nodes by
+drawing an angle a ∈[0, π] uniformly, and a distance r from a normal distribution with mean 0
+and standard deviation 50. Then the position of the node is given by (r cos(a), r sin(a)). For
+the 2-center instances, we do the same but add another central node at (200, 0) and translate a
+sampled node by (200, 0) with a probability of 50%, so that in the end the nodes are distributed
+around the two centers (0, 0) and (200, 0). We construct a complete graph over these nodes,
+taking the Euclidean distance as edge labels.
+The coastal graphs are generated based on the idea that nodes represent cities in coastal
+regions. Typically, cities are mostly settled near the coastline, while cities further land inwards
+are more likely to settle perpendicular to cities on the coast. The nodes of the coastal graphs
+are uniquely sampled according to a probability function, which is influenced by the previously
+sampled nodes, on a 101 × 101 lattice with dimensions 1 × n/15, where n is the number of
+sampled nodes. The probability is affected by its distance to the left side of the lattice (which
+viii
+
+--- PDF PAGE 43 ---
+represents the coastline) and the previously sampled nodes: Nodes around sampled nodes have
+a probability of zero, while nodes perpendicular to other cities with a relatively small land
+inwards x-coordinate differences have an increased probability.
+Also for the coastal graphs,
+edge labels correspond to Euclidean distances. However, coastal graphs are not complete. The
+edges between two nodes are sampled in a two-phase procedure. In the first phase, each edge
+is assigned a probability based on the Euclidean distance between the nodes. Then we create
+an maximum spanning tree according to the edge probability with Kruskal’s algorithm [4]. In
+the second phase, the probability is reduced if the angle between the considered edge and an
+already chosen edges is shallow and set to 0 if it would cross an existing edge. We add edges
+iteratively by sampling with this probability function over all unconnected node pairs until the
+desired number of graphs is reached.
+The mountain class of graphs represent networks of cities in mountain areas. Cities are
+prominently built in the valleys between mountains, and less likely further up the mountains.
+This model works analogously to the coastline mode. Here, the lattice has dimensions
+p
+n/15×
+p
+n/15 and the probability function is derived from the height of the node on a mountain, where
+higher nodes have a lower probability. Also, we set the probability of nodes near other accepted
+nodes to zero. In the first phase of the edge construction, the probability of an edge scales with
+the inverse of the height of the highest point in the straight line between the incident nodes
+on any mountain and the Euclidean distance between the two incident nodes. In the second
+phase, we iteratively sample over the unused edges, where in addition shallow angles diminish
+the probability of edges and crossing set the probability of edges to 0.
+A more detailed explanation of the graph generation process and the standalone implemen-
+tation can be found in [6]. The used benchmark graphs and a standalone instance generator
+are provided in [7].
+C
+Implementation of the policies
+All policies considered in this paper, as well as the TruckOnly policy used for comparison,
+require (repeated) solution of MultiTSP. In Sections C.1 and C.2 we provide a mixed-integer
+linear program (MILP) and a dynamic program (DP), respectively, to solve MultiTSP. We also
+comment on how these are modified to solve RDP∗which we need to solve in order to compute
+competitive ratios.
+On [7] we provide a Rust [8] implementations of the policies. For each policy we provide
+two implementations: one that solves MultiTSP by solving the MILP (using Gurobi 13.0.1 [2])
+and one, only applicable for instances with kd = kt = 1, that uses the DP to solve MultiTSP.
+For solving the SMALL instances we use the MILP-based implementation, for the other two
+instance-classes we use the DP-based one due to superior performance.
+ix
+
+--- PDF PAGE 44 ---
+C.1
+Mixed-Integer Linear Programming Formulation
+Consider an instance (G, α, m, n, W) of MultiTSP where G = (V, E, c) is an undirected graph
+with a designated depot v0 ∈V and positive edge labels c, α is the drone speed, m and n with
+m+n ≥1 denote the numbers of trucks and drones, respectively, and a node set W ⊆V \{v0}.
+For the formulation of the MILP, we build a directed complete graph G′ = (V ′, E′, c′) with
+V ′ := W ∪{v0} by taking a complete directed graph over the vertices V ′ and assigning
+each edge (u, v) ∈E′ the weight c′(u, v) > 0 of the length of the shortest u–v path in G.
+To distinguish the different tours and their corresponding vehicles, we introduce the indices
+It = {1, . . . , m} and Id = {m + 1, . . . , m + n} for the drone and truck tours respectively. The
+set of all tour indices is given by I = Id ∪Ik. Let δ−(v) be the set of edges in G′ originating
+from v ∈V ′ and δ+(v) be the edges terminating in v ∈V ′. The variable xi
+e ∈{0, 1} indicates
+if the edge e ∈E′ is used in the tour of vehicle i ∈I and the variable T ≥0 represents the final
+makespan, which should be minimized. Finally, the variable θv ∈[1, |V |] indicates the position
+of node v in the tour of the visiting vehicle.
+minimize
+T
+subject to
+X
+e∈δ+(v)
+xi
+e =
+X
+e∈δ−(v)
+xi
+e
+∀v ∈V ′ ∀i ∈I,
+(25a)
+X
+e∈δ+(v0)
+xi
+e ≤1
+∀i ∈I,
+(25b)
+X
+i∈I
+xi
+e ≤1
+∀e ∈E′,
+(25c)
+X
+e∈δ−(v)
+X
+i∈I
+xi
+e = 1
+∀v ∈W,
+(25d)
+T ≥
+X
+(u,v)=e∈E′
+c(u, v)xi
+e
+∀i ∈It,
+(25e)
+αT ≥
+X
+(u,v)=e∈E′
+c(u, v)xi
+e
+∀i ∈Id,
+(25f)
+θv ≥θu + 1 −|V |(1 −xi
+uv)
+∀i ∈I ∀(u, v) ∈E′, u, v̸ = v0,
+(25g)
+xi
+e ∈{0, 1}
+∀e ∈E′ ∀i ∈I,
+T ∈R≥0,
+θv ∈[1, |V |]
+∀v ∈V ′ \ {v0}
+Constraints (25a) are flow constraints, they ensure that if a vehicle enters a node, it also
+leaves the node. Constraints (25b) ensure that each vehicle makes only one tour. Note that
+these constraints allow a vehicle to stay at the depot. To strengthen the model, we added the
+constraint (25c) that enforces the vehicles’ tours to be edge-disjoint. The constraints (25d)
+x
+
+--- PDF PAGE 45 ---
+enforce that each node is visited by exactly one vehicle.
+The makespan of each vehicle’s
+tour gives a lower bound for the total makespan T, which is described via the constraints (25e)
+and (25f). Constraints (25g) are Miller-Tucker-Zemlin subtour elimination constraints [5], which
+ensure that each node v is assigned a label θv which corresponds to the position in the tour of
+the visiting vehicle.
+To solve RDP∗, we set W = C and add the constraint (26) to enforce that all demand
+nodes D are visited by the trucks.
+X
+i∈It
+X
+e∈δ−(d)
+xi
+e ≥1
+∀d ∈D
+(26)
+C.2
+Dynamic program
+Consider an instance (G, α, m, n, W) of MultiTSP as before. Analogously to the preprocessing
+for the MILP, we build a (undirected) complete graph G′ = (V ′, E′, c′) with V ′ := W ∪{v0} by
+taking a complete (undirected) graph over the vertices V ′ and assigning each edge {u, v} ∈E′
+the weight c′(u, v) > 0 of the length of the shortest u–v path in G.
+In the first step, we use the Bellman-Held-Karp algorithm [3, 1] for the TSP to obtain (via
+dynamic programming, in time O(|V |22|V |)) a table B[U, u], which, for all subsets U ⊆W and
+nodes u ∈U, contains a shortest path starting from v0, traversing all nodes in U, and ending
+in u. Denote by ℓ(B[U, u]) the length of such a shortest path. After this step, we compute
+Optimisticm,n(C) by iterating over all possible partitions of W into m + n disjoint subsets,
+which induce truck and drone tours, and taking the tours with the smallest makespan. See
+Algorithm 1.
+Algorithm 1 has a runtime of O(|V |(m + n)|V |) due to the runtime required to iterate
+through all pairwise disjoint m + n subsets of C, which dominates the runtime of Bellmann-
+Held-Karp’s algorithm as long kt+kd ≥2. The space consumption of Algorithm 1 is O(|V |2|V |)
+with a dynamic representation of the paths due to the table size of B.
+To solve RDP∗, we modify the algorithm such that in the for-loop only partitions with
+Tm
+i=1 Ui ⊃D are considered.
+We provide an implementation of the Algorithm 1 and the MILP of Section C.1 in [7].
+Online Appendix References
+[A1] R. Bellman. Dynamic Programming Treatment of the Travelling Salesman P roblem.
+Journal of the ACM, 9(1):61–63, 1962.
+[A2] Gurobi Optimization, LLC. Gurobi Optimizer Reference Manual. https://www.gurobi.
+com, 2026.
+xi
+
+--- PDF PAGE 46 ---
+Algorithm 1 Dynamic programm for MultiTSP
+Input: Graph G′ = (V ′, E′, c′) with edge-weights c > 0, α > 0, number of trucks and drones
+m, n ∈N0.
+Output: Up to m truck and n drone tours in G′ that cover all nodes and minimize TSPm,n(W).
+1: Compute table B with Bellmann-Held-Karp’s algorithm
+2: St = {∅: i = 1, . . . , m}
+3: Sd = {∅: i = 1, . . . , n}
+4: T = ∞
+5: for pairwise disjoint subsets U1, . . . , Um+n ⊆C with ∪m+n
+i=1 Ui = W do
+6:
+ui = argminu∈Ui ℓ(B[Ui, u]) + c(u, v0)
+7:
+T ′ = maxi=1,...,m+b βi (ℓ(B[Ui, ui]) + c(ui, v0)) where βi = 1 if i ∈{1, . . . , m} and
+βi = α else.
+8:
+if T ′ < T then
+9:
+T = T ′
+10:
+St = {B[Ui, ui] ∪{c(ui, v0)}: i = 1, . . . , m}
+11:
+Sd = {B[Ui, ui] ∪{c(ui, v0)}: i = m + 1, . . . , m + n}
+12: return St, Sd
+[A3] M. Held and R. M. Karp. A Dynamic Programming Approach to Sequencing Problems.
+Journal of the Society for Industrial and Applied Mathematics, 10(1):196–210, 1962.
+[A4] J. B. Kruskal. On the Shortest Spanning Subtree of a Graph and the Traveling Salesman
+Problem. Proceedings of the American Mathematical Society, 7(1):48–50, 1956.
+[A5] C. E. Miller, A. W. Tucker, and R. A. Zemlin. Integer Programming Formulation of
+Traveling Salesman P roblems. Journal of the ACM, 7:326–329, 1960.
+[A6] A. Neugebauer.
+Gengraph: A Graph Generation Library.
+https://gitlab2.informatik.
+uni-wuerzburg.de/aan99ru/gengraph, 2026.
+[A7] A.
+Neugebauer.
+Distribution
+of
+Relief:
+Implementation
+and
+Evaluation.
+https://gitlab2.informatik.uni-wuerzburg.de/
+transport-and-routing-or-relief-supplies-under-uncertainty-in-disaster-areas/
+drone-assissted-relief-distribution, 2026.
+[A8] The Rust Team. The Rust Programming Language. https://rust-lang.org, 2020.
+xii

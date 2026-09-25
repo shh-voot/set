@@ -1,0 +1,62 @@
+正在加载DEM数据: 镇龙乡及周边30米DEM.mat
+  加载MATLAB格式DEM...
+  DEM尺寸: (1309, 1486)
+  高程范围: 41.7 - 1132.9 米
+  地理范围: (109.0326, 22.8612) - (109.4454, 23.2249)
+  分辨率: 0.000278 度
+{
+  "q1": {
+    "missions": 18,
+    "box_assignments": 80,
+    "unique_boxes": 80,
+    "load_violations": 0,
+    "volume_violations": 0,
+    "area_violations": 0,
+    "published_energy_kwh": 56.515853052555926,
+    "code_recomputed_energy_kwh": 56.51585305255592,
+    "code_energy_mismatch_count": 0,
+    "exponent_only_energy_kwh": 54.18136785077778,
+    "reference_energy_kwh": 63.19181002116945,
+    "reference_energy_failures": 0,
+    "max_dem_underestimate_m": 7.529426620255833,
+    "published_duration_sum_min": 550.0312262863918,
+    "published_duration_max_min": 38.60481639236927,
+    "code_duration_sum_min": 550.0312262863918,
+    "reference_duration_sum_min": 550.8194581766503,
+    "reference_duration_max_min": 38.41973441613011
+  },
+  "q2": {
+    "missions": 45,
+    "box_assignments": 80,
+    "unique_boxes": 80,
+    "load_violations": 0,
+    "volume_violations": 0,
+    "area_violations": 0,
+    "published_energy_kwh": 97.65260763126345,
+    "code_recomputed_energy_kwh": 97.65260763126345,
+    "code_energy_mismatch_count": 0,
+    "exponent_only_energy_kwh": 95.27328543201564,
+    "reference_energy_kwh": 111.87053365598953,
+    "reference_energy_failures": 0,
+    "max_dem_underestimate_m": 7.529426620255833,
+    "completion_min": 173.6387822549022
+  },
+  "q3": {
+    "missions": 45,
+    "box_assignments": 80,
+    "unique_boxes": 80,
+    "load_violations": 0,
+    "volume_violations": 0,
+    "area_violations": 0,
+    "published_energy_kwh": 97.65260763126345,
+    "code_recomputed_energy_kwh": 97.65260763126345,
+    "code_energy_mismatch_count": 0,
+    "exponent_only_energy_kwh": 95.27328543201564,
+    "reference_energy_kwh": 111.87053365598953,
+    "reference_energy_failures": 0,
+    "max_dem_underestimate_m": 7.529426620255833,
+    "completion_min": 182.2643138933139
+  }
+}
+Communication failed points: 8
+Q4 hard late: {'2': 28, '3': 28}

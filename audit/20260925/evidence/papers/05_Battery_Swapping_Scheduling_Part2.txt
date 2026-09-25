@@ -1,0 +1,1397 @@
+--- PDF PAGE 1 ---
+Scheduling of EV Battery Swapping, II: Distributed
+Solutions
+Pengcheng You, Student Member, IEEE, Steven H. Low, Fellow, IEEE,
+Liang Zhang, Student Member, IEEE, Ruilong Deng, Member, IEEE,
+Georgios B. Giannakis, Fellow, IEEE, Youxian Sun, and Zaiyue Yang, Member, IEEE
+Abstract—In Part I of this paper we formulate an optimal
+scheduling problem for battery swapping that assigns to each
+electric vehicle (EV) a best station to swap its depleted battery
+based on its current location and state of charge. The schedule
+aims to minimize a weighted sum of total travel distance and
+generation cost over both station assignments and power ﬂow
+variables, subject to EV range constraints, grid operational
+constraints and AC power ﬂow equations. We propose there
+a centralized solution based on the second-order cone pro-
+gramming (SOCP) relaxation of optimal power ﬂow (OPF) and
+generalized Benders decomposition that is suitable when global
+information is available. In this paper we propose two distributed
+solutions based on the alternating direction method of multipliers
+(ADMM) and dual decomposition respectively that are suitable
+for cases where the distribution grid, battery stations and EVs
+are managed by separate entities. Our algorithms allow these
+entities to make individual decisions but coordinate through
+privacy-preserving information exchanges to jointly solve an
+approximate version of the joint battery swapping scheduling and
+OPF problem. We evaluate our algorithms through simulations.
+Index Terms—Electric vehicle, joint battery swapping schedul-
+ing and OPF, privacy preserving, distributed algorithms.
+I. INTRODUCTION
+A. Motivation
+In Part I of this paper we formulate an optimal scheduling
+problem for battery swapping that assigns to each EV a best
+station to swap its depleted battery based on its current location
+and state of charge. The station assignment not only deter-
+mines EVs’ travel distance, but can also impact signiﬁcantly
+the power ﬂows on a distribution network because batteries are
+large loads. The schedule aims to minimize a weighted sum
+of total travel distance and generation cost over both station
+assignments and power ﬂow variables, subject to EV range
+constraints, grid operational constraints and AC power ﬂow
+equations. This joint battery swapping scheduling and OPF
+problem is nonconvex and computationally difﬁcult because
+P. You, Y. Sun and Z. Yang are with the State Key Laboratory of Industrial
+Control Technology, Zhejiang University, Hangzhou, 310027, China (e-mail:
+pcyou@zju.edu.cn; yxsun@iipc.zju.edu.cn; yangzy@zju.edu.cn).
+P. You and S. H. Low are with the Engineering and Applied Science
+Division, California Institute of Technology, Pasadena, CA 91125 USA (e-
+mail: pcyou@caltech.edu; slow@caltech.edu).
+R. Deng is with the Department of Electrical and Computer Engineer-
+ing, University of Alberta, Edmonton, AB, Canada T6G 1H9 (e-mail: rui-
+long@ualberta.ca).
+L. Zhang and G. B. Giannakis are with the Department of Electrical and
+Computer Engineering, University of Minnesota, Minneapolis, MN 55455
+USA (e-mail: zhan3523@umn.edu; georgios@umn.edu).
+the AC power ﬂow equations are nonlinear and the assignment
+variables are binary.
+We propose in Part I a centralized solution based on the
+SOCP relaxation of OPF, which deals with the nonconvexity of
+power ﬂow equations, and generalized Benders decomposition,
+which deals with the binary nature of assignment variables.
+When the relaxation of OPF is exact, this approach computes
+a global optimum. It is however suitable only for cases
+where the distribution network, battery stations, and EVs are
+managed centrally by the same operator, as is the current
+electric taxi program of State Grid in China. We expect that,
+as EVs proliferate and as battery swapping models mature,
+an equally (if not more) likely business model will emerge
+where the distribution grid is managed by a utility company,
+battery stations are managed by a station operator (or multiple
+station operators), and EVs may be managed by multiple taxi
+companies or by individual drivers. In particular, the set of
+EVs to be scheduled may include a large number of private
+cars in addition to ﬂeet vehicles. The centralized approach of
+Part I will not be suitable for these future scenarios, for two
+reasons.
+First, the operator in the centralized approach needs global
+information such as the grid topology, impedances, operational
+constraints, background loads, availability of fully-charged
+batteries at each station, locations and states of charge of EVs,
+etc. In the future, the grid, battery stations, and EVs will likely
+be operated by different entities that do not share their pri-
+vate information. Second, generalized Benders decomposition
+solves a mixed-integer convex problem in each iteration and
+is computationally expensive. It is hard to scale it to compute
+in real time an optimal station assignment and an (relaxed)
+OPF solution in future scenarios where the numbers of EVs
+and battery stations are large. In this paper we aim to develop
+distributed solutions that preserve private information and are
+more suitable for these future scenarios.
+Instead of generalized Benders decomposition, we relax the
+binary assignment variables to real variables in [0, 1]. With
+both the SOCP relaxation of OPF and the relaxation of binary
+variables, the resulting approximate problem of joint battery
+swapping scheduling and OPF is a convex program. This
+allows us to develop two distributed solutions where different
+entities make their individual decisions but are coordinated
+through privacy-preserving information exchanges to jointly
+solve the global problem. The ﬁrst solution is based on
+ADMM and is for cases where the distributed grid is managed
+by a utility company and all stations and EVs are managed
+arXiv:1611.10296v1  [math.OC]  30 Nov 2016
+
+--- PDF PAGE 2 ---
+……
+utility company
+station operator
+EV
+EV
+EV
+EV
+distribution 
+network 
+topology, nodal 
+and line 
+parameters, etc.
+battery 
+swapping 
+decisions
+individual 
+decision
+obscure information exchanges
+Fig. 1.
+Distributed framework.
+by a station operator. Here the utility company maintains a
+local estimate of some aggregate assignment information that
+is computed by the station operator, and they exchange the
+aggregate information and its estimate to attain consensus.
+The second solution is based on dual decomposition and
+is for cases where the distributed grid is managed by a
+utility company, all battery stations by a station operator,
+and all EVs are individually operated. The utility company
+still sends its local estimate to the station operator while
+the station operator does not need to send the utility com-
+pany the aggregate assignment information, but only some
+Lagrange multipliers. The station operator also broadcasts
+Lagrange multipliers to all EVs and individual EVs respond
+by sending the station operator their choices of stations for
+battery swapping based on the Lagrange multiplier values and
+their current locations and driving ranges. In both approaches,
+given aggregate information and Lagrange multipliers that are
+exchanged, different entities only need their own local states
+(e.g., power ﬂow variables) and local data (e.g., impedance
+values, available batteries, EV locations and driving ranges) to
+iteratively compute their own decisions. See Fig. 1. As we will
+discuss later, both distributed algorithms are able to converge
+to a solution, in which the station assignment may be non-
+binary, to the relaxed version of the joint battery swapping
+scheduling and OPF problem. However, we show it is easy
+to discretize the obtained assignment to achieve a binary one
+that is close to optimum, and the SOCP relaxation is usually
+exact [1], [2].
+B. Literature
+The privacy issues in smart grids have drawn much attention
+from academia due to the vision of more and more inter-
+connections in power systems to strive for strength, security,
+stability and efﬁciency [3]. Most previous work lays emphasis
+on the privacy issue of residential loads from the perspective
+of smart meters [4]–[7], and only a small portion of the related
+literature realizes the signiﬁcance of EVs’ privacy despite their
+expected high penetration in the future and the resulting giant
+impact on smart grids. Currently, privacy concerns for EVs
+mainly arise in Vehicle-to-Grid networks where the status of
+EVs has to be continuously monitored. Tseng [8] proposes a
+secure and privacy-preserving communication protocol based
+on restrictive partially blind signatures to protect EV owners
+from identity and location information leakage. Liu et al. [9]
+design an aggregated-proofs based authentication scheme to
+collect EVs’ status without revealing any individual privacy.
+Besides, Nicanfar et al. [10] present different situations where
+EVs may be involved in the smart grid context, and provide the
+corresponding authentication schemes to preserve EV owners’
+privacy. Nonetheless, the privacy leakage of scheduling infor-
+mation in EV battery charging/swapping is often ignored.
+In contrast to centralized algorithms, distributed (decentral-
+ized) algorithms inherently preserve privacy as global infor-
+mation is not necessary in local computation. Hence there is a
+large literature of distributed algorithm design with various
+applications for privacy-preserving purposes. Liu et al. [6]
+schedule thermostatically controlled devices and batteries in a
+household to hide its actual load proﬁles such that no privacy
+can be inferred from electricity usage. Yang et al. [7] design
+an online control algorithm of batteries that only uses the
+observations of the current load requirement and electricity
+price to strike a tradeoff between the smart meter data privacy
+and the electricity bill for customers. Clifton et al. [11] present
+a toolkit of distributed algorithms that can be combined for
+speciﬁc privacy-preserving data mining applications. Zhou
+et al. [12] devise a multi-level privacy-preserving cooperative
+authentication scheme to realize different levels of privacy
+requirement for a distributed m-healthcare cloud computing
+system that shares personal health information among health-
+care providers. Liu et al. [13] propose a consensus-based
+distributed speed advisory system that optimally determines
+a common speed for a given area in a privacy-aware manner
+to minimize the group emissions of fuel vehicles or the group
+battery consumptions of EVs.
+The remainder of this paper is organized as follows. We
+revisit the problem formulation in Sec. II. The proposed
+distributed solutions via ADMM and dual decomposition are
+elaborated in Sec. III, followed by numerical results in Sec. IV.
+At last, Sec. V concludes.
+II. PROBLEM FORMULATION
+We now summarize the joint battery swapping scheduling
+and OPF problem in Part I [14], using the notations deﬁned
+there.
+An assignment of stations1 to EVs for battery swapping is
+represented by the binary variables u := (uaj, a ∈A, j ∈Nw)
+where
+uaj
+=
+(
+1
+if station j is assigned to EV a
+0
+otherwise
+1Throughout this paper stations refer to battery stations.
+
+--- PDF PAGE 3 ---
+A station assignment must satisfy the following conditions.
+• The assigned station must be in every EV’s driving range:
+uajdaj ≤γaca,
+j ∈Nw, a ∈A
+(1a)
+• Exactly one station is assigned every EV:
+X
+j∈Nw
+uaj = 1,
+a ∈A
+(1b)
+• Every assigned station has enough fully-charged batteries
+for EVs:
+X
+a∈A
+uaj ≤mj,
+j ∈Nw
+(1c)
+A station assignment will add loads to the distribution
+network at buses in Nw that supply electricity to stations.
+The net power injections sj = pj + iqj depend on the station
+assignment u according to
+pj
+=
+
+
+
+
+
+
+
+pg
+j −pb
+j −r
+ 
+Mj −mj +
+X
+a∈A
+uaj
+!
+,
+j ∈Nw
+pg
+j −pb
+j,
+j ∈N/Nw
+(2a)
+qj
+=
+qg
+j −qb
+j,
+j ∈N
+(2b)
+An active distribution network is modeled by the DistFlow
+equations from [15]:
+X
+k:(j,k)∈E
+Sjk = Sij −zijlij + sj,
+j ∈N
+(3a)
+vj −vk = 2Re(zH
+jkSjk) −|zjk|2ljk,
+j →k ∈E (3b)
+vjljk = |Sjk|2,
+j →k ∈E
+(3c)
+The power ﬂow quantities must satisfy the following con-
+straints on grid operation:
+• voltage stability
+vj ≤vj ≤vj,
+j ∈N
+(4a)
+• generation capacity
+pg
+j ≤pg
+j ≤pg
+j,
+j ∈N
+(4b)
+qg
+j ≤qg
+j ≤qg
+j,
+j ∈N
+(4c)
+• line transmission capacity
+|Sjk| ≤Sjk,
+j →k ∈E
+(4d)
+The joint battery swapping scheduling and OPF problem
+is to minimize a weighted sum of total generation cost in the
+distribution network and total travel distance of EVs over both
+station assignments and power ﬂow variables:
+min
+u,s,sg,
+v,l,S
+X
+j∈N
+fj(pg
+j) + α
+X
+a∈A
+X
+j∈Nw
+dajuaj
+(5)
+s.t.
+(1)(2)(3)(4)
+uaj ∈{0, 1},
+a ∈A, j ∈Nw
+III. DISTRIBUTED SOLUTIONS
+A. Relaxations
+The joint battery swapping scheduling and OPF problem (5)
+is computationally difﬁcult for two reasons. First, the quadratic
+equality (3c) is nonconvex. Second, the station assignment
+variables u are binary.
+To deal with the ﬁrst difﬁculty, we replace (3c) by an
+inequality, i.e., replace the DistFlow equations (3) in the
+problem (5) by:
+X
+k:(j,k)∈E
+Sjk = Sij −zijlij + sj,
+j ∈N
+(6a)
+vj −vk = 2Re(zH
+jkSjk) −|zjk|2ljk,
+j →k ∈E (6b)
+vjljk ≥|Sjk|2,
+j →k ∈E
+(6c)
+Fixing any assignment u ∈{0, 1}ANw, the optimization
+problem is then a convex problem. If an optimal solution to
+the SOCP relaxation attains equality in (6c) then the solution
+also satisﬁes (3) and is therefore optimal (for the given u). In
+this case, we say that the SOCP relaxation is exact. Sufﬁcient
+conditions are known that guarantee the exactness of the
+SOCP relaxation; see [1], [2] for a comprehensive tutorial
+and references therein. Even when these conditions are not
+satisﬁed, SOCP relaxation for practical radial networks is still
+often exact, as conﬁrmed also by our simulations in Sec. IV.
+To deal with the second difﬁculty, we use generalized
+Benders decomposition in Part I [14]. This approach computes
+an optimal solution when SOCP relaxation is exact, but it is
+computationally expensive as it requires solving a binary linear
+program (as well as an SOCP relaxation) in each iteration of
+the generalized Benders decomposition procedure. Moreover,
+the computation is centralized and is suitable only when a
+single organization, e.g., State Grid in China, operates all of
+the distribution grid, stations, and EVs.
+In this paper, we develop distributed solutions that are
+suitable for cases where these three are operated by different
+organizations that do not share their private information. To
+deal with the second difﬁculty, we relax the binary variables
+uaj to real variables uaj ∈[0, 1], a ∈A, j ∈Nw. The
+constraints (1) are then replaced by:
+uaj ∈[0, 1] , uaj = 0 if daj > γaca, j ∈Nw, a ∈A (7a)
+X
+j∈Nw
+uaj = 1, a ∈A
+(7b)
+X
+a∈A
+uaj ≤mj, j ∈Nw
+(7c)
+In summary, in this paper we solve the following convex
+relaxation of (5):
+min
+u,s,sg,
+v,l,S
+X
+j∈N
+fj(pg
+j) + α
+X
+a∈A
+X
+j∈Nw
+dajuaj
+(8)
+s.t.
+(2)(4)(6)(7)
+This problem has a convex objective and convex quadrati-
+cal constraints. After an optimal solution (x∗, u∗) of (8) is
+obtained, we check if x∗attains equality in (6c). We also
+discretize u∗
+aj into {0, 1}, e.g., by setting for each EV a a
+
+--- PDF PAGE 4 ---
+single largest uaj to 1 and the rest to 0. An alternative is to
+randomize the station assignment using u∗
+aj as a probability
+distribution. As we will show later, the discretization can
+be readily implemented and achieve an assignment close to
+optimum.
+B. Distributed solution via ADMM
+The problem (8) decomposes naturally into two subprob-
+lems, one on station assignments over u and the other on OPF
+over (s, sg, v, l, S). The station assignment subproblem will
+be solved by a station operator that operates the network of
+stations. The OPF subproblem will be solved by a utility com-
+pany. Our goal is to design a distributed algorithm for them
+to jointly solve (8) without sharing their private information.
+These two subproblems are coupled only in (2a) where
+the utility company needs the load r
+ Mj −mj + P
+a∈A uaj
+
+of station j in order to compute the net real power in-
+jection pj. This quantity depends on the total number of
+EVs that each station j is assigned to and is computed by
+the station operator. Their computation can be decoupled by
+introducing an auxiliary variable wj at each bus (station) j
+that represents the utility company’s estimate of the quantity
+r
+ Mj −mj + P
+a∈A uaj
+
+, and requiring that they be equal
+at optimality.
+Speciﬁcally, recall the station assignment variables u, and
+denote the power ﬂow variables by x := (w, s, sg, v, l, S)
+where w := (r
+ Mj −mj + P
+a∈A uaj
+
+, j ∈Nw). Separate
+the objective function by deﬁning
+f(x)
+:=
+X
+j∈N
+fj(pg
+j)
+g(u)
+:=
+α
+X
+a∈A
+X
+j∈Nw
+dajuaj
+Replace the coupling constraints (2) by constraints local to
+bus j:
+pj
+=
+(
+pg
+j −pb
+j −wj,
+j ∈Nw
+pg
+j −pb
+j,
+j ∈N/Nw
+(9a)
+qj
+=
+qg
+j −qb
+j,
+j ∈N
+(9b)
+Denote the local constraint set for x by
+X
+:=
+{x ∈R(|Nw|+5|N|+3|E|) : x satisﬁes (4)(6)(9)}
+Denote the local constraint set for u by
+U
+:=
+{u ∈RANw : u satisﬁes (7)}
+To simplify notation, deﬁne uj := P
+a∈A uaj for j ∈Nw.
+Then the problem (8) is equivalent to
+min
+x,u
+f(x) + g(u)
+(10a)
+s.t.
+x ∈X, u ∈U
+(10b)
+wj = r (Mj −mj + uj) , j ∈Nw
+(10c)
+We now apply ADMM to (10). Let λ be the Lagrange
+multiplier vector corresponding to the coupling constraint
+(10c), and deﬁne the augmented Lagrangian:
+Lρ(x, u, λ)
+:=
+f(x) + g(u) + hρ(w, u, λ)
+(11a)
+where hρ depends on (x, u) only through (wj, uj, j ∈Nw):
+hρ(w, u, λ) :=
+X
+j∈Nw
+λj[wj −r (Mj −mj + uj)]
++ ρ
+2
+X
+j∈Nw
+[wj −r (Mj −mj + uj)]2
+(11b)
+and ρ is the step size for dual variable λ updates. The standard
+ADMM procedure is to iteratively and sequentially update
+(x, u, λ): for n = 0, 1, . . . ,
+x(n + 1):=arg min
+x∈X f(x) + hρ(w, u(n), λ(n))
+(12a)
+u(n + 1):=arg min
+u∈U g(u) + hρ(w(n + 1), u, λ(n))
+(12b)
+λj(n + 1):=λj(n) + ρ[wj(n + 1)
+−r(Mj −mj + uj(n + 1))], j ∈Nw
+(12c)
+Remark 1:
+1) The x-update (12a) is carried out by the
+utility company and involves minimizing a convex objec-
+tive with convex quadratic constraints. The (u, λ)-updates
+(12b)(12c) are carried out by the station operator and
+the u-update minimizes a convex quadratic objective with
+linear constraints. Both can be efﬁciently solved.
+2) The x-update by the utility company needs (u(n), λ(n))
+from the station operator in iteration n. In fact, from
+(11b), the station operator does not need to communicate
+the detailed station assignment u(n) = (uaj(n), a ∈
+A, j ∈Nw) to the utility company but only the total
+numbers of EVs (uj(n), j ∈Nw) that stations j are
+assigned to.
+3) The (u, λ)-updates by the station operator need in it-
+eration n the utility company’s estimate w(n + 1) of
+(r(Mj −mj + uj(n + 1)), j ∈Nw).
+4) The reason that the x-update by the utility company needs
+(uj(n), j ∈Nw) and the u-update by the station operator
+needs w(n + 1) is the (quadratic) regularization term in
+hρ. This becomes unnecessary for the dual decomposition
+approach in Sec. III-C without the regularization term.
+The communication structure is illustrated in Fig. 2. In
+particular, private information of the utility company, such
+as
+distribution
+network
+parameters
+zjk,
+network
+states
+(s(n), sg(n), v(n), l(n), S(n)), cost functions f, and opera-
+tional constraints, as well as private information of the station
+operator, such as the total number of batteries (Mj, j ∈Nw),
+the numbers of available fully-charged batteries (mj, j ∈Nw),
+how many EVs or where they are or their states of charge, and
+the detailed assignment u(n), do not need to be communicated.
+utility company:
+updates            
+x(n)
+station operator:
+updates                         
+u(n),l(n)
+(
+)
+uj(n),lj(n)
+(
+)
+wj(n+1)
+Fig. 2.
+Communication between utility company and station operator.
+
+--- PDF PAGE 5 ---
+When the cost functions fj are closed, proper and convex
+and L0(x, u, λ) has a saddle point, the ADMM iteration (12)
+converges in that, for all j ∈Nw, the mismatch |wj(n) −
+uj(n)| →0 and the objective f(x(n))+g(u(n)) converges to
+its minimum value [16]. This does not automatically guarantee
+that (x(n), u(n)) converges to an optimal solution to (8).2 If
+(x(n), u(n)) indeed converges to a primal optimal solution
+(x∗, u∗), u∗may generally not be binary. We use a heuristic
+to derive a binary station assignment from u∗, as mentioned
+above. Fortunately, the following result shows that the number
+of EVs a for which a binary assignment needs to be derived
+from the obtained non-binary one (u∗
+aj, j ∈Nw) is small.
+Theorem 1: Suppose (x∗, u∗) is an optimal solution to the
+relaxation (8), then the number of EVs a for which u∗
+aj < 1
+for all j ∈Nw is at most Nw(Nw −1)/2.
+See Appendix A for its proof. In practice, the number Nw
+of stations is typically small compared with the number A of
+EVs that request battery swapping. Therefore, it is expected
+that the discretization will attain a station assignment close to
+optimum, considering the subtle impact of individual EVs.
+C. Distributed solution via dual decomposition
+The ADMM-based algorithm assumes the station operator
+directly controls the station assignment to all EVs. This
+requires that the station operator know the locations (daj),
+states of charge (ca) and performance (γa) of EVs. Moreover,
+the aggregate EV information uj needs to be provided to the
+utility company. We now present another algorithm based on
+dual decomposition that is more suitable in situations where
+it is undesirable or inconvenient to share private information
+between the utility company, the station operator, and EVs.
+In the original relaxation (8), the update of the injections pj
+in (2) by the utility company involves uj which are updated
+by the station operator. These two computations are decoupled
+in the ADMM-based solution by introducing the auxiliary
+variables wj at the utility company and relaxing the constraint
+wj = r(Mj −mj + uj). In addition, the station assignment
+u must satisfy uj ≤mj in (7c). This is enforced in the
+ADMM-based solution by the station operator that computes u
+for the EVs. To fully distribute the computation to individual
+EVs, we dualize uj ≤mj as well. Let λ and µ ≥0 be
+the Lagrange multiplier vectors for the constraints wj = uj
+and uj ≤mj, respectively. Intuitively w and λ decouple the
+computation of the utility company and that of individual EVs
+through coordination with the station operator. Additionally, µ
+decouples and coordinates the EVs’ decisions so that EVs do
+not need direct communication among themselves to ensure
+that their decisions uaj collectively satisfy uj ≤mj.
+Consider the Lagrangian of (10) with these two sets of
+constraints relaxed:
+L(x, u, λ, µ) := f(x) + g(u) +
+X
+j∈Nw
+λj(wj −r(Mj −mj + uj))
++
+X
+j∈Nw
+µj(uj −mj)
+(13)
+2In theory ADMM may converge and circulate around the set of optimal
+solutions, but never reach one. In practice a solution within a given error
+tolerance is acceptable.
+and the dual problem of (10):
+max
+λ,µ≥0
+D(λ, µ) :=
+min
+x∈X,u∈ˆU
+L(x, u, λ, µ)
+where the constraint set ˆU on u is:
+ˆU
+:=
+{u ∈RANw : u satisﬁes (7a)(7b)}
+Let ua := (uaj, j ∈Nw) denote the column vector of EV
+a’s decision on which station to swap its battery. Then the
+dual problem is separable in power ﬂow variables x as well
+as individual EV decisions ua:
+D(λ, µ)
+=:
+V (λ) +
+X
+a∈A
+Ua(λ, µ)
+(14a)
+where the problem V (λ) to be solved by the utility company
+is:
+V (λ)
+:=
+min
+x∈X
+
+f(x) +
+X
+j∈Nw
+λjwj
+
+
+(14b)
+and the problem Ua(λ) to be solved by each individual EV a
+is:
+Ua(λ, µ)
+:=
+min
+ua∈ˆUa
+X
+j∈Nw
+(αdaj −rλj + µj) uaj
+(14c)
+where the constraint set ˆUa on ua is:
+ˆUa :=
+n
+ua ∈RNw :
+uaj ∈[0, 1] , j ∈Nw
+uaj = 0 if daj > γaca, j ∈Nw
+X
+j∈Nw
+uaj = 1
+o
+Note that (14c) entails closed-form solutions. If there exists a
+unique optimal solution to Ua(λ, µ), i.e., for any EV a there
+is a unique j∗
+a(λ, µ) deﬁned as
+j∗
+a(λ, µ)
+:=
+arg
+min
+j:daj≤γaca{αdaj −rλj + µj}
+then the optimal solution to Ua(λ, µ) can be uniquely deter-
+mined as
+uaj(n)
+:=
+(
+1
+if
+j = j∗
+a(λ, µ)
+0
+if
+j̸ = j∗
+a(λ, µ)
+i.e., it simply chooses the unique station j∗
+a within EV a’s
+driving range that has the minimum cost αdaj −rλj + µj.
+From (13) the standard dual algorithm for solving (10) is:
+for j ∈Nw,
+λj(n + 1) := λj(n) + ρ1(n)[wj(n) −r(Mj −mj + uj(n))](15a)
+µj(n + 1) := max{ µj(n) + ρ2(n)(uj(n) −mj), 0 }
+(15b)
+where ρ1(n), ρ2(n) > 0 are diminishing stepsizes and, from
+(14), we have
+x(n) := arg min
+x∈X
+
+f(x) +
+X
+j∈Nw
+λj(n)wj
+
+
+(15c)
+ua(n) := arg min
+ua∈ˆUa
+X
+j∈Nw
+(αdaj −rλj + µj) uaj, a ∈A (15d)
+
+--- PDF PAGE 6 ---
+Remark 2:
+1) The x-update (15c) is carried out by the
+utility company and involves minimizing a convex ob-
+jective with convex quadratic constraints. The only in-
+formation that is non-local to the utility company for its
+x-update is one of the dual variables λ(n) computed by
+the station operator.
+2) The ua-update (15d) is carried out by each individual EV.
+Each EV requires the dual variables (λ(n), µ(n)) from
+the station operator for its update.
+3) The dual updates (15a)(15b) are carried out by the station
+operator which uses a (sub)gradient ascent algorithm to
+solve the dual problem maxλ,µ≥0 D(λ, µ). It requires
+w(n) from the utility company and individual decisions
+ua(n) from EVs a.
+The communication structure is illustrated in Fig. 3. In partic-
+utility company:
+updates            
+x(n)
+station operator:
+updates                         
+l(n),m(n)
+(
+)
+lj(n)
+wj(n)
+EV1 :
+updates             
+u1(n)
+EVA :
+updates             
+uA(n)
+l(n),m(n)
+(
+)
+broadcasts to EVs
+. . . .
+u1(n)
+uA(n)
+Fig. 3.
+Communication between utility company, station operator, and EVs.
+ular, EVs are completely decoupled from the utility company
+and among themselves. Unlike the ADMM-based approach,
+the station operator knows only the (tentative) battery swap-
+ping decisions of EVs, but not their private information such
+as their locations (daj), states of charge (ca) or performance
+(γa).
+Since the relaxation (8) is convex, strong duality holds if
+Slater’s constraint qualiﬁcation is satisﬁed. By strong duality,
+when the above (sub)gradient algorithm converges to a dual
+optimal solution (λ∗, µ∗), any primal optimal point is also a
+solution to the corresponding x-update (15c) and ua-update
+(15d) [17], [18]. Suppose (x(n), ua(n), a ∈A) indeed con-
+verges to a primal optimal solution (x∗, u∗
+a, a ∈A), typically
+(u∗
+a, a ∈A) may not be binary. As discussed above, the
+discretization of (u∗
+a, a ∈A) can be readily implemented since
+Theorem 1 still holds, and in practice the gap to optimum is
+small.
+Remark 3: The two solutions have their own advantages
+and can be adapted to different application scenarios. Speciﬁ-
+cally, the ADMM-based one requires a station operator that is
+trustworthy and can access EVs’ private information. Nonethe-
+less, thanks to the station operator that is able to optimize
+the station assignment on behalf of all EVs, no computation
+unit is necessary on each EV’s end, and communications are
+only required between the station operator and the utility
+company, which is practical to realize. In contrast, the dual-
+decomposition-based one is more distributed in a sense, thus
+further preserving privacy inherently. However, it necessitates
+computation capabilities of all EVs. In addition, iterative
+communications, both between the station operator and the
+utility company and between the station operator and each
+individual EV, are required to enable computation. As a result,
+the deployment of computation units on each EV and commu-
+nication unreliability may impede the practical implementation
+of the dual-decomposition-based solution. To conclude, the
+dual-decomposition-based solution further preserves privacy
+at the price of communication and computation overheads,
+compared with the ADMM-based one.
+IV. NUMERICAL RESULTS
+We test the two distributed algorithms on the same 56-bus
+radial distribution feeder of Southern California Edison (SCE)
+in Part I. Details about the feeder can be found in [19]. Similar
+setups are adopted to demonstrate the algorithm performance.
+4 distributed generators and 4 stations are added to the feeder
+at different buses, and the 4 stations are assumed to be evenly
+distributed in a 4km×4km square area supplied by the feeder.
+Table I lists their parameters.3 We use examples of A = 400
+EVs that request battery swapping in a certain control interval.
+We randomize their current locations uniformly within the
+square area and ignore their destinations. daj is assumed to
+be the Euclidean distance, and the driving range constraints
+are readily satisﬁed by assuming all EVs can reach any of the
+4 stations for illustrative purposes. The constant charging rate
+is r = 0.01MW [20], and the weight is α = 0.02$/km [21].
+Simulations are run on a laptop with Intel Core i7-3632QM
+CPU@2.20GHz, 8GB RAM, and 64-bit Windows 10 OS.
+TABLE I
+SETUP
+(a) Distributed generator
+Bus
+pg
+j
+pg
+j
+qg
+j
+qg
+j
+Cost function
+1
+4
+0
+2
+-2
+0.3pg2 + 30pg
+4
+2.5
+0
+1.5
+-1.5
+0.1pg2 + 20pg
+26
+2.5
+0
+1.5
+-1.5
+0.1pg2 + 20pg
+34
+2.5
+0
+1.5
+-1.5
+0.1pg2 + 20pg
+(b) Station
+Bus
+Location
+Mj
+mj
+5
+(1,1)
+mj
+(i) A ; (ii) A/2
+16
+(3,1)
+mj
+(i) A ; (ii) A/10
+31
+(1,3)
+mj
+(i) A ; (ii) A/4
+43
+(3,3)
+mj
+(i) A ; (ii) A/4
+As shown in Table I(b), we test the two distributed algo-
+rithms using two cases (i) and (ii) of different mj’s to show
+their convergence, the suboptimality they can achieve, and the
+exactness of SOCP relaxation.
+3The units of the real power, reactive power, cost (for the whole control
+interval), distance and weight in this paper are MW, Mvar, $, km and $/km,
+respectively.
+
+--- PDF PAGE 7 ---
+10
+20
+30
+40
+50
+−40
+−35
+−30
+−25
+−20
+−15
+−10
+−5
+0
+Iteration number
+Lambda
+ 
+ 
+Station 1
+Station 2
+Station 3
+Station 4
+(a)
+10
+20
+30
+40
+50
+−0.7
+−0.6
+−0.5
+−0.4
+−0.3
+−0.2
+−0.1
+0
+0.1
+Iteration number
+Residual
+ 
+ 
+Station 1
+Station 2
+Station 3
+Station 4
+(b)
+Fig. 4.
+Convergence of ADMM (a) λ. (b) Residual.
+Convergence: The convergence of the ADMM-based algo-
+rithm in case (i) is demonstrated in Fig. 4, where Fig. 4(a)
+illustrates that the Lagrange multiplier vector λ converges
+rapidly and Fig. 4(b) shows the residual of the relaxed equality
+constraint (10c) diminishes acoordingly so as to attain con-
+sensus of w and (uj, j ∈Nw) between the utility company
+and the station operator. Similar results can be found for
+case (ii). In terms of the dual-decomposition-based algorithm,
+Fig. 5(a) and Fig. 5(b) show the convergence of its two
+Lagrange multiplier vectors λ and µ respectively in case (ii).
+λ maintains the consensus between the utility company and
+EVs at convergence, and µ guarantees (7c) is satisﬁed when it
+converges. Dual decomposition usually takes more iterations
+to converge due to extra iterative coordination among all EVs
+by updating µ. For case (i), results are similar except that µ
+remains 0 during iterations as (7c) is always satisﬁed.
+Suboptimality (comparison with centralized solution): In
+case (i) both algorithms obtain a solution in which the
+station assignment to two EVs, marked black in Fig. 6(a),
+is non-binary, i.e., u242 = [0.707 0.293 0.000 0.000] and
+u367 = [0.230 0.000 0.770 0.000]. This is consistent with
+Theorem 1. Unlike the centralized solution in Part I that
+uses global information to compute a globally optimal binary
+assignment, the distributed algorithms solve the relaxation (8)
+and are likely to attain a non-binary one, exempliﬁed by case
+(i). However, we can naively round u243 and u367 off to
+discretize the assignment, as shown in Fig. 6(a), which turns
+out to be an optimal station assignment of the original problem
+50
+100
+150
+200
+−40
+−35
+−30
+−25
+−20
+−15
+−10
+−5
+0
+Iteration number
+Lambda
+ 
+ 
+Station 1
+Station 2
+Station 3
+Station 4
+(a)
+50
+100
+150
+200
+0
+10
+20
+30
+40
+50
+Iteration number
+Mu
+ 
+ 
+Station 1
+Station 2
+Station 3
+Station 4
+209
+210
+211
+0
+0.005
+0.01
+(b)
+Fig. 5.
+Convergence of dual decomposition (a) λ. (b) µ.
+(5), identical with the one computed by the centralized solution
+in Part I. Typically a heuristic binarization method will yield
+a suboptimal assignment, but the suboptimality gap is usually
+trivial due to the bounded number of EVs with a non-binary
+assignment and their limited impact on the whole system.
+In case (ii) we reduce available fully-charged batteries at
+each station to activate (7c). Fig. 6(b) shows the solution
+achieved by both algorithms which contains a binary as-
+signment, also an optimal station assignment of the original
+problem (5). In this case the relaxation of binary variables
+is exact. EVs, to which the station assignment is altered due
+to the bound imposed on battery availability of each station,
+are marked cyan in Fig. 6(b). The intuition is that an active
+(7c) sometimes can help eliminate the marginal non-binary
+assignment to certain EVs, and this is often the case in practice
+where the battery availability is uneven across stations.
+Exactness of SOCP relaxation: We check whether the above
+solutions computed by the distributed algorithms attain equal-
+ity in (6c), i.e., whether the SOCP relaxation of OPF is exact.
+Our ﬁnal results, as well as most tests in other case studies,
+conﬁrm the exactness of the SOCP relaxation. Only partial
+result data for case (ii) are listed in Table II due to space limit.
+To sum up, the above solutions satisfy power ﬂow equations
+and are thus implementable.
+V. CONCLUDING REMARKS
+This paper is an extension of Part I that solves the same
+optimal scheduling problem for battery swapping. Instead
+
+--- PDF PAGE 8 ---
+0
+1
+2
+3
+4
+0
+1
+2
+3
+4
+x (km)
+y (km)
+ 
+ 
+EV
+station 1
+station 2
+station 3
+station 4
+(a)
+0
+1
+2
+3
+4
+0
+1
+2
+3
+4
+x (km)
+y (km)
+ 
+ 
+EV
+station 1
+station 2
+station 3
+station 4
+(b)
+Fig. 6.
+Suboptimality in different cases (a) case (i). (b) case (ii).
+TABLE II
+EXACTNESS OF SOCP RELAXATION (PARTIAL RESULTS FOR CASE (II))
+Bus
+vjljk
+|Sjk|2
+Residual
+From
+To
+1
+2
+2.582
+2.582
+0.000
+2
+3
+0.006
+0.006
+0.000
+2
+4
+2.336
+2.336
+0.000
+4
+5
+3.413
+3.413
+0.000
+4
+6
+0.005
+0.005
+0.000
+4
+7
+2.276
+2.276
+0.000
+7
+8
+1.984
+1.984
+0.000
+8
+9
+0.009
+0.009
+0.000
+8
+10
+1.518
+1.518
+0.000
+10
+11
+1.318
+1.318
+0.000
+of resorting to a centralized solution which requires global
+information, two distributed solutions based on ADMM and
+dual decomposition respectively are proposed, considering the
+fact that the grid, battery stations and EVs are likely operated
+by different entities, which do not share their private informa-
+tion. The distributed algorithms allow these entities to make
+individual decisions but coordinate through privacy-preserving
+information exchanges to jointly solve an approximate version
+of the joint battery swapping scheduling and OPF problem.
+Finally, the obtained station assignment may not be binary,
+but we prove that the number of EVs for which a binary
+assignment needs to be derived from the obtained non-binary
+one is small, and thus a station assignment that is close
+to optimum is expected to be attained. Numerical tests on
+the SCE 56-bus distribution feeder demonstrate the algorithm
+performance and validate our analysis.
+REFERENCES
+[1] S. H. Low, “Convex relaxation of optimal power ﬂow, I: formulations
+and relaxations,” IEEE Trans. on Control of Network Systems, vol. 1,
+no. 1, pp. 15–27, 2014.
+[2] S. H. Low, “Convex relaxation of optimal power ﬂow, II: exactness,”
+IEEE Trans. on Control of Network Systems, vol. 1, no. 2, pp. 177–189,
+2014.
+[3] P. McDaniel and S. McLaughlin, “Security and privacy challenges in
+the smart grid,” IEEE Security and Privacy, vol. 7, no. 3, pp. 75–77,
+2009.
+[4] G. Kalogridis, C. Efthymiou, S. Z. Denic, T. A. Lewis, and R. Cepeda,
+“Privacy for smart meters: Towards undetectable appliance load sig-
+natures,” in Proc. of IEEE International Conference on Smart Grid
+Communications (SmartGridComm), pp. 232–237, 2010.
+[5] C. Efthymiou and G. Kalogridis, “Smart grid privacy via anonymization
+of smart metering data,” in Proc. of IEEE International Conference on
+Smart Grid Communications (SmartGridComm), pp. 238–243, 2010.
+[6] E. Liu, P. You, and P. Cheng, “Optimal privacy-preserving load schedul-
+ing in smart grid,” in Proc. of IEEE Power & Energy Society General
+Meeting, pp. 1–5, 2016.
+[7] L. Yang, X. Chen, J. Zhang, and H. V. Poor, “Optimal privacy-preserving
+energy management for smart meters,” in Proc. of IEEE Conference on
+Computer Communications (INFOCOM), pp. 513–521, 2014.
+[8] H.-R. Tseng, “A secure and privacy-preserving communication protocol
+for V2G networks,” in Proc. of IEEE Wireless Communications and
+Networking Conference (WCNC), pp. 2706–2711, 2012.
+[9] H. Liu, H. Ning, Y. Zhang, and L. T. Yang, “Aggregated-proofs based
+privacy-preserving authentication for V2G networks in the smart grid,”
+IEEE Trans. on Smart Grid, vol. 3, no. 4, pp. 1722–1733, 2012.
+[10] H. Nicanfar, P. TalebiFard, S. Hosseininezhad, V. Leung, and M. Damm,
+“Security and privacy of electric vehicles in the smart grid context:
+problem and solution,” in Proc. of ACM International Symposium on
+Design and Analysis of Intelligent Vehicular Networks and Applications,
+pp. 45–54, 2013.
+[11] C. Clifton, M. Kantarcioglu, J. Vaidya, X. Lin, and M. Y. Zhu, “Tools for
+privacy preserving distributed data mining,” ACM Sigkdd Explorations
+Newsletter, vol. 4, no. 2, pp. 28–34, 2002.
+[12] J. Zhou, X. Lin, X. Dong, and Z. Cao, “Psmpa: Patient self-
+controllable and multi-level privacy-preserving cooperative authentica-
+tion in distributedm-healthcare cloud computing system,” IEEE Trans.
+on Parallel and Distributed Systems, vol. 26, no. 6, pp. 1693–1703,
+2015.
+[13] M. Liu, R. H. Ord´o˜nez-Hurtado, F. Wirth, Y. Gu, E. Crisostomi, and
+R. Shorten, “A distributed and privacy-aware speed advisory system for
+optimizing conventional and electric vehicle networks,” IEEE Trans. on
+Intelligent Transportation Systems, vol. 17, no. 5, pp. 1308–1318, 2016.
+[14] P. You, S. H. Low, W. Tushar, G. Geng, C. Yuen, Z. Yang, and Y. Sun,
+“Scheduling of EV battery swapping, I: centralized solution,” arXiv
+preprint arXiv:1611.07943, 2016.
+[15] M. E. Baran and F. F. Wu, “Optimal sizing of capacitors placed on a
+radial distribution system,” IEEE Trans. on Power Delivery, vol. 4, no. 1,
+pp. 735–743, 1989.
+[16] S. Boyd, N. Parikh, E. Chu, B. Peleato, and J. Eckstein, “Distributed
+optimization and statistical learning via the alternating direction method
+of multipliers,” Foundations and Trends® in Machine Learning, vol. 3,
+no. 1, pp. 1–122, 2011.
+[17] S. Boyd, L. Xiao, and A. Mutapcic, “Subgradient methods,” lecture notes
+of EE392o, Stanford University, Autumn Quarter, vol. 2004, pp. 2004–
+2005, 2003.
+[18] S. Boyd and L. Vandenberghe, Convex optimization. Cambridge univer-
+sity press, 2004.
+[19] M. Farivar, R. Neal, C. Clarke, and S. Low, “Optimal inverter VAR
+control in distribution systems with high PV penetration,” in Proc. of
+IEEE Power & Energy Society General Meeting, pp. 1–7, 2012.
+[20] M. Yilmaz and P. T. Krein, “Review of battery charger topologies,
+charging power levels, and infrastructure for plug-in electric and hybrid
+vehicles,” IEEE Trans. on Power Electronics, vol. 28, no. 5, pp. 2151–
+2169, 2013.
+
+--- PDF PAGE 9 ---
+[21] U. EIA, “Annual energy review,” Energy Information Administration, US
+Department of Energy: Washington, DC www. eia. doe. gov/emeu/aer,
+2011.
+APPENDIX A
+PROOF OF THEOREM 1
+We refer to EV a as a critical EV if u∗
+aj < 1 for all j ∈Nw.
+We ﬁrst show the following lemma always holds, on which
+basis Theorem 1 is then proved.
+Lemma 1: There
+exists
+an
+optimal
+solution
+with
+no
+uaj, uak, ubj, ubk > 0 for ∀a, b ∈A and ∀j, k ∈Nw,
+i.e., if a solution contains two critical EVs a, b ∈A with
+uaj, uak, ubj, ubk > 0 for certain j, k ∈Nw, there always
+exists a better one.
+Proof: We prove Lemma 1 by contradiction.
+Suppose (8) is solved by the proposed algorithms and we
+obtain the primal optimal solution (u∗, x∗), which contains
+the assignment of two stations to two same critical EVs, i.e.,
+u∗
+aj, u∗
+ak, u∗
+bj, u∗
+bk > 0. We focus on the two-EV-two-station
+subsystem and ﬁx its impact on the remaining parts of the
+whole system, e.g., the distribution network, other stations and
+EVs. Note that EV a and EV b have rBa and rBb charging
+loads to distribute, respectively, where Ba := u∗
+aj + u∗
+ak and
+Bb := u∗
+bj + u∗
+bk. Meanwhile, the two EVs yield in total
+rBj and rBk charging loads at the buses of station j and
+k, respectively, where Bj := u∗
+aj + u∗
+bj and Bk := u∗
+ak + u∗
+bk.
+Apparently, Ba + Bb = Bj + Bk. Since a and b, as well
+as j and k, are indiscriminative, without loss of generality
+we assume case 1: Ba ≥Bj ≥Bk ≥Bb and case 2:
+Bj ≥Ba ≥Bb ≥Bk to cover all possibilities. Below we
+will take case 1 as an illustrative example to go on with the
+proof, and case 2 shares the similar property.
+Obviously the above circumstance u∗
+aj, u∗
+ak, u∗
+bj, u∗
+bk > 0
+would only occur when subcase 1’: daj ≤dbj, dak ≤dbk or
+subcase 2’: dbj ≤daj, dbk ≤dak. Otherwise, EV a and EV b
+would have a bias for different stations in terms of the travel
+distance. For example, if daj ≤dbj, dbk ≤dak, the two-EV-
+two-station subsystem will beneﬁt if EV a goes to station j and
+EV b goes to station k with priority, i.e., u′
+aj = Bj, u′
+ak =
+Bk −Bb, u′
+bj = 0, u′
+bk = Bb with the rest of the optimal
+solution (u∗, x∗) is a better solution. Because the remaining
+parts of the whole system is not affected, which means the OPF
+solution and other EVs’ total travel distance won’t change, but
+the travel distance of the two-EV-two-station subsystem will
+decrease.
+Again we take subcase 1’ as an example, which we call
+case 11’. In this case, we may have
+dbj −dbk > daj −dak
+⇐⇒u∗
+ajdaj + u∗
+akdak + u∗
+bjdbj + u∗
+bkdbk
+> Bjdaj + (Bk −Bb)dak + Bbdbk
+(16)
+or
+daj −dak > dbj −dbk
+⇐⇒u∗
+ajdaj + u∗
+akdak + u∗
+bjdbj + u∗
+bkdbk
+> (Bj −Bb)daj + Bkdak + Bbdbj
+(17)
+or
+daj −dak = dbj −dbk
+⇐⇒u∗
+ajdaj + u∗
+akdak + u∗
+bjdbj + u∗
+bkdbk
+= Bjdaj + (Bk −Bb)dak + Bbdbk
+= (Bj −Bb)daj + Bkdak + Bbdbj
+(18)
+In the cases of (16) and (17), there is a better solution
+that decreases the travel distance of the two-EV-two-station
+subsystem, while the remaining parts of the whole system
+remain the same. This conﬂicts the original assumption that
+(u∗, x∗) is the optimal solution. In the case of (18), still we
+can ﬁnd solutions of equal optimum that only render either
+EV a or EV b critical.
+Likewise, case 12’, case 21’ and case 22’ share the same
+conclusion. As a result, there always exists an optimal solution
+with no uaj, uak, ubj, ubk > 0 for ∀a, b ∈A and ∀j, k ∈Nw.
+This completes the proof.
+Based on Lemma 1, we now go on to prove Theorem 1.
+Proof: According to the deﬁnition of a critical EV,
+its charging load will split into at least two parts that are
+distributed to different stations. The problem is currently
+transformed to how many critical EVs we can assign the Nw
+stations to at most without violating Lemma 1.
+This is a basic assignment problem. Obviously, assume
+every critical EV only splits into two parts at best, i.e., at most
+two station can be assigned to each critical EV. Then we need
+to assign the Nw stations to as many critical EVs as possible
+without repeats. We start from assigning two consecutively
+indexed stations to each critical EV, i.e., stations 1 and 2 to
+one critical EV, and stations 2 and 3 to another, etc. Note that
+stations Nw and 1 are not consecutive. By this means, we
+can assign stations to at most Nw −1 critical EVs. Then two
+stations with a one-index gap are assigned to each critical EV,
+i.e., stations 1 and 3 to one critical EV, and stations 2 and 4
+to another, etc, by which means we can assign stations to at
+most Nw −2 critical EVs. By analogy, we ﬁnally assign two
+stations with an (Nw −2)-index gap to each critical EV, and
+will ﬁnd there is at most only 1 critical EV that we can assign
+stations to. Therefore, in total we are able to assign the Nw
+stations to at most (Nw −1)+(Nw −2)+· · ·+1 = Nw(Nw−1)
+2
+critical EVs, so as to satisfy Lemma 1.
+This completes the proof.
