@@ -7,17 +7,17 @@
       ],
       "resources": {
         "A": {
-          "uav_count": 0,
-          "battery_count": 0,
-          "charger_count": 0
+          "uav_count": 2,
+          "battery_count": 2,
+          "charger_count": 1
         },
         "B": {
-          "uav_count": 0,
-          "battery_count": 0,
-          "charger_count": 0
+          "uav_count": 1,
+          "battery_count": 1,
+          "charger_count": 1
         },
         "C": {
-          "uav_count": 2,
+          "uav_count": 1,
           "battery_count": 2,
           "charger_count": 2
         }
@@ -53,11 +53,11 @@
         "B": {
           "uav_count": 2,
           "battery_count": 4,
-          "charger_count": 3
+          "charger_count": 2
         },
         "C": {
           "uav_count": 2,
-          "battery_count": 3,
+          "battery_count": 4,
           "charger_count": 3
         }
       },
@@ -67,14 +67,14 @@
     }
   ],
   "totals": {
-    "A_uav": 4.0,
-    "A_battery": 6.0,
-    "A_charger": 4.0,
-    "B_uav": 2.0,
-    "B_battery": 4.0,
+    "A_uav": 6.0,
+    "A_battery": 8.0,
+    "A_charger": 5.0,
+    "B_uav": 3.0,
+    "B_battery": 5.0,
     "B_charger": 3.0,
-    "C_uav": 4.0,
-    "C_battery": 5.0,
+    "C_uav": 3.0,
+    "C_battery": 6.0,
     "C_charger": 5.0,
     "relay_uav": 2.0,
     "relay_energy_components": 4.0
@@ -90,12 +90,12 @@
     "relay_energy_components": 6
   },
   "gap": {
-    "A_uav": 0,
-    "B_uav": 0,
-    "C_uav": 2.0,
-    "A_battery": 0,
-    "B_battery": 0,
-    "C_battery": 1.0,
+    "A_uav": 2.0,
+    "B_uav": 1.0,
+    "C_uav": 1.0,
+    "A_battery": 2.0,
+    "B_battery": 1.0,
+    "C_battery": 2.0,
     "relay_uav": 0,
     "relay_energy_components": 0
   }

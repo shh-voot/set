@@ -1,4 +1,5 @@
 {
+  "algorithm": "DEM路径采样 + 双向链路预算 + 候选网格全枚举 + 两中继集合覆盖 + EDD联合重排",
   "coverage_rate": 1.0,
   "covered_area_count": 15,
   "area_count": 15,
@@ -6,23 +7,23 @@
   "official_relay_inventory": 2,
   "relay_energy_components_used": 4,
   "official_relay_energy_components": 6,
-  "transport_energy_kwh": 106.8941378558644,
-  "relay_energy_kwh": 7.474429023473498,
-  "total_energy_kwh": 114.36856687933789,
+  "transport_energy_kwh": 97.65260763126345,
+  "relay_energy_kwh": 6.754889433940063,
+  "total_energy_kwh": 104.40749706520351,
   "uncovered_area_ids": [],
-  "communication_available_mission_count": 49,
+  "communication_available_mission_count": 45,
   "communication_interrupted_mission_ids": [],
   "late_cargo_count_after_joint_reschedule": 0,
-  "transport_completion_after_joint_reschedule_min": 213.98774278104835,
-  "joint_completion_min": 222.81127487594068,
+  "transport_completion_after_joint_reschedule_min": 182.2643138933139,
+  "joint_completion_min": 193.43074068612077,
   "relay_service_windows": {
     "R01": [
       7.323532094892318,
-      213.98774278104835
+      182.2643138933139
     ],
     "R02": [
       9.905674851548365,
-      189.5492509213889
+      182.02506583457242
     ]
   },
   "feasible_100_percent": true

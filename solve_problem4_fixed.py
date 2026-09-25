@@ -40,14 +40,55 @@ def _components(area_ids, relay_rows):
 
 def _partition(area_info, relay_rows, n_groups):
     components = _components(list(area_info), relay_rows)
-    # Greedy load balancing on inseparable components.
-    components.sort(key=lambda c: sum(area_info[x]["population"] for x in c), reverse=True)
-    groups = [[] for _ in range(n_groups)]
-    loads = [0] * n_groups
-    for component in components:
-        idx = min(range(n_groups), key=lambda i: (loads[i], i))
-        groups[idx].extend(component)
-        loads[idx] += sum(area_info[x]["population"] for x in component)
+    weights = {tuple(c): sum(area_info[x]["population"] for x in c) for c in components}
+
+    def build(order):
+        groups = [[] for _ in range(n_groups)]
+        loads = [0] * n_groups
+        for component in order:
+            idx = min(range(n_groups), key=lambda i: (loads[i], i))
+            groups[idx].extend(component)
+            loads[idx] += weights[tuple(component)]
+        return groups, loads
+
+    def score(loads):
+        # Balanced batches reduce the sequential makespan and make resource
+        # reuse more effective.  This is a deterministic surrogate, not a
+        # claim of global optimality.
+        mean = sum(loads) / len(loads)
+        return (max(loads) - min(loads), sum((x - mean) ** 2 for x in loads))
+
+    orders = [
+        sorted(components, key=lambda c: weights[tuple(c)], reverse=True),
+        sorted(components, key=lambda c: weights[tuple(c)]),
+        sorted(components, key=lambda c: (weights[tuple(c)] % 997, -weights[tuple(c)])),
+    ]
+    candidates = [build(order) for order in orders]
+    best = min(candidates, key=lambda x: score(x[1]))
+    # Component-level relocation/swap local search.
+    groups, loads = [list(x) for x in best[0]], list(best[1])
+    improved = True
+    while improved:
+        improved = False
+        base_score = score(loads)
+        # Groups contain area ids; rebuild component ownership for moves.
+        owner = {a: i for i, g in enumerate(groups) for a in g}
+        for comp in components:
+            src = owner[comp[0]]
+            for dst in range(n_groups):
+                if dst == src:
+                    continue
+                trial_loads = loads[:]
+                trial_loads[src] -= weights[tuple(comp)]
+                trial_loads[dst] += weights[tuple(comp)]
+                if score(trial_loads) < base_score:
+                    groups[src] = [a for a in groups[src] if a not in comp]
+                    groups[dst].extend(comp)
+                    loads = trial_loads
+                    improved = True
+                    break
+            if improved:
+                break
     return groups, loads
 
 
@@ -100,7 +141,10 @@ def solve_problem4(num_groups):
     loader.load_all()
     types = {row["type"]: row.to_dict() for _, row in loader.get_uav_types().iterrows()}
 
-    schedule = pd.read_excel(root / "结果" / "问题二_优化修复版.xlsx", sheet_name="架次调度")
+    p2 = root / "结果" / "问题二_增强优化版.xlsx"
+    if not p2.exists():
+        p2 = root / "结果" / "问题二_优化修复版.xlsx"
+    schedule = pd.read_excel(p2, sheet_name="架次调度")
     cargo = loader.get_cargos().copy()
     area_df = loader.get_service_areas()
     area_info = {row["id"]: row.to_dict() for _, row in area_df.iterrows()}
@@ -187,7 +231,10 @@ def solve_staggered_inventory(num_groups):
     data_dir = root / "数据" / "无人机应急物资运输基础数据"
     loader = DataLoader(str(data_dir)); loader.load_all()
     types = {row["type"]: row.to_dict() for _, row in loader.get_uav_types().iterrows()}
-    schedule = pd.read_excel(root / "结果" / "问题二_优化修复版.xlsx", sheet_name="架次调度")
+    p2 = root / "结果" / "问题二_增强优化版.xlsx"
+    if not p2.exists():
+        p2 = root / "结果" / "问题二_优化修复版.xlsx"
+    schedule = pd.read_excel(p2, sheet_name="架次调度")
     area_df = loader.get_service_areas()
     area_info = {row["id"]: row.to_dict() for _, row in area_df.iterrows()}
     relay_rows = pd.read_excel(root / "结果" / "问题三_中继部署方案_修复版.xlsx").to_dict("records")
@@ -237,7 +284,8 @@ if __name__ == "__main__":
     staggered2 = solve_staggered_inventory(2)
     staggered3 = solve_staggered_inventory(3)
     (root / "结果" / "问题四_错峰复用汇总.json").write_text(
-        json.dumps({"staggered_2": staggered2, "staggered_3": staggered3}, ensure_ascii=False, indent=2),
+        json.dumps({"algorithm": "中继覆盖分量多起点负载均衡 + 组件级迁移局部搜索 + 批次整体错峰复用",
+                    "staggered_2": staggered2, "staggered_3": staggered3}, ensure_ascii=False, indent=2),
         encoding="utf-8")
     print(json.dumps({"groups_2": result2[1], "gap_2": result2[3],
                       "groups_3": result3[1], "gap_3": result3[3],

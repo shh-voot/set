@@ -1,14 +1,15 @@
 {
+  "algorithm": "中继覆盖分量多起点负载均衡 + 组件级迁移局部搜索 + 批次整体错峰复用",
   "staggered_2": {
     "groups": 2,
-    "completion_min": 337.68695206775715,
+    "completion_min": 281.3157239709898,
     "required": {
       "A_uav": 4,
       "B_uav": 2,
       "C_uav": 2,
       "A_battery": 6,
       "B_battery": 4,
-      "C_battery": 3
+      "C_battery": 4
     },
     "inventory": {
       "A_uav": 4,
@@ -30,14 +31,14 @@
   },
   "staggered_3": {
     "groups": 3,
-    "completion_min": 513.2840661251915,
+    "completion_min": 453.2001778572148,
     "required": {
       "A_uav": 4,
       "B_uav": 2,
       "C_uav": 2,
       "A_battery": 6,
       "B_battery": 4,
-      "C_battery": 3
+      "C_battery": 4
     },
     "inventory": {
       "A_uav": 4,

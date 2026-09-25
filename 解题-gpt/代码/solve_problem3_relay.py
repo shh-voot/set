@@ -267,7 +267,11 @@ def main():
     # clearance or arbitrary range limit is introduced here.
     los = LOSCommunicationModel(dem.dem_data, dem.dem_bounds,
                                 CommParams(max_range_m=float("inf"), safety_margin_m=0.0))
-    p2_file = root / "结果" / "问题二_优化修复版.xlsx"
+    # Feed the globally optimized Problem-2 schedule when available.  The
+    # fallback preserves reproducibility for a clean checkout containing only
+    # the earlier official-data result.
+    enhanced_p2 = root / "结果" / "问题二_增强优化版.xlsx"
+    p2_file = enhanced_p2 if enhanced_p2.exists() else root / "结果" / "问题二_优化修复版.xlsx"
     schedule = pd.read_excel(p2_file, sheet_name="架次调度")
     duration_min = float(schedule["end_min"].max())
 
@@ -474,6 +478,7 @@ def main():
     pd.DataFrame(coverage_rows).to_excel(output_dir / "问题三_覆盖核验_修复版.xlsx", index=False)
     schedule.to_excel(output_dir / "问题三_运输调度_修复版.xlsx", index=False)
     summary = {
+        "algorithm": "DEM路径采样 + 双向链路预算 + 候选网格全枚举 + 两中继集合覆盖 + EDD联合重排",
         "coverage_rate": coverage,
         "covered_area_count": len(all_covered),
         "area_count": len(areas),
