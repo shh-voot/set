@@ -135,15 +135,14 @@ def _resource_counts(tasks, params):
 
 
 def solve_problem4(num_groups):
-    root = Path(__file__).parent
-    data_dir = root / "数据" / "无人机应急物资运输基础数据"
+    project_root = Path(__file__).resolve().parents[2]
+    root = project_root / "解题-gpt"
+    data_dir = project_root / "数据" / "无人机应急物资运输基础数据"
     loader = DataLoader(str(data_dir))
     loader.load_all()
     types = {row["type"]: row.to_dict() for _, row in loader.get_uav_types().iterrows()}
 
     p2 = root / "结果" / "问题二_增强优化版.xlsx"
-    if not p2.exists():
-        p2 = root / "结果" / "问题二_优化修复版.xlsx"
     schedule = pd.read_excel(p2, sheet_name="架次调度")
     cargo = loader.get_cargos().copy()
     area_df = loader.get_service_areas()
@@ -227,13 +226,14 @@ def solve_staggered_inventory(num_groups):
     and battery types and shifts a group only as a whole, so the result is a
     conservative, auditable feasibility check rather than a fabricated fleet.
     """
-    root = Path(__file__).parent
-    data_dir = root / "数据" / "无人机应急物资运输基础数据"
+    project_root = Path(__file__).resolve().parents[2]
+    root = project_root / "解题-gpt"
+    data_dir = project_root / "数据" / "无人机应急物资运输基础数据"
     loader = DataLoader(str(data_dir)); loader.load_all()
     types = {row["type"]: row.to_dict() for _, row in loader.get_uav_types().iterrows()}
     p2 = root / "结果" / "问题二_增强优化版.xlsx"
     if not p2.exists():
-        p2 = root / "结果" / "问题二_优化修复版.xlsx"
+        p2 = root / "结果" / "问题二_增强优化版.xlsx"
     schedule = pd.read_excel(p2, sheet_name="架次调度")
     area_df = loader.get_service_areas()
     area_info = {row["id"]: row.to_dict() for _, row in area_df.iterrows()}
@@ -278,7 +278,7 @@ def solve_staggered_inventory(num_groups):
 
 
 if __name__ == "__main__":
-    root = Path(__file__).parent
+    root = Path(__file__).resolve().parents[2] / "解题-gpt"
     result2 = solve_problem4(2)
     result3 = solve_problem4(3)
     staggered2 = solve_staggered_inventory(2)

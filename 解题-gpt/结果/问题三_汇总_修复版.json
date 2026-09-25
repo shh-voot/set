@@ -7,23 +7,23 @@
   "official_relay_inventory": 2,
   "relay_energy_components_used": 4,
   "official_relay_energy_components": 6,
-  "transport_energy_kwh": 97.65260763126345,
-  "relay_energy_kwh": 6.754889433940063,
-  "total_energy_kwh": 104.40749706520351,
+  "transport_energy_kwh": 92.94461335122921,
+  "relay_energy_kwh": 6.4100036126023205,
+  "total_energy_kwh": 99.35461696383153,
   "uncovered_area_ids": [],
-  "communication_available_mission_count": 45,
+  "communication_available_mission_count": 43,
   "communication_interrupted_mission_ids": [],
   "late_cargo_count_after_joint_reschedule": 0,
-  "transport_completion_after_joint_reschedule_min": 182.2643138933139,
-  "joint_completion_min": 193.43074068612077,
+  "transport_completion_after_joint_reschedule_min": 180.351667415015,
+  "joint_completion_min": 189.17519950990732,
   "relay_service_windows": {
     "R01": [
       7.323532094892318,
-      182.2643138933139
+      180.351667415015
     ],
     "R02": [
       9.905674851548365,
-      182.02506583457242
+      165.12575842172168
     ]
   },
   "feasible_100_percent": true

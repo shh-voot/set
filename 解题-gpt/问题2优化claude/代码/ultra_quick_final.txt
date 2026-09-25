@@ -1,0 +1,45 @@
+============================================================
+超简化测试 - 简化规模
+============================================================
+
+加载数据...
+加载官方数据...
+正在加载DEM数据: 镇龙乡及周边30米DEM.mat
+  加载MATLAB格式DEM...
+  DEM尺寸: (1309, 1486)
+  高程范围: 41.7 - 1132.9 米
+  地理范围: (109.0326, 22.8612) - (109.4454, 23.2249)
+  分辨率: 0.000278 度
+  货箱数量: 80
+  服务区数量: 15
+  机型数量: 3
+    A: 4架, 6组电池
+    B: 2架, 4组电池
+    C: 2架, 4组电池
+
+原始统计：
+  总货箱数: 80
+  服务区数: 15
+Traceback (most recent call last):
+  File "C:\Users\yoush\anaconda3\envs\huawei_opt\lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'sid'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\claude\华为杯\D题\解题-gpt\问题2优化claude\代码\ultra_quick_run.py", line 93, in <module>
+    main()
+  File "D:\claude\华为杯\D题\解题-gpt\问题2优化claude\代码\ultra_quick_run.py", line 35, in main
+    used_areas.add(c['sid'])
+  File "C:\Users\yoush\anaconda3\envs\huawei_opt\lib\site-packages\pandas\core\series.py", line 1133, in __getitem__
+    return self._get_value(key)
+  File "C:\Users\yoush\anaconda3\envs\huawei_opt\lib\site-packages\pandas\core\series.py", line 1249, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\yoush\anaconda3\envs\huawei_opt\lib\site-packages\pandas\core\indexes\base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'sid'

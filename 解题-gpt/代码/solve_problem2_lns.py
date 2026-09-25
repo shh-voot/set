@@ -13,6 +13,7 @@ invented here; all candidates are evaluated by ``direct_mission``.
 from pathlib import Path
 import json
 import math
+import os
 
 import pandas as pd
 
@@ -127,9 +128,10 @@ def local_search(chosen, groups, areas, types, depot, dem, cargo_by_id):
 
 
 def main():
-    root = Path(__file__).parent
-    data_dir = root / "数据" / "无人机应急物资运输基础数据"
-    dem_dir = root / "数据" / "镇龙乡地理空间数据" / "镇龙乡及周边地理数据" / "数字高程模型数据（DEM）"
+    project_root = Path(__file__).resolve().parents[2]
+    root = project_root / "解题-gpt"
+    data_dir = project_root / "数据" / "无人机应急物资运输基础数据"
+    dem_dir = project_root / "数据" / "镇龙乡地理空间数据" / "镇龙乡及周边地理数据" / "数字高程模型数据（DEM）"
     loader = DataLoader(str(data_dir)); loader.load_all()
     cargo = loader.get_cargos().copy()
     cargo_by_id = cargo.set_index(ID, drop=False)
@@ -139,7 +141,8 @@ def main():
     dem = DEMLoader(str(next(dem_dir.glob("*.mat")))); dem.load()
 
     groups = build_groups(cargo, areas)
-    chosen_state = beam_assign(groups, areas, types, depot, dem, cargo_by_id, width=80)
+    beam_width = int(os.environ.get("P2_BEAM_WIDTH", "80"))
+    chosen_state = beam_assign(groups, areas, types, depot, dem, cargo_by_id, width=beam_width)
     chosen, missions, cargo_rows = chosen_state[2], chosen_state[0], chosen_state[1]
     chosen, missions, cargo_rows, score = local_search(
         chosen, groups, areas, types, depot, dem, cargo_by_id)
@@ -164,7 +167,7 @@ def main():
                                       mission_df.end_min.max(), sum(~cargo_df.on_time),
                                       sum(max(0.0, r["delivery_min"] - r["deadline_min"])
                                           for r in cargo_rows), mission_df.energy_kwh.sum(),
-                                      "EDD + bounded beam(80) + 1-swap LNS"]})
+                                      f"EDD + bounded beam({beam_width}) + 1-swap LNS"]})
     output = root / "结果" / "问题二_增强优化版.xlsx"
     with pd.ExcelWriter(output, engine="openpyxl") as writer:
         mission_df.to_excel(writer, sheet_name="架次调度", index=False)

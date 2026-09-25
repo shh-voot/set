@@ -228,9 +228,10 @@ def _repair_late_types(schedule, direct, relay_by_area, relay_starts, types,
 
 
 def main():
-    root = Path(__file__).parent
-    data_dir = root / "数据" / "无人机应急物资运输基础数据"
-    dem_dir = root / "数据" / "镇龙乡地理空间数据" / "镇龙乡及周边地理数据" / "数字高程模型数据（DEM）"
+    project_root = Path(__file__).resolve().parents[2]
+    root = project_root / "解题-gpt"
+    data_dir = project_root / "数据" / "无人机应急物资运输基础数据"
+    dem_dir = project_root / "数据" / "镇龙乡地理空间数据" / "镇龙乡及周边地理数据" / "数字高程模型数据（DEM）"
     loader = DataLoader(str(data_dir))
     loader.load_all()
     # Reuse the official heterogeneous transport-UAV parameters so that
@@ -271,7 +272,7 @@ def main():
     # fallback preserves reproducibility for a clean checkout containing only
     # the earlier official-data result.
     enhanced_p2 = root / "结果" / "问题二_增强优化版.xlsx"
-    p2_file = enhanced_p2 if enhanced_p2.exists() else root / "结果" / "问题二_优化修复版.xlsx"
+    p2_file = enhanced_p2
     schedule = pd.read_excel(p2_file, sheet_name="架次调度")
     duration_min = float(schedule["end_min"].max())
 

@@ -1,0 +1,16 @@
+============================================================
+超快速测试 - 简化规模
+============================================================
+数据路径: D:\claude\华为杯\D题\数据\无人机应急物资运输基础数据
+货箱文件: D:\claude\华为杯\D题\数据\无人机应急物资运输基础数据\物资需求与配送时限.xlsx
+
+简化后统计：
+  总货箱数: 30
+  服务区数: 8
+  总质量: 234.0 kg
+Traceback (most recent call last):
+  File "D:\claude\华为杯\D题\解题-gpt\问题2优化claude\代码\ultra_quick_run.py", line 88, in <module>
+    main()
+  File "D:\claude\华为杯\D题\解题-gpt\问题2优化claude\代码\ultra_quick_run.py", line 48, in main
+    optimizer = NSGAIIOptimizer(
+TypeError: NSGAIIOptimizer.__init__() got an unexpected keyword argument 'data_dir'

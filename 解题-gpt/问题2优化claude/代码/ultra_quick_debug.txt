@@ -1,0 +1,31 @@
+============================================================
+超简化测试 - 简化规模
+============================================================
+
+加载数据...
+加载官方数据...
+正在加载DEM数据: 镇龙乡及周边30米DEM.mat
+  加载MATLAB格式DEM...
+  DEM尺寸: (1309, 1486)
+  高程范围: 41.7 - 1132.9 米
+  地理范围: (109.0326, 22.8612) - (109.4454, 23.2249)
+  分辨率: 0.000278 度
+  货箱数量: 80
+  服务区数量: 15
+  机型数量: 3
+    A: 4架, 6组电池
+    B: 2架, 4组电池
+    C: 2架, 4组电池
+
+原始统计：
+  总货箱数: 80
+  服务区数: 15
+
+调试：查看cargo_by_id结构
+  类型: <class 'pandas.core.series.Series'>
+Traceback (most recent call last):
+  File "D:\claude\华为杯\D题\解题-gpt\问题2优化claude\代码\ultra_quick_run.py", line 112, in <module>
+    main()
+  File "D:\claude\华为杯\D题\解题-gpt\问题2优化claude\代码\ultra_quick_run.py", line 32, in main
+    print(f"  列名: {list(cargo_by_id.columns)}")
+UnicodeEncodeError: 'gbk' codec can't encode character '\xb3' in position 51: illegal multibyte sequence

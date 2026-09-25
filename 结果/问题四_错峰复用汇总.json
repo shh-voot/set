@@ -2,7 +2,7 @@
   "algorithm": "中继覆盖分量多起点负载均衡 + 组件级迁移局部搜索 + 批次整体错峰复用",
   "staggered_2": {
     "groups": 2,
-    "completion_min": 281.3157239709898,
+    "completion_min": 294.0178155176093,
     "required": {
       "A_uav": 4,
       "B_uav": 2,
@@ -31,7 +31,7 @@
   },
   "staggered_3": {
     "groups": 3,
-    "completion_min": 453.2001778572148,
+    "completion_min": 463.644929776047,
     "required": {
       "A_uav": 4,
       "B_uav": 2,

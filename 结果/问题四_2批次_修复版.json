@@ -53,7 +53,7 @@
         "B": {
           "uav_count": 2,
           "battery_count": 4,
-          "charger_count": 2
+          "charger_count": 3
         },
         "C": {
           "uav_count": 2,
@@ -72,7 +72,7 @@
     "A_charger": 5.0,
     "B_uav": 3.0,
     "B_battery": 5.0,
-    "B_charger": 3.0,
+    "B_charger": 4.0,
     "C_uav": 3.0,
     "C_battery": 6.0,
     "C_charger": 5.0,

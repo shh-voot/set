@@ -1,0 +1,431 @@
+{
+  "official_input_dir": "D:\\claude\\华为杯\\D题\\数据\\无人机应急物资运输基础数据",
+  "candidate_file": "D:\\claude\\华为杯\\D题\\解题-gpt\\问题2优化\\结果\\问题二_ALNS候选方案.xlsx",
+  "cargo_count": 80,
+  "unique_cargo_count": 80,
+  "duplicate_cargo_count": 0,
+  "score": [
+    0,
+    0.0,
+    164.81356227460145,
+    95.20417606584402,
+    43
+  ],
+  "all_cargo_on_time": true,
+  "physical_all_feasible": true,
+  "max_physical_energy_abs_err": 8.881784197001252e-16,
+  "max_physical_duration_abs_err": 7.105427357601002e-15,
+  "max_physical_delivery_offset_abs_err": 5.329070518200751e-15,
+  "resource": [
+    {
+      "type": "A",
+      "official_uav": 4,
+      "used_uav": 4,
+      "official_battery": 6,
+      "used_battery": 6
+    },
+    {
+      "type": "B",
+      "official_uav": 2,
+      "used_uav": 2,
+      "official_battery": 4,
+      "used_battery": 4
+    },
+    {
+      "type": "C",
+      "official_uav": 2,
+      "used_uav": 2,
+      "official_battery": 4,
+      "used_battery": 4
+    }
+  ],
+  "physical_checks": [
+    {
+      "mission_id": 1,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 0.0,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.7839879770380191,
+      "range_margin_km": 11.502599394800432
+    },
+    {
+      "mission_id": 2,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 3.8410866581579635,
+      "range_margin_km": 6.573185810138405
+    },
+    {
+      "mission_id": 3,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.0662140354936613,
+      "range_margin_km": 6.403121315744379
+    },
+    {
+      "mission_id": 4,
+      "energy_abs_err": 4.440892098500626e-16,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 0.0,
+      "official_feasible": true,
+      "reserve_margin_kwh": 4.333601243769264,
+      "range_margin_km": 12.523185810138404
+    },
+    {
+      "mission_id": 5,
+      "energy_abs_err": 2.220446049250313e-16,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 0.0,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.7755841015659595,
+      "range_margin_km": 11.64313339726446
+    },
+    {
+      "mission_id": 6,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.990999206488577,
+      "range_margin_km": 13.132356728787316
+    },
+    {
+      "mission_id": 7,
+      "energy_abs_err": 4.440892098500626e-16,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.4736512993094397,
+      "range_margin_km": 10.378180758994608
+    },
+    {
+      "mission_id": 8,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 7.105427357601002e-15,
+      "delivery_offset_abs_err": 0.0,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.2481894841779013,
+      "range_margin_km": 0.8044635033818004
+    },
+    {
+      "mission_id": 9,
+      "energy_abs_err": 2.220446049250313e-16,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.9705765865083684,
+      "range_margin_km": 12.532356728787319
+    },
+    {
+      "mission_id": 10,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 4.18972979366227,
+      "range_margin_km": 11.76294217113676
+    },
+    {
+      "mission_id": 11,
+      "energy_abs_err": 4.440892098500626e-16,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.1381490129539138,
+      "range_margin_km": 6.729463503381801
+    },
+    {
+      "mission_id": 12,
+      "energy_abs_err": 2.220446049250313e-16,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.024797744717916,
+      "range_margin_km": 13.702599394800432
+    },
+    {
+      "mission_id": 13,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 5.329070518200751e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.3083734787064376,
+      "range_margin_km": 18.43794217113676
+    },
+    {
+      "mission_id": 14,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 7.105427357601002e-15,
+      "delivery_offset_abs_err": 0.0,
+      "official_feasible": true,
+      "reserve_margin_kwh": 0.9594991893661335,
+      "range_margin_km": 1.1528689180923042
+    },
+    {
+      "mission_id": 15,
+      "energy_abs_err": 8.881784197001252e-16,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 0.0,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.2768429224243558,
+      "range_margin_km": 2.633696514496057
+    },
+    {
+      "mission_id": 16,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 0.9760970659815782,
+      "range_margin_km": 5.981076032675546
+    },
+    {
+      "mission_id": 17,
+      "energy_abs_err": 2.220446049250313e-16,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.0287025049135776,
+      "range_margin_km": 14.332356728787316
+    },
+    {
+      "mission_id": 18,
+      "energy_abs_err": 4.440892098500626e-16,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 0.9395679579470637,
+      "range_margin_km": 5.381076032675548
+    },
+    {
+      "mission_id": 19,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.2235267830384,
+      "range_margin_km": 8.603121315744378
+    },
+    {
+      "mission_id": 20,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 1.7763568394002505e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.353605018874111,
+      "range_margin_km": 18.673185810138406
+    },
+    {
+      "mission_id": 21,
+      "energy_abs_err": 4.440892098500626e-16,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 0.0,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.018469445232336,
+      "range_margin_km": 13.84313339726446
+    },
+    {
+      "mission_id": 22,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 1.7763568394002505e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.295045265565996,
+      "range_margin_km": 15.473185810138407
+    },
+    {
+      "mission_id": 23,
+      "energy_abs_err": 4.440892098500626e-16,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.6948336821011485,
+      "range_margin_km": 12.578180758994607
+    },
+    {
+      "mission_id": 24,
+      "energy_abs_err": 4.440892098500626e-16,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 0.0,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.6231259133463087,
+      "range_margin_km": 12.361788730809414
+    },
+    {
+      "mission_id": 25,
+      "energy_abs_err": 4.440892098500626e-16,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.8823181435482157,
+      "range_margin_km": 7.520974384603429
+    },
+    {
+      "mission_id": 26,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 7.105427357601002e-15,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.9967303532505776,
+      "range_margin_km": 9.108696514496058
+    },
+    {
+      "mission_id": 27,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.0435354192760662,
+      "range_margin_km": 7.181076032675545
+    },
+    {
+      "mission_id": 28,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 5.329070518200751e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.3212002082001137,
+      "range_margin_km": 19.237942171136762
+    },
+    {
+      "mission_id": 29,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 1.7763568394002505e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.354054492877334,
+      "range_margin_km": 15.565704332117479
+    },
+    {
+      "mission_id": 30,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.293189447139754,
+      "range_margin_km": 8.9294635033818
+    },
+    {
+      "mission_id": 31,
+      "energy_abs_err": 2.220446049250313e-16,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.0404253792137883,
+      "range_margin_km": 14.732356728787318
+    },
+    {
+      "mission_id": 32,
+      "energy_abs_err": 4.440892098500626e-16,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 0.0,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.5351194951178444,
+      "range_margin_km": 10.161788730809414
+    },
+    {
+      "mission_id": 33,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 1.7763568394002505e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.3263444440582646,
+      "range_margin_km": 17.073185810138405
+    },
+    {
+      "mission_id": 34,
+      "energy_abs_err": 2.220446049250313e-16,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.7289453768082004,
+      "range_margin_km": 10.154655022554486
+    },
+    {
+      "mission_id": 35,
+      "energy_abs_err": 4.440892098500626e-16,
+      "duration_abs_err": 7.105427357601002e-15,
+      "delivery_offset_abs_err": 0.0,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.0868102705173803,
+      "range_margin_km": 7.277868918092304
+    },
+    {
+      "mission_id": 36,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.0615868748129964,
+      "range_margin_km": 10.427868918092303
+    },
+    {
+      "mission_id": 37,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 1.7763568394002505e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.4157814082893156,
+      "range_margin_km": 19.16570433211748
+    },
+    {
+      "mission_id": 38,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 0.0,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.715099667056771,
+      "range_margin_km": 13.354655022554486
+    },
+    {
+      "mission_id": 39,
+      "energy_abs_err": 4.440892098500626e-16,
+      "duration_abs_err": 3.552713678800501e-15,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 2.783048048300449,
+      "range_margin_km": 12.561788730809416
+    },
+    {
+      "mission_id": 40,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 7.105427357601002e-15,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.1252226405228822,
+      "range_margin_km": 8.308696514496058
+    },
+    {
+      "mission_id": 41,
+      "energy_abs_err": 0.0,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.0645036467709912,
+      "range_margin_km": 7.581076032675547
+    },
+    {
+      "mission_id": 42,
+      "energy_abs_err": 2.220446049250313e-16,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 3.552713678800501e-15,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.8880551951352673,
+      "range_margin_km": 12.795974384603428
+    },
+    {
+      "mission_id": 43,
+      "energy_abs_err": 4.440892098500626e-16,
+      "duration_abs_err": 0.0,
+      "delivery_offset_abs_err": 0.0,
+      "official_feasible": true,
+      "reserve_margin_kwh": 1.7995970519190698,
+      "range_margin_km": 14.99597438460343
+    }
+  ]
+}

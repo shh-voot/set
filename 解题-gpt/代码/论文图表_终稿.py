@@ -162,32 +162,28 @@ def active_counts(schedule, typ):
 
 
 def q2():
-    enhanced = pd.read_excel(RESULT / "问题二_增强优化版.xlsx", sheet_name="架次调度")
-    baseline = pd.read_excel(RESULT / "问题二_优化修复版.xlsx", sheet_name="架次调度")
+    schedule = pd.read_excel(RESULT / "问题二_增强优化版.xlsx", sheet_name="架次调度")
     fig = plt.figure(figsize=(13.5, 7.0))
     grid = fig.add_gridspec(2, 3, height_ratios=[1.0, 1.28], hspace=0.42, wspace=0.32)
-    metrics = [("架次", len(baseline), len(enhanced)),
-               ("完成时间（min）", baseline["end_min"].max(), enhanced["end_min"].max()),
-               ("总能耗（kWh）", baseline["energy_kwh"].sum(), enhanced["energy_kwh"].sum())]
-    for j, (label, old, new) in enumerate(metrics):
+    metrics = [("架次", len(schedule)),
+               ("完成时间（min）", schedule["end_min"].max()),
+               ("总能耗（kWh）", schedule["energy_kwh"].sum())]
+    for j, (label, value) in enumerate(metrics):
         ax = fig.add_subplot(grid[0, j])
-        bars = ax.bar([0, 1], [old, new], color=[COLORS["baseline"], COLORS["highlight"]], width=0.55)
-        ax.set_xticks([0, 1], ["原方案", "增强方案"])
+        bar = ax.bar([0], [value], color=COLORS["highlight"], width=0.55)[0]
+        ax.set_xticks([0], ["正式方案"])
         ax.set_title(label, loc="left", weight="bold")
         ax.grid(axis="y", color=COLORS["grid"], lw=0.7); ax.set_axisbelow(True)
-        for bar, value in zip(bars, [old, new]):
-            ax.text(bar.get_x() + bar.get_width() / 2, value, f"{value:.1f}" if j else f"{value:.0f}",
-                    ha="center", va="bottom", fontsize=10, weight="bold")
-        if new < old:
-            ax.text(1, max(old, new) * 0.78, f"↓{(old - new) / old * 100:.1f}%", ha="center", color="#42756C", weight="bold")
+        ax.text(bar.get_x() + bar.get_width() / 2, value, f"{value:.1f}" if j else f"{value:.0f}",
+                ha="center", va="bottom", fontsize=10, weight="bold")
     ax = fig.add_subplot(grid[1, :2])
     for typ in ("A", "B", "C"):
-        t, y = active_counts(enhanced, typ)
+        t, y = active_counts(schedule, typ)
         ax.step(t, y, where="post", color=COLORS[typ], lw=2, label=f"机型{typ}")
     for typ, cap in (("A", 4), ("B", 2), ("C", 2)):
         ax.axhline(cap, color=COLORS[typ], lw=0.8, ls="--", alpha=0.45)
     ax.set_xlabel("调度时间（min）"); ax.set_ylabel("同时执行架次")
-    ax.set_title("增强方案的实体机并发峰值与官方库存上限", loc="left", weight="bold")
+    ax.set_title("正式方案的实体机并发峰值与官方库存上限", loc="left", weight="bold")
     ax.grid(color=COLORS["grid"], lw=0.7); ax.legend(ncol=3, frameon=False)
     ax = fig.add_subplot(grid[1, 2])
     labels = ["按时货箱", "迟到货箱"]
@@ -198,9 +194,9 @@ def q2():
     ax.grid(axis="y", color=COLORS["grid"], lw=0.7); ax.set_axisbelow(True)
     for bar, value in zip(bars, vals):
         ax.text(bar.get_x() + bar.get_width() / 2, value + 2, str(value), ha="center", weight="bold")
-    fig.suptitle("问题二  束搜索与局部搜索的性能改进", x=0.04, ha="left", fontsize=16, weight="bold")
+    fig.suptitle("问题二  异构机队调度正式结果", x=0.04, ha="left", fontsize=16, weight="bold")
     fig.tight_layout(rect=(0, 0, 1, 0.94))
-    save(fig, "问题二_增强前后性能与资源峰值.png")
+    save(fig, "问题二_性能与资源峰值.png")
 
 
 def q3():
