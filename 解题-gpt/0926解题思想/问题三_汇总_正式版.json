@@ -1,0 +1,58 @@
+{
+  "feasible_100_percent": true,
+  "mission_count": 45,
+  "cargo_count": 80,
+  "late_cargo_count": 0,
+  "communication_sample_count": 10890,
+  "communication_available_sample_count": 10890,
+  "communication_gap_count": 0,
+  "transport_completion_min": 166.0,
+  "relay_sortie_count": 3,
+  "relay_energy_components_used": 3,
+  "official_relay_energy_components": 6,
+  "relay_energy_kwh": 5.615097649746094,
+  "transport_energy_kwh": 94.82975184734296,
+  "total_energy_kwh": 100.44484949708905,
+  "joint_completion_min": 199.3866433055512,
+  "violations": [],
+  "capacity_violation_mission_ids": [],
+  "volume_violation_mission_ids": [],
+  "relay_rows": [
+    {
+      "relay_id": "R01",
+      "point": "P1",
+      "service_start_min": 40.0,
+      "service_end_min": 165.0,
+      "launch_min": 28.491475831108943,
+      "return_end_min": 178.00852416889106,
+      "flight_energy_kwh": 0.23204677637725904,
+      "hover_energy_kwh": 2.2916666666666665,
+      "energy_kwh": 2.5237134430439254,
+      "component_required": 1
+    },
+    {
+      "relay_id": "R02",
+      "point": "P2",
+      "service_start_min": 15.0,
+      "service_end_min": 70.0,
+      "launch_min": 3.8985736605067096,
+      "return_end_min": 82.60142633949329,
+      "flight_energy_kwh": 0.2206710793285391,
+      "hover_energy_kwh": 1.0083333333333335,
+      "energy_kwh": 1.2290044126618727,
+      "component_required": 1
+    },
+    {
+      "relay_id": "R02",
+      "point": "P3",
+      "service_start_min": 100.0,
+      "service_end_min": 185.0,
+      "launch_min": 87.11335669444883,
+      "return_end_min": 199.3866433055512,
+      "flight_energy_kwh": 0.30404646070696184,
+      "hover_energy_kwh": 1.5583333333333336,
+      "energy_kwh": 1.8623797940402955,
+      "component_required": 1
+    }
+  ]
+}
